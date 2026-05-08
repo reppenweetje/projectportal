@@ -1,26 +1,57 @@
 @import "tailwindcss";
 
+@theme {
+  /* REPP brand */
+  --color-repp-navy: #0f0f70;
+  --color-repp-blue: #1b23aa;
+  --color-repp-yellow: #edff00;
+  --color-repp-gray: #d8d6d6;
+  --color-repp-white: #ffffff;
+
+  /* De Hofman accent (project-level) */
+  --color-hofman-orange: #f59e0b;
+  --color-hofman-deep: #0a1530;
+
+  /* Status palette for units — matched to live plattegrond */
+  --color-status-available: #6dcf85; /* groen */
+  --color-status-optie: #f5c34c;     /* geel — verkocht onder voorbehoud */
+  --color-status-sold: #ef5455;      /* rood */
+  --color-status-coming: #cbd5e1;    /* wit-grijs (rand) — coming soon */
+
+  /* Surfaces */
+  --color-surface: #ffffff;
+  --color-surface-muted: #f5f5f7;
+  --color-ink: #0f0f70;
+  --color-ink-soft: #475569;
+
+  /* Typography */
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* Radii / shadows */
+  --radius-card: 0.75rem;
+}
+
 :root {
+  color-scheme: light;
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0f0f70;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
+html, body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Mobile-first: ensure sticky footer doesn't overlap content */
+.has-sticky-cta {
+  padding-bottom: 5.5rem;
+}
+
+@media (min-width: 768px) {
+  .has-sticky-cta {
+    padding-bottom: 0;
+  }
 }
