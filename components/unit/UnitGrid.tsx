@@ -21,7 +21,11 @@ const statusLabelShort: Record<UnitStatus, string> = {
   coming_soon: "Soon",
 };
 
-const interactiveStatuses: UnitStatus[] = ["available", "in_optie"];
+const interactiveStatuses: UnitStatus[] = [
+  "available",
+  "in_optie",
+  "verkocht_ovb",
+];
 
 type Mode = "modal" | "link";
 type Size = "default" | "mini";

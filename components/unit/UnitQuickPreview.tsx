@@ -122,6 +122,13 @@ export function UnitQuickPreview({
             </p>
           )}
 
+          {unit.status === "verkocht_ovb" && (
+            <div className="mt-5 rounded-xl bg-status-optie/15 border border-status-optie/40 p-3 text-xs text-repp-navy/80 leading-relaxed">
+              Deze unit is verkocht onder voorbehoud. Als de huidige reservering
+              niet doorgaat, krijgen wachtlijst-staanden als eerste bericht.
+            </div>
+          )}
+
           <div className="mt-6 space-y-2">
             <Link
               href={`/${project.slug}/units/${unit.slug}`}
@@ -136,7 +143,9 @@ export function UnitQuickPreview({
                 className="flex-1 block bg-repp-yellow text-repp-navy text-center font-bold px-4 py-3 rounded-full hover:brightness-95 transition"
                 onClick={onClose}
               >
-                Reserveer (vrijblijvend)
+                {unit.status === "verkocht_ovb"
+                  ? "Op de wachtlijst"
+                  : "Reserveer (vrijblijvend)"}
               </Link>
               <FavoriteButton unitSlug={unit.slug} size="lg" />
             </div>

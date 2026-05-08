@@ -10,7 +10,11 @@ const typeColor: Record<Unit["type"], string> = {
   XXL: "border-status-coming/50",
 };
 
-const interactiveStatuses: Unit["status"][] = ["available", "in_optie"];
+const interactiveStatuses: Unit["status"][] = [
+  "available",
+  "in_optie",
+  "verkocht_ovb",
+];
 
 export function UnitCard({
   project,

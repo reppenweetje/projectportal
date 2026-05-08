@@ -9,6 +9,7 @@ import { ScarcityStrip } from "@/components/marketing/ScarcityStrip";
 import { ReservationForm } from "@/components/conversion/ReservationForm";
 
 type Params = { projectSlug: string };
+type SearchParams = { unit?: string; intent?: string };
 
 export const metadata: Metadata = {
   title: "Reserveer jouw unit",
@@ -16,12 +17,20 @@ export const metadata: Metadata = {
 
 export default async function ReserverenPage({
   params,
+  searchParams,
 }: {
   params: Promise<Params>;
+  searchParams: Promise<SearchParams>;
 }) {
   const { projectSlug } = await params;
+  const sp = await searchParams;
   const project = getProjectBySlug(projectSlug);
   if (!project) notFound();
+
+  const isWachtlijst = sp.intent === "wachtlijst";
+  const requestedUnit = sp.unit
+    ? project.units.find((u) => u.slug === sp.unit)
+    : undefined;
 
   return (
     <>
@@ -34,14 +43,32 @@ export default async function ReserverenPage({
               <span className="inline-block w-1.5 h-1.5 rounded-full bg-status-available" />
               Geen kosten · Geen verplichting
             </p>
-            <h1 className="mt-4 text-4xl md:text-6xl font-extrabold text-repp-navy tracking-tight">
-              Zet jouw unit op naam
-            </h1>
-            <p className="mt-4 text-repp-navy/70 max-w-xl mx-auto">
-              Wij bellen je voor een persoonlijk gesprek. Pas daarna, als jij
-              klaar bent, gaan we naar een officiële reservering. De 5%
-              aanbetaling komt pas op het moment dat jij ja zegt.
-            </p>
+            {isWachtlijst ? (
+              <>
+                <h1 className="mt-4 text-4xl md:text-6xl font-extrabold text-repp-navy tracking-tight">
+                  Op de wachtlijst
+                </h1>
+                <p className="mt-4 text-repp-navy/70 max-w-xl mx-auto">
+                  {requestedUnit
+                    ? `Unit ${requestedUnit.number} (${requestedUnit.type}) is verkocht onder voorbehoud. `
+                    : "Deze unit is verkocht onder voorbehoud. "}
+                  Als de huidige reservering niet doorgaat, krijg jij als eerste
+                  bericht. We bellen je sowieso om door te nemen wat de opties
+                  zijn (bijvoorbeeld andere units in jouw gewenste type).
+                </p>
+              </>
+            ) : (
+              <>
+                <h1 className="mt-4 text-4xl md:text-6xl font-extrabold text-repp-navy tracking-tight">
+                  Zet jouw unit op naam
+                </h1>
+                <p className="mt-4 text-repp-navy/70 max-w-xl mx-auto">
+                  Wij bellen je voor een persoonlijk gesprek. Pas daarna, als
+                  jij klaar bent, gaan we naar een officiële reservering. De 5%
+                  aanbetaling komt pas op het moment dat jij ja zegt.
+                </p>
+              </>
+            )}
           </div>
         </section>
 

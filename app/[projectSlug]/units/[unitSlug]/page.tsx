@@ -43,6 +43,7 @@ export default async function UnitDetailPage({
 
   const isReservable =
     unit.status === "available" || unit.status === "in_optie";
+  const isWachtlijst = unit.status === "verkocht_ovb";
 
   // Per-type scarcity for FOMO
   const sameType = project.units.filter((u) => u.type === unit.type);
@@ -193,7 +194,7 @@ export default async function UnitDetailPage({
                 )}
 
                 {/* Per-type FOMO */}
-                {isReservable && (
+                {(isReservable || isWachtlijst) && (
                   <div className="mt-4 pt-4 border-t border-white/10 text-sm">
                     <p className="font-semibold text-repp-yellow">
                       Nog {sameTypeAvailable}{" "}
@@ -209,12 +210,27 @@ export default async function UnitDetailPage({
                   </div>
                 )}
 
+                {isWachtlijst && (
+                  <div className="mt-4 rounded-xl bg-status-optie/15 border border-status-optie/40 p-3 text-xs text-white/85 leading-relaxed">
+                    Deze unit is verkocht onder voorbehoud. Als de huidige
+                    reservering niet doorgaat, krijgen wachtlijst-staanden als
+                    eerste bericht.
+                  </div>
+                )}
+
                 {isReservable ? (
                   <Link
                     href={`/${project.slug}/reserveren?unit=${unit.slug}`}
                     className="mt-5 block bg-repp-yellow text-repp-navy text-center font-bold text-base px-4 py-4 rounded-full hover:brightness-95 shadow-lg shadow-black/20"
                   >
                     Reserveer Unit {unit.number}
+                  </Link>
+                ) : isWachtlijst ? (
+                  <Link
+                    href={`/${project.slug}/reserveren?unit=${unit.slug}&intent=wachtlijst`}
+                    className="mt-5 block bg-repp-yellow text-repp-navy text-center font-bold text-base px-4 py-4 rounded-full hover:brightness-95 shadow-lg shadow-black/20"
+                  >
+                    Op de wachtlijst voor Unit {unit.number}
                   </Link>
                 ) : unit.status === "coming_soon" ? (
                   <Link
@@ -225,9 +241,7 @@ export default async function UnitDetailPage({
                   </Link>
                 ) : (
                   <div className="mt-5 block bg-white/10 text-white/60 text-center font-semibold px-4 py-3 rounded-full">
-                    {unit.status === "verkocht_ovb"
-                      ? "Verkocht onder voorbehoud"
-                      : "Verkocht"}
+                    Verkocht
                   </div>
                 )}
 
@@ -249,8 +263,8 @@ export default async function UnitDetailPage({
                 </div>
               </div>
 
-              {/* Soft conversion: save for later (only for reservable units) */}
-              {isReservable && (
+              {/* Soft conversion: save for later (reservable + verkocht ovb) */}
+              {(isReservable || isWachtlijst) && (
                 <SaveForLater
                   unitSlug={unit.slug}
                   unitNumber={unit.number}
