@@ -25,6 +25,7 @@ const interactiveStatuses: UnitStatus[] = [
   "available",
   "in_optie",
   "verkocht_ovb",
+  "coming_soon",
 ];
 
 type Mode = "modal" | "link";

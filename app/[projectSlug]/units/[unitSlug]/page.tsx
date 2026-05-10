@@ -86,7 +86,7 @@ export default async function UnitDetailPage({
                 <p className="mt-4 text-repp-navy/70">
                   {formatM2(unit.m2BVO)} bvo · {unit.layers} lagen
                   {unit.metBedrijfsgebondenWoning &&
-                    " · mogelijk met bedrijfsgebonden woning"}
+                    " · met bedrijfsgebonden woning"}
                 </p>
               </div>
               <div>
@@ -147,7 +147,7 @@ export default async function UnitDetailPage({
                     ? ([
                         [
                           "Tweede verdieping",
-                          `${formatM2(unit.m2TweedeVerdieping)} (mogelijk woning)`,
+                          `${formatM2(unit.m2TweedeVerdieping)} (bedrijfsgebonden woning)`,
                         ],
                       ] as [string, string][])
                     : []),

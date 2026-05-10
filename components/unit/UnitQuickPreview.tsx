@@ -97,7 +97,7 @@ export function UnitQuickPreview({
             {unit.m2TweedeVerdieping && (
               <SpecRow
                 label="Tweede verdieping"
-                value={`${formatM2(unit.m2TweedeVerdieping)} (mogelijk woning)`}
+                value={`${formatM2(unit.m2TweedeVerdieping)} (woning)`}
               />
             )}
             <SpecRow
@@ -129,6 +129,15 @@ export function UnitQuickPreview({
             </div>
           )}
 
+          {unit.status === "coming_soon" && (
+            <div className="mt-5 rounded-xl bg-status-coming/15 border border-status-coming/40 p-3 text-xs text-repp-navy/80 leading-relaxed">
+              <span className="font-bold">Coming soon: XXL met bedrijfsgebonden
+              woning.</span>{" "}
+              3 lagen, woning op de tweede verdieping. Plaats je op de wachtlijst
+              en je krijgt voorrang zodra de XXL-units in actieve verkoop gaan.
+            </div>
+          )}
+
           <div className="mt-6 space-y-2">
             <Link
               href={`/${project.slug}/units/${unit.slug}`}
@@ -139,13 +148,19 @@ export function UnitQuickPreview({
             </Link>
             <div className="flex gap-2">
               <Link
-                href={`/${project.slug}/reserveren?unit=${unit.slug}`}
+                href={
+                  unit.status === "coming_soon"
+                    ? `/${project.slug}/xxl`
+                    : `/${project.slug}/reserveren?unit=${unit.slug}${unit.status === "verkocht_ovb" ? "&intent=wachtlijst" : ""}`
+                }
                 className="flex-1 block bg-repp-yellow text-repp-navy text-center font-bold px-4 py-3 rounded-full hover:brightness-95 transition"
                 onClick={onClose}
               >
-                {unit.status === "verkocht_ovb"
-                  ? "Op de wachtlijst"
-                  : "Reserveer (vrijblijvend)"}
+                {unit.status === "coming_soon"
+                  ? "Op de XXL-wachtlijst"
+                  : unit.status === "verkocht_ovb"
+                    ? "Op de wachtlijst"
+                    : "Reserveer (vrijblijvend)"}
               </Link>
               <FavoriteButton unitSlug={unit.slug} size="lg" />
             </div>

@@ -96,7 +96,7 @@ export default async function XxlPage({
               />
               <Card
                 title="Bedrijfsgebonden woning"
-                body="We onderzoeken of wonen toegestaan is binnen het bestemmingsplan voor deze twee units. Reageer als je interesse hebt."
+                body="Ondernemen op de begane grond en eerste verdieping, wonen op de tweede. Eén adres voor je bedrijf én je thuis."
                 accent
               />
               <Card

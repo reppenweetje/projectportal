@@ -288,8 +288,8 @@ export function XxlInterestForm({ project }: { project: Project }) {
         <div className="pt-4 border-t border-white/10 text-xs text-white/70 leading-relaxed space-y-2">
           <p>
             <span className="text-repp-yellow font-semibold">Status:</span>{" "}
-            Coming soon. We onderzoeken nu of bedrijfsgebonden wonen binnen
-            deze units mogelijk is.
+            Coming soon. De XXL wordt opgeleverd als 3-laags unit met
+            bedrijfsgebonden woning op de tweede verdieping.
           </p>
           <p>
             <span className="text-repp-yellow font-semibold">Voorrang:</span>{" "}

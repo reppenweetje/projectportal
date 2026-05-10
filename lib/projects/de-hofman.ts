@@ -316,7 +316,7 @@ export const deHofman: Project = {
     },
     {
       q: "Kan ik in een unit wonen én werken?",
-      a: "Voor de twee XXL-units (Unit 7 en 14) wordt momenteel onderzocht of bedrijfsgebonden wonen is toegestaan binnen het bestemmingsplan. Bij L- en XL-units is dat niet aan de orde; dat zijn pure bedrijfsruimtes. Wil je wonen én werken? Schrijf je dan in voor de XXL-wachtlijst, dan houden we je op de hoogte zodra de uitkomst van het onderzoek bekend is.",
+      a: "De twee XXL-units (Unit 7 en 14) worden opgeleverd met bedrijfsgebonden woning op de tweede verdieping. Bedrijf op de begane grond en eerste verdieping, wonen erboven. Bij L- en XL-units is wonen niet aan de orde; dat zijn pure bedrijfsruimtes. Wil je wonen én werken? Schrijf je dan in voor de XXL-wachtlijst, je krijgt voorrang zodra ze in actieve verkoop gaan.",
     },
     {
       q: "Is de reservering bindend?",
