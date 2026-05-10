@@ -271,7 +271,7 @@ export const deHofman: Project = {
       name: "RENO Projecten",
       role: "Bouwpartner",
       logoSrc: "/images/logos/reno-projecten.png",
-      href: "https://renoprojectbouw.nl",
+      href: "https://www.reno.nl",
     },
     {
       name: "Credion",
