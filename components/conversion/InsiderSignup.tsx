@@ -108,12 +108,17 @@ export function InsiderSignup({
         }`}
       >
         <p className="text-2xl">📬</p>
-        <p className={`mt-2 font-bold ${labelCls}`}>
-          Top, je bent ingeschreven.
+        <p className={`mt-2 font-bold text-lg ${labelCls}`}>
+          Welkom als Hofman Insider.
         </p>
-        <p className={`mt-1 text-sm ${helperCls}`}>
-          We mailen alleen als er iets relevants speelt over {project.name}.
-          Niet meer dan 1× per maand. Uitschrijven kan altijd.
+        <p className={`mt-2 text-sm ${helperCls}`}>
+          Jij krijgt vanaf nu als eerste belangrijk nieuws over {project.name}:
+          statuswijzigingen, prijsindexaties, de start van de XXL-verkoop en
+          bouwmijlpalen. Voor reguliere bezoekers is dat nieuws meestal te
+          laat.
+        </p>
+        <p className={`mt-3 text-[11px] ${helperCls}`}>
+          Geen spam. Uitschrijven kan altijd via een link in iedere mail.
         </p>
       </div>
     );
