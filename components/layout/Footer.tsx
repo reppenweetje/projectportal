@@ -10,8 +10,7 @@ export function Footer({ project }: { project: Project }) {
         <div className="md:col-span-3">
           <p className="font-extrabold text-white text-lg">REPP</p>
           <p className="text-sm mt-2">
-            Bedrijfsmakelaar voor nieuwbouw bedrijfsunits in de Metropoolregio
-            Amsterdam.
+            Bedrijfsmakelaar voor nieuwbouw projecten.
           </p>
         </div>
         <div className="md:col-span-2">
