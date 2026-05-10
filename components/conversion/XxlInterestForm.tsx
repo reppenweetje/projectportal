@@ -153,7 +153,7 @@ export function XxlInterestForm({ project }: { project: Project }) {
               sub={
                 sample?.prijsZonderWoningExBtw
                   ? formatEuro(sample.prijsZonderWoningExBtw)
-                  : ""
+                  : "Prijs nog te bepalen"
               }
             />
             <Pill
@@ -270,20 +270,18 @@ export function XxlInterestForm({ project }: { project: Project }) {
 
         <ul className="space-y-2 text-sm">
           <PriceRow
-            label="Met woning"
+            label="Vanaf"
             value={
               sample ? `${formatEuro(sample.prijsExBtw)} excl. btw` : ""
             }
           />
-          <PriceRow
-            label="Zonder woning"
-            value={
-              sample?.prijsZonderWoningExBtw
-                ? `${formatEuro(sample.prijsZonderWoningExBtw)} excl. btw`
-                : ""
-            }
-            muted
-          />
+          {sample?.prijsZonderWoningExBtw && (
+            <PriceRow
+              label="Zonder woning"
+              value={`${formatEuro(sample.prijsZonderWoningExBtw)} excl. btw`}
+              muted
+            />
+          )}
           <PriceRow label="VVE / maand" value="€ 160" muted />
         </ul>
 

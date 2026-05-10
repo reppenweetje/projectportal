@@ -23,7 +23,7 @@ export function OrientationCard({ project }: { project: Project }) {
             <span className="text-repp-blue font-bold">02</span>
             <span>
               Drie types: L (105 m², {formatEuro(239500)}), XL (113 m²,{" "}
-              {formatEuro(259500)}), XXL (191 m², vanaf {formatEuro(435000)}).
+              {formatEuro(259500)}), XXL (191 m², vanaf {formatEuro(515500)}).
               Alle prijzen excl. BTW.
             </span>
           </li>

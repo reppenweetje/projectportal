@@ -39,7 +39,8 @@ const buildUnit = (n: number): Unit => {
       m2TweedeVerdieping: 70,
       layers: 3,
       prijsExBtw: 515500,
-      prijsZonderWoningExBtw: 435000,
+      // prijsZonderWoningExBtw tijdelijk weggehaald: XXL wordt vooralsnog
+      // alleen aangeboden inclusief bedrijfsgebonden woning.
       vvePerMaand: 160,
       status: status(n),
       metBedrijfsgebondenWoning: true,
