@@ -6,14 +6,29 @@ export function ScarcityStrip({ project }: { project: Project }) {
   const counts = countByStatus(project);
   const sellable = project.totalUnits - counts.coming_soon;
   const stillAvailable = counts.available + counts.in_optie;
-  // "Verkocht" telt strikt: alleen daadwerkelijk verkochte units. Verkocht
-  // onder voorbehoud blijft buiten dit percentage.
   const soldPct = Math.round((counts.sold / sellable) * 100);
 
   return (
     <div className="bg-repp-navy text-white">
-      <div className="mx-auto max-w-6xl px-5 py-3">
-        <div className="flex flex-wrap items-center gap-x-2 gap-y-2 text-sm">
+      <div className="mx-auto max-w-6xl px-4 sm:px-5 py-2.5">
+        {/* Mobile: compact one-liner with one chip */}
+        <div className="flex md:hidden items-center justify-between gap-2 text-xs">
+          <span className="inline-flex items-center gap-1.5 font-bold text-repp-yellow min-w-0">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-repp-yellow animate-pulse shrink-0" />
+            <span className="truncate">
+              {soldPct}% verkocht · nog {stillAvailable} vrij
+            </span>
+          </span>
+          <Link
+            href={`/${project.slug}/units`}
+            className="shrink-0 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-repp-yellow text-repp-navy font-bold text-[11px]"
+          >
+            Bekijk →
+          </Link>
+        </div>
+
+        {/* Desktop: full 3-chip layout */}
+        <div className="hidden md:flex flex-wrap items-center gap-x-2 gap-y-2 text-sm">
           <span className="font-bold text-repp-yellow inline-flex items-center gap-2 mr-1">
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-repp-yellow animate-pulse" />
             De verkoop gaat snel.
