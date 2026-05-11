@@ -183,19 +183,22 @@ function UnitCell({
   const aspectCls =
     size === "mini"
       ? "aspect-[3/4]"
-      : "aspect-[2/3] md:aspect-[3/4]";
+      : "aspect-square md:aspect-[3/4]";
 
   const radiusCls =
     size === "mini" ? "rounded-sm md:rounded" : "rounded-md md:rounded-lg";
 
-  const padCls = size === "mini" ? "p-0.5" : "p-1.5 md:p-3";
+  const padCls = size === "mini" ? "p-0.5" : "p-1 md:p-3";
 
   const numberSize =
-    size === "mini" ? "text-[8px]" : "text-[10px] md:text-xs";
+    size === "mini" ? "text-[8px]" : "text-[9px] md:text-xs";
   const typeSize =
-    size === "mini" ? "text-xs md:text-sm" : "text-base md:text-2xl";
+    size === "mini" ? "text-xs md:text-sm" : "text-sm md:text-2xl";
   const labelSize = size === "mini" ? "text-[7px]" : "text-[9px] md:text-[10px]";
-  const m2Size = size === "mini" ? "hidden" : "text-[8px] md:text-[10px]";
+  // m² + status-label alleen op desktop; op mobile is alleen U-nummer + type genoeg
+  // (kleur duidt status, legenda eronder verklaart de kleuren)
+  const m2Size = size === "mini" ? "hidden" : "hidden md:block text-[10px]";
+  const labelHiddenOnMobile = "hidden md:block";
 
   // When a current unit is set, dim all other cells so the current one pops
   const dimNonCurrent =
@@ -224,7 +227,7 @@ function UnitCell({
           {unit.type}
         </div>
         {size !== "mini" && (
-          <div className={`${labelSize} mt-1 opacity-80`}>
+          <div className={`${labelSize} ${labelHiddenOnMobile} mt-1 opacity-80`}>
             {statusLabelShort[unit.status]}
           </div>
         )}

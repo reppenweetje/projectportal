@@ -45,9 +45,9 @@ html, body {
   text-rendering: optimizeLegibility;
 }
 
-/* Mobile-first: ensure sticky footer doesn't overlap content */
+/* Bottom safe-area for the floating WhatsApp button on mobile */
 .has-sticky-cta {
-  padding-bottom: 5.5rem;
+  padding-bottom: 1.5rem;
 }
 
 @media (min-width: 768px) {

@@ -106,17 +106,22 @@ export function MobileMenu({ project }: { project: Project }) {
       </button>
 
       {open && (
-        <div
-          className="fixed inset-0 z-50 md:hidden"
-          aria-modal="true"
-          role="dialog"
-        >
-          <div
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm animate-[fadeIn_.15s_ease-out]"
+        <div className="fixed inset-0 z-50 md:hidden" role="dialog" aria-modal="true">
+          {/* Backdrop */}
+          <button
+            type="button"
+            aria-label="Sluit menu"
             onClick={() => setOpen(false)}
+            className="absolute inset-0 w-full h-full bg-black/50 backdrop-blur-sm cursor-default animate-[fadeIn_.15s_ease-out]"
           />
-          <div className="absolute top-0 right-0 bottom-0 w-[88vw] max-w-sm bg-white shadow-2xl flex flex-col animate-[slideInRight_.22s_ease-out]">
-            <div className="flex items-center justify-between px-5 h-16 border-b border-repp-gray">
+
+          {/* Side panel — gebruikt h-[100dvh] voor iOS Safari */}
+          <div
+            className="fixed top-0 right-0 w-[88vw] max-w-sm bg-white shadow-2xl flex flex-col animate-[slideInRight_.22s_ease-out]"
+            style={{ height: "100dvh" }}
+          >
+            {/* Header */}
+            <div className="shrink-0 flex items-center justify-between px-5 h-16 border-b border-repp-gray">
               <p className="font-bold text-repp-navy">{project.name}</p>
               <button
                 type="button"
@@ -128,7 +133,8 @@ export function MobileMenu({ project }: { project: Project }) {
               </button>
             </div>
 
-            <nav className="flex-1 overflow-y-auto py-3">
+            {/* Scrollable nav body */}
+            <div className="flex-1 min-h-0 overflow-y-auto py-3">
               <p className="px-5 pb-2 text-[11px] uppercase tracking-wider text-repp-navy/40 font-semibold">
                 Bekijk
               </p>
@@ -148,7 +154,7 @@ export function MobileMenu({ project }: { project: Project }) {
               </ul>
 
               {profile?.name && (
-                <div className="px-5 pt-5">
+                <div className="px-5 pt-5 pb-2">
                   <Link
                     href={`/${project.slug}/welkom`}
                     className="block rounded-xl bg-surface-muted border border-repp-gray p-4"
@@ -165,9 +171,10 @@ export function MobileMenu({ project }: { project: Project }) {
                   </Link>
                 </div>
               )}
-            </nav>
+            </div>
 
-            <div className="border-t border-repp-gray p-4 space-y-2">
+            {/* Sticky bottom CTAs */}
+            <div className="shrink-0 border-t border-repp-gray p-4 space-y-2 bg-white">
               <Link
                 href={`/${project.slug}/reserveren`}
                 className="block w-full bg-repp-yellow text-repp-navy text-center font-bold px-5 py-3.5 rounded-full hover:brightness-95 transition"
