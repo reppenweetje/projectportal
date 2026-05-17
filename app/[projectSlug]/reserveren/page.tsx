@@ -9,11 +9,19 @@ import { ScarcityStrip } from "@/components/marketing/ScarcityStrip";
 import { ReservationForm } from "@/components/conversion/ReservationForm";
 
 type Params = { projectSlug: string };
-type SearchParams = { unit?: string; intent?: string };
+type SearchParams = { unit?: string; intent?: string; type?: string };
 
-export const metadata: Metadata = {
-  title: "Reserveer jouw unit",
-};
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}): Promise<Metadata> {
+  const sp = await searchParams;
+  if (sp.intent === "wachtlijst") {
+    return { title: "Op de wachtlijst" };
+  }
+  return { title: "Reserveer jouw unit" };
+}
 
 export default async function ReserverenPage({
   params,

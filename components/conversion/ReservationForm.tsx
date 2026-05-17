@@ -14,12 +14,34 @@ export function ReservationForm({ project }: { project: Project }) {
   const profile = useLeadProfile();
   const params = useSearchParams();
 
-  const reservable = project.units.filter(
-    (u) => u.status === "available" || u.status === "in_optie",
-  );
+  // Wachtlijst-modus: gebruiker komt vanaf een verkocht_ovb-unit met
+  // ?intent=wachtlijst&unit=hofman-unit-XX. Dan moeten verkocht_ovb-units
+  // óók in de dropdown verschijnen en moet de unit-state matchen.
+  const isWachtlijst = params.get("intent") === "wachtlijst";
+  const typeParam = params.get("type");
+
+  const reservable = project.units.filter((u) => {
+    if (u.status === "available" || u.status === "in_optie") return true;
+    if (isWachtlijst && u.status === "verkocht_ovb") return true;
+    return false;
+  });
+
+  // Slug-resolutie: directe ?unit= wint; daarna eventueel ?type= (eerste
+  // beschikbare van dat type); anders eerste reserveerbare unit.
+  const slugFromType =
+    typeParam
+      ? project.units.find(
+          (u) =>
+            u.type === typeParam &&
+            (u.status === "available" || u.status === "in_optie"),
+        )?.slug
+      : undefined;
 
   const initialUnitSlug =
-    params.get("unit") ?? reservable[0]?.slug ?? project.units[0].slug;
+    params.get("unit") ??
+    slugFromType ??
+    reservable[0]?.slug ??
+    project.units[0].slug;
   const initialUnit =
     project.units.find((u) => u.slug === initialUnitSlug) ?? project.units[0];
 
@@ -159,7 +181,13 @@ export function ReservationForm({ project }: { project: Project }) {
             </div>
           </div>
 
-          <Field label="Welke unit wil je op naam zetten?">
+          <Field
+            label={
+              isWachtlijst
+                ? "Voor welke unit wil je op de wachtlijst?"
+                : "Welke unit wil je op naam zetten?"
+            }
+          >
             <select
               value={unit.slug}
               onChange={(e) => {
@@ -173,6 +201,7 @@ export function ReservationForm({ project }: { project: Project }) {
               {reservable.map((u) => (
                 <option key={u.slug} value={u.slug}>
                   Unit {u.number} · {u.type} · {formatEuro(u.prijsExBtw)}
+                  {u.status === "verkocht_ovb" ? " · wachtlijst" : ""}
                 </option>
               ))}
             </select>
@@ -237,7 +266,9 @@ export function ReservationForm({ project }: { project: Project }) {
             >
               {step === "submitting"
                 ? "Versturen…"
-                : `Bevestig: zet Unit ${unit.number} op mijn naam →`}
+                : isWachtlijst
+                  ? `Bevestig: zet mij op de wachtlijst voor Unit ${unit.number} →`
+                  : `Bevestig: zet Unit ${unit.number} op mijn naam →`}
             </button>
             <p className="mt-3 text-xs text-repp-navy/60">
               Geen kosten, geen verplichting. Pas na een persoonlijk gesprek
@@ -263,7 +294,13 @@ export function ReservationForm({ project }: { project: Project }) {
       noValidate
     >
       <div className="lg:col-span-2 space-y-6">
-        <Field label="Welke unit wil je op naam zetten?">
+        <Field
+          label={
+            isWachtlijst
+              ? "Voor welke unit wil je op de wachtlijst?"
+              : "Welke unit wil je op naam zetten?"
+          }
+        >
           <select
             value={unit.slug}
             onChange={(e) => {
@@ -275,6 +312,7 @@ export function ReservationForm({ project }: { project: Project }) {
             {reservable.map((u) => (
               <option key={u.slug} value={u.slug}>
                 Unit {u.number} · {u.type} · {formatEuro(u.prijsExBtw)}
+                {u.status === "verkocht_ovb" ? " · wachtlijst" : ""}
               </option>
             ))}
           </select>
@@ -339,7 +377,9 @@ export function ReservationForm({ project }: { project: Project }) {
           >
             {step === "submitting"
               ? "Versturen…"
-              : `Zet Unit ${unit.number} op mijn naam (vrijblijvend) →`}
+              : isWachtlijst
+                ? `Zet mij op de wachtlijst voor Unit ${unit.number} →`
+                : `Zet Unit ${unit.number} op mijn naam (vrijblijvend) →`}
           </button>
           <p className="mt-3 text-xs text-repp-navy/60">
             Geen kosten, geen verplichting. Pas na een persoonlijk gesprek met

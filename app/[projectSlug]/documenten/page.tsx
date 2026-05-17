@@ -6,7 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 import { StickyCTA } from "@/components/layout/StickyCTA";
 import { InfoTabs } from "@/components/info/InfoTabs";
 import { FAQ } from "@/components/marketing/FAQ";
-import { Documents } from "@/components/marketing/Documents";
+import { DocumentsGate } from "@/components/info/DocumentsGate";
 import { Locatie } from "@/components/info/Locatie";
 
 type Params = { projectSlug: string };
@@ -63,7 +63,7 @@ export default async function DocumentenPage({
         <section className="px-5 py-10 md:py-14">
           <div className="mx-auto max-w-5xl">
             <InfoTabs
-              documenten={<Documents project={project} />}
+              documenten={<DocumentsGate project={project} />}
               faq={<FAQ project={project} />}
               locatie={<Locatie project={project} />}
             />

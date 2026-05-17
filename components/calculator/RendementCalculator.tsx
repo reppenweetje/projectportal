@@ -20,10 +20,28 @@ function annuity(principal: number, annualRatePct: number, years: number) {
 }
 
 export function RendementCalculator({ project }: { project: Project }) {
+  // Toon alleen één representatieve unit per type (L, XL) in de dropdown.
+  // Voorkeur voor beschikbare units; valt terug op wachtlijst (verkocht_ovb)
+  // of, als laatste, een verkochte unit, zodat het prijspunt zichtbaar blijft.
   const sellableUnits = project.units.filter((u) => u.status !== "coming_soon");
+
+  const pickRepresentative = (type: "L" | "XL" | "XXL") => {
+    const ofType = sellableUnits.filter((u) => u.type === type);
+    if (ofType.length === 0) return null;
+    return (
+      ofType.find((u) => u.status === "available") ??
+      ofType.find((u) => u.status === "verkocht_ovb") ??
+      ofType[0]
+    );
+  };
+
+  const representativeUnits = (["L", "XL"] as const)
+    .map((t) => pickRepresentative(t))
+    .filter((u): u is NonNullable<ReturnType<typeof pickRepresentative>> => !!u);
+
   const [unitId, setUnitId] = useState<string>(
-    sellableUnits.find((u) => u.status === "available")?.slug ??
-      sellableUnits[0].slug,
+    representativeUnits.find((u) => u.status === "available")?.slug ??
+      representativeUnits[0].slug,
   );
   const [huurPerM2Jaar, setHuurPerM2Jaar] = useState(DEFAULT_HUUR_PER_M2_PER_JAAR);
   const [ownPercent, setOwnPercent] = useState(DEFAULT_OWN_PERCENT);
@@ -32,8 +50,10 @@ export function RendementCalculator({ project }: { project: Project }) {
   const [leegstandPct, setLeegstandPct] = useState(DEFAULT_LEEGSTAND);
 
   const unit = useMemo(
-    () => sellableUnits.find((u) => u.slug === unitId) ?? sellableUnits[0],
-    [unitId, sellableUnits],
+    () =>
+      representativeUnits.find((u) => u.slug === unitId) ??
+      representativeUnits[0],
+    [unitId, representativeUnits],
   );
 
   const koopsom = unit.prijsExBtw;
@@ -58,15 +78,15 @@ export function RendementCalculator({ project }: { project: Project }) {
 
       <div className="mt-8 grid lg:grid-cols-2 gap-10">
         <div className="space-y-6">
-          <Field label="Welke unit?">
+          <Field label="Welk type unit?">
             <select
               value={unitId}
               onChange={(e) => setUnitId(e.target.value)}
               className="w-full rounded-xl border border-repp-gray bg-white px-4 py-3 text-repp-navy font-medium focus:outline-none focus:ring-2 focus:ring-repp-blue"
             >
-              {sellableUnits.map((u) => (
+              {representativeUnits.map((u) => (
                 <option key={u.slug} value={u.slug}>
-                  Unit {u.number} · {u.type} · {formatEuro(u.prijsExBtw)}
+                  Type {u.type} · {u.m2BVO} m² · {formatEuro(u.prijsExBtw)}
                 </option>
               ))}
             </select>
@@ -162,16 +182,16 @@ export function RendementCalculator({ project }: { project: Project }) {
 
           <div className="mt-6 pt-6 border-t border-white/10 space-y-2">
             <Link
-              href={`/${project.slug}/reserveren?unit=${unit.slug}`}
+              href={`/${project.slug}/reserveren?type=${unit.type}`}
               className="block w-full bg-repp-yellow text-repp-navy text-center font-bold px-4 py-3.5 rounded-full hover:brightness-95 transition"
             >
-              Reserveer Unit {unit.number} →
+              Reserveer een Type {unit.type} →
             </Link>
             <Link
               href={`/${project.slug}/units/${unit.slug}`}
               className="block w-full text-center text-sm text-white/80 hover:text-white py-1.5"
             >
-              Eerst meer info over Unit {unit.number}
+              Eerst meer info over Type {unit.type}
             </Link>
           </div>
 

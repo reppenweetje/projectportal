@@ -48,15 +48,14 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
 }
 
 function QuoteMark() {
+  // Subtiel typografisch aanhalingsteken in plaats van het opvallende gele icoon.
   return (
-    <svg
-      viewBox="0 0 24 24"
-      className="w-7 h-7 text-repp-yellow"
-      fill="currentColor"
+    <span
       aria-hidden
+      className="block font-serif text-5xl leading-none text-repp-navy/15 select-none"
     >
-      <path d="M7.17 6C4.31 6 2 8.31 2 11.17v6.66h6.66v-6.66H4.83C4.83 8.6 6.05 7 7.17 6zm10 0c-2.86 0-5.17 2.31-5.17 5.17v6.66h6.66v-6.66h-3.83C14.83 8.6 16.05 7 17.17 6z" />
-    </svg>
+      &ldquo;
+    </span>
   );
 }
 
