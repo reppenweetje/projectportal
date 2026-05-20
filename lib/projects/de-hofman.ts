@@ -15,16 +15,18 @@ const specsXXL: UnitSpecs = {
   vrijeHoogteTweedeVerdieping: "2,72 m",
 };
 
-// Verdeling volgens de live plattegrond:
-//   Verkocht (rood):                1, 2, 3, 8, 9, 10
-//   Verkocht onder voorbehoud (geel): 5, 11
-//   Beschikbaar (groen):            4, 6, 12, 13
-//   Coming soon (wit, XXL):         7, 14
+// Verdeling volgens REPP's actuele situatieplattegrond (20-5-2026):
+//   Verkocht (rood):                  1, 2, 3, 8, 9, 10
+//   Verkocht onder voorbehoud (oranje): 11
+//   In optie (lichtgeel):             6, 12, 13
+//   Beschikbaar (groen):              4, 5
+//   Coming soon (wit, XXL):           7, 14
 const status = (n: number): Unit["status"] => {
   if (n === 7 || n === 14) return "coming_soon";
   if ([1, 2, 3, 8, 9, 10].includes(n)) return "sold";
-  if ([5, 11].includes(n)) return "verkocht_ovb";
-  return "available";
+  if (n === 11) return "verkocht_ovb";
+  if ([6, 12, 13].includes(n)) return "in_optie";
+  return "available";  // 4, 5
 };
 
 const buildUnit = (n: number): Unit => {
