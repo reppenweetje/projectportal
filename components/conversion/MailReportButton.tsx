@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { updateProfile, useLeadProfile } from "@/lib/personalization";
 import type { Project } from "@/lib/types";
+import { track } from "@/lib/track";
 
 type State = "idle" | "ask" | "sending" | "done" | "error";
 
@@ -44,6 +45,7 @@ export function MailReportButton({
         }),
       });
       if (!res.ok) throw new Error("Verzenden mislukt");
+      track("report_requested", { reportType });
       setState("done");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Onbekende fout");

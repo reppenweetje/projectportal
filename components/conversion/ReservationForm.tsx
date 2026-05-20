@@ -7,6 +7,7 @@ import type { Project, Unit } from "@/lib/types";
 import { formatEuro } from "@/lib/types";
 import { useLeadProfile } from "@/lib/personalization";
 import { buildWhatsAppLink } from "@/lib/utils";
+import { track } from "@/lib/track";
 
 type Step = "form" | "submitting" | "done" | "error";
 
@@ -72,6 +73,14 @@ export function ReservationForm({ project }: { project: Project }) {
         const j = (await res.json().catch(() => null)) as { error?: string } | null;
         throw new Error(j?.error ?? "Verzenden mislukt");
       }
+      track("reservation_submitted", {
+        unit: unit.slug,
+        unitType: unit.type,
+        unitStatus: unit.status,
+        contactMoment,
+        verified: isVerified,
+        source: profile?.source ?? "direct",
+      });
       setStep("done");
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : "Onbekende fout");

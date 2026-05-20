@@ -1,6 +1,7 @@
 "use client";
 
 import { useFavorite } from "@/lib/favorites";
+import { track } from "@/lib/track";
 
 export function FavoriteButton({
   unitSlug,
@@ -33,6 +34,10 @@ export function FavoriteButton({
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
+        // Track BEFORE toggle so we capture the action that's about to happen.
+        if (!isFavorite) {
+          track("unit_favorited", { unit: unitSlug });
+        }
         toggle();
       }}
       aria-pressed={isFavorite}

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { updateProfile, useLeadProfile } from "@/lib/personalization";
 import type { Project } from "@/lib/types";
+import { track } from "@/lib/track";
 
 type Modus = "ondernemer" | "belegger" | "beide";
 type Topic = "alles" | "prijzen" | "xxl" | "status";
@@ -77,6 +78,7 @@ export function InsiderSignup({
         }),
       });
       if (!res.ok) throw new Error("Verzenden mislukt");
+      track("insider_signed_up", { source, modus, topic });
       setDone(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Onbekende fout");

@@ -5,6 +5,7 @@ import type { Project } from "@/lib/types";
 import { formatEuro } from "@/lib/types";
 import { useLeadProfile } from "@/lib/personalization";
 import { buildWhatsAppLink } from "@/lib/utils";
+import { track } from "@/lib/track";
 
 type Step = "form" | "submitting" | "done" | "error";
 
@@ -64,6 +65,12 @@ export function XxlInterestForm({ project }: { project: Project }) {
         const j = (await res.json().catch(() => null)) as { error?: string } | null;
         throw new Error(j?.error ?? "Verzenden mislukt");
       }
+      track("xxl_interest", {
+        woningKeuze,
+        unitKeuze,
+        contactMoment,
+        hasGebruik: !!gebruik,
+      });
       setStep("done");
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : "Onbekende fout");

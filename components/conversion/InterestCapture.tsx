@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { Project } from "@/lib/types";
+import { track } from "@/lib/track";
 
 type Variant = "default" | "compact" | "card";
 
@@ -38,6 +39,7 @@ export function InterestCapture({
         }),
       });
       if (!res.ok) throw new Error("Verzenden mislukt");
+      track("interest_captured", { source, context: context ?? null });
       setDone(true);
     } catch {
       setError("Er ging iets mis, probeer opnieuw.");
