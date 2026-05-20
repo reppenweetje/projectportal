@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -39,6 +40,19 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="nl" className={`${montserrat.variable} h-full antialiased`}>
+      <head>
+        {/* Plausible analytics — privacy-friendly, geen cookies, geen PII.
+            afterInteractive = laadt na page-interactive zodat LCP/INP niet wordt
+            geraakt. Project script-tag van Plausible.io. */}
+        <Script
+          defer
+          src="https://plausible.io/js/pa-eFSYAFqqhvm0T_2-rG-QC.js"
+          strategy="afterInteractive"
+        />
+        <Script id="plausible-init" strategy="afterInteractive">
+          {`window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()`}
+        </Script>
+      </head>
       <body className="min-h-full flex flex-col bg-surface text-ink">
         {children}
       </body>
