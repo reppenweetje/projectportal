@@ -6,18 +6,32 @@ export function Testimonials({ project }: { project: Project }) {
   if (items.length === 0) return null;
 
   return (
-    <section className="px-5 py-20 md:py-24 bg-white">
+    <section className="py-12 md:py-20 bg-white">
       <div className="mx-auto max-w-6xl">
-        <div className="text-center mb-12">
-          <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
+        <div className="text-center mb-6 md:mb-10 px-5">
+          <p className="text-[11px] uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
             Wat kopers zeggen
           </p>
-          <h2 className="mt-3 text-3xl md:text-5xl font-extrabold text-repp-navy tracking-tight">
+          <h2 className="mt-2 text-2xl md:text-5xl font-extrabold text-repp-navy tracking-tight">
             De eerste ondernemers van De Hofman.
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-5">
+        {/* Mobile: horizontal-scroll-snap zodat quotes 1× zichtbaar zijn
+            en je kunt swipen ipv eindeloos verticaal scrollen.
+            Desktop: 3-koloms grid zoals voorheen. */}
+        <div
+          className="flex md:hidden gap-3 overflow-x-auto snap-x snap-mandatory px-5 pb-3"
+          style={{ scrollbarWidth: "thin" }}
+        >
+          {items.map((t) => (
+            <div key={t.id} className="shrink-0 snap-start w-[85vw] sm:w-[60vw]">
+              <TestimonialCard testimonial={t} compact />
+            </div>
+          ))}
+        </div>
+
+        <div className="hidden md:grid md:grid-cols-3 gap-5 px-5">
           {items.map((t) => (
             <TestimonialCard key={t.id} testimonial={t} />
           ))}
@@ -27,14 +41,32 @@ export function Testimonials({ project }: { project: Project }) {
   );
 }
 
-function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
+function TestimonialCard({
+  testimonial,
+  compact,
+}: {
+  testimonial: Testimonial;
+  compact?: boolean;
+}) {
   return (
-    <figure className="rounded-2xl border border-repp-gray bg-surface-muted p-6 md:p-7 flex flex-col">
+    <figure
+      className={`rounded-2xl border border-repp-gray bg-surface-muted flex flex-col h-full ${
+        compact ? "p-4" : "p-5 md:p-6"
+      }`}
+    >
       <QuoteMark />
-      <blockquote className="mt-3 text-repp-navy/90 text-[15px] leading-relaxed flex-1">
+      <blockquote
+        className={`mt-2 text-repp-navy/90 leading-snug flex-1 ${
+          compact ? "text-sm line-clamp-6" : "text-[15px] leading-relaxed"
+        }`}
+      >
         {testimonial.quote}
       </blockquote>
-      <figcaption className="mt-5 pt-5 border-t border-repp-gray/70 flex items-center gap-3">
+      <figcaption
+        className={`flex items-center gap-3 border-t border-repp-gray/70 ${
+          compact ? "mt-3 pt-3" : "mt-5 pt-5"
+        }`}
+      >
         <Avatar testimonial={testimonial} />
         <div className="min-w-0">
           <p className="font-bold text-repp-navy text-sm">{testimonial.author}</p>

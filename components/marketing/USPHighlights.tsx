@@ -60,30 +60,30 @@ function USPSet(): USP[] {
 export function USPHighlights({ project }: { project: Project }) {
   const usps = USPSet();
   return (
-    <section className="bg-surface-muted py-12 md:py-16">
+    <section className="bg-surface-muted py-10 md:py-14">
       <div className="mx-auto max-w-6xl px-5">
-        <div className="text-center mb-10">
-          <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
+        <div className="text-center mb-6 md:mb-8">
+          <p className="text-[11px] uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
             Waarom De Hofman
           </p>
-          <h2 className="mt-3 text-3xl md:text-4xl font-extrabold text-repp-navy tracking-tight">
+          <h2 className="mt-2 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight">
             Zes redenen om vandaag te kiezen.
           </h2>
         </div>
-        <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+        <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2.5 md:gap-4">
           {usps.map((usp) => (
             <li
               key={usp.title}
-              className="flex gap-3 items-start rounded-2xl bg-white border border-repp-gray p-5 md:p-6"
+              className="flex gap-3 items-start rounded-xl bg-white border border-repp-gray px-4 py-3 md:p-5"
             >
-              <div className="shrink-0 w-9 h-9 rounded-full bg-repp-navy text-white grid place-items-center">
+              <div className="shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full bg-repp-navy text-white grid place-items-center">
                 {usp.icon}
               </div>
               <div className="min-w-0">
-                <p className="font-bold text-repp-navy text-[15px] leading-tight">
+                <p className="font-bold text-repp-navy text-sm md:text-[15px] leading-tight">
                   {usp.title}
                 </p>
-                <p className="mt-1 text-sm text-repp-navy/70 leading-relaxed">
+                <p className="mt-1 text-[13px] md:text-sm text-repp-navy/70 leading-snug">
                   {usp.body}
                 </p>
               </div>
@@ -99,7 +99,7 @@ function CheckIcon() {
   return (
     <svg
       viewBox="0 0 24 24"
-      className="w-5 h-5"
+      className="w-4 h-4 md:w-5 md:h-5"
       fill="none"
       stroke="currentColor"
       strokeWidth="2.5"
