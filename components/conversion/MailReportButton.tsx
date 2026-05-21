@@ -36,13 +36,10 @@ export function MailReportButton({
     gateContext: `bereken-${reportType}`,
     title:
       reportType === "maandlast"
-        ? "Stuur me het maandlast-rapport"
-        : "Stuur me het rendement-rapport",
+        ? "Stuur het maandlast-rapport"
+        : "Stuur het rendement-rapport",
     description:
-      "Vul je naam en e-mailadres in en we sturen het rapport meteen toe. " +
-      "Zo kun je 'm later rustig doorlezen, of meenemen naar je accountant " +
-      "of partner. Telefoonnummer is optioneel — alleen handig als je het " +
-      "fijn vindt om kort contact te hebben bij vragen.",
+      "We mailen het rapport meteen zodat je het later kunt doorlezen of delen. Telefoonnummer is optioneel, alleen voor als je gebeld wilt worden over de berekening.",
     submitLabel: "Stuur me het rapport",
   });
 

@@ -305,8 +305,7 @@ export function LeadCaptureForm({
       </button>
 
       <p className="text-[11px] text-ink-soft text-center mt-1 leading-snug">
-        Door op de knop te klikken ga je akkoord met de verwerking van je
-        gegevens. We sturen geen ongevraagde mailings.
+        Geen ongevraagde mailings. We delen je gegevens niet.
       </p>
     </form>
   );
