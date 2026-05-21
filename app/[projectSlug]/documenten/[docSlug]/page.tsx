@@ -4,7 +4,6 @@ import Link from "next/link";
 import { getProjectBySlug } from "@/lib/projects/de-hofman";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { DocumentLeadBanner } from "@/components/conversion/DocumentLeadBanner";
 import { DocIcon } from "@/components/marketing/DocIcon";
 
 type Params = { projectSlug: string; docSlug: string };
@@ -76,8 +75,6 @@ export default async function DocumentViewerPage({
 
         <section className="flex-1 bg-surface-muted">
           <div className="mx-auto max-w-6xl px-4 sm:px-5 py-5 md:py-6 h-full">
-            <DocumentLeadBanner doc={doc} />
-
             {/* Mobile: prominent action card (iframe rendert vaak slecht op iOS) */}
             <div className="md:hidden rounded-2xl border border-repp-gray bg-white p-5">
               <div className="flex items-center gap-4">

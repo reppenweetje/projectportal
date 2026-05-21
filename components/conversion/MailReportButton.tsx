@@ -1,12 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { updateProfile, useLeadProfile } from "@/lib/personalization";
+import { readLeadProfile, useLeadProfile } from "@/lib/personalization";
 import type { Project } from "@/lib/types";
 import { track } from "@/lib/track";
+import { useLeadCapture } from "@/lib/use-lead-capture";
 
-type State = "idle" | "ask" | "sending" | "done" | "error";
+type State = "idle" | "sending" | "done" | "error";
 
+/**
+ * MailReportButton — verstuurt een calculator-rapport per mail.
+ *
+ * Voor walk-in bezoekers zonder lead-cookie: klik triggert eerst de
+ * LeadCaptureDialog (vraagt naam + email + telefoon optioneel + uitlegt
+ * waarom). Na succesvolle submit: rapport wordt direct gestuurd naar het
+ * net opgegeven email-adres.
+ *
+ * Voor terugkerende bezoekers met cookie: direct verzenden zonder popup.
+ */
 export function MailReportButton({
   project,
   reportType,
@@ -18,16 +29,32 @@ export function MailReportButton({
 }) {
   const profile = useLeadProfile();
   const [state, setState] = useState<State>("idle");
-  const [name, setName] = useState(profile?.name ?? "");
-  const [email, setEmail] = useState(profile?.email ?? "");
   const [error, setError] = useState<string | null>(null);
+  const [sentTo, setSentTo] = useState<string | null>(null);
 
-  const knownEmail = profile?.email;
-  const buttonLabel = knownEmail
-    ? `Stuur dit rapport naar ${knownEmail}`
-    : "Stuur dit rapport naar mijn mail";
+  const { gateOrRun, dialog } = useLeadCapture({
+    gateContext: `bereken-${reportType}`,
+    title:
+      reportType === "maandlast"
+        ? "Stuur het maandlast-rapport"
+        : "Stuur het rendement-rapport",
+    description:
+      "We mailen het rapport meteen zodat je het later kunt doorlezen of delen. Telefoonnummer is optioneel, alleen voor als je gebeld wilt worden over de berekening.",
+    submitLabel: "Stuur me het rapport",
+  });
 
-  async function send(targetEmail: string, targetName?: string) {
+  async function send() {
+    // Lees profiel SYNCHROON uit cookie. useLeadProfile-state kan
+    // achterlopen direct na gate-submit (useEffect zonder deps draait
+    // niet opnieuw). readLeadProfile() pakt de actuele cookie-waarde,
+    // dus we hebben hier altijd de net opgegeven email.
+    const fresh = readLeadProfile() ?? profile;
+    const target = fresh?.email;
+    if (!target) {
+      setError("Geen e-mailadres bekend, probeer opnieuw.");
+      setState("error");
+      return;
+    }
     setState("sending");
     setError(null);
     try {
@@ -37,15 +64,16 @@ export function MailReportButton({
         body: JSON.stringify({
           project: project.slug,
           reportType,
-          email: targetEmail,
-          name: targetName ?? profile?.name,
-          phone: profile?.phone,
-          sessionId: profile?.sessionId,
+          email: target,
+          name: fresh?.name,
+          phone: fresh?.phone,
+          sessionId: fresh?.sessionId,
           context,
         }),
       });
       if (!res.ok) throw new Error("Verzenden mislukt");
       track("report_requested", { reportType });
+      setSentTo(target);
       setState("done");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Onbekende fout");
@@ -54,74 +82,28 @@ export function MailReportButton({
   }
 
   function onClick() {
-    if (knownEmail) {
-      send(knownEmail);
+    if (state === "sending") return;
+    if (profile?.email) {
+      // Bekende email → direct sturen, geen popup nodig.
+      send();
     } else {
-      setState("ask");
+      // Trigger gate; na succes: send() runt met verse cookie-data.
+      gateOrRun(() => send());
     }
-  }
-
-  async function onSubmitForm(e: React.FormEvent) {
-    e.preventDefault();
-    if (!email.includes("@")) return;
-    updateProfile({
-      name: name.trim() || profile?.name,
-      email: email.trim(),
-      source: profile?.source ?? "calculator-report",
-    });
-    await send(email.trim(), name.trim() || profile?.name);
   }
 
   if (state === "done") {
     return (
       <p className="mt-4 text-xs text-repp-yellow text-center font-semibold">
-        ✓ Rapport onderweg naar {email || knownEmail}
+        ✓ Rapport onderweg naar {sentTo}
       </p>
     );
   }
 
-  if (state === "ask") {
-    return (
-      <form onSubmit={onSubmitForm} className="mt-4 space-y-2">
-        <p className="text-xs text-white/80">
-          Vul je gegevens in en we sturen het rapport meteen toe.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-2">
-          <input
-            type="text"
-            placeholder="Naam"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="flex-1 min-w-0 rounded-full bg-white/10 border border-white/30 text-white placeholder-white/50 px-4 py-2.5 text-sm focus:bg-white/15 focus:ring-2 focus:ring-repp-yellow focus:outline-none"
-          />
-          <input
-            type="email"
-            required
-            placeholder="jouw@email.nl"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="flex-1 min-w-0 rounded-full bg-white/10 border border-white/30 text-white placeholder-white/50 px-4 py-2.5 text-sm focus:bg-white/15 focus:ring-2 focus:ring-repp-yellow focus:outline-none"
-          />
-        </div>
-        <div className="flex items-center gap-3">
-          <button
-            type="submit"
-            className="bg-repp-yellow text-repp-navy text-sm font-bold px-4 py-2 rounded-full hover:brightness-95 transition"
-          >
-            Stuur me het rapport →
-          </button>
-          <button
-            type="button"
-            onClick={() => setState("idle")}
-            className="text-xs text-white/60 hover:text-white"
-          >
-            Annuleer
-          </button>
-        </div>
-        {error && <p className="text-xs text-rose-200">⚠ {error}</p>}
-      </form>
-    );
-  }
+  const knownEmail = profile?.email;
+  const buttonLabel = knownEmail
+    ? `Stuur dit rapport naar ${knownEmail}`
+    : "Stuur dit rapport naar mijn mail";
 
   return (
     <div className="mt-4">
@@ -147,6 +129,7 @@ export function MailReportButton({
         {state === "sending" ? "Versturen…" : buttonLabel}
       </button>
       {error && <p className="mt-2 text-xs text-rose-300">⚠ {error}</p>}
+      {dialog}
     </div>
   );
 }
