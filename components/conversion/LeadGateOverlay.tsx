@@ -10,21 +10,26 @@
  *  1. Genereer client-side session_id (UUID).
  *  2. POST naar Supabase `lead-upsert` met source="dehofman_portal" →
  *     levert portal_token op.
- *  3. POST naar Supabase `portal-resolve` met die portal_token → zet
- *     dh_session + dh_profile cookies via response.
- *  4. POST naar Zapier-webhook (fire-and-forget) zodat de bestaande
- *     automation/CRM-flow getriggerd wordt. Faalt deze, dan blokkeert
- *     het de unlock niet.
- *  5. router.refresh() → server re-rendert, LeadGate ziet cookie, overlay
- *     verdwijnt, content unlock.
+ *  3. POST naar Zapier-webhook (fire-and-forget) parallel zodat de
+ *     bestaande automation/CRM-flow getriggerd wordt. Faalt deze, dan
+ *     blokkeert het de unlock niet.
+ *  4. window.location → huidige pad + `?t=PORTAL_TOKEN`. De **middleware**
+ *     (same-origin) doet dan de cookie-set via portal-resolve en
+ *     307-redirect naar dezelfde URL zonder ?t=. Cookies landen op
+ *     dehofman.nl-domain en zijn HttpOnly.
+ *
+ * Waarom redirect ipv direct fetch naar portal-resolve?
+ * Browsers staan geen Set-Cookie van een third-party origin
+ * (supabase.co) toe op de hoofd-domain (dehofman.nl). Cross-origin
+ * cookies vereisen SameSite=None + Secure én een trustrelatie die we
+ * niet hebben. Via de middleware-redirect zit alles in same-origin.
  *
  * Geen fallback path nodig: als Supabase lead-upsert faalt blokkeren we
  * (gebruiker ziet error), want zonder portal_token geen unlock. Zapier
  * fail = geen issue.
  */
 
-import { useRef, useState, type FormEvent } from "react";
-import { useRouter } from "next/navigation";
+import { useState, type FormEvent } from "react";
 import { track } from "@/lib/track";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -57,9 +62,7 @@ export function LeadGateOverlay({
   description: string;
   children: React.ReactNode;
 }) {
-  const router = useRouter();
   const [state, setState] = useState<SubmitState>({ kind: "idle" });
-  const formRef = useRef<HTMLFormElement>(null);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -154,37 +157,11 @@ export function LeadGateOverlay({
         return;
       }
 
-      // ─── Stap 2: portal-resolve → cookies via Set-Cookie ──────────────
-      // We doen de fetch met `credentials: 'include'` zodat de browser de
-      // Set-Cookie headers honoreert. CORS staat dehofman.nl + Vercel-
-      // preview toe (zie portal-resolve DEFAULT_ALLOWED).
-      const resolveRes = await fetch(`${SUPABASE_URL}/functions/v1/portal-resolve`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "content-type": "application/json",
-          accept: "application/json",
-          authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-          apikey: SUPABASE_ANON_KEY,
-        },
-        body: JSON.stringify({ token: portalToken }),
-      });
-
-      if (!resolveRes.ok) {
-        console.error("[lead-gate] portal-resolve failed", resolveRes.status);
-        // Niet blokkerend voor de zapier-call, maar wel voor de unlock.
-        // We tonen een error en laten de bezoeker opnieuw proberen.
-        setState({
-          kind: "error",
-          message: "Even niet beschikbaar. Probeer het opnieuw.",
-        });
-        return;
-      }
-
-      // ─── Stap 3: Zapier webhook (parallel, fire-and-forget) ───────────
+      // ─── Stap 2: Zapier webhook (parallel, fire-and-forget) ───────────
       // Bestaand REPP-automation. Faalt deze, dan unlocken we alsnog.
-      // CORS van Zapier accepteert `no-cors` mode; response wordt opaque
-      // en we kunnen niet de status lezen, maar de POST komt aan.
+      // `no-cors` zorgt dat de browser de POST verzendt zonder preflight;
+      // response wordt opaque (we kunnen status niet lezen, maar Zapier
+      // ontvangt het payload wel).
       fetch(ZAPIER_WEBHOOK_URL, {
         method: "POST",
         mode: "no-cors",
@@ -203,7 +180,7 @@ export function LeadGateOverlay({
         console.warn("[lead-gate] zapier webhook fetch error (non-blocking)", err);
       });
 
-      // ─── Stap 4: analytics + reveal ───────────────────────────────────
+      // ─── Stap 3: analytics ────────────────────────────────────────────
       try {
         track("interest_captured", {
           source: "portal_gate",
@@ -213,10 +190,18 @@ export function LeadGateOverlay({
         // analytics may not be initialized; never break the flow.
       }
 
-      // router.refresh laat Next.js de Server Components opnieuw renderen.
-      // LeadGate ziet nu de dh_session cookie en rendert de echte content
-      // ipv deze overlay.
-      router.refresh();
+      // ─── Stap 4: redirect met ?t= zodat middleware cookies zet ────────
+      // Cross-origin Set-Cookie van supabase.co naar dehofman.nl werkt
+      // niet (browser-security). De middleware draait same-origin, dus
+      // door naar /pad?t=TOKEN te navigeren laten we de bestaande
+      // portal-resolve flow uit middleware.ts de cookies correct zetten.
+      // Direct daarna 307't middleware terug naar /pad (zonder ?t=) met
+      // de cookies geinstalleerd → LeadGate ziet sessie, rendert content.
+      if (typeof window !== "undefined") {
+        const here = window.location.pathname + window.location.search;
+        const sep = window.location.search ? "&" : "?";
+        window.location.href = `${here}${sep}t=${encodeURIComponent(portalToken)}`;
+      }
     } catch (err) {
       console.error("[lead-gate] submit failed", err);
       setState({
@@ -250,7 +235,6 @@ export function LeadGateOverlay({
           <p className="mt-2 text-sm text-ink-soft">{description}</p>
 
           <form
-            ref={formRef}
             onSubmit={handleSubmit}
             className="mt-6 flex flex-col gap-3"
             noValidate
