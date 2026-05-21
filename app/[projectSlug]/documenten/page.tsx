@@ -8,6 +8,7 @@ import { InfoTabs } from "@/components/info/InfoTabs";
 import { FAQ } from "@/components/marketing/FAQ";
 import { Documents } from "@/components/marketing/Documents";
 import { Locatie } from "@/components/info/Locatie";
+import { LeadGate } from "@/components/conversion/LeadGate";
 
 type Params = { projectSlug: string };
 
@@ -62,11 +63,17 @@ export default async function DocumentenPage({
 
         <section className="px-5 py-10 md:py-14">
           <div className="mx-auto max-w-5xl">
-            <InfoTabs
-              documenten={<Documents project={project} />}
-              faq={<FAQ project={project} />}
-              locatie={<Locatie project={project} />}
-            />
+            <LeadGate
+              gateContext="documenten"
+              title="Toegang tot de documenten"
+              description="Vul je gegevens in om de brochure, plattegronden en koopovereenkomst te bekijken. We sturen je het PDF-pakket direct toe."
+            >
+              <InfoTabs
+                documenten={<Documents project={project} />}
+                faq={<FAQ project={project} />}
+                locatie={<Locatie project={project} />}
+              />
+            </LeadGate>
           </div>
         </section>
       </main>

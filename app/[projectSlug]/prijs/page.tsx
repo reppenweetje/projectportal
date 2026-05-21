@@ -8,6 +8,7 @@ import { Footer } from "@/components/layout/Footer";
 import { StickyCTA } from "@/components/layout/StickyCTA";
 import { ScarcityStrip } from "@/components/marketing/ScarcityStrip";
 import { PriceComparisonChart } from "@/components/marketing/PriceComparisonChart";
+import { LeadGate } from "@/components/conversion/LeadGate";
 
 const REPRESENTATIVE_M2 = 105;
 
@@ -58,55 +59,61 @@ export default async function PrijsPage({
           </div>
         </section>
 
-        {/* The real comparison chart */}
-        <section className="px-5">
-          <div className="mx-auto max-w-4xl">
-            <PriceComparisonChart benchmarks={project.prijsBenchmarks} />
-          </div>
-        </section>
+        <LeadGate
+          gateContext="prijs"
+          title="Toegang tot de prijsvergelijking"
+          description="Vul je gegevens in om de prijzen per m², de concrete besparing en alle voordelen van De Hofman te zien."
+        >
+          {/* The real comparison chart */}
+          <section className="px-5">
+            <div className="mx-auto max-w-4xl">
+              <PriceComparisonChart benchmarks={project.prijsBenchmarks} />
+            </div>
+          </section>
 
-        {/* The savings — big number */}
-        <section className="px-5 mt-10">
-          <div className="mx-auto max-w-4xl rounded-3xl bg-repp-yellow/15 border-2 border-repp-yellow/40 p-6 md:p-10 text-center">
-            <p className="text-xs uppercase tracking-[0.2em] text-repp-navy font-semibold">
-              Dat scheelt concreet
-            </p>
-            <p className="mt-3 text-5xl md:text-7xl font-extrabold text-repp-navy tracking-tight tabular-nums">
-              €{savingsPerM2}/m²
-            </p>
-            <p className="mt-3 text-repp-navy/80 max-w-xl mx-auto">
-              Bij een L-unit van {formatM2(REPRESENTATIVE_M2)} houd je daarmee{" "}
-              <span className="font-bold text-repp-navy">
-                {formatEuro(savingsLUnit)}
-              </span>{" "}
-              direct in je eigen vermogen, in plaats van in de aankoopprijs.
-            </p>
-          </div>
-        </section>
+          {/* The savings — big number */}
+          <section className="px-5 mt-10">
+            <div className="mx-auto max-w-4xl rounded-3xl bg-repp-yellow/15 border-2 border-repp-yellow/40 p-6 md:p-10 text-center">
+              <p className="text-xs uppercase tracking-[0.2em] text-repp-navy font-semibold">
+                Dat scheelt concreet
+              </p>
+              <p className="mt-3 text-5xl md:text-7xl font-extrabold text-repp-navy tracking-tight tabular-nums">
+                €{savingsPerM2}/m²
+              </p>
+              <p className="mt-3 text-repp-navy/80 max-w-xl mx-auto">
+                Bij een L-unit van {formatM2(REPRESENTATIVE_M2)} houd je daarmee{" "}
+                <span className="font-bold text-repp-navy">
+                  {formatEuro(savingsLUnit)}
+                </span>{" "}
+                direct in je eigen vermogen, in plaats van in de aankoopprijs.
+              </p>
+            </div>
+          </section>
 
-        {/* What you get on top */}
-        <section className="px-5 mt-12">
-          <div className="mx-auto max-w-4xl">
-            <p className="text-center text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold mb-5">
-              Bovendien al inbegrepen
-            </p>
-            <ul className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-              <Perk title="V.o.n." body="Geen 10,4% overdrachtsbelasting" />
-              <Perk
-                title="BTW-teruggave"
-                body="21% volledig terug bij zakelijk gebruik of verhuur"
-              />
-              <Perk
-                title="Nutsaansluitingen"
-                body="Niet apart te betalen, anders €3-5k extra"
-              />
-              <Perk
-                title="Parkeerplaats"
-                body="1 eigen plek voor de deur"
-              />
-            </ul>
-          </div>
-        </section>
+          {/* What you get on top */}
+          <section className="px-5 mt-12">
+            <div className="mx-auto max-w-4xl">
+              <p className="text-center text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold mb-5">
+                Bovendien al inbegrepen
+              </p>
+              <ul className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <Perk title="V.o.n." body="Geen 10,4% overdrachtsbelasting" />
+                <Perk
+                  title="BTW-teruggave"
+                  body="21% volledig terug bij zakelijk gebruik of verhuur"
+                />
+                <Perk
+                  title="Nutsaansluitingen"
+                  body="Niet apart te betalen, anders €3-5k extra"
+                />
+                <Perk
+                  title="Parkeerplaats"
+                  body="1 eigen plek voor de deur"
+                />
+              </ul>
+            </div>
+          </section>
+        </LeadGate>
 
         {/* Calculator teaser */}
         <section className="px-5 mt-16 mb-20">
