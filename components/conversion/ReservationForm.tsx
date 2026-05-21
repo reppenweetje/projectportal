@@ -323,13 +323,30 @@ export function ReservationForm({ project }: { project: Project }) {
 
         <div className="grid sm:grid-cols-2 gap-4">
           <Field label="Naam *">
-            <Input value={naam} onChange={setNaam} required />
+            <Input
+              value={naam}
+              onChange={setNaam}
+              required
+              autoComplete="name"
+            />
           </Field>
           <Field label="E-mail *">
-            <Input value={email} onChange={setEmail} required type="email" />
+            <Input
+              value={email}
+              onChange={setEmail}
+              required
+              type="email"
+              autoComplete="email"
+            />
           </Field>
           <Field label="Telefoon *">
-            <Input value={telefoon} onChange={setTelefoon} required type="tel" />
+            <Input
+              value={telefoon}
+              onChange={setTelefoon}
+              required
+              type="tel"
+              autoComplete="tel"
+            />
           </Field>
         </div>
 
@@ -473,18 +490,28 @@ function Input({
   onChange,
   required,
   type = "text",
+  autoComplete,
+  inputMode,
 }: {
   value: string;
   onChange: (v: string) => void;
   required?: boolean;
   type?: string;
+  autoComplete?: string;
+  inputMode?: "text" | "email" | "tel" | "numeric" | "decimal";
 }) {
+  // Auto-derive inputMode from type voor mobile-keyboard hints
+  const resolvedInputMode =
+    inputMode ??
+    (type === "email" ? "email" : type === "tel" ? "tel" : undefined);
   return (
     <input
       type={type}
       required={required}
       value={value}
       onChange={(e) => onChange(e.target.value)}
+      autoComplete={autoComplete}
+      inputMode={resolvedInputMode}
       className="w-full rounded-xl border border-repp-gray bg-white px-4 py-3 text-repp-navy focus:outline-none focus:ring-2 focus:ring-repp-blue"
     />
   );

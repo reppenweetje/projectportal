@@ -134,6 +134,8 @@ export function InsiderSignup({
         <div className="flex flex-col sm:flex-row gap-2">
           <input
             type="email"
+            inputMode="email"
+            autoComplete="email"
             required
             placeholder="jouw@email.nl"
             value={email}
@@ -163,6 +165,7 @@ export function InsiderSignup({
         <Field label="Naam" labelCls={labelCls}>
           <input
             type="text"
+            autoComplete="given-name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Voornaam"
@@ -172,6 +175,8 @@ export function InsiderSignup({
         <Field label="E-mail *" labelCls={labelCls}>
           <input
             type="email"
+            inputMode="email"
+            autoComplete="email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}

@@ -100,6 +100,7 @@ export function MaandlastCalculator({ project }: { project: Project }) {
               </span>
               <input
                 type="number"
+                inputMode="numeric"
                 value={huidigeHuur}
                 min={0}
                 step={50}

@@ -13,7 +13,13 @@ export function Header({ project }: { project: Project }) {
   ];
 
   return (
-    <header className="sticky top-0 z-30 w-full bg-repp-navy/95 backdrop-blur border-b border-repp-yellow/40">
+    <header
+      // Padding-top met safe-area zodat de header op iPhones met notch /
+      // dynamic island niet onder de status-bar verdwijnt. viewportFit:
+      // cover in layout.tsx laat content tot in de safe-area zone lopen.
+      style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
+      className="sticky top-0 z-30 w-full bg-repp-navy/95 backdrop-blur border-b border-repp-yellow/40"
+    >
       <div className="mx-auto max-w-6xl px-4 sm:px-5 h-16 flex items-center justify-between gap-3">
         <Link
           href={`/${project.slug}`}

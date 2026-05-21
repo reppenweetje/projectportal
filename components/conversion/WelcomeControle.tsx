@@ -206,6 +206,16 @@ function Field({
   editable: boolean;
   type?: string;
 }) {
+  const inputMode =
+    type === "email" ? "email" : type === "tel" ? "tel" : undefined;
+  const autoComplete =
+    type === "email"
+      ? "email"
+      : type === "tel"
+        ? "tel"
+        : label.toLowerCase().startsWith("naam")
+          ? "name"
+          : undefined;
   return (
     <div className="rounded-xl border border-repp-gray bg-surface-muted px-4 py-3">
       <p className="text-[11px] uppercase tracking-wider text-repp-navy/50 font-semibold">
@@ -214,6 +224,8 @@ function Field({
       {editable ? (
         <input
           type={type}
+          inputMode={inputMode}
+          autoComplete={autoComplete}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           className="mt-1 w-full bg-white rounded-lg border border-repp-gray px-3 py-2 text-repp-navy focus:outline-none focus:ring-2 focus:ring-repp-blue"

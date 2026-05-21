@@ -62,3 +62,16 @@ html, body {
     padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
   }
 }
+
+/* iOS Safari zoomt automatisch in op inputs met font-size < 16px wanneer
+   ze focus krijgen, wat een irritant UX-hick veroorzaakt (page zoomt in,
+   user moet handmatig uitzoomen). Forceer minimum 16px op alle inputs
+   op mobile-breakpoints. Tailwind text-sm/xs in markup blijft werken op
+   desktop maar krijgt 16px-floor onder 768px. */
+@media (max-width: 767px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
