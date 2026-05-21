@@ -8,6 +8,7 @@ import { StickyCTA } from "@/components/layout/StickyCTA";
 import { CalculatorTabs } from "@/components/calculator/CalculatorTabs";
 import { ScarcityStrip } from "@/components/marketing/ScarcityStrip";
 import { ExitIntentModal } from "@/components/conversion/ExitIntentModal";
+import { LeadGate } from "@/components/conversion/LeadGate";
 
 type Params = { projectSlug: string };
 
@@ -44,9 +45,15 @@ export default async function BerekenPage({
               </p>
             </div>
             <div className="mt-12">
-              <Suspense fallback={null}>
-                <CalculatorTabs project={project} />
-              </Suspense>
+              <LeadGate
+                gateContext="bereken"
+                title="Toegang tot de calculator"
+                description="Vul je gegevens in om je maandlast of rendement uit te rekenen. Op basis van je voorkeuren krijg je een persoonlijk rapport."
+              >
+                <Suspense fallback={null}>
+                  <CalculatorTabs project={project} />
+                </Suspense>
+              </LeadGate>
             </div>
           </div>
         </section>
