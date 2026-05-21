@@ -1,28 +1,57 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import type { Project, ProjectDocument } from "@/lib/types";
 import { DocIcon } from "./DocIcon";
+import { useLeadCapture } from "@/lib/use-lead-capture";
 
 export function Documents({ project }: { project: Project }) {
   const essentieel = project.documents.filter((d) => d.group === "essentieel");
   const juridisch = project.documents.filter((d) => d.group === "juridisch");
+  const router = useRouter();
+
+  // Eén gedeelde lead-capture dialog voor alle document-clicks. De `title`
+  // is generiek hier; bij het openen wordt de doclabel dynamisch in de
+  // pending-action verwerkt (we navigeren naar de doc-viewer).
+  const { gateOrRun, dialog } = useLeadCapture({
+    gateContext: "documenten",
+    title: "Bekijk het document",
+    description:
+      "Vul je naam en e-mailadres in om de documenten te bekijken. " +
+      "We sturen ze ook naar je inbox, zodat je ze later rustig kunt " +
+      "nalezen — handig om met je partner of accountant te delen. " +
+      "Telefoonnummer is optioneel; alleen als je het prettig vindt om " +
+      "kort contact te hebben bij vragen.",
+    submitLabel: "Bekijk de documenten",
+  });
+
+  function openDoc(doc: ProjectDocument) {
+    router.push(`/${project.slug}/documenten/${doc.slug}`);
+  }
 
   return (
-    <div className="space-y-10">
-      <DocSection
-        title="Essentieel"
-        subtitle="Project, prijzen, plattegronden en beelden. Start hier."
-        docs={essentieel}
-        project={project}
-        accent="blue"
-      />
-      <DocSection
-        title="Voor de notaris"
-        subtitle="Juridische stukken voor de overdracht."
-        docs={juridisch}
-        project={project}
-        accent="navy"
-      />
-    </div>
+    <>
+      <div className="space-y-10">
+        <DocSection
+          title="Essentieel"
+          subtitle="Project, prijzen, plattegronden en beelden. Start hier."
+          docs={essentieel}
+          project={project}
+          accent="blue"
+          onCardClick={(doc) => gateOrRun(() => openDoc(doc))}
+        />
+        <DocSection
+          title="Voor de notaris"
+          subtitle="Juridische stukken voor de overdracht."
+          docs={juridisch}
+          project={project}
+          accent="navy"
+          onCardClick={(doc) => gateOrRun(() => openDoc(doc))}
+        />
+      </div>
+      {dialog}
+    </>
   );
 }
 
@@ -32,12 +61,14 @@ function DocSection({
   docs,
   project,
   accent,
+  onCardClick,
 }: {
   title: string;
   subtitle: string;
   docs: ProjectDocument[];
   project: Project;
   accent: "blue" | "navy";
+  onCardClick: (doc: ProjectDocument) => void;
 }) {
   const accentBar = accent === "blue" ? "bg-repp-blue" : "bg-repp-navy";
   return (
@@ -54,7 +85,11 @@ function DocSection({
       <ul className="grid sm:grid-cols-2 gap-3">
         {docs.map((d) => (
           <li key={d.slug}>
-            <DocCard doc={d} projectSlug={project.slug} />
+            <DocCard
+              doc={d}
+              projectSlug={project.slug}
+              onClick={() => onCardClick(d)}
+            />
           </li>
         ))}
       </ul>
@@ -65,13 +100,24 @@ function DocSection({
 function DocCard({
   doc,
   projectSlug,
+  onClick,
 }: {
   doc: ProjectDocument;
   projectSlug: string;
+  onClick: () => void;
 }) {
+  // We renderen nog steeds een <Link> zodat right-click/middle-click /
+  // crawlers de juiste URL pakken. Maar de gewone left-click intercept
+  // we voor de gate. Bij gate-success navigeren we programmatisch.
   return (
     <Link
       href={`/${projectSlug}/documenten/${doc.slug}`}
+      onClick={(e) => {
+        // Laat keyboard-modifiers (cmd+click → nieuw tabblad) gewoon door.
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        e.preventDefault();
+        onClick();
+      }}
       className="group flex items-center gap-4 rounded-2xl border border-repp-gray bg-white p-4 hover:border-repp-navy hover:shadow-md transition"
     >
       <DocIcon slug={doc.slug} />

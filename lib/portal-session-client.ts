@@ -18,7 +18,11 @@
  */
 
 import { useEffect, useState } from "react";
-import { PROFILE_COOKIE, type PortalProfile, PROFILE_VERSION } from "./portal-session";
+import {
+  PROFILE_COOKIE,
+  type PortalProfile,
+  PROFILE_VERSION,
+} from "./portal-session-shared";
 
 export type ClientPortalSession =
   | { isReturning: true; firstName: string | null }

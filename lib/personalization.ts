@@ -39,6 +39,17 @@ function readCookie(): LeadProfile | null {
   }
 }
 
+/**
+ * Synchroon lezen van het lead-profile cookie. Bedoeld voor situaties
+ * waar de useState-based useLeadProfile() achterloopt — bv. direct na
+ * een gate-submit wanneer een component meteen het verse email-adres
+ * nodig heeft om iets te verzenden. Voor reactive UI gebruik je gewoon
+ * useLeadProfile().
+ */
+export function readLeadProfile(): LeadProfile | null {
+  return readCookie();
+}
+
 function writeCookie(profile: LeadProfile) {
   if (typeof document === "undefined") return;
   const expires = new Date(
