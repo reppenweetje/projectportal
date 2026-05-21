@@ -104,9 +104,9 @@ function RoadIndicator({ size }: { size: Size }) {
     <div className={`relative ${widthCls} flex items-center justify-center`}>
       {/* Asphalt-style strip */}
       <div className="absolute inset-y-1 right-1 left-1 rounded-md bg-repp-navy/15">
-        {/* dashed road centerline */}
+        {/* dashed road centerline — transparante gaps, navy dashes */}
         <div
-          className="absolute inset-y-2 left-1/2 -translate-x-1/2 w-0.5 bg-repp-navy/30"
+          className="absolute inset-y-2 left-1/2 -translate-x-1/2 w-0.5 text-repp-navy/70"
           style={{
             backgroundImage:
               "linear-gradient(to bottom, currentColor 0 6px, transparent 6px 12px)",
