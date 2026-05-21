@@ -13,7 +13,13 @@ export function Header({ project }: { project: Project }) {
   ];
 
   return (
-    <header className="sticky top-0 z-30 w-full bg-white/95 backdrop-blur border-b border-repp-gray/60">
+    <header
+      // Padding-top met safe-area zodat de header op iPhones met notch /
+      // dynamic island niet onder de status-bar verdwijnt. viewportFit:
+      // cover in layout.tsx laat content tot in de safe-area zone lopen.
+      style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
+      className="sticky top-0 z-30 w-full bg-repp-navy/95 backdrop-blur border-b border-repp-yellow/40"
+    >
       <div className="mx-auto max-w-6xl px-4 sm:px-5 h-16 flex items-center justify-between gap-3">
         <Link
           href={`/${project.slug}`}
@@ -21,7 +27,7 @@ export function Header({ project }: { project: Project }) {
           className="shrink-0"
         >
           <Image
-            src="/images/logos/repp-bedrijfsmakelaar.svg"
+            src="/images/logos/repp-bedrijfsmakelaar-wit.svg"
             alt="REPP Bedrijfsmakelaar"
             width={84}
             height={24}
@@ -36,11 +42,32 @@ export function Header({ project }: { project: Project }) {
             <Link
               key={i.href}
               href={i.href}
-              className="inline-flex px-3 py-2 text-sm font-semibold text-repp-navy hover:text-repp-blue transition"
+              className="inline-flex px-3 py-2 text-sm font-semibold text-white hover:text-repp-yellow transition"
             >
               {i.label}
             </Link>
           ))}
+          <Link
+            href={`/${project.slug}/documenten/brochure`}
+            className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-semibold text-white hover:text-repp-yellow transition"
+            title="Download de brochure"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Brochure
+          </Link>
           <HeaderFavorites projectSlug={project.slug} />
           <HeaderIdentity projectSlug={project.slug} />
           <Link

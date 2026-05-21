@@ -33,7 +33,9 @@
 
 :root {
   color-scheme: light;
-  --background: #ffffff;
+  /* Body background is licht-grijs (zelfde als --color-surface-muted) zodat
+     witte cards/sections subtle contrast krijgen ipv plat wit-op-wit. */
+  --background: #f5f5f7;
   --foreground: #0f0f70;
 }
 
@@ -45,13 +47,31 @@ html, body {
   text-rendering: optimizeLegibility;
 }
 
-/* Bottom safe-area for the floating WhatsApp button on mobile */
+/* Bottom safe-area for the floating WhatsApp button (h-14 = 56px,
+   bottom-5 = 20px, dus button strekt tot 76px vanaf bottom). Padding
+   moet groter zijn dan dat anders dekt 'ie de laatste regel content af.
+   env(safe-area-inset-bottom) voor iOS-notch / home-indicator. */
 .has-sticky-cta {
-  padding-bottom: 1.5rem;
+  padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px));
 }
 
 @media (min-width: 768px) {
   .has-sticky-cta {
-    padding-bottom: 0;
+    /* Op desktop staat de button rechts-onder maar laatste sectie heeft
+       genoeg eigen padding, dus iets minder is OK. */
+    padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* iOS Safari zoomt automatisch in op inputs met font-size < 16px wanneer
+   ze focus krijgen, wat een irritant UX-hick veroorzaakt (page zoomt in,
+   user moet handmatig uitzoomen). Forceer minimum 16px op alle inputs
+   op mobile-breakpoints. Tailwind text-sm/xs in markup blijft werken op
+   desktop maar krijgt 16px-floor onder 768px. */
+@media (max-width: 767px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
   }
 }

@@ -44,9 +44,9 @@ export default async function DocumentenPage({
           <div className="relative px-5 pt-14 md:pt-20 pb-10 md:pb-14">
             <div className="mx-auto max-w-5xl">
               <div className="flex items-baseline gap-3">
-                <span className="inline-block w-1 h-8 rounded-full bg-repp-yellow" />
+                <span className="inline-block w-1 h-8 rounded-full bg-repp-navy" />
                 <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
-                  {project.name} · Alles open en compleet
+                  {project.name} · Voor jouw aankoop
                 </p>
               </div>
               <h1 className="mt-3 text-4xl md:text-6xl font-extrabold text-repp-navy tracking-tight">

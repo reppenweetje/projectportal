@@ -40,6 +40,7 @@ export function InsiderSignup({
 
   useEffect(() => {
     if (profile) {
+      /* eslint-disable react-hooks/set-state-in-effect */
       if (profile.name && !name) setName(profile.name);
       if (profile.email && !email) setEmail(profile.email);
       if (profile.modus && profile.modus !== "ondernemer" &&
@@ -48,6 +49,7 @@ export function InsiderSignup({
       } else if (profile.modus) {
         setModus(profile.modus);
       }
+      /* eslint-enable react-hooks/set-state-in-effect */
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile]);
@@ -132,6 +134,8 @@ export function InsiderSignup({
         <div className="flex flex-col sm:flex-row gap-2">
           <input
             type="email"
+            inputMode="email"
+            autoComplete="email"
             required
             placeholder="jouw@email.nl"
             value={email}
@@ -161,6 +165,7 @@ export function InsiderSignup({
         <Field label="Naam" labelCls={labelCls}>
           <input
             type="text"
+            autoComplete="given-name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Voornaam"
@@ -170,6 +175,8 @@ export function InsiderSignup({
         <Field label="E-mail *" labelCls={labelCls}>
           <input
             type="email"
+            inputMode="email"
+            autoComplete="email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}

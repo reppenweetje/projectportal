@@ -96,6 +96,8 @@ export function InterestCapture({
       <div className="mt-3 flex gap-2">
         <input
           type="email"
+          inputMode="email"
+          autoComplete="email"
           required
           placeholder="jouw@email.nl"
           value={email}

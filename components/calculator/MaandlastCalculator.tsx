@@ -5,6 +5,11 @@ import { useMemo, useState } from "react";
 import type { Project, Unit } from "@/lib/types";
 import { formatEuro } from "@/lib/types";
 import { MailReportButton } from "@/components/conversion/MailReportButton";
+import {
+  UnitTypePicker,
+  representativeUnitForType,
+  type CalculatorUnitType,
+} from "./UnitTypePicker";
 
 const DEFAULT_INTEREST = 5.5;
 const DEFAULT_TERM_YEARS = 20;
@@ -20,18 +25,16 @@ function annuity(principal: number, annualRatePct: number, years: number) {
 
 export function MaandlastCalculator({ project }: { project: Project }) {
   const sellableUnits = project.units.filter((u) => u.status !== "coming_soon");
-  const [unitId, setUnitId] = useState<string>(
-    sellableUnits.find((u) => u.status === "available")?.slug ??
-      sellableUnits[0].slug,
-  );
+  const [selectedType, setSelectedType] = useState<CalculatorUnitType>("L");
   const [ownPercent, setOwnPercent] = useState(DEFAULT_OWN_PERCENT);
   const [rentePct, setRentePct] = useState(DEFAULT_INTEREST);
   const [termYears, setTermYears] = useState(DEFAULT_TERM_YEARS);
   const [huidigeHuur, setHuidigeHuur] = useState(DEFAULT_HUUR);
 
-  const unit = useMemo(
-    () => sellableUnits.find((u) => u.slug === unitId) ?? sellableUnits[0],
-    [unitId, sellableUnits],
+  const unit = useMemo<Unit>(
+    () =>
+      representativeUnitForType(project, selectedType) ?? sellableUnits[0],
+    [project, selectedType, sellableUnits],
   );
 
   const koopsom = unit.prijsExBtw;
@@ -52,18 +55,12 @@ export function MaandlastCalculator({ project }: { project: Project }) {
 
       <div className="mt-8 grid lg:grid-cols-2 gap-10">
         <div className="space-y-6">
-          <Field label="Welke unit?">
-            <select
-              value={unitId}
-              onChange={(e) => setUnitId(e.target.value)}
-              className="w-full rounded-xl border border-repp-gray bg-white px-4 py-3 text-repp-navy font-medium focus:outline-none focus:ring-2 focus:ring-repp-blue"
-            >
-              {sellableUnits.map((u) => (
-                <option key={u.slug} value={u.slug}>
-                  Unit {u.number} · {u.type} · {formatEuro(u.prijsExBtw)}
-                </option>
-              ))}
-            </select>
+          <Field label="Welk type unit?">
+            <UnitTypePicker
+              project={project}
+              selectedType={selectedType}
+              onSelect={(t) => setSelectedType(t)}
+            />
           </Field>
 
           <Slider
@@ -103,6 +100,7 @@ export function MaandlastCalculator({ project }: { project: Project }) {
               </span>
               <input
                 type="number"
+                inputMode="numeric"
                 value={huidigeHuur}
                 min={0}
                 step={50}

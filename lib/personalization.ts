@@ -56,7 +56,14 @@ function writeCookie(profile: LeadProfile) {
     Date.now() + TTL_DAYS * 24 * 60 * 60 * 1000,
   ).toUTCString();
   const value = encodeURIComponent(JSON.stringify(profile));
-  document.cookie = `${COOKIE_NAME}=${value}; path=/; expires=${expires}; SameSite=Lax`;
+  // Secure flag op HTTPS — extra hardening tegen MITM-cookie-leak. We
+  // detecteren protocol op runtime ipv hardcode zodat localhost (http)
+  // ook gewoon werkt voor dev.
+  const secure =
+    typeof location !== "undefined" && location.protocol === "https:"
+      ? "; Secure"
+      : "";
+  document.cookie = `${COOKIE_NAME}=${value}; path=/; expires=${expires}; SameSite=Lax${secure}`;
 }
 
 function profileFromUrl(): Partial<LeadProfile> {
@@ -98,6 +105,7 @@ export function useLeadProfile(): LeadProfile | null {
     }
     if (Object.keys(merged).length > 0) {
       writeCookie(merged);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setProfile(merged);
     }
   }, []);

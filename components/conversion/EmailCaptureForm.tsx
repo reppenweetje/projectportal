@@ -93,6 +93,7 @@ export function EmailCaptureForm({
     <form onSubmit={handle} className="flex flex-col sm:flex-row gap-2">
       <input
         type="text"
+        autoComplete="given-name"
         placeholder="Naam"
         value={name}
         onChange={(e) => setName(e.target.value)}
@@ -100,6 +101,8 @@ export function EmailCaptureForm({
       />
       <input
         type="email"
+        inputMode="email"
+        autoComplete="email"
         required
         placeholder="jouw@email.nl"
         value={email}

@@ -43,14 +43,29 @@ const DEFAULT_PROJECT = process.env.NEXT_PUBLIC_DEFAULT_PROJECT?.trim();
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
 
+type ResolveProfile = {
+  first_name: string | null;
+  email: string | null;
+  phone: string | null;
+  persona: string | null;       // ondernemer | belegger | null
+  size_id: string | null;       // L | XL | XXL | null
+  intent_id: string | null;
+  temperature: string | null;
+  stage: string | null;
+  score: number | null;
+};
+
 type ResolveResult = {
   ok: true;
   session_token: string;
   expires_at: string;
-  profile: { first_name: string | null };
+  profile: ResolveProfile;
 } | {
   ok: false;
 };
+
+const LEAD_COOKIE = 'repp_lead';
+const LEAD_COOKIE_MAX_AGE = 60 * 60 * 24 * 90; // 90d, mirrors client-side TTL_DAYS
 
 async function callPortalResolve(
   body: { token: string } | { session_token: string },
@@ -75,11 +90,22 @@ async function callPortalResolve(
     }
     const data = await res.json();
     if (data && data.ok && typeof data.session_token === 'string') {
+      const p = (data.profile ?? {}) as Partial<ResolveProfile>;
       return {
         ok: true,
         session_token: data.session_token,
         expires_at: data.expires_at,
-        profile: data.profile ?? { first_name: null },
+        profile: {
+          first_name: p.first_name ?? null,
+          email: p.email ?? null,
+          phone: p.phone ?? null,
+          persona: p.persona ?? null,
+          size_id: p.size_id ?? null,
+          intent_id: p.intent_id ?? null,
+          temperature: p.temperature ?? null,
+          stage: p.stage ?? null,
+          score: p.score ?? null,
+        },
       };
     }
     return { ok: false };
@@ -87,6 +113,53 @@ async function callPortalResolve(
     console.error('[middleware] portal-resolve fetch failed', err);
     return { ok: false };
   }
+}
+
+/**
+ * Map persona uit Supabase naar de modus die LeadProfile/PersonalizationBanner
+ * verwacht. CLP schrijft `persona` als "ondernemer" of "belegger" (1-op-1
+ * dezelfde labels), maar oude leads / handmatige edits kunnen variant-strings
+ * bevatten zoals "investor", "gebruiker". Hier normaliseren we naar het
+ * client-type zodat de UI niet hoeft te raden.
+ */
+function normalizeModus(persona: string | null): 'ondernemer' | 'belegger' | undefined {
+  if (!persona) return undefined;
+  const p = persona.toLowerCase();
+  if (p.includes('beleg') || p.includes('invest')) return 'belegger';
+  if (p.includes('onder') || p.includes('gebruik') || p.includes('owner')) return 'ondernemer';
+  return undefined;
+}
+
+function normalizeUnitType(sizeId: string | null): 'L' | 'XL' | 'XXL' | undefined {
+  if (!sizeId) return undefined;
+  const s = sizeId.toUpperCase();
+  if (s === 'L' || s === 'XL' || s === 'XXL') return s;
+  return undefined;
+}
+
+/**
+ * Schrijf het `repp_lead` cookie dat de portal-UI consumeert. Dit is een
+ * plain JSON-cookie (geen HMAC) want het is puur UX/personalisatie en
+ * gevoelige acties (reserveren, downloads) checken altijd dh_session
+ * server-side. `verified: true` is hier intentioneel: aankomen via een
+ * uniek per-lead PORTAL_TOKEN uit een Brevo-mail is impliciete bevestiging
+ * dat we de juiste persoon te pakken hebben — dus skip de welkom-controle
+ * en geef 1-click reserveerflow direct.
+ */
+function buildLeadCookie(profile: ResolveProfile): string {
+  const payload: Record<string, unknown> = {
+    source: 'email',
+    verified: true,
+    verifiedAt: new Date().toISOString(),
+  };
+  if (profile.first_name) payload.name = profile.first_name;
+  if (profile.email) payload.email = profile.email;
+  if (profile.phone) payload.phone = profile.phone;
+  const modus = normalizeModus(profile.persona);
+  if (modus) payload.modus = modus;
+  const unitType = normalizeUnitType(profile.size_id);
+  if (unitType) payload.unitType = unitType;
+  return encodeURIComponent(JSON.stringify(payload));
 }
 
 async function applyPortalCookies(
@@ -117,12 +190,25 @@ async function applyPortalCookies(
     path: '/',
     maxAge: COOKIE_MAX_AGE_SECONDS,
   });
+
+  // repp_lead: NIET HttpOnly, NIET HMAC-signed — puur UX-cookie zodat
+  // PersonalizationBanner + ReservationForm + ExitIntent direct kunnen
+  // tonen wat we al weten. Auth-checks gaan via dh_session.
+  response.cookies.set({
+    name: LEAD_COOKIE,
+    value: buildLeadCookie(result.profile),
+    httpOnly: false,
+    secure: true,
+    sameSite: 'lax',
+    path: '/',
+    maxAge: LEAD_COOKIE_MAX_AGE,
+  });
 }
 
 // ─── Main handler ───────────────────────────────────────────────────────────
 
 export async function middleware(request: NextRequest) {
-  const { pathname, searchParams } = request.nextUrl;
+  const { searchParams } = request.nextUrl;
   const tokenParam = searchParams.get('t');
   const sessionCookie = request.cookies.get(SESSION_COOKIE)?.value;
 
@@ -169,6 +255,7 @@ export async function middleware(request: NextRequest) {
     const response = await applyCleanUrlLogic(request);
     response.cookies.delete(SESSION_COOKIE);
     response.cookies.delete(PROFILE_COOKIE);
+    response.cookies.delete(LEAD_COOKIE);
     return response;
   }
 

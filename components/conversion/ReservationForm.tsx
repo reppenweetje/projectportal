@@ -15,16 +15,25 @@ export function ReservationForm({ project }: { project: Project }) {
   const profile = useLeadProfile();
   const params = useSearchParams();
 
+  // Bij wachtlijst-intent (verkochte unit) tonen we ALLE units in de
+  // dropdown, met de requested unit voorgeselecteerd. Anders alleen
+  // beschikbare/in-optie units.
+  const isWachtlijst = params.get("intent") === "wachtlijst";
   const reservable = project.units.filter(
     (u) => u.status === "available" || u.status === "in_optie",
   );
+  const selectableUnits = isWachtlijst ? project.units : reservable;
 
   const initialUnitSlug =
-    params.get("unit") ?? reservable[0]?.slug ?? project.units[0].slug;
+    params.get("unit") ?? selectableUnits[0]?.slug ?? project.units[0].slug;
   const initialUnit =
     project.units.find((u) => u.slug === initialUnitSlug) ?? project.units[0];
 
   const [unit, setUnit] = useState<Unit>(initialUnit);
+  // Voor de huidig geselecteerde unit: status bepaalt de copy
+  // (wachtlijst-aanmelden of op-naam-zetten).
+  const unitOnWaitlist =
+    unit.status === "verkocht_ovb" || unit.status === "sold";
   const [naam, setNaam] = useState("");
   const [email, setEmail] = useState("");
   const [telefoon, setTelefoon] = useState("");
@@ -38,9 +47,11 @@ export function ReservationForm({ project }: { project: Project }) {
   // Pre-fill from CLP profile
   useEffect(() => {
     if (profile) {
+      /* eslint-disable react-hooks/set-state-in-effect */
       if (profile.name && !naam) setNaam(profile.name);
       if (profile.email && !email) setEmail(profile.email);
       if (profile.phone && !telefoon) setTelefoon(profile.phone);
+      /* eslint-enable react-hooks/set-state-in-effect */
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile]);
@@ -168,7 +179,13 @@ export function ReservationForm({ project }: { project: Project }) {
             </div>
           </div>
 
-          <Field label="Welke unit wil je op naam zetten?">
+          <Field
+            label={
+              isWachtlijst
+                ? "Welke unit wil je op naam zetten of aanmelden voor de wachtlijst?"
+                : "Welke unit wil je op naam zetten?"
+            }
+          >
             <select
               value={unit.slug}
               onChange={(e) => {
@@ -179,9 +196,9 @@ export function ReservationForm({ project }: { project: Project }) {
               }}
               className="w-full rounded-xl border border-repp-gray bg-white px-4 py-3 text-repp-navy font-medium focus:outline-none focus:ring-2 focus:ring-repp-blue"
             >
-              {reservable.map((u) => (
+              {selectableUnits.map((u) => (
                 <option key={u.slug} value={u.slug}>
-                  Unit {u.number} · {u.type} · {formatEuro(u.prijsExBtw)}
+                  {unitOptionLabel(u)}
                 </option>
               ))}
             </select>
@@ -246,7 +263,9 @@ export function ReservationForm({ project }: { project: Project }) {
             >
               {step === "submitting"
                 ? "Versturen…"
-                : `Bevestig: zet Unit ${unit.number} op mijn naam →`}
+                : unitOnWaitlist
+                  ? `Meld me aan voor wachtlijst Unit ${unit.number} →`
+                  : `Bevestig: zet Unit ${unit.number} op mijn naam →`}
             </button>
             <p className="mt-3 text-xs text-repp-navy/60">
               Geen kosten, geen verplichting. Pas na een persoonlijk gesprek
@@ -272,7 +291,13 @@ export function ReservationForm({ project }: { project: Project }) {
       noValidate
     >
       <div className="lg:col-span-2 space-y-6">
-        <Field label="Welke unit wil je op naam zetten?">
+        <Field
+          label={
+            isWachtlijst
+              ? "Welke unit wil je op naam zetten of aanmelden voor de wachtlijst?"
+              : "Welke unit wil je op naam zetten?"
+          }
+        >
           <select
             value={unit.slug}
             onChange={(e) => {
@@ -281,9 +306,9 @@ export function ReservationForm({ project }: { project: Project }) {
             }}
             className="w-full rounded-xl border border-repp-gray bg-white px-4 py-3 text-repp-navy font-medium focus:outline-none focus:ring-2 focus:ring-repp-blue"
           >
-            {reservable.map((u) => (
+            {selectableUnits.map((u) => (
               <option key={u.slug} value={u.slug}>
-                Unit {u.number} · {u.type} · {formatEuro(u.prijsExBtw)}
+                {unitOptionLabel(u)}
               </option>
             ))}
           </select>
@@ -298,13 +323,30 @@ export function ReservationForm({ project }: { project: Project }) {
 
         <div className="grid sm:grid-cols-2 gap-4">
           <Field label="Naam *">
-            <Input value={naam} onChange={setNaam} required />
+            <Input
+              value={naam}
+              onChange={setNaam}
+              required
+              autoComplete="name"
+            />
           </Field>
           <Field label="E-mail *">
-            <Input value={email} onChange={setEmail} required type="email" />
+            <Input
+              value={email}
+              onChange={setEmail}
+              required
+              type="email"
+              autoComplete="email"
+            />
           </Field>
           <Field label="Telefoon *">
-            <Input value={telefoon} onChange={setTelefoon} required type="tel" />
+            <Input
+              value={telefoon}
+              onChange={setTelefoon}
+              required
+              type="tel"
+              autoComplete="tel"
+            />
           </Field>
         </div>
 
@@ -348,7 +390,9 @@ export function ReservationForm({ project }: { project: Project }) {
           >
             {step === "submitting"
               ? "Versturen…"
-              : `Zet Unit ${unit.number} op mijn naam (vrijblijvend) →`}
+              : unitOnWaitlist
+                ? `Meld me aan voor wachtlijst Unit ${unit.number} →`
+                : `Zet Unit ${unit.number} op mijn naam (vrijblijvend) →`}
           </button>
           <p className="mt-3 text-xs text-repp-navy/60">
             Geen kosten, geen verplichting. Pas na een persoonlijk gesprek met
@@ -418,6 +462,20 @@ function SidebarSummary({
   );
 }
 
+function unitOptionLabel(u: Unit): string {
+  const base = `Unit ${u.number} · ${u.type} · ${formatEuro(u.prijsExBtw)}`;
+  if (u.status === "sold" || u.status === "verkocht_ovb") {
+    return `${base} (wachtlijst)`;
+  }
+  if (u.status === "in_optie") {
+    return `${base} (in optie)`;
+  }
+  if (u.status === "coming_soon") {
+    return `${base} (binnenkort)`;
+  }
+  return base;
+}
+
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
@@ -432,18 +490,28 @@ function Input({
   onChange,
   required,
   type = "text",
+  autoComplete,
+  inputMode,
 }: {
   value: string;
   onChange: (v: string) => void;
   required?: boolean;
   type?: string;
+  autoComplete?: string;
+  inputMode?: "text" | "email" | "tel" | "numeric" | "decimal";
 }) {
+  // Auto-derive inputMode from type voor mobile-keyboard hints
+  const resolvedInputMode =
+    inputMode ??
+    (type === "email" ? "email" : type === "tel" ? "tel" : undefined);
   return (
     <input
       type={type}
       required={required}
       value={value}
       onChange={(e) => onChange(e.target.value)}
+      autoComplete={autoComplete}
+      inputMode={resolvedInputMode}
       className="w-full rounded-xl border border-repp-gray bg-white px-4 py-3 text-repp-navy focus:outline-none focus:ring-2 focus:ring-repp-blue"
     />
   );

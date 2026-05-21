@@ -26,10 +26,12 @@ export function WelcomeControle({ project }: { project: Project }) {
   // Hydrate inputs once profile is loaded
   useEffect(() => {
     if (profile) {
+      /* eslint-disable react-hooks/set-state-in-effect */
       setName(profile.name ?? "");
       setEmail(profile.email ?? "");
       setPhone(profile.phone ?? "");
       setModus(profile.modus ?? "");
+      /* eslint-enable react-hooks/set-state-in-effect */
     }
   }, [profile]);
 
@@ -204,6 +206,16 @@ function Field({
   editable: boolean;
   type?: string;
 }) {
+  const inputMode =
+    type === "email" ? "email" : type === "tel" ? "tel" : undefined;
+  const autoComplete =
+    type === "email"
+      ? "email"
+      : type === "tel"
+        ? "tel"
+        : label.toLowerCase().startsWith("naam")
+          ? "name"
+          : undefined;
   return (
     <div className="rounded-xl border border-repp-gray bg-surface-muted px-4 py-3">
       <p className="text-[11px] uppercase tracking-wider text-repp-navy/50 font-semibold">
@@ -212,6 +224,8 @@ function Field({
       {editable ? (
         <input
           type={type}
+          inputMode={inputMode}
+          autoComplete={autoComplete}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           className="mt-1 w-full bg-white rounded-lg border border-repp-gray px-3 py-2 text-repp-navy focus:outline-none focus:ring-2 focus:ring-repp-blue"
