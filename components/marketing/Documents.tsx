@@ -78,7 +78,7 @@ function DocSection({
           <p className="text-sm text-repp-navy/60 mt-0.5">{subtitle}</p>
         </div>
       </div>
-      <ul className="grid sm:grid-cols-2 gap-3">
+      <ul className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
         {docs.map((d) => (
           <li key={d.slug}>
             <DocCard
@@ -102,28 +102,31 @@ function DocCard({
   projectSlug: string;
   onClick: () => void;
 }) {
-  // We renderen nog steeds een <Link> zodat right-click/middle-click /
-  // crawlers de juiste URL pakken. Maar de gewone left-click intercept
-  // we voor de gate. Bij gate-success navigeren we programmatisch.
+  // Vierkant card (aspect-square). Icon top-left, titel onder, Bekijk
+  // helemaal onderaan. Cmd/Ctrl+click blijft natural-link gedrag voor
+  // nieuwe-tabblad. SEO crawlers krijgen ook de echte URL te zien.
   return (
     <Link
       href={`/${projectSlug}/documenten/${doc.slug}`}
       onClick={(e) => {
-        // Laat keyboard-modifiers (cmd+click → nieuw tabblad) gewoon door.
         if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
         e.preventDefault();
         onClick();
       }}
-      className="group flex items-center gap-4 rounded-2xl border border-repp-gray bg-white p-4 hover:border-repp-navy hover:shadow-md transition"
+      className="group flex aspect-square flex-col rounded-2xl border border-repp-gray bg-white p-4 md:p-5 hover:border-repp-navy hover:shadow-md transition"
     >
-      <DocIcon slug={doc.slug} />
-      <div className="min-w-0 flex-1">
-        <p className="font-semibold text-repp-navy text-sm md:text-base">
+      <div className="shrink-0">
+        <DocIcon slug={doc.slug} />
+      </div>
+      <div className="mt-3 flex-1 min-w-0">
+        <p className="font-semibold text-repp-navy text-sm md:text-base leading-tight">
           {doc.label}
         </p>
-        <p className="text-xs text-repp-navy/60 truncate">{doc.body}</p>
+        <p className="mt-1 text-xs text-repp-navy/60 leading-snug line-clamp-2">
+          {doc.body}
+        </p>
       </div>
-      <span className="text-xs text-repp-blue font-semibold whitespace-nowrap inline-flex items-center gap-1 group-hover:gap-1.5 transition-all">
+      <span className="mt-3 text-xs text-repp-blue font-semibold inline-flex items-center gap-1 group-hover:gap-1.5 transition-all">
         Bekijk
         <span className="group-hover:translate-x-0.5 transition">→</span>
       </span>

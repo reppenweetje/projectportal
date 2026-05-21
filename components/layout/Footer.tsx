@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/lib/types";
 import { FooterIdentity } from "./FooterIdentity";
@@ -8,10 +9,24 @@ export function Footer({ project }: { project: Project }) {
     <footer className="bg-repp-navy text-white/80 mt-16">
       <div className="mx-auto max-w-6xl px-5 py-12 grid gap-10 md:grid-cols-12">
         <div className="md:col-span-3">
-          <p className="font-extrabold text-white text-lg">REPP</p>
-          <p className="text-sm mt-2">
+          <Image
+            src="/images/logos/repp-bedrijfsmakelaar-wit.svg"
+            alt="REPP Bedrijfsmakelaar"
+            width={140}
+            height={36}
+            className="h-7 w-auto"
+          />
+          <p className="text-sm mt-3">
             Bedrijfsmakelaar voor nieuwbouw projecten.
           </p>
+          <a
+            href="https://repp.nl"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-sm text-white/80 hover:text-repp-yellow mt-3 transition"
+          >
+            Meer over REPP <span aria-hidden>→</span>
+          </a>
         </div>
         <div className="md:col-span-2">
           <p className="font-semibold text-white text-sm uppercase tracking-wider">

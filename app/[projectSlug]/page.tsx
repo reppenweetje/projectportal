@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyCTA } from "@/components/layout/StickyCTA";
 import { MinimalHero } from "@/components/marketing/MinimalHero";
+import { USPHighlights } from "@/components/marketing/USPHighlights";
 import { TrustStack } from "@/components/marketing/TrustStack";
 import { Testimonials } from "@/components/marketing/Testimonials";
 import { HeroCalculator } from "@/components/calculator/HeroCalculator";
@@ -50,6 +51,9 @@ export default async function ProjectHomePage({
       <main className="flex-1 has-sticky-cta">
         {/* 1. Hook — sfeerbeeld + intent CTAs */}
         <MinimalHero project={project} />
+
+        {/* 1b. USP-bullets direct na de hero — vier-zes redenen waarom */}
+        <USPHighlights project={project} />
 
         {/* 2. Trust — partners */}
         <TrustStack project={project} />
