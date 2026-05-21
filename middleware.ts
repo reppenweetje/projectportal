@@ -208,7 +208,7 @@ async function applyPortalCookies(
 // ─── Main handler ───────────────────────────────────────────────────────────
 
 export async function middleware(request: NextRequest) {
-  const { pathname, searchParams } = request.nextUrl;
+  const { searchParams } = request.nextUrl;
   const tokenParam = searchParams.get('t');
   const sessionCookie = request.cookies.get(SESSION_COOKIE)?.value;
 

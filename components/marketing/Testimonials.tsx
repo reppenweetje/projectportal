@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Project, Testimonial } from "@/lib/types";
 
 export function Testimonials({ project }: { project: Project }) {
@@ -63,9 +64,11 @@ function QuoteMark() {
 function Avatar({ testimonial }: { testimonial: Testimonial }) {
   if (testimonial.photoSrc) {
     return (
-      <img
+      <Image
         src={testimonial.photoSrc}
         alt={testimonial.author}
+        width={40}
+        height={40}
         className="w-10 h-10 rounded-full object-cover"
       />
     );

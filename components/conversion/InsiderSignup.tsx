@@ -40,6 +40,7 @@ export function InsiderSignup({
 
   useEffect(() => {
     if (profile) {
+      /* eslint-disable react-hooks/set-state-in-effect */
       if (profile.name && !name) setName(profile.name);
       if (profile.email && !email) setEmail(profile.email);
       if (profile.modus && profile.modus !== "ondernemer" &&
@@ -48,6 +49,7 @@ export function InsiderSignup({
       } else if (profile.modus) {
         setModus(profile.modus);
       }
+      /* eslint-enable react-hooks/set-state-in-effect */
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile]);

@@ -47,9 +47,11 @@ export function ReservationForm({ project }: { project: Project }) {
   // Pre-fill from CLP profile
   useEffect(() => {
     if (profile) {
+      /* eslint-disable react-hooks/set-state-in-effect */
       if (profile.name && !naam) setNaam(profile.name);
       if (profile.email && !email) setEmail(profile.email);
       if (profile.phone && !telefoon) setTelefoon(profile.phone);
+      /* eslint-enable react-hooks/set-state-in-effect */
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile]);

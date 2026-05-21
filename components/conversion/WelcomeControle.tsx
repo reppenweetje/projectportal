@@ -26,10 +26,12 @@ export function WelcomeControle({ project }: { project: Project }) {
   // Hydrate inputs once profile is loaded
   useEffect(() => {
     if (profile) {
+      /* eslint-disable react-hooks/set-state-in-effect */
       setName(profile.name ?? "");
       setEmail(profile.email ?? "");
       setPhone(profile.phone ?? "");
       setModus(profile.modus ?? "");
+      /* eslint-enable react-hooks/set-state-in-effect */
     }
   }, [profile]);
 

@@ -1,5 +1,7 @@
 import type { Project } from "@/lib/types";
 
+// project-prop blijft voor toekomst (per-project USP-set), nu nog ongebruikt.
+
 /**
  * USPHighlights — bullet-grid met de belangrijkste USPs direct na de hero
  * banner. Geeft bezoekers in 1 oogopslag de redenen om verder te lezen.
@@ -54,7 +56,8 @@ function USPSet(): USP[] {
   ];
 }
 
-export function USPHighlights({ project: _project }: { project: Project }) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function USPHighlights({ project }: { project: Project }) {
   const usps = USPSet();
   return (
     <section className="bg-surface-muted py-12 md:py-16">

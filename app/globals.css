@@ -47,13 +47,18 @@ html, body {
   text-rendering: optimizeLegibility;
 }
 
-/* Bottom safe-area for the floating WhatsApp button on mobile */
+/* Bottom safe-area for the floating WhatsApp button (h-14 = 56px,
+   bottom-5 = 20px, dus button strekt tot 76px vanaf bottom). Padding
+   moet groter zijn dan dat anders dekt 'ie de laatste regel content af.
+   env(safe-area-inset-bottom) voor iOS-notch / home-indicator. */
 .has-sticky-cta {
-  padding-bottom: 1.5rem;
+  padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px));
 }
 
 @media (min-width: 768px) {
   .has-sticky-cta {
-    padding-bottom: 0;
+    /* Op desktop staat de button rechts-onder maar laatste sectie heeft
+       genoeg eigen padding, dus iets minder is OK. */
+    padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
   }
 }

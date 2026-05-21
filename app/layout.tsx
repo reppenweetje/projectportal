@@ -1,7 +1,16 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Montserrat } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  // viewportFit cover voor iPhone-notch / dynamic island — content kan tot
+  // randen lopen, env(safe-area-inset-*) regelt padding waar nodig.
+  viewportFit: "cover",
+  themeColor: "#0f0f70",
+};
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",

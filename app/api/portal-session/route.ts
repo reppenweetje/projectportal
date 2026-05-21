@@ -2,7 +2,7 @@
  * POST /api/portal-session
  *
  * Same-origin endpoint die een portal_token inwisselt voor dh_session +
- * dh_profile cookies op het dehofman.nl-domain.
+ * dh_profile + repp_lead cookies op het dehofman.nl-domain.
  *
  * Waarom een eigen route ipv direct vanuit de browser naar Supabase
  * portal-resolve? Browsers blokkeren Set-Cookie van een third-party origin
@@ -12,7 +12,7 @@
  * `?t=`-redirect of refresh.
  *
  * Body:  { "token": "<portal_token uuid>" }
- * 200:   { "ok": true, "profile": { "first_name": string | null } }
+ * 200:   { "ok": true, "profile": { first_name, email, modus, ... } }
  * 400:   invalid_token
  * 401:   token_not_found (portal-resolve gaf 401)
  * 500:   server_misconfigured (env vars missen)
@@ -27,6 +27,29 @@ import {
   COOKIE_MAX_AGE_SECONDS,
   signProfile,
 } from "@/lib/portal-session";
+
+const LEAD_COOKIE = "repp_lead";
+const LEAD_COOKIE_MAX_AGE = 60 * 60 * 24 * 90; // 90d
+
+function normalizeModus(
+  persona: string | null | undefined,
+): "ondernemer" | "belegger" | undefined {
+  if (!persona) return undefined;
+  const p = persona.toLowerCase();
+  if (p.includes("beleg") || p.includes("invest")) return "belegger";
+  if (p.includes("onder") || p.includes("gebruik") || p.includes("owner"))
+    return "ondernemer";
+  return undefined;
+}
+
+function normalizeUnitType(
+  sizeId: string | null | undefined,
+): "L" | "XL" | "XXL" | undefined {
+  if (!sizeId) return undefined;
+  const s = sizeId.toUpperCase();
+  if (s === "L" || s === "XL" || s === "XXL") return s;
+  return undefined;
+}
 
 export const runtime = "nodejs"; // Node-runtime voor stabiele fetch + Web Crypto
 
@@ -57,7 +80,17 @@ export async function POST(req: Request) {
     ok?: boolean;
     session_token?: string;
     expires_at?: string;
-    profile?: { first_name?: string | null };
+    profile?: {
+      first_name?: string | null;
+      email?: string | null;
+      phone?: string | null;
+      persona?: string | null;
+      size_id?: string | null;
+      intent_id?: string | null;
+      temperature?: string | null;
+      stage?: string | null;
+      score?: number | null;
+    };
   } | null = null;
 
   try {
@@ -90,12 +123,32 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "invalid" }, { status: 401 });
   }
 
-  const firstName = resolveData.profile?.first_name ?? null;
+  const profile = resolveData.profile ?? {};
+  const firstName = profile.first_name ?? null;
   const profileCookie = await signProfile({ first_name: firstName });
+
+  // Bouw het bredere repp_lead cookie zodat UI direct gepersonaliseerd is.
+  const leadPayload: Record<string, unknown> = {
+    source: "email",
+    verified: true,
+    verifiedAt: new Date().toISOString(),
+  };
+  if (firstName) leadPayload.name = firstName;
+  if (profile.email) leadPayload.email = profile.email;
+  if (profile.phone) leadPayload.phone = profile.phone;
+  const modus = normalizeModus(profile.persona);
+  if (modus) leadPayload.modus = modus;
+  const unitType = normalizeUnitType(profile.size_id);
+  if (unitType) leadPayload.unitType = unitType;
 
   const response = NextResponse.json({
     ok: true,
-    profile: { first_name: firstName },
+    profile: {
+      first_name: firstName,
+      email: profile.email ?? null,
+      modus: modus ?? null,
+      unitType: unitType ?? null,
+    },
   });
 
   response.cookies.set({
@@ -116,6 +169,16 @@ export async function POST(req: Request) {
     sameSite: "lax",
     path: "/",
     maxAge: COOKIE_MAX_AGE_SECONDS,
+  });
+
+  response.cookies.set({
+    name: LEAD_COOKIE,
+    value: encodeURIComponent(JSON.stringify(leadPayload)),
+    httpOnly: false,
+    secure: true,
+    sameSite: "lax",
+    path: "/",
+    maxAge: LEAD_COOKIE_MAX_AGE,
   });
 
   return response;

@@ -74,6 +74,7 @@ export function usePortalSession(): ClientPortalSession | null {
   useEffect(() => {
     const profile = readProfileCookie();
     if (profile) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setSession({ isReturning: true, firstName: profile.first_name });
     } else {
       setSession({ isReturning: false, firstName: null });
