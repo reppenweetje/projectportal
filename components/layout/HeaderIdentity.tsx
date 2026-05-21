@@ -12,7 +12,7 @@ export function HeaderIdentity({ projectSlug }: { projectSlug: string }) {
       href={`/${projectSlug}/welkom`}
       aria-label={`Ingelogd als ${profile.name}`}
       title={`Ingelogd als ${profile.name}`}
-      className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-repp-navy text-white font-bold text-xs hover:bg-repp-blue transition"
+      className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white text-repp-navy font-bold text-xs hover:brightness-90 transition"
     >
       {initials(profile.name)}
     </Link>

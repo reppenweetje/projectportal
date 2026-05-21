@@ -87,7 +87,7 @@ export function MobileMenu({ project }: { project: Project }) {
         onClick={() => setOpen(true)}
         aria-label="Open menu"
         aria-expanded={open}
-        className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full text-repp-navy hover:bg-repp-gray/40 transition"
+        className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full text-white hover:bg-white/10 transition"
       >
         <svg
           viewBox="0 0 24 24"

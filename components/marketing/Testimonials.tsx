@@ -51,7 +51,7 @@ function QuoteMark() {
   return (
     <svg
       viewBox="0 0 24 24"
-      className="w-7 h-7 text-repp-yellow"
+      className="w-7 h-7 text-repp-navy"
       fill="currentColor"
       aria-hidden
     >

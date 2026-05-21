@@ -13,7 +13,7 @@ export function Header({ project }: { project: Project }) {
   ];
 
   return (
-    <header className="sticky top-0 z-30 w-full bg-white/95 backdrop-blur border-b border-repp-gray/60">
+    <header className="sticky top-0 z-30 w-full bg-repp-navy/95 backdrop-blur border-b border-repp-yellow/40">
       <div className="mx-auto max-w-6xl px-4 sm:px-5 h-16 flex items-center justify-between gap-3">
         <Link
           href={`/${project.slug}`}
@@ -21,7 +21,7 @@ export function Header({ project }: { project: Project }) {
           className="shrink-0"
         >
           <Image
-            src="/images/logos/repp-bedrijfsmakelaar.svg"
+            src="/images/logos/repp-bedrijfsmakelaar-wit.svg"
             alt="REPP Bedrijfsmakelaar"
             width={84}
             height={24}
@@ -36,7 +36,7 @@ export function Header({ project }: { project: Project }) {
             <Link
               key={i.href}
               href={i.href}
-              className="inline-flex px-3 py-2 text-sm font-semibold text-repp-navy hover:text-repp-blue transition"
+              className="inline-flex px-3 py-2 text-sm font-semibold text-white hover:text-repp-yellow transition"
             >
               {i.label}
             </Link>

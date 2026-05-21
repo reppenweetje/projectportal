@@ -10,7 +10,7 @@ export function HeaderFavorites({ projectSlug }: { projectSlug: string }) {
   return (
     <Link
       href={`/${projectSlug}/favorieten`}
-      className="inline-flex items-center gap-1.5 px-3 h-9 rounded-full hover:bg-repp-gray/40 transition text-repp-navy"
+      className="inline-flex items-center gap-1.5 px-3 h-9 rounded-full hover:bg-white/10 transition text-white"
       aria-label={`${count} favorieten`}
     >
       <svg
