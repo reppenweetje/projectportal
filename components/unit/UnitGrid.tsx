@@ -45,11 +45,14 @@ export function UnitGrid({
 }) {
   const [previewUnit, setPreviewUnit] = useState<Unit | null>(null);
 
+  // Rij 1 (units 1-7) bovenaan, rij 2 (units 8-14) onderaan — matched
+  // de fysieke lay-out van het blok in de Waarderpolder (rij met de
+  // lage nummers ligt aan de A. Hofmanweg-zijde).
   const top = project.units
-    .filter((u) => u.number >= 8)
+    .filter((u) => u.number <= 7)
     .sort((a, b) => a.number - b.number);
   const bottom = project.units
-    .filter((u) => u.number <= 7)
+    .filter((u) => u.number >= 8)
     .sort((a, b) => a.number - b.number);
 
   const containerCls =

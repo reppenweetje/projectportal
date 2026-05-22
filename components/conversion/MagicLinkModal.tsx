@@ -122,9 +122,15 @@ export function MagicLinkModal({
               inloglink klaar. De link werkt 60 dagen vanaf nu.
             </p>
             <p className="mt-2 text-xs text-repp-navy/60">
-              Geen mail binnen 5 minuten? Check je spam-folder, of laat
-              je gegevens via een formulier achter (bijv. brochure
-              opvragen) — je krijgt dan automatisch een nieuwe link.
+              Geen mail binnen 5 minuten? Check je spam-folder, of bel
+              ons direct op{" "}
+              <a
+                href="tel:+31202610080"
+                className="font-semibold text-repp-navy underline hover:text-repp-blue"
+              >
+                020 261 0080
+              </a>{" "}
+              — dan helpen we je meteen verder.
             </p>
             <button
               type="button"
