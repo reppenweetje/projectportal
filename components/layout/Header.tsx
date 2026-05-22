@@ -38,20 +38,21 @@ export function Header({ project }: { project: Project }) {
           />
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-2">
+        {/* Desktop nav — tighter spacing zodat "Reserveer een unit" past
+            zonder overflow op smallere desktop-vensters. */}
+        <nav className="hidden md:flex items-center gap-0.5">
           {items.map((i) => (
             <Link
               key={i.href}
               href={i.href}
-              className="inline-flex px-3 py-2 text-sm font-semibold text-white hover:text-repp-yellow transition"
+              className="inline-flex px-2.5 py-2 text-sm font-semibold text-white hover:text-repp-yellow transition"
             >
               {i.label}
             </Link>
           ))}
           <Link
             href={`/${project.slug}/documenten/brochure`}
-            className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-semibold text-white hover:text-repp-yellow transition"
+            className="inline-flex items-center gap-1.5 px-2.5 py-2 text-sm font-semibold text-white hover:text-repp-yellow transition"
             title="Download de brochure"
           >
             <svg
@@ -76,19 +77,18 @@ export function Header({ project }: { project: Project }) {
             href={`/${project.slug}/reserveren`}
             className="inline-flex items-center bg-repp-yellow text-repp-navy text-sm font-bold px-4 py-2 rounded-full hover:brightness-95 transition"
           >
-            Reserveer
+            Reserveer een unit
           </Link>
         </nav>
 
-        {/* Mobile: yellow CTA + hamburger. Reserveer kleiner zodat 'ie
-            niet visueel concurreert met andere yellow-CTAs (zoals Bekijk
-            in ScarcityStrip eronder). */}
-        <div className="flex md:hidden items-center gap-1.5">
+        {/* Mobile: yellow CTA + hamburger. Tight padding zodat "Reserveer
+            een unit" past naast logo + hamburger op kleine schermen. */}
+        <div className="flex md:hidden items-center gap-1">
           <Link
             href={`/${project.slug}/reserveren`}
-            className="inline-flex items-center bg-repp-yellow text-repp-navy text-[11px] font-bold px-2.5 py-1.5 rounded-full hover:brightness-95 transition"
+            className="inline-flex items-center bg-repp-yellow text-repp-navy text-[11px] font-bold px-2.5 py-1.5 rounded-full hover:brightness-95 transition whitespace-nowrap"
           >
-            Reserveer
+            Reserveer een unit
           </Link>
           <MobileMenu project={project} />
         </div>
