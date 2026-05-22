@@ -159,7 +159,10 @@ function buildLeadCookie(profile: ResolveProfile): string {
   if (modus) payload.modus = modus;
   const unitType = normalizeUnitType(profile.size_id);
   if (unitType) payload.unitType = unitType;
-  return encodeURIComponent(JSON.stringify(payload));
+  // ⚠️ GEEN encodeURIComponent hier — NextResponse.cookies.set() doet dat
+  // zelf. Dubbele encoding breekt de client-side readCookie() in
+  // lib/personalization.ts die met 1 decode parsed. Bug-fix.
+  return JSON.stringify(payload);
 }
 
 async function applyPortalCookies(

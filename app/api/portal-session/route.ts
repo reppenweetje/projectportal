@@ -173,7 +173,9 @@ export async function POST(req: Request) {
 
   response.cookies.set({
     name: LEAD_COOKIE,
-    value: encodeURIComponent(JSON.stringify(leadPayload)),
+    // ⚠️ GEEN encodeURIComponent — NextResponse.cookies.set() encodet zelf.
+    // Dubbel-encoded value breekt client readCookie() in personalization.ts.
+    value: JSON.stringify(leadPayload),
     httpOnly: false,
     secure: true,
     sameSite: "lax",
