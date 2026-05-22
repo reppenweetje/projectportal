@@ -9,7 +9,7 @@ export function Gallery({ project }: { project: Project }) {
   if (images.length === 0) return null;
 
   return (
-    <section className="py-20 md:py-28 bg-surface-muted">
+    <section className="pt-2 pb-16 md:pt-4 md:pb-24 bg-surface-muted">
       <div className="mx-auto max-w-5xl px-5">
         <div className="text-center mb-10">
           <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
