@@ -173,8 +173,12 @@ export const deHofman: Project = {
   rendementBrutoMin: 6,
   rendementBrutoMax: 8,
   heroImage: {
-    src: `${baseRender}/hero-dusk.jpg`,
-    alt: "De Hofman bij schemering, hoofdgevel met DE HOFMAN-belettering",
+    // 2-eve toont De Hofman in 3/4-perspectief, DE HOFMAN-belettering staat
+    // klein in de upper-right zodat de H1 "De Hofman" overlay er niet mee
+    // botst. Hoofdgevel-render hero-dusk.jpg blijft beschikbaar in de
+    // gallery-carrousel onder.
+    src: `${baseRender}/2-eve.jpg`,
+    alt: "De Hofman bij avond, schuin aanzicht met entree en parkeren",
     caption: "Impressie · De Hofman bij schemering",
   },
   gallery: [

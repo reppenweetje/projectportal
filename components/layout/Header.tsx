@@ -78,11 +78,13 @@ export function Header({ project }: { project: Project }) {
           </Link>
         </nav>
 
-        {/* Mobile: yellow CTA + hamburger */}
-        <div className="flex md:hidden items-center gap-1">
+        {/* Mobile: yellow CTA + hamburger. Reserveer kleiner zodat 'ie
+            niet visueel concurreert met andere yellow-CTAs (zoals Bekijk
+            in ScarcityStrip eronder). */}
+        <div className="flex md:hidden items-center gap-1.5">
           <Link
             href={`/${project.slug}/reserveren`}
-            className="inline-flex items-center bg-repp-yellow text-repp-navy text-xs font-bold px-3 py-2 rounded-full hover:brightness-95 transition"
+            className="inline-flex items-center bg-repp-yellow text-repp-navy text-[11px] font-bold px-2.5 py-1.5 rounded-full hover:brightness-95 transition"
           >
             Reserveer
           </Link>
