@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useFavorite } from "@/lib/favorites";
 import { useLeadProfile } from "@/lib/personalization";
+import { LeadCaptureDialog } from "@/components/conversion/LeadCaptureDialog";
 
 export function SaveForLater({
   unitSlug,
@@ -18,10 +19,39 @@ export function SaveForLater({
   const { isFavorite, toggle } = useFavorite(unitSlug);
   const profile = useLeadProfile();
   const isVerified = Boolean(profile?.verified);
+  const hasIdentity = Boolean(profile?.email);
 
   const [notify, setNotify] = useState(false);
   const [notifySaved, setNotifySaved] = useState(false);
   const [notifyBusy, setNotifyBusy] = useState(false);
+  const [signupOpen, setSignupOpen] = useState(false);
+
+  // Voor walk-ins zonder account: signup-dialog openen ipv direct
+  // favoriet opslaan. Reden: favorieten zijn alleen waardevol als we
+  // de lead later kunnen mailen bij statuswijziging — anoniem opslaan
+  // in localStorage helpt sales niet. Na signup wordt favoriet automatisch
+  // opgeslagen + notify-flag aangezet zodat de lead direct profiteert.
+  function onFavoriteClick() {
+    if (isFavorite) {
+      // Reeds favoriet: unfavorite-actie heeft geen lead-capture nodig
+      toggle();
+      return;
+    }
+    if (hasIdentity) {
+      // Bekende lead: gewoon togglen, geen modal
+      toggle();
+      return;
+    }
+    // Walk-in zonder identity: signup-modal eerst
+    setSignupOpen(true);
+  }
+
+  function onSignupSuccess() {
+    setSignupOpen(false);
+    // LeadCaptureForm heeft cookies geset; nu kan toggle() de favoriet
+    // bewaren met identity-context.
+    toggle();
+  }
 
   async function onToggleNotify(checked: boolean) {
     setNotify(checked);
@@ -65,7 +95,7 @@ export function SaveForLater({
       </p>
       <button
         type="button"
-        onClick={toggle}
+        onClick={onFavoriteClick}
         aria-pressed={isFavorite}
         className={`mt-4 w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-full font-bold text-sm uppercase tracking-wider transition ${
           isFavorite
@@ -103,6 +133,16 @@ export function SaveForLater({
           </span>
         </label>
       )}
+
+      <LeadCaptureDialog
+        open={signupOpen}
+        onClose={() => setSignupOpen(false)}
+        onSuccess={onSignupSuccess}
+        gateContext={`favorite-unit-${unitSlug}`}
+        title="Bewaar Unit als favoriet"
+        description={`Om Unit ${unitNumber} (${unitType}) op te slaan, laat je éénmalig je gegevens achter. Dan kunnen we je ook mailen bij statuswijzigingen.`}
+        submitLabel={`Bewaar Unit ${unitNumber}`}
+      />
     </div>
   );
 }

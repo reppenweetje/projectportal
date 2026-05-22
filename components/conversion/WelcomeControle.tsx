@@ -58,14 +58,35 @@ export function WelcomeControle({ project }: { project: Project }) {
     return null;
   }
 
-  function onConfirm() {
+  async function onConfirm() {
     setMode("submitting");
-    markVerified({
+    const updated = {
       name: name.trim() || undefined,
       email: email.trim() || undefined,
       phone: phone.trim() || undefined,
       modus: modus || undefined,
-    });
+    };
+    markVerified(updated);
+
+    // Background-sync naar Supabase + Brevo zodat sales/CRM de nieuwe
+    // waardes ziet. Best-effort; UI hangt niet op deze call. Alleen
+    // firen als we email hebben (vereiste voor Brevo dedup).
+    if (updated.email) {
+      void fetch("/api/portal-update", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          name: updated.name ?? null,
+          email: updated.email,
+          phone: updated.phone ?? null,
+          modus: updated.modus ?? null,
+        }),
+      }).catch((err) => {
+        // Silent fail — cookie is al bijgewerkt, server-sync is bonus.
+        console.error("[welkom] portal-update failed", err);
+      });
+    }
+
     setMode("done");
     setTimeout(() => router.replace(next), 700);
   }
