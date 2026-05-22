@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/lib/types";
 import { FooterIdentity } from "./FooterIdentity";
+import { FooterLogin } from "./FooterLogin";
 import { InsiderSignup } from "@/components/conversion/InsiderSignup";
 
 export function Footer({ project }: { project: Project }) {
@@ -108,7 +109,11 @@ export function Footer({ project }: { project: Project }) {
       <div className="border-t border-white/10">
         <div className="mx-auto max-w-6xl px-5 py-4 text-xs text-white/50 flex flex-wrap items-center justify-between gap-3">
           <span>© {new Date().getFullYear()} REPP Bedrijfsmakelaar</span>
+          {/* Identity-strip: óf "Ingelogd als X · Dit ben ik niet" als
+              er een profile is, óf "Inloggen op je account" als de
+              bezoeker uitgelogd is. Wederzijds exclusief. */}
           <FooterIdentity projectSlug={project.slug} />
+          <FooterLogin />
           <span>Aan deze website kunnen geen rechten worden ontleend.</span>
         </div>
       </div>
