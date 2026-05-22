@@ -6,6 +6,7 @@ import { formatEuro } from "@/lib/types";
 import { useLeadProfile } from "@/lib/personalization";
 import { buildWhatsAppLink } from "@/lib/utils";
 import { track } from "@/lib/track";
+import { PrivacyConsent } from "@/components/legal/PrivacyConsent";
 
 type Step = "form" | "submitting" | "done" | "error";
 
@@ -280,6 +281,11 @@ export function XxlInterestForm({ project }: { project: Project }) {
               ? "Versturen…"
               : "Plaats mij op de XXL-wachtlijst →"}
           </button>
+          <PrivacyConsent
+            tone="light"
+            actionLabel="aanmelden"
+            className="mt-3"
+          />
           <p className="mt-3 text-xs text-repp-navy/60">
             Geen kosten, geen verplichting. We mailen alleen als de XXL-units
             in verkoop gaan of als er belangrijke updates zijn.

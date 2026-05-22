@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { Project, Unit } from "@/lib/types";
 import { formatEuro } from "@/lib/types";
-import { MailReportButton } from "@/components/conversion/MailReportButton";
 import {
   UnitTypePicker,
   representativeUnitForType,
@@ -163,23 +162,6 @@ export function MaandlastCalculator({ project }: { project: Project }) {
               Eerst meer info over Unit {unit.number}
             </Link>
           </div>
-
-          <MailReportButton
-            project={project}
-            reportType="maandlast"
-            context={{
-              unit: unit.slug,
-              koopsom,
-              ownPercent,
-              eigenInbreng,
-              rentePct,
-              termYears,
-              huidigeHuur,
-              maandHypotheek,
-              totaalMaand,
-              verschilMetHuur,
-            }}
-          />
 
           <p className="mt-4 text-[11px] text-white/40 leading-relaxed">
             Indicatieve berekening op basis van annuïteitenhypotheek. Werkelijke

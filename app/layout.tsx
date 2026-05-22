@@ -30,17 +30,36 @@ function getSiteUrl(): string {
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: {
-    default: "REPP | Projectportal",
-    template: "%s | REPP",
+    default: "De Hofman, Haarlem | REPP Bedrijfsmakelaar",
+    template: "%s | De Hofman",
   },
   description:
-    "REPP Projectportal: koop een bedrijfsunit in een van onze nieuwbouwprojecten.",
+    "Koop je eigen bedrijfsunit in De Hofman, Waarderpolder Haarlem. 14 hoogwaardige units vanaf €239.500 v.o.n. — zonder overdrachtsbelasting. Plug-and-play opgeleverd Q3 2027.",
+  applicationName: "De Hofman · REPP",
+  authors: [{ name: "REPP Bedrijfsmakelaar", url: "https://repp.nl" }],
+  creator: "REPP Bedrijfsmakelaar",
+  publisher: "REPP Bedrijfsmakelaar",
+  category: "real estate",
+  formatDetection: {
+    email: false,
+    telephone: true,
+    address: true,
+  },
   openGraph: {
     type: "website",
     locale: "nl_NL",
+    siteName: "De Hofman",
   },
   twitter: {
     card: "summary_large_image",
+    creator: "@repp_nl",
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  alternates: {
+    canonical: getSiteUrl(),
   },
 };
 

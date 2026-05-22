@@ -8,6 +8,7 @@ import { formatEuro } from "@/lib/types";
 import { useLeadProfile } from "@/lib/personalization";
 import { buildWhatsAppLink } from "@/lib/utils";
 import { track } from "@/lib/track";
+import { PrivacyConsent } from "@/components/legal/PrivacyConsent";
 
 type Step = "form" | "submitting" | "done" | "error";
 
@@ -267,6 +268,11 @@ export function ReservationForm({ project }: { project: Project }) {
                   ? `Meld me aan voor wachtlijst Unit ${unit.number} →`
                   : `Bevestig: zet Unit ${unit.number} op mijn naam →`}
             </button>
+            <PrivacyConsent
+              tone="light"
+              actionLabel="bevestigen"
+              className="mt-3"
+            />
             <p className="mt-3 text-xs text-repp-navy/60">
               Geen kosten, geen verplichting. Pas na een persoonlijk gesprek
               nemen we de volgende stap.
@@ -394,6 +400,11 @@ export function ReservationForm({ project }: { project: Project }) {
                 ? `Meld me aan voor wachtlijst Unit ${unit.number} →`
                 : `Zet Unit ${unit.number} op mijn naam (vrijblijvend) →`}
           </button>
+          <PrivacyConsent
+            tone="light"
+            actionLabel="bevestigen"
+            className="mt-3"
+          />
           <p className="mt-3 text-xs text-repp-navy/60">
             Geen kosten, geen verplichting. Pas na een persoonlijk gesprek met
             de makelaar nemen we de volgende stap.

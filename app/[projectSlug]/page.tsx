@@ -17,6 +17,15 @@ import { HomeOutro } from "@/components/marketing/HomeOutro";
 import { ScarcityStrip } from "@/components/marketing/ScarcityStrip";
 import { PersonalizationBanner } from "@/components/marketing/PersonalizationBanner";
 import { ExitIntentModal } from "@/components/conversion/ExitIntentModal";
+import { ProjectJsonLd } from "@/components/seo/ProjectJsonLd";
+
+function getSiteUrl(): string {
+  const url = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (url) return url.replace(/\/$/, "");
+  const vercel = process.env.NEXT_PUBLIC_VERCEL_URL;
+  if (vercel) return `https://${vercel}`;
+  return "http://localhost:3000";
+}
 
 type Params = { projectSlug: string };
 
@@ -28,9 +37,62 @@ export async function generateMetadata({
   const { projectSlug } = await params;
   const project = getProjectBySlug(projectSlug);
   if (!project) return { title: "Project niet gevonden" };
+
+  const title = `${project.name}, ${project.city}`;
+  const description = `${project.tagline} ${project.totalUnits} hoogwaardige bedrijfsunits in de Waarderpolder. Koop je eigen pand vanaf €239.500 v.o.n., zonder overdrachtsbelasting.`;
+  const heroImage = project.heroImage?.src;
+
   return {
-    title: `${project.name}, ${project.city}`,
-    description: `${project.name} in ${project.city}. ${project.tagline} ${project.totalUnits} hoogwaardige bedrijfsunits.`,
+    title,
+    description,
+    keywords: [
+      "bedrijfsunit kopen",
+      "bedrijfsruimte Haarlem",
+      "Waarderpolder",
+      "De Hofman",
+      "REPP Bedrijfsmakelaar",
+      "nieuwbouw bedrijfspand",
+      "L-unit XL-unit",
+      "kavel bedrijventerrein",
+    ],
+    alternates: {
+      canonical: "/",
+    },
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      locale: "nl_NL",
+      siteName: project.name,
+      ...(heroImage
+        ? {
+            images: [
+              {
+                url: heroImage,
+                width: 1200,
+                height: 630,
+                alt: project.heroImage.alt,
+              },
+            ],
+          }
+        : {}),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      ...(heroImage ? { images: [heroImage] } : {}),
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
   };
 }
 
@@ -43,8 +105,11 @@ export default async function ProjectHomePage({
   const project = getProjectBySlug(projectSlug);
   if (!project) notFound();
 
+  const siteUrl = getSiteUrl();
+
   return (
     <>
+      <ProjectJsonLd project={project} baseUrl={siteUrl} />
       <Header project={project} />
       <PersonalizationBanner project={project} />
       <ScarcityStrip project={project} />

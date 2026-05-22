@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Project } from "@/lib/types";
 import { track } from "@/lib/track";
+import { PrivacyConsent } from "@/components/legal/PrivacyConsent";
 
 type Variant = "default" | "compact" | "card";
 
@@ -113,6 +114,11 @@ export function InterestCapture({
         </button>
       </div>
       {error && <p className="mt-2 text-xs text-red-600">{error}</p>}
+      <PrivacyConsent
+        tone="muted"
+        actionLabel="inschrijven"
+        className="mt-2"
+      />
     </form>
   );
 }

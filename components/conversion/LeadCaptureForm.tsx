@@ -18,6 +18,7 @@
 import { useState, type FormEvent } from "react";
 import { track } from "@/lib/track";
 import { updateProfile } from "@/lib/personalization";
+import { PrivacyConsent } from "@/components/legal/PrivacyConsent";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -304,9 +305,11 @@ export function LeadCaptureForm({
         {submitting ? "Bezig…" : submitLabel}
       </button>
 
-      <p className="text-[11px] text-ink-soft text-center mt-1 leading-snug">
-        Geen ongevraagde mailings. We delen je gegevens niet.
-      </p>
+      <PrivacyConsent
+        tone="muted"
+        actionLabel="verzenden"
+        className="text-center mt-1"
+      />
     </form>
   );
 }

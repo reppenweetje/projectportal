@@ -31,6 +31,7 @@
 
 import { useState, type FormEvent } from "react";
 import { track } from "@/lib/track";
+import { PrivacyConsent } from "@/components/legal/PrivacyConsent";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -315,11 +316,11 @@ export function LeadGateOverlay({
               {submitting ? "Bezig…" : "Bekijk de informatie"}
             </button>
 
-            <p className="text-[11px] text-ink-soft text-center mt-2 leading-snug">
-              Door op de knop te klikken ga je akkoord met de verwerking van je
-              gegevens om je over De Hofman te informeren. Geen ongevraagde
-              mailings.
-            </p>
+            <PrivacyConsent
+              tone="muted"
+              actionLabel="bekijken"
+              className="text-center mt-2"
+            />
           </form>
         </div>
       </div>

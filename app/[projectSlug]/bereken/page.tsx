@@ -44,9 +44,8 @@ export default async function BerekenPage({
               </p>
             </div>
             <div className="mt-12">
-              {/* Calculator is publiek bedienbaar. Popup verschijnt pas
-                  wanneer iemand op "Stuur rapport naar mijn mail" klikt
-                  — zie MailReportButton voor de gate-trigger. */}
+              {/* Calculator is publiek bedienbaar zonder gate. Mail-rapport
+                  optie is voor nu uit (komt later terug). */}
               <Suspense fallback={null}>
                 <CalculatorTabs project={project} />
               </Suspense>
