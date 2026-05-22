@@ -63,10 +63,11 @@ function VerifiedBanner({
           ? `er zijn nog ${stillAvailable} units beschikbaar.`
           : "de verkoop is open.";
 
-  const modusLink =
-    profile.modus === "belegger"
-      ? `/${project.slug}/bereken?modus=belegger`
-      : `/${project.slug}/bereken?modus=ondernemer`;
+  // CTA leidt naar de plattegrond — leads willen vrijwel altijd eerst
+  // zien welke units nog beschikbaar zijn voordat ze verder kwalificeren.
+  // Modus-routing naar /bereken voelde te smal; /units geeft het complete
+  // beeld inclusief prijzen + status per unit.
+  const ctaLink = `/${project.slug}/units`;
 
   return (
     <div className="bg-repp-yellow text-repp-navy">
@@ -78,14 +79,12 @@ function VerifiedBanner({
           <p className="text-sm leading-snug">
             <span className="font-bold">Welkom {profile.name},</span>{" "}
             <span>{availabilityCopy}</span>
-            {profile.modus && (
-              <Link
-                href={modusLink}
-                className="ml-2 underline underline-offset-2 font-semibold hover:no-underline"
-              >
-                Direct verder →
-              </Link>
-            )}
+            <Link
+              href={ctaLink}
+              className="ml-2 underline underline-offset-2 font-semibold hover:no-underline"
+            >
+              Bekijk beschikbaarheid →
+            </Link>
           </p>
         </div>
         <button

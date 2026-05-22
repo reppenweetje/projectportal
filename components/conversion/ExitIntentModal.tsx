@@ -73,34 +73,32 @@ export function ExitIntentModal({ project }: { project: Project }) {
           ×
         </button>
         <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
-          Voor je gaat
+          Voor je vertrekt
         </p>
         <h2 className="mt-2 text-2xl md:text-3xl font-extrabold text-repp-navy tracking-tight">
-          Krijg de brochure én prijslijst per mail.
+          Houd De Hofman in de gaten
         </h2>
-        <p className="mt-2 text-sm text-repp-navy/70">
-          Geen verplichting. We sturen je 1 mail met de stukken zodat je later
-          rustig kunt lezen. Je staat er niet meteen aan vast.
+        <p className="mt-2 text-sm text-repp-navy/70 leading-relaxed">
+          Laat je mailadres achter — je krijgt de brochure, prijslijst en
+          updates zodra een unit verandert van status. Op elk moment uitschrijven.
         </p>
         <div className="mt-5">
           <EmailCaptureForm
             source="exit-intent"
             context={{ project: project.slug }}
-            ctaLabel="Stuur me"
-            successText="Top, je krijgt de stukken zo in je inbox."
+            ctaLabel="Houd me op de hoogte"
+            successText="Top, je staat erin. Tot snel."
             tone="light"
           />
         </div>
         <p className="mt-3 text-[11px] text-repp-navy/50">
-          Liever rondkijken zonder gegevens?{" "}
           <button
             type="button"
             onClick={() => setOpen(false)}
             className="underline hover:text-repp-navy"
           >
-            Sluit dit venster
+            Nee dank je, ik kijk nog even rond
           </button>
-          .
         </p>
       </div>
     </div>

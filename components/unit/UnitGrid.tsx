@@ -100,13 +100,15 @@ export function UnitGrid({
 }
 
 function RoadIndicator({ size }: { size: Size }) {
-  const widthCls = size === "mini" ? "w-5" : "w-7 md:w-9";
+  // Wijder gemaakt (was w-5 / w-7) zodat de "A. Hofmanweg" verticale
+  // tekst leesbaar is. Bredere strip + grotere font + sterkere contrast.
+  const widthCls = size === "mini" ? "w-7" : "w-10 md:w-12";
   const fontCls =
-    size === "mini" ? "text-[8px]" : "text-[9px] md:text-[10px]";
+    size === "mini" ? "text-[9px]" : "text-[11px] md:text-xs";
   return (
     <div className={`relative ${widthCls} flex items-center justify-center`}>
-      {/* Asphalt-style strip */}
-      <div className="absolute inset-y-1 right-1 left-1 rounded-md bg-repp-navy/15">
+      {/* Asphalt-style strip — donkerder zodat tekst-contrast hoger is */}
+      <div className="absolute inset-y-1 right-1 left-1 rounded-md bg-repp-navy/20">
         {/* dashed road centerline — transparante gaps, navy dashes */}
         <div
           className="absolute inset-y-2 left-1/2 -translate-x-1/2 w-0.5 text-repp-navy/70"
@@ -118,7 +120,7 @@ function RoadIndicator({ size }: { size: Size }) {
         />
       </div>
       <span
-        className={`relative ${fontCls} uppercase tracking-[0.18em] text-repp-navy/70 font-semibold whitespace-nowrap`}
+        className={`relative ${fontCls} uppercase tracking-[0.18em] text-repp-navy font-bold whitespace-nowrap`}
         style={{ writingMode: "vertical-rl", textOrientation: "mixed" }}
       >
         A. Hofmanweg
