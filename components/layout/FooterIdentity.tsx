@@ -8,10 +8,20 @@ export function FooterIdentity({ projectSlug }: { projectSlug: string }) {
   const profile = useLeadProfile();
   const router = useRouter();
   const [confirming, setConfirming] = useState(false);
+  const [busy, setBusy] = useState(false);
 
   if (!profile?.name) return null;
 
-  function logout() {
+  async function logout() {
+    setBusy(true);
+    try {
+      // Server wist dh_session + dh_profile (HttpOnly, kan alleen server-side)
+      // plus repp_lead voor consistentie. Client wist daarnaast nog z'n eigen
+      // repp_lead via clearLeadProfile() en reload't naar / met schone slate.
+      await fetch("/api/portal-logout", { method: "POST" });
+    } catch (err) {
+      console.error("[logout] portal-logout call failed", err);
+    }
     clearLeadProfile();
     router.replace(`/${projectSlug}`);
     if (typeof window !== "undefined") {
@@ -20,7 +30,7 @@ export function FooterIdentity({ projectSlug }: { projectSlug: string }) {
   }
 
   return (
-    <div className="text-xs text-white/50 flex items-center gap-2">
+    <div className="text-xs text-white/50 flex items-center gap-2 flex-wrap">
       <span>
         Ingelogd als{" "}
         <span className="text-white/70 font-medium">{profile.name}</span>
@@ -31,13 +41,15 @@ export function FooterIdentity({ projectSlug }: { projectSlug: string }) {
           <button
             type="button"
             onClick={logout}
-            className="underline hover:text-white text-white/80"
+            disabled={busy}
+            className="underline hover:text-white text-white/80 disabled:opacity-60"
           >
-            Ja, log uit
+            {busy ? "Bezig…" : "Ja, log mij uit"}
           </button>
           <button
             type="button"
             onClick={() => setConfirming(false)}
+            disabled={busy}
             className="underline hover:text-white"
           >
             Annuleer
@@ -49,7 +61,7 @@ export function FooterIdentity({ projectSlug }: { projectSlug: string }) {
           onClick={() => setConfirming(true)}
           className="underline hover:text-white"
         >
-          Niet ik / log uit
+          Dit ben ik niet
         </button>
       )}
     </div>

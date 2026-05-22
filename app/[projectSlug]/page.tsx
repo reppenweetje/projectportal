@@ -55,6 +55,10 @@ export default async function ProjectHomePage({
         {/* 1b. USP-bullets direct na de hero — vier-zes redenen waarom */}
         <USPHighlights project={project} />
 
+        {/* 1c. Sfeer-carrousel direct na de USP-bullets zodat bezoeker
+            visueel meteen kan inzoomen op het pand voordat 'ie verder leest. */}
+        <Gallery project={project} />
+
         {/* 2. Trust — partners */}
         <TrustStack project={project} />
 
@@ -67,9 +71,8 @@ export default async function ProjectHomePage({
         {/* 5. Loss aversion — wat het kost om niet te kiezen */}
         <LossAversion project={project} />
 
-        {/* 6. Show the project — video + gallery */}
+        {/* 6. Video block voor diepere project-context */}
         <VideoBlock project={project} />
-        <Gallery project={project} />
 
         {/* 7. Key documents — concrete download / leesbaar */}
         <KeyDocuments project={project} />
