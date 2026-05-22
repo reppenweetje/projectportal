@@ -1,4 +1,7 @@
 import { NextResponse } from "next/server";
+import { upsertWalkinLead } from "@/lib/lead-sync";
+
+export const runtime = "nodejs";
 
 export async function POST(request: Request) {
   const body = (await request.json().catch(() => null)) as Record<
@@ -9,11 +12,25 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid request" }, { status: 400 });
   }
 
-  // TODO: render PDF via Puppeteer/Chromium and send via Resend with attachment.
-  console.log("[report]", {
-    ...body,
-    receivedAt: new Date().toISOString(),
+  const reportType = typeof body.reportType === "string" ? body.reportType : null;
+
+  const result = await upsertWalkinLead({
+    source: "dehofman_portal_report",
+    email: String(body.email),
+    first_name: typeof body.name === "string" ? body.name : null,
+    temperature: "warm",
+    attributes: {
+      project: typeof body.project === "string" ? body.project : "de-hofman",
+      report_type: reportType,
+      context: body.context ?? null,
+      source_label: typeof body.source === "string" ? body.source : "report",
+    },
   });
 
-  return NextResponse.json({ ok: true });
+  if (!result.ok) console.error("[report] lead-sync failed", result.error);
+
+  return NextResponse.json({
+    ok: true,
+    portal_token: result.portal_token ?? null,
+  });
 }
