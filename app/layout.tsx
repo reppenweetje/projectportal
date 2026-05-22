@@ -54,10 +54,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     creator: "@repp_nl",
   },
-  icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-  },
+  // Favicon: app/icon.svg wordt automatisch gepicked door Next.js
+  // (App Router convention). De .ico is verwijderd zodat 'ie niet
+  // overrides. Geen apple-touch-icon yet (PNG vereist) — modern iOS
+  // gebruikt de SVG ook.
   alternates: {
     canonical: getSiteUrl(),
   },
