@@ -3,6 +3,7 @@ import Image from "next/image";
 import type { Project } from "@/lib/types";
 import { HeaderFavorites } from "./HeaderFavorites";
 import { HeaderIdentity } from "./HeaderIdentity";
+import { LoginNudge } from "./LoginNudge";
 import { MobileMenu } from "./MobileMenu";
 
 export function Header({ project }: { project: Project }) {
@@ -13,6 +14,7 @@ export function Header({ project }: { project: Project }) {
   ];
 
   return (
+    <>
     <header
       // Padding-top met safe-area zodat de header op iPhones met notch /
       // dynamic island niet onder de status-bar verdwijnt. viewportFit:
@@ -92,5 +94,10 @@ export function Header({ project }: { project: Project }) {
         </div>
       </div>
     </header>
+    {/* LoginNudge buiten sticky header zodat 'ie wegscrollt met content
+        ipv permanent ruimte te pakken op mobile. Rendert alleen voor
+        uitgelogde bezoekers (interne useLeadProfile check). */}
+    <LoginNudge />
+    </>
   );
 }
