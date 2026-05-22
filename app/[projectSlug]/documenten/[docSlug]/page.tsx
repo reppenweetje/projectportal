@@ -31,6 +31,11 @@ export default async function DocumentViewerPage({
   const doc = project.documents.find((d) => d.slug === docSlug);
   if (!doc) notFound();
 
+  // Mooie filename voor downloads: "De Hofman <label>.pdf"
+  // Label wordt lowercased zodat 'Brochure' → 'brochure', matching de
+  // gebruiker's voorbeeld. Speciale chars (-, /) blijven intact.
+  const downloadName = `${project.name} ${doc.label.toLowerCase()}.pdf`;
+
   return (
     <>
       <Header project={project} />
@@ -62,7 +67,7 @@ export default async function DocumentViewerPage({
                 </a>
                 <a
                   href={doc.href}
-                  download
+                  download={downloadName}
                   className="inline-flex items-center gap-1.5 bg-repp-navy text-white text-sm font-semibold px-4 py-2 rounded-full hover:bg-repp-blue transition"
                 >
                   <DownloadIcon />
@@ -97,7 +102,7 @@ export default async function DocumentViewerPage({
                 </a>
                 <a
                   href={doc.href}
-                  download
+                  download={downloadName}
                   className="flex items-center justify-center gap-2 w-full bg-repp-navy text-white font-semibold py-3 rounded-full hover:bg-repp-blue transition"
                 >
                   <DownloadIcon />

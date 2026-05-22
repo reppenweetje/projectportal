@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { updateProfile, useLeadProfile } from "@/lib/personalization";
+import { PrivacyConsent } from "@/components/legal/PrivacyConsent";
 
 type Tone = "light" | "dark";
 
@@ -117,6 +118,12 @@ export function EmailCaptureForm({
         {busy ? "…" : ctaLabel}
       </button>
       {err && <p className={`text-xs ${errCls} sm:basis-full`}>{err}</p>}
+      <div className="sm:basis-full">
+        <PrivacyConsent
+          tone={tone === "dark" ? "dark" : "muted"}
+          actionLabel="verzenden"
+        />
+      </div>
     </form>
   );
 }

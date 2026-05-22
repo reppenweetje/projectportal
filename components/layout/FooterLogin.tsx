@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useLeadProfile } from "@/lib/personalization";
+import { PrivacyConsent } from "@/components/legal/PrivacyConsent";
 
 /**
  * FooterLogin — toont "Inloggen op je account" link voor uitgelogde
@@ -134,6 +135,10 @@ export function FooterLogin() {
                     ? "Versturen…"
                     : "Stuur me een inloglink"}
                 </button>
+                <PrivacyConsent
+                  tone="muted"
+                  actionLabel="versturen"
+                />
                 <p className="text-[11px] text-repp-navy/50 leading-relaxed pt-1">
                   Geen account bij ons? Vul dan eerst een formulier in op
                   de site (reservering, brochure, etc.) — je krijgt automatisch

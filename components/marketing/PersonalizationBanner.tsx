@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useLeadProfile } from "@/lib/personalization";
+import { countByStatus } from "@/lib/projects/de-hofman";
 import type { Project } from "@/lib/types";
 
 export function PersonalizationBanner({ project }: { project: Project }) {
@@ -11,11 +12,18 @@ export function PersonalizationBanner({ project }: { project: Project }) {
 
   if (!profile?.name || dismissed) return null;
 
+  // Live unit-count zodat de banner-copy ("nog X units beschikbaar")
+  // matched met de situatieplattegrond. Available + in_optie tellen
+  // we beide als "beschikbaar" want in_optie is nog reserveerbaar.
+  const counts = countByStatus(project);
+  const stillAvailable = counts.available + counts.in_optie;
+
   if (profile.verified) {
     return (
       <VerifiedBanner
         project={project}
         profile={profile}
+        stillAvailable={stillAvailable}
         onClose={() => setDismissed(true)}
       />
     );
@@ -33,26 +41,27 @@ export function PersonalizationBanner({ project }: { project: Project }) {
 function VerifiedBanner({
   project,
   profile,
+  stillAvailable,
   onClose,
 }: {
   project: Project;
   profile: NonNullable<ReturnType<typeof useLeadProfile>>;
+  stillAvailable: number;
   onClose: () => void;
 }) {
-  const interests = profile.interests ?? [];
-  const interestsText =
-    interests.length > 1
-      ? interests.slice(0, -1).join(", ") +
-        " en " +
-        interests[interests.length - 1]
-      : interests[0];
-
-  const modusLabel =
-    profile.modus === "belegger"
-      ? "als belegging"
-      : profile.modus === "ondernemer"
-        ? "voor je bedrijf"
-        : null;
+  // Banner-copy aanpassen op live unit-availability:
+  //   - 0 beschikbaar  → "alle units zijn vergeven" (extreme urgency)
+  //   - 1 beschikbaar  → "nog 1 unit beschikbaar"
+  //   - 2-5            → "Er zijn nog X units beschikbaar"  (acute scarcity)
+  //   - 6+             → "De verkoop is open."             (geen urgency yet)
+  const availabilityCopy =
+    stillAvailable === 0
+      ? "alle units zijn voorlopig vergeven."
+      : stillAvailable === 1
+        ? "nog 1 unit beschikbaar."
+        : stillAvailable <= 5
+          ? `er zijn nog ${stillAvailable} units beschikbaar.`
+          : "de verkoop is open.";
 
   const modusLink =
     profile.modus === "belegger"
@@ -67,18 +76,8 @@ function VerifiedBanner({
             {initials(profile.name ?? "")}
           </div>
           <p className="text-sm leading-snug">
-            <span className="font-bold">Welkom terug, {profile.name}.</span>
-            {interestsText && (
-              <span className="hidden md:inline">
-                {" "}
-                Je gaf eerder aan dat je zoekt naar{" "}
-                <span className="font-semibold">{interestsText}</span>
-                {modusLabel && <> {modusLabel}</>}.
-              </span>
-            )}
-            {!interestsText && modusLabel && (
-              <span className="hidden md:inline"> Je zoekt {modusLabel}.</span>
-            )}
+            <span className="font-bold">Welkom {profile.name},</span>{" "}
+            <span>{availabilityCopy}</span>
             {profile.modus && (
               <Link
                 href={modusLink}

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { updateProfile, useLeadProfile } from "@/lib/personalization";
 import type { Project } from "@/lib/types";
 import { track } from "@/lib/track";
+import { PrivacyConsent } from "@/components/legal/PrivacyConsent";
 
 type Modus = "ondernemer" | "belegger" | "beide";
 type Topic = "alles" | "prijzen" | "xxl" | "status";
@@ -153,6 +154,10 @@ export function InsiderSignup({
         <p className={`text-[11px] ${helperCls}`}>
           Geen spam. Max 1× per maand. Uitschrijven kan altijd.
         </p>
+        <PrivacyConsent
+          tone={tone === "dark" ? "dark" : "muted"}
+          actionLabel="inschrijven"
+        />
         {error && <p className="text-xs text-rose-300">⚠ {error}</p>}
       </form>
     );
@@ -238,6 +243,11 @@ export function InsiderSignup({
           Geen spam. Max 1× per maand. Uitschrijven kan altijd via een link in
           de mail.
         </p>
+        <PrivacyConsent
+          tone={tone === "dark" ? "dark" : "muted"}
+          actionLabel="inschrijven"
+          className="mt-2"
+        />
       </div>
     </form>
   );

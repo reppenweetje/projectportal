@@ -168,8 +168,17 @@ export function WelcomeControle({ project }: { project: Project }) {
       </div>
 
       <p className="mt-6 text-[11px] text-repp-navy/45 leading-relaxed">
-        We gebruiken je gegevens alleen om jou te helpen bij {project.name}.
-        Niet ik?{" "}
+        We gebruiken je gegevens alleen om jou te helpen bij {project.name} en
+        delen ze niet met derden — zie onze{" "}
+        <a
+          href="https://repp.nl/wp-content/uploads/2025/03/PRIVACY-VERKLARING.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline hover:text-repp-navy"
+        >
+          privacyverklaring
+        </a>
+        . Niet ik?{" "}
         <button
           type="button"
           onClick={onNotMe}

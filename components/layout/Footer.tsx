@@ -4,6 +4,7 @@ import type { Project } from "@/lib/types";
 import { FooterIdentity } from "./FooterIdentity";
 import { FooterLogin } from "./FooterLogin";
 import { InsiderSignup } from "@/components/conversion/InsiderSignup";
+import { PrivacyLink } from "@/components/legal/PrivacyConsent";
 
 export function Footer({ project }: { project: Project }) {
   return (
@@ -114,7 +115,11 @@ export function Footer({ project }: { project: Project }) {
               bezoeker uitgelogd is. Wederzijds exclusief. */}
           <FooterIdentity projectSlug={project.slug} />
           <FooterLogin />
-          <span>Aan deze website kunnen geen rechten worden ontleend.</span>
+          <div className="flex items-center gap-2 flex-wrap">
+            <PrivacyLink tone="dark" />
+            <span className="text-white/30">·</span>
+            <span>Aan deze website kunnen geen rechten worden ontleend.</span>
+          </div>
         </div>
       </div>
     </footer>
