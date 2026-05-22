@@ -61,10 +61,9 @@ export function LoginNudge() {
             <button
               type="button"
               onClick={() => setSignupOpen(true)}
-              // Wit met navy tekst — onderscheidt van de gele "Reserveer"
-              // CTA in de Header zodat de twee CTAs niet visueel
-              // concurreren.
-              className="inline-flex items-center bg-white text-repp-navy text-[11px] sm:text-xs font-bold px-3 sm:px-3.5 py-1.5 rounded-full hover:bg-white/90 transition whitespace-nowrap"
+              // Geel met underline — subtiel, geen pill-button concurrentie
+              // met de gele "Reserveer" CTA in de Header.
+              className="text-[11px] sm:text-xs text-repp-yellow font-bold underline underline-offset-2 hover:no-underline whitespace-nowrap"
             >
               Maak account →
             </button>

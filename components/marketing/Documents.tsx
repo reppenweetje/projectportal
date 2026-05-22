@@ -18,7 +18,7 @@ export function Documents({ project }: { project: Project }) {
     gateContext: "documenten",
     title: "Bekijk het document",
     description:
-      "We sturen je het document direct per mail zodat je het later terug kunt vinden. Telefoonnummer is optioneel, alleen voor als je gebeld wilt worden bij vragen.",
+      "We sturen je het document direct per mail zodat je het later terug kunt vinden.",
     submitLabel: "Bekijk de documenten",
   });
 
