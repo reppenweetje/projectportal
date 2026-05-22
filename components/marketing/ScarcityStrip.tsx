@@ -27,13 +27,9 @@ export function ScarcityStrip({ project }: { project: Project }) {
           </Link>
         </div>
 
-        {/* Desktop: full 3-chip layout */}
-        <div className="hidden md:flex flex-wrap items-center gap-x-2 gap-y-2 text-sm">
-          <span className="font-bold text-repp-yellow inline-flex items-center gap-2 mr-1">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-repp-yellow animate-pulse" />
-            De verkoop gaat snel.
-          </span>
-
+        {/* Desktop: 3 chips, linksgealigned (zonder "De verkoop gaat snel"-
+            lead-in want die concurreert met de gele banner-message erboven). */}
+        <div className="hidden md:flex flex-wrap items-center gap-2 text-sm">
           <Chip
             href={`/${project.slug}/units`}
             label={`Al ${soldPct}% verkocht`}
