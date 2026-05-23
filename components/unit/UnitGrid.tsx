@@ -100,17 +100,16 @@ export function UnitGrid({
 }
 
 function RoadIndicator({ size }: { size: Size }) {
-  // De strip simuleert de A. Hofmanweg langs het blok. Vroeger gebruikten
-  // we writing-mode: vertical-rl met text-orientation: mixed waardoor
-  // letters individueel gestapeld werden — slecht leesbaar. Nu echte
-  // 90°-rotatie via CSS-transform: tekst staat zoals een straatnaam-bord
-  // (lees van onder naar boven door je hoofd te kantelen) en woorden
-  // blijven aaneengesloten.
-  const widthCls = size === "mini" ? "w-7" : "w-10 md:w-12";
-  const fontCls =
-    size === "mini" ? "text-[10px]" : "text-xs md:text-sm";
+  // De strip simuleert de A. Hofmanweg langs het blok. Op mobile passen
+  // we de roteerde tekst "A. Hofmanweg" niet binnen de korte grid-hoogte
+  // (text gets clipped door overflow-hidden of bleedt buiten container).
+  // Daarom: alleen het asphalt + dashed centerline op mobile (visuele
+  // hint is genoeg, plus straat-label staat duidelijk in de h2 erboven
+  // en in de page-context). Vanaf md+ tonen we de geroteerde tekst weer
+  // omdat daar wel genoeg verticale ruimte is.
+  const widthCls = size === "mini" ? "w-5" : "w-6 md:w-12";
   return (
-    <div className={`relative ${widthCls} flex items-center justify-center overflow-hidden`}>
+    <div className={`relative ${widthCls} flex items-center justify-center`}>
       {/* Asphalt-style strip — donkerder zodat tekst-contrast hoger is */}
       <div className="absolute inset-y-1 right-1 left-1 rounded-md bg-repp-navy/20">
         {/* dashed road centerline — transparante gaps, navy dashes */}
@@ -123,12 +122,14 @@ function RoadIndicator({ size }: { size: Size }) {
           }}
         />
       </div>
-      <span
-        className={`relative ${fontCls} uppercase tracking-[0.18em] text-repp-navy font-bold whitespace-nowrap origin-center`}
-        style={{ transform: "rotate(-90deg)" }}
-      >
-        A. Hofmanweg
-      </span>
+      {size !== "mini" && (
+        <span
+          className="hidden md:block relative text-sm uppercase tracking-[0.18em] text-repp-navy font-bold whitespace-nowrap origin-center"
+          style={{ transform: "rotate(-90deg)" }}
+        >
+          A. Hofmanweg
+        </span>
+      )}
     </div>
   );
 }
