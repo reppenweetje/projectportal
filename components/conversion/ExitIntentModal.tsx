@@ -79,7 +79,7 @@ export function ExitIntentModal({ project }: { project: Project }) {
           Houd De Hofman in de gaten
         </h2>
         <p className="mt-2 text-sm text-repp-navy/70 leading-relaxed">
-          Laat je mailadres achter — je krijgt de brochure, prijslijst en
+          Laat je mailadres achter. Je krijgt de brochure, prijslijst en
           updates zodra een unit verandert van status. Op elk moment uitschrijven.
         </p>
         <div className="mt-5">

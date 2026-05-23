@@ -4,9 +4,14 @@ import { countByStatus } from "@/lib/projects/de-hofman";
 
 export function ScarcityStrip({ project }: { project: Project }) {
   const counts = countByStatus(project);
+  // Denominator = totaal (14), niet sellable (12). Coming-soon units
+  // tellen mee in "X van Y" want bezoekers willen de totaalcapaciteit
+  // zien; sold-pct blijft over sellable zodat percentage realistisch
+  // blijft (anders nooit 100% want coming_soon zit in noemer).
   const sellable = project.totalUnits - counts.coming_soon;
   const stillAvailable = counts.available + counts.in_optie;
   const soldPct = Math.round((counts.sold / sellable) * 100);
+  const totalUnits = project.totalUnits;
 
   return (
     <div className="bg-repp-navy text-white">
@@ -40,7 +45,7 @@ export function ScarcityStrip({ project }: { project: Project }) {
           />
           <Chip
             href={`/${project.slug}/units`}
-            label={`Nog ${stillAvailable} van ${sellable} beschikbaar`}
+            label={`Nog ${stillAvailable} van ${totalUnits} beschikbaar`}
           />
         </div>
       </div>

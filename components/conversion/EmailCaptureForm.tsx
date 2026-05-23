@@ -91,14 +91,17 @@ export function EmailCaptureForm({
   const errCls = tone === "dark" ? "text-rose-200" : "text-red-600";
 
   return (
-    <form onSubmit={handle} className="flex flex-col sm:flex-row gap-2">
+    // Form is altijd vertikaal — wordt o.a. in modals gebruikt waar de
+    // horizontale variant fields squeezed in onleesbare smalle pills.
+    // Naam → Email → Submit-knop stacked + privacy-tekst eronder.
+    <form onSubmit={handle} className="flex flex-col gap-2.5">
       <input
         type="text"
         autoComplete="given-name"
         placeholder="Naam"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className={`flex-1 min-w-0 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 transition ${inputCls}`}
+        className={`w-full px-4 py-3 text-sm focus:outline-none focus:ring-2 transition ${inputCls}`}
       />
       <input
         type="email"
@@ -108,22 +111,20 @@ export function EmailCaptureForm({
         placeholder="jouw@email.nl"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className={`flex-1 min-w-0 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 transition ${inputCls}`}
+        className={`w-full px-4 py-3 text-sm focus:outline-none focus:ring-2 transition ${inputCls}`}
       />
       <button
         type="submit"
         disabled={busy}
-        className={`shrink-0 px-5 py-2.5 rounded-full text-sm font-bold transition disabled:opacity-60 ${btnCls}`}
+        className={`w-full px-5 py-3 rounded-full text-sm font-bold transition disabled:opacity-60 ${btnCls}`}
       >
         {busy ? "…" : ctaLabel}
       </button>
-      {err && <p className={`text-xs ${errCls} sm:basis-full`}>{err}</p>}
-      <div className="sm:basis-full">
-        <PrivacyConsent
-          tone={tone === "dark" ? "dark" : "muted"}
-          actionLabel="verzenden"
-        />
-      </div>
+      {err && <p className={`text-xs ${errCls}`}>{err}</p>}
+      <PrivacyConsent
+        tone={tone === "dark" ? "dark" : "muted"}
+        actionLabel="verzenden"
+      />
     </form>
   );
 }

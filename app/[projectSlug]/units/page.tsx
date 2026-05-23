@@ -25,7 +25,8 @@ export default async function UnitsOverviewPage({
   const project = getProjectBySlug(projectSlug);
   if (!project) notFound();
   const counts = countByStatus(project);
-  const sellable = project.totalUnits - counts.coming_soon;
+  // Denominator = totaal (14), niet sellable (12 / excl. coming_soon).
+  const totalUnits = project.totalUnits;
 
   return (
     <>
@@ -41,7 +42,7 @@ export default async function UnitsOverviewPage({
               Welke past bij jou?
             </h1>
             <p className="mt-4 text-repp-navy/70 max-w-xl mx-auto">
-              Nog {counts.available + counts.in_optie} van {sellable} beschikbaar.
+              Nog {counts.available + counts.in_optie} van {totalUnits} beschikbaar.
               Tik op een unit voor specs en reservering.
             </p>
           </div>
