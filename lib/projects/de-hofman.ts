@@ -160,7 +160,7 @@ export const deHofman: Project = {
       pricePerM2: 2539,
     },
   ],
-  whatsAppNumber: "31202610080",
+  whatsAppNumber: "31617192538",
   makelaar: {
     name: "Makelaar REPP",
     role: "Jouw vaste contactpersoon",
