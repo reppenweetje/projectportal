@@ -81,14 +81,16 @@ export function Header({ project }: { project: Project }) {
           </Link>
         </nav>
 
-        {/* Mobile: yellow CTA + hamburger. Tight padding zodat "Reserveer
-            een unit" past naast logo + hamburger op kleine schermen. */}
+        {/* Mobile: yellow CTA + hamburger. "Reserveer" houden we kort op
+            mobile zodat de hamburger niet off-screen valt op iPhone SE-
+            formaat (375px). Desktop heeft volle "Reserveer een unit"
+            label. */}
         <div className="flex md:hidden items-center gap-1">
           <Link
             href={`/${project.slug}/reserveren`}
-            className="inline-flex items-center bg-repp-yellow text-repp-navy text-[11px] font-bold px-2.5 py-1.5 rounded-full hover:brightness-95 transition whitespace-nowrap"
+            className="inline-flex items-center bg-repp-yellow text-repp-navy text-xs font-bold px-3 py-1.5 rounded-full hover:brightness-95 transition whitespace-nowrap"
           >
-            Reserveer een unit
+            Reserveer
           </Link>
           <MobileMenu project={project} />
         </div>

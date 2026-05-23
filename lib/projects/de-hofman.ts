@@ -184,12 +184,6 @@ export const deHofman: Project = {
   },
   gallery: [
     {
-      src: `${baseRender}/hero-dusk.jpg`,
-      alt: "De Hofman bij schemering, hoofdgevel met DE HOFMAN-belettering",
-      caption: "Hoofdgevel bij schemering",
-      weight: 100,
-    },
-    {
       src: `${baseRender}/aerial-roof.jpg`,
       alt: "Luchtfoto van De Hofman met dakterras op unit 27",
       caption: "Dakterras op de bovenste verdieping",

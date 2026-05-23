@@ -83,19 +83,23 @@ export function MobileMenu({ project }: { project: Project }) {
 
   return (
     <>
+      {/* Hamburger — tightly sized (w-9 h-9), zonder hover-circle background
+          want op touch blijft :hover-state actief na tap waardoor er een
+          witte rondje verschijnt. Lijnen iets dikker + groter zodat ze
+          duidelijk leesbaar zijn naast de gele CTA. */}
       <button
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Open menu"
         aria-expanded={open}
-        className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full text-white hover:bg-white/10 transition"
+        className="md:hidden inline-flex items-center justify-center w-9 h-9 text-white active:text-repp-yellow transition"
       >
         <svg
           viewBox="0 0 24 24"
-          className="w-5 h-5"
+          className="w-6 h-6"
           fill="none"
           stroke="currentColor"
-          strokeWidth="2.2"
+          strokeWidth="2.4"
           strokeLinecap="round"
           strokeLinejoin="round"
           aria-hidden
