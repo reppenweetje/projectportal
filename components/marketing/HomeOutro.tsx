@@ -5,8 +5,10 @@ import { buildWhatsAppLink } from "@/lib/utils";
 
 export function HomeOutro({ project }: { project: Project }) {
   const counts = countByStatus(project);
-  const sellable = project.totalUnits - counts.coming_soon;
   const stillAvailable = counts.available + counts.in_optie;
+  // Denominator = totaal (14), niet sellable. Coming-soon units tellen
+  // mee in zicht-totaal want bezoeker wil scope van het project zien.
+  const totalUnits = project.totalUnits;
 
   return (
     <section className="px-5 py-20 md:py-28">
@@ -18,7 +20,7 @@ export function HomeOutro({ project }: { project: Project }) {
           Begin bij de units zelf.
         </h2>
         <p className="mt-4 text-repp-navy/70 max-w-xl mx-auto">
-          Nog {stillAvailable} van {sellable} units beschikbaar. Tik op de
+          Nog {stillAvailable} van {totalUnits} units beschikbaar. Tik op de
           plattegrond om een snelle preview te zien. Dan beslis je of je
           verder kijkt.
         </p>

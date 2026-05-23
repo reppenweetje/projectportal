@@ -14,7 +14,7 @@ export function ScarcityBar({ project }: { project: Project }) {
           <span className="inline-block w-2 h-2 rounded-full bg-repp-navy animate-pulse" />
           <span>
             Nog <span className="font-extrabold">{stillAvailable}</span> van{" "}
-            {sellable} units beschikbaar
+            {project.totalUnits} units beschikbaar
           </span>
           <span className="hidden sm:inline text-repp-navy/70">
             · {soldPercent}% verkocht
