@@ -16,6 +16,7 @@
  */
 
 import { useState, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import { track } from "@/lib/track";
 import { updateProfile } from "@/lib/personalization";
 import { PrivacyConsent } from "@/components/legal/PrivacyConsent";
@@ -47,6 +48,7 @@ export function LeadCaptureForm({
   onSuccess: () => void;
   submitLabel?: string;
 }) {
+  const router = useRouter();
   const [state, setState] = useState<SubmitState>({ kind: "idle" });
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -75,6 +77,22 @@ export function LeadCaptureForm({
     }
     if (!firstName) {
       setState({ kind: "error", message: "Vul je voornaam in." });
+      return;
+    }
+    // Telefoonnummer is nu verplicht (geen `(optioneel)` meer). NL-format
+    // validatie: 06xxxxxxxx of +316xxxxxxxx. We slaan op in international
+    // format zodat CRM-matching consistent is met chatlog.userphone die
+    // Evolution in 316... format levert.
+    const phoneDigits = phone.replace(/\D/g, "");
+    if (!phone || !phoneDigits) {
+      setState({ kind: "error", message: "Vul je 06-nummer in." });
+      return;
+    }
+    if (
+      !(phoneDigits.length === 10 && phoneDigits.startsWith("06")) &&
+      !(phoneDigits.length === 11 && phoneDigits.startsWith("316"))
+    ) {
+      setState({ kind: "error", message: "Gebruik een NL-mobiel nummer (06...)." });
       return;
     }
 
@@ -222,6 +240,13 @@ export function LeadCaptureForm({
       }
 
       // ─── 6. Success ────────────────────────────────────────────────
+      // router.refresh() zorgt dat Server Components opnieuw renderen met
+      // de net gezette session-cookies. Resultaat: gebruiker ziet meteen
+      // de "ingelogde" UI (welkom-banner, personalisatie, gated content
+      // unlocked) zonder full page reload of redirect. Voorheen lag dit
+      // bij de caller — onbetrouwbaar omdat niet alle callers refresh
+      // deden. Nu altijd intern in LeadCaptureForm zelf.
+      router.refresh();
       onSuccess();
     } catch (err) {
       console.error("[lead-gate] submit failed", err);
@@ -261,17 +286,15 @@ export function LeadCaptureForm({
       </label>
 
       <label className="flex flex-col gap-1 text-sm">
-        <span className="font-medium text-repp-navy">
-          Telefoonnummer{" "}
-          <span className="text-ink-soft font-normal">(optioneel)</span>
-        </span>
+        <span className="font-medium text-repp-navy">Telefoonnummer</span>
         <input
           name="phone"
           type="tel"
           autoComplete="tel"
           inputMode="tel"
           disabled={submitting}
-          placeholder="06 ..."
+          required
+          placeholder="06 12 34 56 78"
           className="rounded-full px-4 py-2.5 border border-repp-gray bg-white text-repp-navy placeholder-repp-navy/40 focus:outline-none focus:ring-2 focus:ring-repp-blue disabled:opacity-60"
         />
       </label>

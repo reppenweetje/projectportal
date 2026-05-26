@@ -112,6 +112,13 @@ export type Project = {
   /** Concrete benchmark vergelijking voor /prijs pagina */
   prijsBenchmarks: PriceBenchmark[];
   whatsAppNumber: string;
+  /**
+   * Aparte WhatsApp-nummer specifiek voor de /reserveren-pagina (sales
+   * makelaar). Andere CTA's (header, sticky, warm-handoff, etc.) blijven
+   * `whatsAppNumber` (Reppit-bot) gebruiken. Als niet gezet valt 'ie
+   * terug op `whatsAppNumber`.
+   */
+  reservationWhatsAppNumber?: string;
   makelaar: { name: string; role: string; phone: string };
   beleggingsSpecialist: { name: string; role: string; phone: string };
   rendementBrutoMin: number;
