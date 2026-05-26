@@ -5,7 +5,7 @@ import { buildWhatsAppLink } from "@/lib/utils";
 
 export function HomeOutro({ project }: { project: Project }) {
   const counts = countByStatus(project);
-  const stillAvailable = counts.available + counts.in_optie;
+  const stillAvailable = counts.available;
   // Denominator = totaal (14), niet sellable. Coming-soon units tellen
   // mee in zicht-totaal want bezoeker wil scope van het project zien.
   const totalUnits = project.totalUnits;

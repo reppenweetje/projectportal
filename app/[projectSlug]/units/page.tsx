@@ -42,7 +42,7 @@ export default async function UnitsOverviewPage({
               Welke past bij jou?
             </h1>
             <p className="mt-4 text-repp-navy/70 max-w-xl mx-auto">
-              Nog {counts.available + counts.in_optie} van {totalUnits} beschikbaar.
+              Nog {counts.available} van {totalUnits} beschikbaar.
               Tik op een unit voor specs en reservering.
             </p>
           </div>

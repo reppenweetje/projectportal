@@ -17,16 +17,14 @@ const specsXXL: UnitSpecs = {
 
 // Verdeling volgens REPP's actuele situatieplattegrond (22-5-2026):
 //   Verkocht (rood):                  1, 2, 3, 6, 8, 9, 10  ← unit 6 verkocht
-//   Verkocht onder voorbehoud (oranje): 11
-//   In optie (lichtgeel):             12, 13
+//   Verkocht onder voorbehoud (oranje): 11, 12, 13
 //   Beschikbaar (groen):              4, 5
 //   Coming soon (wit, XXL):           7, 14
-// Totaal nog vrij (available + in_optie): 4 units
+// Totaal nog echt vrij: 2 units (4 en 5)
 const status = (n: number): Unit["status"] => {
   if (n === 7 || n === 14) return "coming_soon";
   if ([1, 2, 3, 6, 8, 9, 10].includes(n)) return "sold";
-  if (n === 11) return "verkocht_ovb";
-  if ([12, 13].includes(n)) return "in_optie";
+  if ([11, 12, 13].includes(n)) return "verkocht_ovb";
   return "available";  // 4, 5
 };
 
@@ -161,6 +159,10 @@ export const deHofman: Project = {
     },
   ],
   whatsAppNumber: "31617192538",
+  // Sales-makelaar nummer voor reserverings-flow (was vroeger het
+  // hoofd-WA-nummer). Reservering = serieuze intent, sales pakt direct
+  // op. Reppit-nummer is voor algemene info/chat.
+  reservationWhatsAppNumber: "31616079428",
   makelaar: {
     name: "Makelaar REPP",
     role: "Jouw vaste contactpersoon",

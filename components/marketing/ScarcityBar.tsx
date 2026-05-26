@@ -3,9 +3,8 @@ import { countByStatus } from "@/lib/projects/de-hofman";
 
 export function ScarcityBar({ project }: { project: Project }) {
   const counts = countByStatus(project);
-  const sellable = project.totalUnits - counts.coming_soon;
-  const stillAvailable = counts.available + counts.in_optie;
-  const soldPercent = Math.round((counts.sold / sellable) * 100);
+  const stillAvailable = counts.available;
+  const soldPercent = Math.round(((counts.sold + counts.verkocht_ovb) / project.totalUnits) * 100);
 
   return (
     <div className="bg-repp-yellow text-repp-navy">

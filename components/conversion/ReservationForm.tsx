@@ -141,7 +141,7 @@ export function ReservationForm({ project }: { project: Project }) {
         </div>
         <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
           <a
-            href={buildWhatsAppLink(project.whatsAppNumber, waMsg)}
+            href={buildWhatsAppLink(project.reservationWhatsAppNumber || project.whatsAppNumber, waMsg)}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center bg-repp-navy text-white text-sm font-semibold px-5 py-3 rounded-full hover:bg-repp-blue transition"

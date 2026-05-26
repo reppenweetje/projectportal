@@ -13,10 +13,10 @@ export function PersonalizationBanner({ project }: { project: Project }) {
   if (!profile?.name || dismissed) return null;
 
   // Live unit-count zodat de banner-copy ("nog X units beschikbaar")
-  // matched met de situatieplattegrond. Available + in_optie tellen
-  // we beide als "beschikbaar" want in_optie is nog reserveerbaar.
+  // matched met de situatieplattegrond. Alleen `available` telt;
+  // verkocht_ovb units zijn vanuit lead-perspectief niet vrij.
   const counts = countByStatus(project);
-  const stillAvailable = counts.available + counts.in_optie;
+  const stillAvailable = counts.available;
 
   if (profile.verified) {
     return (
