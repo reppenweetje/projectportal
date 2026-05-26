@@ -140,7 +140,7 @@ export function SaveForLater({
         onSuccess={onSignupSuccess}
         gateContext={`favorite-unit-${unitSlug}`}
         title="Bewaar Unit als favoriet"
-        description={`Om Unit ${unitNumber} (${unitType}) op te slaan, laat je éénmalig je gegevens achter. Dan kunnen we je ook mailen bij statuswijzigingen.`}
+        description={`Om Unit ${unitNumber} (${unitType}) op te slaan, laat je éénmalig je gegevens achter. Dan kunnen we je ook bereiken bij statuswijzigingen.`}
         submitLabel={`Bewaar Unit ${unitNumber}`}
       />
     </div>

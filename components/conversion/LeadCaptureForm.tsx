@@ -85,14 +85,14 @@ export function LeadCaptureForm({
     // Evolution in 316... format levert.
     const phoneDigits = phone.replace(/\D/g, "");
     if (!phone || !phoneDigits) {
-      setState({ kind: "error", message: "Vul je 06-nummer in." });
+      setState({ kind: "error", message: "Ook nog je 06-nummer graag, zodat we je kunnen bereiken." });
       return;
     }
     if (
       !(phoneDigits.length === 10 && phoneDigits.startsWith("06")) &&
       !(phoneDigits.length === 11 && phoneDigits.startsWith("316"))
     ) {
-      setState({ kind: "error", message: "Gebruik een NL-mobiel nummer (06...)." });
+      setState({ kind: "error", message: "Hmm, dit lijkt geen NL 06-nummer. Probeer 06 gevolgd door 8 cijfers." });
       return;
     }
 
