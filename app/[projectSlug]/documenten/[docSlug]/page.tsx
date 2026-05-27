@@ -117,28 +117,18 @@ export default async function DocumentViewerPage({
               </p>
             </div>
 
-            {/* Desktop: in-page iframe viewer */}
+            {/* Desktop: in-page iframe viewer. Was eerder <object> maar
+                Chrome rendert <object data="...pdf"> regelmatig niet meer
+                inline (toont fallback content terwijl Content-Type +
+                X-Frame-Options correct zijn). <iframe> is universeel
+                betrouwbaarder voor PDF embedding. */}
             <div className="hidden md:block">
               <div className="rounded-2xl border border-repp-gray bg-white overflow-hidden h-[calc(100vh-300px)] min-h-[520px]">
-                <object
-                  data={doc.href}
-                  type="application/pdf"
-                  className="w-full h-full"
-                >
-                  <div className="p-8 text-center">
-                    <p className="text-repp-navy/70 text-sm">
-                      Je browser laat geen PDF in de pagina zien.
-                    </p>
-                    <a
-                      href={doc.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-4 inline-flex items-center bg-repp-navy text-white text-sm font-semibold px-4 py-2 rounded-full"
-                    >
-                      Open de PDF
-                    </a>
-                  </div>
-                </object>
+                <iframe
+                  src={`${doc.href}#view=FitH&toolbar=1`}
+                  title={doc.label}
+                  className="w-full h-full block border-0"
+                />
               </div>
               <p className="mt-3 text-xs text-repp-navy/50 text-center">
                 Tip: download de PDF om hem op je telefoon of tablet te bewaren.
