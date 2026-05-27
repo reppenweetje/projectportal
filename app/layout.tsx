@@ -75,6 +75,15 @@ export default function RootLayout({
   return (
     <html lang="nl" className={`${montserrat.variable} h-full antialiased`}>
       <head>
+        {/* Meta domain verification voor dehofman.nl. Vereist door Meta
+            Business Manager om iOS 14+ attribution + Aggregated Event
+            Measurement te kunnen gebruiken. Tag MOET in <head> staan,
+            anders faalt Meta's crawler. */}
+        <meta
+          name="facebook-domain-verification"
+          content="isp530fvb5yb9qmcpcoeqjsuyyakap"
+        />
+
         {/* Plausible analytics — privacy-friendly, geen cookies, geen PII.
             afterInteractive = laadt na page-interactive zodat LCP/INP niet wordt
             geraakt. Project script-tag van Plausible.io. */}
