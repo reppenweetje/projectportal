@@ -12,8 +12,13 @@ const nextConfig: NextConfig = {
           // Voorkomt MIME-sniff exploits (browser raadt content-type)
           { key: "X-Content-Type-Options", value: "nosniff" },
           // Voorkomt clickjacking (iframe-embedding van onze site door
-          // andere domains; Vercel deploy-preview gebruikt geen iframes)
-          { key: "X-Frame-Options", value: "DENY" },
+          // andere domains). SAMEORIGIN ipv DENY zodat we onze eigen
+          // PDFs in /docs/ in <object>/iframe kunnen embedden op de
+          // document-viewer pagina. Chrome past X-Frame-Options ook toe
+          // op <object data="...pdf">; met DENY weigerde de browser de
+          // PDF inline te renderen → fallback "Je browser laat geen
+          // PDF zien" werd zichtbaar voor alle ingelogde users.
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
           // Stuur Referer alleen bij dezelfde origin om PII-lek in
           // URL-paden naar third-parties (analytics, embedded fonts) te
           // beperken. Bij cross-origin alleen scheme+host, geen path.
