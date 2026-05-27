@@ -19,6 +19,7 @@ import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { track } from "@/lib/track";
 import { updateProfile } from "@/lib/personalization";
+import { fireMetaLead } from "@/lib/metaPixel";
 import { PrivacyConsent } from "@/components/legal/PrivacyConsent";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -240,6 +241,15 @@ export function LeadCaptureForm({
       }
 
       // ─── 6. Success ────────────────────────────────────────────────
+      // Meta Pixel Lead-event: walk-in conversie. Fired vóór router.refresh
+      // zodat de Pixel zeker fired voordat de pagina opnieuw rendert (in
+      // edge cases waarbij refresh een nieuwe pagina laadt waar fbq nog
+      // niet geinitialiseerd is). reason='walkin-form' onderscheidt deze
+      // van CLP-chat-leads als beide ooit naar dezelfde Pixel ID landen.
+      fireMetaLead("walkin-form", {
+        gateContext,
+        hasPhone: !!phone,
+      });
       // router.refresh() zorgt dat Server Components opnieuw renderen met
       // de net gezette session-cookies. Resultaat: gebruiker ziet meteen
       // de "ingelogde" UI (welkom-banner, personalisatie, gated content
