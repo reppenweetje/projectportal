@@ -41,18 +41,18 @@ export default async function DocumentenPage({
             }}
             aria-hidden
           />
-          <div className="relative px-5 pt-14 md:pt-20 pb-10 md:pb-14">
+          <div className="relative px-5 pt-7 md:pt-10 pb-5 md:pb-7">
             <div className="mx-auto max-w-5xl">
-              <div className="flex items-baseline gap-3">
-                <span className="inline-block w-1 h-8 rounded-full bg-repp-navy" />
-                <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
+              <div className="flex items-baseline gap-2.5">
+                <span className="inline-block w-1 h-6 rounded-full bg-repp-navy" />
+                <p className="text-[11px] uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
                   {project.name} · Voor jouw aankoop
                 </p>
               </div>
-              <h1 className="mt-3 text-4xl md:text-6xl font-extrabold text-repp-navy tracking-tight">
+              <h1 className="mt-2 text-3xl md:text-4xl font-extrabold text-repp-navy tracking-tight">
                 Alle documenten
               </h1>
-              <p className="mt-3 text-repp-navy/70 max-w-xl">
+              <p className="mt-2 text-sm md:text-base text-repp-navy/70 max-w-xl">
                 {docCount} stukken, van de brochure tot de
                 koop-aannemingsovereenkomst. Klik om te bekijken of te downloaden.
               </p>
@@ -60,7 +60,7 @@ export default async function DocumentenPage({
           </div>
         </section>
 
-        <section className="px-5 py-10 md:py-14">
+        <section className="px-5 py-5 md:py-7">
           <div className="mx-auto max-w-5xl">
             {/* Lijst is publiek, popup verschijnt pas bij klik op een
                 document-kaart — zie Documents component voor de gate. */}
