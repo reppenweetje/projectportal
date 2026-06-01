@@ -75,7 +75,10 @@ export function Header({ project }: { project: Project }) {
           <HeaderIdentity projectSlug={project.slug} />
           <Link
             href={`/${project.slug}/reserveren`}
-            className="inline-flex items-center bg-repp-yellow text-repp-navy text-sm font-bold px-4 py-2 rounded-full hover:brightness-95 transition"
+            // ml-2 = expliciete ademruimte tussen het identity-avatar-bolletje
+            // en de gele CTA. Zonder marge plakte het visueel direct tegen de F
+            // aan terwijl de nav verder gap-0.5 hanteert (zie comment hierboven).
+            className="ml-2 inline-flex items-center bg-repp-yellow text-repp-navy text-sm font-bold px-4 py-2 rounded-full hover:brightness-95 transition"
           >
             Reserveer een unit
           </Link>
