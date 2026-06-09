@@ -5,7 +5,6 @@ import { getProjectBySlug } from "@/lib/projects/de-hofman";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyCTA } from "@/components/layout/StickyCTA";
-import { ScarcityStrip } from "@/components/marketing/ScarcityStrip";
 import { ReservationForm } from "@/components/conversion/ReservationForm";
 
 type Params = { projectSlug: string };
@@ -35,7 +34,6 @@ export default async function ReserverenPage({
   return (
     <>
       <Header project={project} />
-      <ScarcityStrip project={project} />
       <main className="flex-1 has-sticky-cta">
         <section className="px-5 pt-12 md:pt-16 pb-12">
           <div className="mx-auto max-w-5xl text-center">

@@ -13,7 +13,6 @@ import { LossAversion } from "@/components/marketing/LossAversion";
 import { KeyDocuments } from "@/components/marketing/KeyDocuments";
 import { Gallery } from "@/components/marketing/Gallery";
 import { HomeOutro } from "@/components/marketing/HomeOutro";
-import { ScarcityStrip } from "@/components/marketing/ScarcityStrip";
 import { PersonalizationBanner } from "@/components/marketing/PersonalizationBanner";
 import { ExitIntentModal } from "@/components/conversion/ExitIntentModal";
 import { ProjectJsonLd } from "@/components/seo/ProjectJsonLd";
@@ -111,7 +110,6 @@ export default async function ProjectHomePage({
       <ProjectJsonLd project={project} baseUrl={siteUrl} />
       <Header project={project} />
       <PersonalizationBanner project={project} />
-      <ScarcityStrip project={project} />
       <main className="flex-1 has-sticky-cta">
         {/* 1. Hook — sfeerbeeld + intent CTAs */}
         <MinimalHero project={project} />

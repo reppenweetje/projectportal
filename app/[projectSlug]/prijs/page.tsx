@@ -6,7 +6,6 @@ import { formatEuro, formatM2 } from "@/lib/types";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyCTA } from "@/components/layout/StickyCTA";
-import { ScarcityStrip } from "@/components/marketing/ScarcityStrip";
 import { PriceComparisonChart } from "@/components/marketing/PriceComparisonChart";
 import { LeadGate } from "@/components/conversion/LeadGate";
 
@@ -39,7 +38,6 @@ export default async function PrijsPage({
   return (
     <>
       <Header project={project} />
-      <ScarcityStrip project={project} />
       <main className="flex-1 has-sticky-cta">
         <section className="px-5 pt-12 md:pt-20 pb-8 text-center">
           <div className="mx-auto max-w-3xl">

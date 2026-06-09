@@ -10,7 +10,6 @@ import { UnitStatusBadge } from "@/components/unit/UnitStatusBadge";
 import { UnitGrid } from "@/components/unit/UnitGrid";
 import { UnitImageCarousel } from "@/components/unit/UnitImageCarousel";
 import { SaveForLater } from "@/components/unit/SaveForLater";
-import { ScarcityStrip } from "@/components/marketing/ScarcityStrip";
 import { buildWhatsAppLink } from "@/lib/utils";
 
 type Params = { projectSlug: string; unitSlug: string };
@@ -59,7 +58,6 @@ export default async function UnitDetailPage({
   return (
     <>
       <Header project={project} />
-      <ScarcityStrip project={project} />
       <main className="flex-1 has-sticky-cta">
         <section className="px-5 pt-8 md:pt-10">
           <div className="mx-auto max-w-5xl">

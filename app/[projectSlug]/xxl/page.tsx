@@ -7,7 +7,6 @@ import { getProjectBySlug } from "@/lib/projects/de-hofman";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyCTA } from "@/components/layout/StickyCTA";
-import { ScarcityStrip } from "@/components/marketing/ScarcityStrip";
 import { XxlInterestForm } from "@/components/conversion/XxlInterestForm";
 
 type Params = { projectSlug: string };
@@ -31,7 +30,6 @@ export default async function XxlPage({
   return (
     <>
       <Header project={project} />
-      <ScarcityStrip project={project} />
       <main className="flex-1 has-sticky-cta">
         {/* Hero */}
         <section className="relative overflow-hidden bg-hofman-deep text-white">

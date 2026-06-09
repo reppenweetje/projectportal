@@ -7,7 +7,6 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyCTA } from "@/components/layout/StickyCTA";
 import { UnitGrid } from "@/components/unit/UnitGrid";
-import { ScarcityStrip } from "@/components/marketing/ScarcityStrip";
 import { ExitIntentModal } from "@/components/conversion/ExitIntentModal";
 
 type Params = { projectSlug: string };
@@ -31,7 +30,6 @@ export default async function UnitsOverviewPage({
   return (
     <>
       <Header project={project} />
-      <ScarcityStrip project={project} />
       <main className="flex-1 has-sticky-cta">
         <section className="px-5 pt-12 md:pt-20 pb-12">
           <div className="mx-auto max-w-5xl text-center">
