@@ -198,8 +198,8 @@ export const deHofman: Project = {
     },
     {
       src: `${baseRender}/entree-fietsen.jpg`,
-      alt: "Entree van De Hofman overdag met fietsenstalling en laadbus",
-      caption: "Entree met fietsenstalling",
+      alt: "Zijvleugel van De Hofman overdag, hoekaanzicht met entree en laadbus",
+      caption: "Zijvleugel overdag",
       weight: 80,
     },
     {
