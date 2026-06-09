@@ -39,7 +39,12 @@ export function Gallery({ project }: { project: Project }) {
   const drag = useRef({ down: false, startX: 0, startScroll: 0, moved: false });
 
   function onPointerDown(e: React.PointerEvent) {
-    if (e.pointerType !== "mouse") return;
+    // Touch laten we native scrollen — alleen de moved-vlag resetten zodat
+    // een tap na een eerdere muis-sleep niet per ongeluk geblokkeerd wordt.
+    if (e.pointerType !== "mouse") {
+      drag.current.moved = false;
+      return;
+    }
     const el = stripRef.current;
     if (!el) return;
     drag.current = {
@@ -48,6 +53,11 @@ export function Gallery({ project }: { project: Project }) {
       startScroll: el.scrollLeft,
       moved: false,
     };
+    // Pointer capture houdt move/up-events bij dit element, ook als de
+    // cursor snel buiten de strip beweegt. Scroll-snap zetten we uit tijdens
+    // het slepen, anders snapt de browser steeds terug en voelt het stroef.
+    el.setPointerCapture(e.pointerId);
+    el.style.scrollSnapType = "none";
   }
   function onPointerMove(e: React.PointerEvent) {
     const el = stripRef.current;
@@ -57,7 +67,12 @@ export function Gallery({ project }: { project: Project }) {
     if (Math.abs(dx) > 4) s.moved = true;
     el.scrollLeft = s.startScroll - dx;
   }
-  function endDrag() {
+  function endDrag(e: React.PointerEvent) {
+    const el = stripRef.current;
+    if (el) {
+      el.style.scrollSnapType = "";
+      if (el.hasPointerCapture?.(e.pointerId)) el.releasePointerCapture(e.pointerId);
+    }
     drag.current.down = false;
   }
 
