@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import type { Project } from "@/lib/types";
 
@@ -30,6 +30,36 @@ export function Gallery({ project }: { project: Project }) {
   }, [images.length]);
 
   const onClose = useCallback(() => setOpenIndex(null), []);
+
+  // Drag-to-scroll voor de strip. Touch laat de browser native scrollen
+  // (momentum + swipe blijven werken); alleen muis hijacken we voor
+  // klik-en-sleep. dragMoved onthoudt of er gesleept is, zodat een sleep
+  // niet per ongeluk de lightbox opent.
+  const stripRef = useRef<HTMLDivElement>(null);
+  const drag = useRef({ down: false, startX: 0, startScroll: 0, moved: false });
+
+  function onPointerDown(e: React.PointerEvent) {
+    if (e.pointerType !== "mouse") return;
+    const el = stripRef.current;
+    if (!el) return;
+    drag.current = {
+      down: true,
+      startX: e.clientX,
+      startScroll: el.scrollLeft,
+      moved: false,
+    };
+  }
+  function onPointerMove(e: React.PointerEvent) {
+    const el = stripRef.current;
+    const s = drag.current;
+    if (!el || !s.down) return;
+    const dx = e.clientX - s.startX;
+    if (Math.abs(dx) > 4) s.moved = true;
+    el.scrollLeft = s.startScroll - dx;
+  }
+  function endDrag() {
+    drag.current.down = false;
+  }
 
   // Keyboard navigation
   useEffect(() => {
@@ -62,21 +92,31 @@ export function Gallery({ project }: { project: Project }) {
             Een blik op De Hofman
           </h2>
           <p className="mt-3 text-sm text-repp-navy/60">
-            Tik op een impressie voor een grotere weergave. Swipe of scroll
-            door alle {images.length} beelden.
+            Tik op een impressie voor een grotere weergave. Sleep, swipe of
+            scroll door alle {images.length} beelden.
           </p>
         </div>
       </div>
 
       <div
-        className="flex gap-3 md:gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-5 px-5 md:px-[max(1.25rem,calc((100vw-64rem)/2))] pb-6"
+        ref={stripRef}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerLeave={endDrag}
+        onDragStart={(e) => e.preventDefault()}
+        className="flex gap-3 md:gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-5 px-5 md:px-[max(1.25rem,calc((100vw-64rem)/2))] pb-6 cursor-grab active:cursor-grabbing select-none"
         style={{ scrollbarWidth: "thin" }}
       >
         {images.map((img, idx) => (
           <button
             type="button"
             key={img.src}
-            onClick={() => setOpenIndex(idx)}
+            onClick={() => {
+              // Een sleep mag de lightbox niet openen.
+              if (drag.current.moved) return;
+              setOpenIndex(idx);
+            }}
             aria-label={`Vergroot impressie: ${img.alt}`}
             className="group relative shrink-0 snap-start overflow-hidden rounded-2xl bg-repp-gray w-[80vw] sm:w-[55vw] md:w-[42vw] lg:w-[36vw] aspect-[4/3] cursor-zoom-in focus:outline-none focus:ring-4 focus:ring-repp-blue/40 hover:brightness-110 transition"
           >

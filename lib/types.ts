@@ -127,10 +127,6 @@ export type Project = {
   heroImage: ProjectImage;
   /** Gallery images (renders, impressies) */
   gallery: ProjectImage[];
-  /** Optional video file URL */
-  videoSrc?: string;
-  /** Optional poster image for video (defaults to heroImage) */
-  videoPoster?: string;
   documents: ProjectDocument[];
   testimonials: Testimonial[];
   trustPartners: TrustPartner[];

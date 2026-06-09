@@ -12,7 +12,6 @@ import { HeroCalculator } from "@/components/calculator/HeroCalculator";
 import { LossAversion } from "@/components/marketing/LossAversion";
 import { KeyDocuments } from "@/components/marketing/KeyDocuments";
 import { Gallery } from "@/components/marketing/Gallery";
-import { VideoBlock } from "@/components/marketing/VideoBlock";
 import { HomeOutro } from "@/components/marketing/HomeOutro";
 import { ScarcityStrip } from "@/components/marketing/ScarcityStrip";
 import { PersonalizationBanner } from "@/components/marketing/PersonalizationBanner";
@@ -136,10 +135,7 @@ export default async function ProjectHomePage({
         {/* 5. Loss aversion — wat het kost om niet te kiezen */}
         <LossAversion project={project} />
 
-        {/* 6. Video block voor diepere project-context */}
-        <VideoBlock project={project} />
-
-        {/* 7. Key documents — concrete download / leesbaar */}
+        {/* 6. Key documents — concrete download / leesbaar */}
         <KeyDocuments project={project} />
 
         {/* 8. Last-mile CTA */}

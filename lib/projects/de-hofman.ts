@@ -176,106 +176,69 @@ export const deHofman: Project = {
   rendementBrutoMin: 6,
   rendementBrutoMax: 8,
   heroImage: {
-    // Hoofdgebouw bij schemering, schuin hoekaanzicht. De donkere voorgrond
-    // en de zware bottom-gradient houden de witte H1 "De Hofman" goed
-    // leesbaar; de unit-belettering zit mid-rechts en botst niet met de titel.
-    src: `${baseRender}/gevel-schemering.jpg`,
-    alt: "De Hofman bij schemering, schuin hoekaanzicht met verlichte units",
-    caption: "Impressie · De Hofman bij schemering",
+    // Zijvleugel bij avond, schuin hoekaanzicht met verlichte units. De
+    // donkere voorgrond en de zware bottom-gradient houden de witte H1
+    // "De Hofman" goed leesbaar.
+    src: `${baseRender}/zijgevel-avond.jpg`,
+    alt: "De Hofman bij avond, schuin hoekaanzicht met verlichte units",
+    caption: "Impressie · De Hofman bij avond",
   },
   gallery: [
     {
-      src: `${baseRender}/gevel-schemering.jpg`,
-      alt: "De Hofman bij schemering, schuin hoekaanzicht met verlichte units",
-      caption: "Hoofdgebouw bij schemering",
+      src: `${baseRender}/zijgevel-avond.jpg`,
+      alt: "De Hofman bij avond, schuin hoekaanzicht met verlichte units",
+      caption: "De Hofman bij avond",
       weight: 100,
     },
     {
       src: `${baseRender}/gevel-overdag.jpg`,
       alt: "De Hofman overdag, hoekaanzicht met entree en geparkeerde auto's",
       caption: "Hoofdentree overdag",
-      weight: 95,
-    },
-    {
-      src: `${baseRender}/zijgevel-avond.jpg`,
-      alt: "Zijvleugel van De Hofman bij avond, verlichte gevel en units",
-      caption: "Zijvleugel bij avond",
       weight: 90,
     },
     {
       src: `${baseRender}/entree-fietsen.jpg`,
       alt: "Entree van De Hofman overdag met fietsenstalling en laadbus",
       caption: "Entree met fietsenstalling",
-      weight: 85,
-    },
-    {
-      src: `${baseRender}/dakterras-luchtfoto.jpg`,
-      alt: "Luchtfoto van De Hofman met ingericht dakterras op de bovenste verdieping",
-      caption: "Dakterras op de bovenste verdieping",
       weight: 80,
     },
     {
       src: `${baseRender}/units-in-bedrijf.jpg`,
       alt: "Vooraanzicht van een unitrij met bedrijven in bedrijf en een bestelbus",
       caption: "Units in bedrijf",
-      weight: 75,
+      weight: 70,
     },
     {
       src: `${baseRender}/unit-open-overdag.jpg`,
       alt: "Open unit overdag met showroom en werkplaats achter de overheaddeur",
       caption: "Open unit overdag",
-      weight: 70,
-    },
-    {
-      src: `${baseRender}/unit-open-avond.jpg`,
-      alt: "Unitrij bij avond met warm verlichte werkplaats achter de overheaddeur",
-      caption: "Unit bij avond",
-      weight: 65,
+      weight: 60,
     },
     {
       src: `${baseRender}/interieur-studio.jpg`,
       alt: "Verdieping ingericht als creatieve studio met vergadertafel en moodboards",
       caption: "Verdieping als creatieve studio",
-      weight: 60,
+      weight: 50,
     },
     {
       src: `${baseRender}/interieur-kantoor.jpg`,
       alt: "Verdieping ingericht als kantoor met bureau, fauteuil en boekenwand",
       caption: "Verdieping als kantoor",
-      weight: 55,
-    },
-    {
-      src: `${baseRender}/interieur-pantry.jpg`,
-      alt: "Pantry op de verdieping met keukenblok, eettafel en trapgat",
-      caption: "Pantry op de verdieping",
-      weight: 50,
+      weight: 40,
     },
     {
       src: `${baseRender}/werkplaats-vakman.jpg`,
       alt: "Werkplaats op de begane grond met bestelbus, werkbank en gereedschapsrek",
       caption: "Werkplaats met eigen inrit",
-      weight: 45,
-    },
-    {
-      src: `${baseRender}/werkplaats-hout.jpg`,
-      alt: "Unit als timmerwerkplaats met houtbewerker aan de werkbank",
-      caption: "Unit als timmerwerkplaats",
-      weight: 40,
+      weight: 30,
     },
     {
       src: `${baseRender}/werkplaats-installateur.jpg`,
       alt: "Unit als installatiebedrijf met cv-ketels, leidingwerk en warmtepomp",
       caption: "Unit als installatiebedrijf",
-      weight: 35,
-    },
-    {
-      src: `${baseRender}/werkplaats-afbouw.jpg`,
-      alt: "Unit tijdens afbouw met bouwmateriaal, steiger en bestelbus",
-      caption: "Unit tijdens afbouw",
-      weight: 30,
+      weight: 20,
     },
   ],
-  videoSrc: "/video/de-hofman.mp4",
   testimonials: [
     {
       id: "jt-bouw",
