@@ -176,11 +176,11 @@ export const deHofman: Project = {
   rendementBrutoMin: 6,
   rendementBrutoMax: 8,
   heroImage: {
-    // Zijvleugel bij avond, schuin hoekaanzicht met verlichte units. De
-    // donkere voorgrond en de zware bottom-gradient houden de witte H1
-    // "De Hofman" goed leesbaar.
-    src: `${baseRender}/zijgevel-avond.jpg`,
-    alt: "De Hofman bij avond, schuin hoekaanzicht met verlichte units",
+    // Kopgevel bij avond, schuin hoekaanzicht met verlichte units en oprit.
+    // De donkere lucht en voorgrond plus de zware bottom-gradient houden de
+    // witte H1 "De Hofman" goed leesbaar.
+    src: `${baseRender}/banner-avond.jpg`,
+    alt: "De Hofman bij avond, schuin hoekaanzicht met verlichte units en oprit",
     caption: "Impressie · De Hofman bij avond",
   },
   gallery: [
