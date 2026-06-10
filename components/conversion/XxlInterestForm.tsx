@@ -82,16 +82,16 @@ export function XxlInterestForm({ project }: { project: Project }) {
   }
 
   if (step === "done") {
-    const waMsg = `Hallo, ik heb me net aangemeld voor de XXL-wachtlijst van ${project.name}. Mijn naam: ${naam}.`;
+    const waMsg = `Hallo, ik heb me net aangemeld voor een XXL-unit van ${project.name}. Mijn naam: ${naam}.`;
     return (
       <div className="rounded-3xl bg-status-coming/10 border border-status-coming/30 p-8 md:p-10 text-center">
         <p className="text-5xl">📬</p>
         <h2 className="mt-4 text-3xl md:text-4xl font-extrabold text-repp-navy tracking-tight">
-          Top, je staat op de XXL-wachtlijst
+          Top, je aanmelding is binnen
         </h2>
         <p className="mt-3 text-repp-navy/75 max-w-xl mx-auto">
-          We mailen je zodra de XXL-units (Unit 7 en 14) in actieve verkoop
-          gaan, en je krijgt als eerste toegang voor je voorkeur.
+          De XXL-units (Unit 7 en 14) zijn nu te koop. We nemen contact met je
+          op om jouw voorkeur en scenario door te spreken.
         </p>
         <div className="mt-6 inline-block rounded-2xl bg-white border border-repp-gray p-5 text-left">
           <p className="text-xs uppercase tracking-wider text-repp-navy/50 font-semibold">
@@ -279,7 +279,7 @@ export function XxlInterestForm({ project }: { project: Project }) {
           >
             {step === "submitting"
               ? "Versturen…"
-              : "Plaats mij op de XXL-wachtlijst →"}
+              : "Meld mij aan voor de XXL →"}
           </button>
           <PrivacyConsent
             tone="light"
@@ -287,8 +287,8 @@ export function XxlInterestForm({ project }: { project: Project }) {
             className="mt-3"
           />
           <p className="mt-3 text-xs text-repp-navy/60">
-            Geen kosten, geen verplichting. We mailen alleen als de XXL-units
-            in verkoop gaan of als er belangrijke updates zijn.
+            Geen kosten, geen verplichting. We nemen contact op om jouw voorkeur
+            en scenario door te spreken.
           </p>
         </div>
       </div>
@@ -324,13 +324,13 @@ export function XxlInterestForm({ project }: { project: Project }) {
         <div className="pt-4 border-t border-white/10 text-xs text-white/70 leading-relaxed space-y-2">
           <p>
             <span className="text-repp-yellow font-semibold">Status:</span>{" "}
-            Coming soon. De XXL wordt opgeleverd als 3-laags unit met
+            Nu te koop. De XXL wordt opgeleverd als 3-laags unit met
             bedrijfsgebonden woning op de tweede verdieping.
           </p>
           <p>
-            <span className="text-repp-yellow font-semibold">Voorrang:</span>{" "}
-            Wachtlijst-staanden krijgen als eerste toegang zodra de XXL in
-            actieve verkoop gaat.
+            <span className="text-repp-yellow font-semibold">Aanmelden:</span>{" "}
+            Laat je voorkeur achter, dan nemen we contact op om jouw scenario
+            door te spreken.
           </p>
         </div>
       </aside>

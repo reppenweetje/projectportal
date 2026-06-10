@@ -129,12 +129,11 @@ export function UnitQuickPreview({
             </div>
           )}
 
-          {unit.status === "coming_soon" && (
+          {unit.type === "XXL" && (
             <div className="mt-5 rounded-xl bg-status-coming/15 border border-status-coming/40 p-3 text-xs text-repp-navy/80 leading-relaxed">
-              <span className="font-bold">Coming soon: XXL met bedrijfsgebonden
-              woning.</span>{" "}
-              3 lagen, woning op de tweede verdieping. Plaats je op de wachtlijst
-              en je krijgt voorrang zodra de XXL-units in actieve verkoop gaan.
+              <span className="font-bold">XXL met bedrijfsgebonden woning.</span>{" "}
+              3 lagen, woning op de tweede verdieping. Nu te koop: meld je aan,
+              dan nemen we contact op om jouw scenario door te spreken.
             </div>
           )}
 
@@ -149,15 +148,15 @@ export function UnitQuickPreview({
             <div className="flex gap-2">
               <Link
                 href={
-                  unit.status === "coming_soon"
+                  unit.type === "XXL"
                     ? `/${project.slug}/xxl`
                     : `/${project.slug}/reserveren?unit=${unit.slug}${unit.status === "verkocht_ovb" ? "&intent=wachtlijst" : ""}`
                 }
                 className="flex-1 block bg-repp-yellow text-repp-navy text-center font-bold px-4 py-3 rounded-full hover:brightness-95 transition"
                 onClick={onClose}
               >
-                {unit.status === "coming_soon"
-                  ? "Op de XXL-wachtlijst"
+                {unit.type === "XXL"
+                  ? "Meld je aan (XXL)"
                   : unit.status === "verkocht_ovb"
                     ? "Op de wachtlijst"
                     : "Reserveer (vrijblijvend)"}

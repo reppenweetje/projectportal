@@ -216,7 +216,14 @@ export default async function UnitDetailPage({
                   </div>
                 )}
 
-                {isReservable ? (
+                {unit.type === "XXL" && isReservable ? (
+                  <Link
+                    href={`/${project.slug}/xxl`}
+                    className="mt-5 block bg-repp-yellow text-repp-navy text-center font-bold text-base px-4 py-4 rounded-full hover:brightness-95 shadow-lg shadow-black/20"
+                  >
+                    Meld je aan voor Unit {unit.number}
+                  </Link>
+                ) : isReservable ? (
                   <Link
                     href={`/${project.slug}/reserveren?unit=${unit.slug}`}
                     className="mt-5 block bg-repp-yellow text-repp-navy text-center font-bold text-base px-4 py-4 rounded-full hover:brightness-95 shadow-lg shadow-black/20"
@@ -229,13 +236,6 @@ export default async function UnitDetailPage({
                     className="mt-5 block bg-repp-yellow text-repp-navy text-center font-bold text-base px-4 py-4 rounded-full hover:brightness-95 shadow-lg shadow-black/20"
                   >
                     Op de wachtlijst voor Unit {unit.number}
-                  </Link>
-                ) : unit.status === "coming_soon" ? (
-                  <Link
-                    href={`/${project.slug}/xxl`}
-                    className="mt-5 block bg-repp-blue text-white text-center font-semibold px-4 py-3 rounded-full hover:brightness-110"
-                  >
-                    Plaats mij op de wachtlijst
                   </Link>
                 ) : (
                   <div className="mt-5 block bg-white/10 text-white/60 text-center font-semibold px-4 py-3 rounded-full">

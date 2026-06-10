@@ -12,7 +12,7 @@ import { XxlInterestForm } from "@/components/conversion/XxlInterestForm";
 type Params = { projectSlug: string };
 
 export const metadata: Metadata = {
-  title: "XXL-wachtlijst — wonen + werken op één adres",
+  title: "XXL-units te koop — wonen + werken op één adres",
 };
 
 export default async function XxlPage({
@@ -55,7 +55,7 @@ export default async function XxlPage({
                 ← Alle units
               </Link>
               <p className="mt-6 text-xs uppercase tracking-[0.2em] text-repp-yellow font-semibold">
-                Coming soon · {xxlUnits.length} units
+                Nu te koop · {xxlUnits.length} units
               </p>
               <h1 className="mt-3 text-5xl md:text-7xl font-extrabold tracking-tight leading-[0.95]">
                 XXL-unit met
@@ -110,14 +110,14 @@ export default async function XxlPage({
           <div className="mx-auto max-w-5xl">
             <div className="text-center mb-10">
               <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
-                Wachtlijst
+                Aanmelden
               </p>
               <h2 className="mt-3 text-3xl md:text-5xl font-extrabold text-repp-navy tracking-tight">
                 Interesse in een XXL?
               </h2>
               <p className="mt-3 text-repp-navy/70 max-w-xl mx-auto">
-                Vul je voorkeur in. Zodra de XXL-units in actieve verkoop gaan
-                krijg jij als eerste bericht en voorrang voor jouw scenario.
+                De XXL-units zijn nu te koop. Vul je voorkeur in, dan nemen we
+                contact op om jouw scenario door te spreken.
               </p>
             </div>
             <Suspense fallback={null}>

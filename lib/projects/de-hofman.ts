@@ -18,14 +18,14 @@ const specsXXL: UnitSpecs = {
 // Verdeling volgens REPP's actuele situatieplattegrond (1-6-2026):
 //   Verkocht (rood):                    1, 2, 3, 8, 9, 10, 11
 //   Verkocht onder voorbehoud (oranje): 6, 12, 13
-//   Beschikbaar (groen):                4, 5
-//   Coming soon (wit, XXL):             7, 14
-// Totaal nog echt vrij: 2 units (4 en 5)
+//   Beschikbaar (groen):                4, 5, 7, 14
+// 7 en 14 zijn de XXL-units: nu in verkoop. Aanmelden loopt via de
+// dedicated XXL-registratie (/xxl), niet de standaard reserveer-flow.
+// Totaal nog echt vrij: 4 units (4, 5, 7, 14)
 const status = (n: number): Unit["status"] => {
-  if (n === 7 || n === 14) return "coming_soon";
   if ([1, 2, 3, 8, 9, 10, 11].includes(n)) return "sold";
   if ([6, 12, 13].includes(n)) return "verkocht_ovb";
-  return "available";  // 4, 5
+  return "available";  // 4, 5, 7, 14
 };
 
 const buildUnit = (n: number): Unit => {
@@ -329,7 +329,7 @@ export const deHofman: Project = {
     },
     {
       q: "Kan ik in een unit wonen én werken?",
-      a: "De twee XXL-units (Unit 7 en 14) worden opgeleverd met bedrijfsgebonden woning op de tweede verdieping. Bedrijf op de begane grond en eerste verdieping, wonen erboven. Bij L- en XL-units is wonen niet aan de orde; dat zijn pure bedrijfsruimtes. Wil je wonen én werken? Schrijf je dan in voor de XXL-wachtlijst, je krijgt voorrang zodra ze in actieve verkoop gaan.",
+      a: "De twee XXL-units (Unit 7 en 14) worden opgeleverd met bedrijfsgebonden woning op de tweede verdieping. Bedrijf op de begane grond en eerste verdieping, wonen erboven. Bij L- en XL-units is wonen niet aan de orde; dat zijn pure bedrijfsruimtes. Wil je wonen én werken? De XXL-units zijn nu te koop. Meld je aan via de XXL-pagina, dan nemen we contact op om jouw scenario door te spreken.",
     },
     {
       q: "Is de reservering bindend?",
@@ -341,7 +341,7 @@ export const deHofman: Project = {
     },
     {
       q: "Wat als ik nu niet beslis?",
-      a: "Eerlijk: meer dan 50% is al verkocht in een paar maanden. De L-units gaan het snelst; er zijn er nog enkele vrij. Wij dwingen je niet, maar de markt is wat hij is: nieuwbouw in de Waarderpolder is schaars en wordt schaarser. Wil je niet meteen reserveren? Schrijf je dan in voor 'Hofman Insider', dan krijg je als eerste bericht over prijsindexaties, statuswijzigingen en de start van de XXL-verkoop.",
+      a: "Eerlijk: meer dan 50% is al verkocht in een paar maanden. De L-units gaan het snelst; er zijn er nog enkele vrij. Wij dwingen je niet, maar de markt is wat hij is: nieuwbouw in de Waarderpolder is schaars en wordt schaarser. Wil je niet meteen reserveren? Schrijf je dan in voor 'Hofman Insider', dan krijg je als eerste bericht over prijsindexaties en statuswijzigingen.",
     },
   ],
   documents: [
