@@ -184,7 +184,7 @@ export function WelcomeControle({ project }: { project: Project }) {
           onClick={onNotMe}
           className="inline-flex items-center justify-center text-sm text-repp-navy/50 hover:text-repp-navy font-medium px-4 py-3"
         >
-          Niet ik
+          Dit ben ik niet
         </button>
       </div>
 
