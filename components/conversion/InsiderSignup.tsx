@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import { updateProfile, useLeadProfile } from "@/lib/personalization";
 import type { Project } from "@/lib/types";
 import { track } from "@/lib/track";
+import { fireMetaLead } from "@/lib/metaPixel";
+import { HONEYPOT_FIELD, isHoneypotTripped } from "@/lib/botGuard";
+import { Honeypot } from "@/components/conversion/Honeypot";
 import { PrivacyConsent } from "@/components/legal/PrivacyConsent";
 
 type Modus = "ondernemer" | "belegger" | "beide";
@@ -38,6 +41,7 @@ export function InsiderSignup({
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [hp, setHp] = useState("");
 
   useEffect(() => {
     if (profile) {
@@ -58,6 +62,12 @@ export function InsiderSignup({
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email.includes("@")) return;
+    // Honeypot: bot vulde het verborgen veld in. Doe alsof het lukte, stuur
+    // niets door.
+    if (isHoneypotTripped(hp)) {
+      setDone(true);
+      return;
+    }
     setBusy(true);
     setError(null);
     try {
@@ -78,10 +88,14 @@ export function InsiderSignup({
           topic,
           source,
           sessionId: profile?.sessionId,
+          [HONEYPOT_FIELD]: hp,
         }),
       });
       if (!res.ok) throw new Error("Verzenden mislukt");
       track("insider_signed_up", { source, modus, topic });
+      // Meta-conversie: alleen voor Meta-ad-verkeer, max 1x per bezoeker
+      // (gate + dedup in lib/metaPixel.ts).
+      fireMetaLead("insider", { modus, topic });
       setDone(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Onbekende fout");
@@ -132,6 +146,7 @@ export function InsiderSignup({
   if (variant === "compact") {
     return (
       <form onSubmit={onSubmit} className="space-y-2">
+        <Honeypot value={hp} onChange={setHp} />
         <div className="flex flex-col sm:flex-row gap-2">
           <input
             type="email"
@@ -166,6 +181,7 @@ export function InsiderSignup({
   // full variant
   return (
     <form onSubmit={onSubmit} className="space-y-6">
+      <Honeypot value={hp} onChange={setHp} />
       <div className="grid sm:grid-cols-2 gap-4">
         <Field label="Naam" labelCls={labelCls}>
           <input

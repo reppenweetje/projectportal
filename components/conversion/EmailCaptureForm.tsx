@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { updateProfile, useLeadProfile } from "@/lib/personalization";
+import { fireMetaLead } from "@/lib/metaPixel";
+import { HONEYPOT_FIELD, isHoneypotTripped } from "@/lib/botGuard";
+import { Honeypot } from "@/components/conversion/Honeypot";
 import { PrivacyConsent } from "@/components/legal/PrivacyConsent";
 
 type Tone = "light" | "dark";
@@ -30,10 +33,17 @@ export function EmailCaptureForm({
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
   const [err, setErr] = useState<string | null>(null);
+  const [hp, setHp] = useState("");
 
   async function handle(e: React.FormEvent) {
     e.preventDefault();
     if (!email.includes("@")) return;
+    // Honeypot: bot vulde het verborgen veld in. Doe alsof het lukte, stuur
+    // niets door en zet geen profiel-cookie.
+    if (isHoneypotTripped(hp)) {
+      setDone(true);
+      return;
+    }
     setBusy(true);
     setErr(null);
     try {
@@ -53,10 +63,14 @@ export function EmailCaptureForm({
           source,
           context,
           project: "de-hofman",
+          [HONEYPOT_FIELD]: hp,
         }),
       }).catch(() => {});
       // Optional task (mail, etc.)
       if (onSubmit) await onSubmit({ name, email });
+      // Meta-conversie: alleen voor Meta-ad-verkeer, max 1x per bezoeker
+      // (gate + dedup in lib/metaPixel.ts).
+      fireMetaLead("email-capture", { source });
       setDone(true);
       onCaptured?.({ name, email });
     } catch {
@@ -95,6 +109,7 @@ export function EmailCaptureForm({
     // horizontale variant fields squeezed in onleesbare smalle pills.
     // Naam → Email → Submit-knop stacked + privacy-tekst eronder.
     <form onSubmit={handle} className="flex flex-col gap-2.5">
+      <Honeypot value={hp} onChange={setHp} />
       <input
         type="text"
         autoComplete="given-name"

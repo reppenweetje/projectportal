@@ -3,6 +3,9 @@
 import { useState } from "react";
 import type { Project } from "@/lib/types";
 import { track } from "@/lib/track";
+import { fireMetaLead } from "@/lib/metaPixel";
+import { HONEYPOT_FIELD, isHoneypotTripped } from "@/lib/botGuard";
+import { Honeypot } from "@/components/conversion/Honeypot";
 import { PrivacyConsent } from "@/components/legal/PrivacyConsent";
 
 type Variant = "default" | "compact" | "card";
@@ -23,9 +26,15 @@ export function InterestCapture({
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [hp, setHp] = useState("");
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+    // Honeypot: bot vulde het verborgen veld in. Doe alsof het lukte.
+    if (isHoneypotTripped(hp)) {
+      setDone(true);
+      return;
+    }
     setBusy(true);
     setError(null);
     try {
@@ -37,10 +46,14 @@ export function InterestCapture({
           email,
           source,
           context: context ?? null,
+          [HONEYPOT_FIELD]: hp,
         }),
       });
       if (!res.ok) throw new Error("Verzenden mislukt");
       track("interest_captured", { source, context: context ?? null });
+      // Meta-conversie: alleen voor Meta-ad-verkeer, max 1x per bezoeker
+      // (gate + dedup in lib/metaPixel.ts).
+      fireMetaLead("interest", { source, context: context ?? null });
       setDone(true);
     } catch {
       setError("Er ging iets mis, probeer opnieuw.");
@@ -84,6 +97,7 @@ export function InterestCapture({
           : "rounded-xl bg-repp-gray/30 p-4"
       }
     >
+      <Honeypot value={hp} onChange={setHp} />
       <p
         className={
           variant === "card"

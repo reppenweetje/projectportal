@@ -31,6 +31,7 @@
 
 import { useState, type FormEvent } from "react";
 import { track } from "@/lib/track";
+import { fireMetaLead } from "@/lib/metaPixel";
 import { PrivacyConsent } from "@/components/legal/PrivacyConsent";
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -187,6 +188,10 @@ export function LeadGateOverlay({
           source: "portal_gate",
           context: gateContext,
         });
+        // Meta-conversie: alleen voor Meta-ad-verkeer, max 1x per bezoeker
+        // (gate + dedup in lib/metaPixel.ts). Vóór de redirect hieronder,
+        // anders navigeert de pagina weg voordat het event verstuurd is.
+        fireMetaLead("portal-gate", { gateContext });
       } catch {
         // analytics may not be initialized; never break the flow.
       }

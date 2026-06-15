@@ -8,6 +8,7 @@ import { formatEuro } from "@/lib/types";
 import { useLeadProfile } from "@/lib/personalization";
 import { buildWhatsAppLink } from "@/lib/utils";
 import { track } from "@/lib/track";
+import { fireMetaLead } from "@/lib/metaPixel";
 import { PrivacyConsent } from "@/components/legal/PrivacyConsent";
 
 type Step = "form" | "submitting" | "done" | "error";
@@ -93,6 +94,9 @@ export function ReservationForm({ project }: { project: Project }) {
         verified: isVerified,
         source: profile?.source ?? "direct",
       });
+      // Meta-conversie: alleen voor Meta-ad-verkeer, max 1x per bezoeker
+      // (gate + dedup in lib/metaPixel.ts).
+      fireMetaLead("reservation", { unit: unit.slug, unitType: unit.type });
       setStep("done");
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : "Onbekende fout");
