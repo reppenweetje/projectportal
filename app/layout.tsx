@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Montserrat } from "next/font/google";
 import Script from "next/script";
+import AttributionTracker from "@/components/analytics/AttributionTracker";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -123,6 +124,9 @@ export default function RootLayout({
         )}
       </head>
       <body className="min-h-full flex flex-col bg-surface text-ink">
+        {/* Legt marketing-herkomst (utm/fbclid/gclid) vast in repp_attr cookie
+            zodat conversie-events alleen voor betaald ad-verkeer vuren. */}
+        <AttributionTracker />
         {children}
       </body>
     </html>

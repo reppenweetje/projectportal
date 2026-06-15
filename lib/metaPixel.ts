@@ -22,7 +22,17 @@
  *
  * Unique event-ID elk fire zodat browser-Pixel en server-side CAPI (mocht
  * die later komen) niet dubbel tellen.
+ *
+ * CONVERSIE-POORT: fireMetaLead en fireMetaContact vuren ALLEEN wanneer de
+ * bezoeker via een Meta-advertentie binnenkwam (isMetaOrigin() — fbclid of
+ * utm_source=meta/facebook/... in het repp_attr cookie). Walk-ins (direct,
+ * organisch, e-mail-portaltoken, Google) tellen dus NIET mee als Meta-conversie,
+ * zodat Meta's ad-algoritme niet optimaliseert op verkeer dat het niet zelf
+ * leverde. fireMetaCustom en de PageView (in layout.tsx) blijven ongepoort —
+ * die zijn puur voor analytics/retargeting, geen conversie-optimalisatie.
  */
+
+import { isMetaOrigin } from "@/lib/attribution";
 
 declare global {
   interface Window {
@@ -56,6 +66,9 @@ export function fireMetaLead(
   reason: string,
   extra: Record<string, unknown> = {},
 ): void {
+  // Poort: alleen tellen als Meta-conversie wanneer de bezoeker van een
+  // Meta-ad kwam. Walk-ins worden niet teruggerekend naar Meta.
+  if (!isMetaOrigin()) return;
   fireMetaPixelEvent("Lead", reason, extra);
 }
 
@@ -63,6 +76,8 @@ export function fireMetaContact(
   reason: string,
   extra: Record<string, unknown> = {},
 ): void {
+  // Zelfde poort als fireMetaLead — Contact is ook een conversie-categorie.
+  if (!isMetaOrigin()) return;
   fireMetaPixelEvent("Contact", reason, extra);
 }
 
