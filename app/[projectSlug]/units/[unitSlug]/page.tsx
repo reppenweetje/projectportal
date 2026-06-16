@@ -83,8 +83,6 @@ export default async function UnitDetailPage({
                 </h1>
                 <p className="mt-4 text-repp-navy/70">
                   {formatM2(unit.m2BVO)} bvo · {unit.layers} lagen
-                  {unit.metBedrijfsgebondenWoning &&
-                    " · met bedrijfsgebonden woning"}
                 </p>
               </div>
               <div>
@@ -145,7 +143,7 @@ export default async function UnitDetailPage({
                     ? ([
                         [
                           "Tweede verdieping",
-                          `${formatM2(unit.m2TweedeVerdieping)} (bedrijfsgebonden woning)`,
+                          formatM2(unit.m2TweedeVerdieping),
                         ],
                       ] as [string, string][])
                     : []),
@@ -185,11 +183,6 @@ export default async function UnitDetailPage({
                 <p className="text-xs text-white/60 mt-1">
                   excl. 21% btw · v.o.n. · VVE €{unit.vvePerMaand}/mnd
                 </p>
-                {unit.prijsZonderWoningExBtw && (
-                  <p className="text-xs text-white/60 mt-1">
-                    Zonder woning: {formatEuro(unit.prijsZonderWoningExBtw)}
-                  </p>
-                )}
 
                 {/* Per-type FOMO */}
                 {(isReservable || isWachtlijst) && (

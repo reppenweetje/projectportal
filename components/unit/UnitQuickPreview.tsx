@@ -97,7 +97,7 @@ export function UnitQuickPreview({
             {unit.m2TweedeVerdieping && (
               <SpecRow
                 label="Tweede verdieping"
-                value={`${formatM2(unit.m2TweedeVerdieping)} (woning)`}
+                value={formatM2(unit.m2TweedeVerdieping)}
               />
             )}
             <SpecRow
@@ -131,9 +131,9 @@ export function UnitQuickPreview({
 
           {unit.type === "XXL" && (
             <div className="mt-5 rounded-xl bg-status-coming/15 border border-status-coming/40 p-3 text-xs text-repp-navy/80 leading-relaxed">
-              <span className="font-bold">XXL met bedrijfsgebonden woning.</span>{" "}
-              3 lagen, woning op de tweede verdieping. Nu te koop: meld je aan,
-              dan nemen we contact op om jouw scenario door te spreken.
+              <span className="font-bold">XXL, 3 volle lagen.</span>{" "}
+              191 m² over 3 verdiepingen. Nu te koop: meld je aan, dan nemen we
+              contact op om jouw scenario door te spreken.
             </div>
           )}
 

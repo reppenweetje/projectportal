@@ -118,7 +118,7 @@ worden automatisch getrackt. Custom-events via `track()` uit `lib/track.ts`:
 | `reservation_submitted` | reserveer-formulier verzonden | unit, unitType, unitStatus, contactMoment, verified, source |
 | `interest_captured` | soft-conversion e-mail-capture | source, context |
 | `insider_signed_up` | Insider-list aanmelding | source, modus, topic |
-| `xxl_interest` | XXL-interesse formulier | woningKeuze, unitKeuze, contactMoment, hasGebruik |
+| `xxl_interest` | XXL-interesse formulier | unitKeuze, contactMoment, hasGebruik |
 | `report_requested` | calculator-rapport per mail | reportType |
 | `unit_favorited` | unit toegevoegd aan favorieten | unit |
 

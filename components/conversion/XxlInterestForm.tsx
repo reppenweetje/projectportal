@@ -11,7 +11,6 @@ import { PrivacyConsent } from "@/components/legal/PrivacyConsent";
 
 type Step = "form" | "submitting" | "done" | "error";
 
-type WoningKeuze = "met_woning" | "zonder_woning" | "beide";
 type UnitKeuze = "unit-7" | "unit-14" | "beide" | "geen_voorkeur";
 
 export function XxlInterestForm({ project }: { project: Project }) {
@@ -19,7 +18,6 @@ export function XxlInterestForm({ project }: { project: Project }) {
   const xxlUnits = project.units.filter((u) => u.type === "XXL");
   const sample = xxlUnits[0];
 
-  const [woningKeuze, setWoningKeuze] = useState<WoningKeuze>("beide");
   const [unitKeuze, setUnitKeuze] = useState<UnitKeuze>("geen_voorkeur");
   const [naam, setNaam] = useState("");
   const [bedrijfsnaam, setBedrijfsnaam] = useState("");
@@ -53,7 +51,6 @@ export function XxlInterestForm({ project }: { project: Project }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           project: project.slug,
-          woningKeuze,
           unitKeuze,
           naam,
           bedrijfsnaam,
@@ -70,14 +67,13 @@ export function XxlInterestForm({ project }: { project: Project }) {
         throw new Error(j?.error ?? "Verzenden mislukt");
       }
       track("xxl_interest", {
-        woningKeuze,
         unitKeuze,
         contactMoment,
         hasGebruik: !!gebruik,
       });
       // Meta-conversie: alleen voor Meta-ad-verkeer, max 1x per bezoeker
       // (gate + dedup in lib/metaPixel.ts).
-      fireMetaLead("xxl-interest", { woningKeuze, unitKeuze });
+      fireMetaLead("xxl-interest", { unitKeuze });
       setStep("done");
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : "Onbekende fout");
@@ -102,12 +98,6 @@ export function XxlInterestForm({ project }: { project: Project }) {
             Wat we van je hebben
           </p>
           <ul className="mt-3 space-y-1.5 text-sm text-repp-navy/80">
-            <li>
-              <span className="text-repp-navy/50">Voorkeur woning:</span>{" "}
-              <span className="font-semibold text-repp-navy">
-                {woningLabel(woningKeuze)}
-              </span>
-            </li>
             <li>
               <span className="text-repp-navy/50">Voorkeur unit:</span>{" "}
               <span className="font-semibold text-repp-navy">
@@ -149,36 +139,6 @@ export function XxlInterestForm({ project }: { project: Project }) {
       noValidate
     >
       <div className="lg:col-span-2 space-y-7">
-        <Field
-          label="Welke variant heeft je voorkeur?"
-          help="De XXL kan zakelijk-only of met bedrijfsgebonden woning op de tweede verdieping."
-        >
-          <div className="grid sm:grid-cols-3 gap-2">
-            <Pill
-              active={woningKeuze === "met_woning"}
-              onClick={() => setWoningKeuze("met_woning")}
-              label="Met woning"
-              sub={sample ? formatEuro(sample.prijsExBtw) : ""}
-            />
-            <Pill
-              active={woningKeuze === "zonder_woning"}
-              onClick={() => setWoningKeuze("zonder_woning")}
-              label="Zonder woning"
-              sub={
-                sample?.prijsZonderWoningExBtw
-                  ? formatEuro(sample.prijsZonderWoningExBtw)
-                  : "Prijs nog te bepalen"
-              }
-            />
-            <Pill
-              active={woningKeuze === "beide"}
-              onClick={() => setWoningKeuze("beide")}
-              label="Beide opties"
-              sub="Hoor graag wat er kan"
-            />
-          </div>
-        </Field>
-
         <Field label="Welke unit heeft je voorkeur?">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             <Pill
@@ -248,7 +208,7 @@ export function XxlInterestForm({ project }: { project: Project }) {
             value={gebruik}
             onChange={(e) => setGebruik(e.target.value)}
             rows={3}
-            placeholder="Bijvoorbeeld: aannemingsbedrijf met werkplaats + kantoor, wil de woning gebruiken voor mezelf en/of personeel"
+            placeholder="Bijvoorbeeld: aannemingsbedrijf met werkplaats op de begane grond en kantoor op de verdiepingen"
             className="w-full rounded-xl border border-repp-gray bg-white px-4 py-3 text-repp-navy focus:outline-none focus:ring-2 focus:ring-repp-blue"
           />
         </Field>
@@ -304,7 +264,7 @@ export function XxlInterestForm({ project }: { project: Project }) {
           </p>
           <p className="mt-2 text-2xl font-extrabold">3 lagen</p>
           <p className="text-sm text-white/60 mt-0.5">
-            Bedrijf op de begane grond &amp; 1e, woning op de 2e
+            Werkplaats op de begane grond, kantoor op de 1e &amp; 2e
           </p>
         </div>
 
@@ -315,21 +275,14 @@ export function XxlInterestForm({ project }: { project: Project }) {
               sample ? `${formatEuro(sample.prijsExBtw)} excl. btw` : ""
             }
           />
-          {sample?.prijsZonderWoningExBtw && (
-            <PriceRow
-              label="Zonder woning"
-              value={`${formatEuro(sample.prijsZonderWoningExBtw)} excl. btw`}
-              muted
-            />
-          )}
           <PriceRow label="VVE / maand" value="€ 160" muted />
         </ul>
 
         <div className="pt-4 border-t border-white/10 text-xs text-white/70 leading-relaxed space-y-2">
           <p>
             <span className="text-repp-yellow font-semibold">Status:</span>{" "}
-            Nu te koop. De XXL wordt opgeleverd als 3-laags unit met
-            bedrijfsgebonden woning op de tweede verdieping.
+            Nu te koop. De XXL wordt opgeleverd als 3-laags bedrijfsunit van
+            191 m².
           </p>
           <p>
             <span className="text-repp-yellow font-semibold">Aanmelden:</span>{" "}
@@ -340,12 +293,6 @@ export function XxlInterestForm({ project }: { project: Project }) {
       </aside>
     </form>
   );
-}
-
-function woningLabel(k: WoningKeuze): string {
-  if (k === "met_woning") return "Met bedrijfsgebonden woning";
-  if (k === "zonder_woning") return "Zonder woning (zakelijk only)";
-  return "Beide opties open";
 }
 
 function unitLabel(k: UnitKeuze): string {

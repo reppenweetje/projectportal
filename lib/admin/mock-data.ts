@@ -198,7 +198,7 @@ export function getRecentEvents(): RecentEvent[] {
     const details: Record<RecentEvent["type"], string> = {
       lead: `${name}${domain} via brochure-banner`,
       reservation: `${name} — Unit ${[4, 6, 12, 13][Math.floor(seedRandom(nameSeed + "u") * 4)]}`,
-      xxl: `${name} — voorkeur Unit ${seedRandom(nameSeed + "x") < 0.5 ? "7" : "14"}, met woning`,
+      xxl: `${name} — voorkeur Unit ${seedRandom(nameSeed + "x") < 0.5 ? "7" : "14"}`,
       insider: `${name}${domain} — alle updates`,
       "notify-status": `${name} — Unit ${[4, 6, 12, 13][Math.floor(seedRandom(nameSeed + "n") * 4)]}`,
       report: `${name}${domain} — maandlast-scenario`,

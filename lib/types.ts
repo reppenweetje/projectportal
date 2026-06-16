@@ -17,10 +17,8 @@ export type Unit = {
   m2TweedeVerdieping: number | null;
   layers: 2 | 3;
   prijsExBtw: number;
-  prijsZonderWoningExBtw?: number;
   vvePerMaand: number;
   status: UnitStatus;
-  metBedrijfsgebondenWoning?: boolean;
 };
 
 export type UnitSpecs = {

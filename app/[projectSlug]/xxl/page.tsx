@@ -12,7 +12,7 @@ import { XxlInterestForm } from "@/components/conversion/XxlInterestForm";
 type Params = { projectSlug: string };
 
 export const metadata: Metadata = {
-  title: "XXL-units te koop — wonen + werken op één adres",
+  title: "XXL-units te koop — 3 lagen, 191 m² op één adres",
 };
 
 export default async function XxlPage({
@@ -60,17 +60,17 @@ export default async function XxlPage({
               <h1 className="mt-3 text-5xl md:text-7xl font-extrabold tracking-tight leading-[0.95]">
                 XXL-unit met
                 <br />
-                wonen + werken
+                3 volle lagen
               </h1>
               <p className="mt-5 text-lg md:text-xl text-white/85 font-light max-w-2xl">
-                3 lagen, 191 m², op de hoek van het blok. Bedrijf op de begane
-                grond en eerste verdieping, eventueel een bedrijfsgebonden
-                woning op de tweede.
+                3 lagen, 191 m², op de hoek van het blok. Werkplaats en opslag
+                op de begane grond, kantoor of showroom op de eerste en tweede
+                verdieping.
               </p>
               <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm">
                 <Spec label="Begane grond" value="60,7 m²" />
                 <Spec label="1e verdieping" value="60,7 m²" />
-                <Spec label="2e verdieping" value="70 m² (woning)" />
+                <Spec label="2e verdieping" value="70 m²" />
                 <Spec label="Vrije hoogte BG" value="3,69 m" />
                 <Spec label="Vloerbelasting" value="1.000 kg/m²" />
               </div>
@@ -85,16 +85,16 @@ export default async function XxlPage({
               Wat de XXL anders maakt
             </p>
             <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight">
-              Bedrijf, kantoor en thuis op één adres.
+              Werkplaats, kantoor en opslag op één adres.
             </h2>
             <ul className="mt-8 grid sm:grid-cols-3 gap-4">
               <Card
                 title="3 lagen, 191 m²"
-                body="Werkplaats &amp; opslag op de begane grond, kantoor of showroom op de eerste, woning op de tweede."
+                body="Werkplaats &amp; opslag op de begane grond, kantoor of showroom op de eerste en tweede verdieping."
               />
               <Card
-                title="Bedrijfsgebonden woning"
-                body="Ondernemen op de begane grond en eerste verdieping, wonen op de tweede. Eén adres voor je bedrijf én je thuis."
+                title="Een hele extra verdieping"
+                body="70 m² extra op de tweede verdieping, bovenop je werkvloer. Ruimte voor kantoor, vergaderen of extra opslag."
                 accent
               />
               <Card

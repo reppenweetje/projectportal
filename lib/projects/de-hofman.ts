@@ -40,11 +40,8 @@ const buildUnit = (n: number): Unit => {
       m2TweedeVerdieping: 70,
       layers: 3,
       prijsExBtw: 515500,
-      // prijsZonderWoningExBtw tijdelijk weggehaald: XXL wordt vooralsnog
-      // alleen aangeboden inclusief bedrijfsgebonden woning.
       vvePerMaand: 160,
       status: status(n),
-      metBedrijfsgebondenWoning: true,
     };
   }
   if (n === 1 || n === 8) {
@@ -328,8 +325,8 @@ export const deHofman: Project = {
       a: "Dat kan, en het wordt al gedaan, bijvoorbeeld door JT Bouw die twee units heeft gekoppeld voor 210 m² aan werkruimte. De units zijn slim ontworpen met schakelbare wanden, dus uitbreiden of koppelen is bouwtechnisch eenvoudig. Vraag de makelaar naar de mogelijkheden; niet alle unit-combinaties zijn even logisch, en sommige vereisen vroeg afstemmen voor de bouwspecificaties.",
     },
     {
-      q: "Kan ik in een unit wonen én werken?",
-      a: "De twee XXL-units (Unit 7 en 14) worden opgeleverd met bedrijfsgebonden woning op de tweede verdieping. Bedrijf op de begane grond en eerste verdieping, wonen erboven. Bij L- en XL-units is wonen niet aan de orde; dat zijn pure bedrijfsruimtes. Wil je wonen én werken? De XXL-units zijn nu te koop. Meld je aan via de XXL-pagina, dan nemen we contact op om jouw scenario door te spreken.",
+      q: "Wat maakt de XXL-units anders?",
+      a: "De twee XXL-units (Unit 7 en 14) zijn met 191 m² over 3 lagen de grootste in De Hofman, op de uiteinden van het blok. Werkplaats en opslag op de begane grond, kantoor of showroom op de eerste en tweede verdieping. De L- en XL-units zijn 2 lagen. De XXL-units zijn nu te koop. Meld je aan via de XXL-pagina, dan nemen we contact op om jouw scenario door te spreken.",
     },
     {
       q: "Is de reservering bindend?",
