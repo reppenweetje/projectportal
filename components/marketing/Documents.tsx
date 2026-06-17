@@ -119,7 +119,7 @@ function DocCard({
         <DocIcon slug={doc.slug} />
       </div>
       <div className="mt-3 flex-1 min-w-0">
-        <p className="font-semibold text-repp-navy text-sm md:text-base leading-tight">
+        <p className="font-semibold text-repp-navy text-sm md:text-base leading-tight break-words hyphens-auto">
           {doc.label}
         </p>
         <p className="mt-1 text-xs text-repp-navy/60 leading-snug line-clamp-2">
