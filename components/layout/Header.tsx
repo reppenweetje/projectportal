@@ -84,16 +84,18 @@ export function Header({ project }: { project: Project }) {
           </Link>
         </nav>
 
-        {/* Mobile: yellow CTA + hamburger. "Reserveer" houden we kort op
-            mobile zodat de hamburger niet off-screen valt op iPhone SE-
-            formaat (375px). Desktop heeft volle "Reserveer een unit"
-            label. */}
+        {/* Mobile: gele CTA + hamburger. Op mobile sturen we naar de
+            documenten-overzichtspagina (niet direct de brochure-viewer):
+            de bezoeker kiest daar zelf de Brochure-kaart en krijgt dan pas
+            de lead-gate. Korte label "Brochure" zodat de hamburger niet
+            off-screen valt op iPhone SE-formaat (375px). Desktop houdt de
+            "Reserveer een unit"-CTA. */}
         <div className="flex md:hidden items-center gap-1">
           <Link
-            href={`/${project.slug}/reserveren`}
+            href={`/${project.slug}/documenten`}
             className="inline-flex items-center bg-repp-yellow text-repp-navy text-xs font-bold px-3 py-1.5 rounded-full hover:brightness-95 transition whitespace-nowrap"
           >
-            Reserveer
+            Brochure
           </Link>
           <MobileMenu project={project} />
         </div>
