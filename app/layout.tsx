@@ -55,10 +55,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     creator: "@repp_nl",
   },
-  // Favicon: app/icon.svg wordt automatisch gepicked door Next.js
-  // (App Router convention). De .ico is verwijderd zodat 'ie niet
-  // overrides. Geen apple-touch-icon yet (PNG vereist) — modern iOS
-  // gebruikt de SVG ook.
+  // Favicon: app/icon.png (1000x1000, vierkant) wordt automatisch
+  // gepicked door Next.js (App Router convention). Vierkant + raster
+  // zodat Google 'm als zoekresultaat-favicon accepteert; de oude brede
+  // wordmark-SVG werd door Google afgekeurd (niet vierkant → globe).
   alternates: {
     canonical: getSiteUrl(),
   },
