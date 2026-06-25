@@ -1,6 +1,16 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // De document-PDFs staan bewust BUITEN /public (in private/docs/) zodat
+  // ze niet statisch publiek te bereiken zijn — alleen via de gated
+  // /api/download/[slug] route achter een dh_session-check. Next.js'
+  // output-file-tracing detecteert een dynamische readFile(join(cwd, ...))
+  // niet automatisch, dus forceren we het bundelen van die map in de
+  // serverless function. Zonder dit → 404 op Vercel (bestand niet meegebundeld).
+  outputFileTracingIncludes: {
+    "/api/download/[slug]": ["./private/docs/de-hofman/**/*"],
+  },
+
   // Basis security headers — Vercel zet HSTS al automatisch op het edge,
   // deze dekken extra surfaces. Geen CSP omdat we Plausible inline
   // bootstrap én next/script gebruiken — strict-CSP zou die breken.

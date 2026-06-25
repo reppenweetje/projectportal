@@ -2,9 +2,12 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getProjectBySlug } from "@/lib/projects/de-hofman";
+import { getPortalSession } from "@/lib/portal-session";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { DocIcon } from "@/components/marketing/DocIcon";
+import { LeadGate } from "@/components/conversion/LeadGate";
+import { DocumentViewTracker } from "@/components/marketing/DocumentViewTracker";
 
 type Params = { projectSlug: string; docSlug: string };
 
@@ -31,10 +34,17 @@ export default async function DocumentViewerPage({
   const doc = project.documents.find((d) => d.slug === docSlug);
   if (!doc) notFound();
 
-  // Download-actie via /api/download/<slug> zodat de Content-Disposition
-  // header ALTIJD "De Hofman <label>.pdf" forceert (ook bij right-click,
-  // PDF-viewer save, mobile share-sheet). Het <object>/iframe blijft
-  // naar de statische /docs/-URL wijzen voor in-page preview-snelheid.
+  // Is deze bezoeker een gepasseerde lead? Bepaalt of we het
+  // document_opened-event vuren (alleen voor echte, ingelogde views —
+  // niet voor de geblurde gate-weergave). De LeadGate hieronder doet
+  // dezelfde check nog eens voor de daadwerkelijke afscherming.
+  const session = await getPortalSession();
+
+  // ALLE PDF-toegang loopt via de sessie-gated /api/download/<slug> route;
+  // de bestanden staan niet meer publiek in /public. `?inline=1` levert de
+  // PDF met Content-Disposition: inline voor de iframe-preview; zonder query
+  // forceert de route een download met nette "De Hofman <label>.pdf"-naam.
+  const inlineHref = `/api/download/${doc.slug}?inline=1`;
   const downloadHref = `/api/download/${doc.slug}`;
   const downloadName = `${project.name} ${doc.label.toLowerCase()}.pdf`;
 
@@ -42,6 +52,14 @@ export default async function DocumentViewerPage({
     <>
       <Header project={project} />
       <main className="flex-1 flex flex-col">
+        <LeadGate
+          gateContext="documenten"
+          title="Bekijk het document"
+          description="Laat je naam en e-mailadres achter om de brochure en alle projectdocumenten te bekijken. We sturen je geen ongewenste mail."
+        >
+        {session.isReturning && (
+          <DocumentViewTracker slug={doc.slug} type={doc.group} />
+        )}
         <section className="px-4 sm:px-5 pt-6 pb-4 border-b border-repp-gray">
           <div className="mx-auto max-w-6xl">
             <Link
@@ -60,7 +78,7 @@ export default async function DocumentViewerPage({
               {/* Desktop actions only — mobile gets prominent buttons below */}
               <div className="hidden md:flex items-center gap-2 shrink-0">
                 <a
-                  href={doc.href}
+                  href={inlineHref}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-sm text-repp-navy hover:text-repp-blue font-semibold px-4 py-2 rounded-full border border-repp-gray hover:border-repp-navy transition"
@@ -95,7 +113,7 @@ export default async function DocumentViewerPage({
               </div>
               <div className="mt-5 space-y-2">
                 <a
-                  href={doc.href}
+                  href={inlineHref}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 w-full bg-repp-yellow text-repp-navy font-bold py-3.5 rounded-full hover:brightness-95 transition"
@@ -125,7 +143,7 @@ export default async function DocumentViewerPage({
             <div className="hidden md:block">
               <div className="rounded-2xl border border-repp-gray bg-white overflow-hidden h-[calc(100vh-300px)] min-h-[520px]">
                 <iframe
-                  src={`${doc.href}#view=FitH&toolbar=1`}
+                  src={`${inlineHref}#view=FitH&toolbar=1`}
                   title={doc.label}
                   className="w-full h-full block border-0"
                 />
@@ -136,6 +154,7 @@ export default async function DocumentViewerPage({
             </div>
           </div>
         </section>
+        </LeadGate>
       </main>
       <Footer project={project} />
     </>
