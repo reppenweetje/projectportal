@@ -124,13 +124,13 @@ export const deHofman: Project = {
   prijsBenchmarks: [
     {
       label: "De Hofman L",
-      sublabel: "Regulier",
+      sublabel: "Nieuwbouw",
       pricePerM2: 2281,
       isHofman: true,
     },
     {
       label: "De Hofman XL",
-      sublabel: "Regulier",
+      sublabel: "Nieuwbouw",
       pricePerM2: 2296,
       isHofman: true,
     },
