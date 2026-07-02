@@ -35,7 +35,10 @@ type LeadRow = {
   status: string | null;
   size_id: string | null;
   persona: string | null;
+  intent_id: string | null;
+  timeline_id: string | null;
   crm_stage: string | null;
+  attributes: Record<string, unknown> | null;
 };
 
 export type EventType =
@@ -46,34 +49,39 @@ export type EventType =
   | "notify-status"
   | "report";
 
+/** Volledig lead-detail incl. herkomst en klik-/gedragssignalen. */
+export type LeadDetail = {
+  id: string;
+  ts: string;
+  type: EventType;
+  name: string;
+  email: string; // gemaskeerd
+  sourceLabel: string;
+  crmStage: string | null;
+  temperature: string | null;
+  /** Waar de lead vandaan kwam (instappagina of chat-intentie). */
+  origin: string;
+  /** Wat de persoon heeft aangeklikt / gedaan (leesbare labels). */
+  clicks: string[];
+};
+
 export type LeadsData = {
   connected: boolean;
-  /** Aantal leads over ALLE tijd (voor de "sinds start"-context). */
   totalAllTime: number;
   overview: {
     leads: number;
-    leadsTrend: number | null; // % vs vorige even lange periode; null bij "all"
+    leadsTrend: number | null;
     hot: number;
-    qualified: number; // crm_stage gekwalificeerd of verder
+    qualified: number;
     reservations: number;
   };
   funnel: { label: string; count: number; percent: number }[];
-  /** Herkomst van de leads — het hoofdsignaal ("waar komen leads vandaan"). */
-  sources: {
-    label: string;
-    leads: number;
-    share: number; // % van totaal in periode
-    hot: number;
-  }[];
-  recent: {
-    id: string;
-    ts: string;
-    type: EventType;
-    name: string;
-    detail: string;
-    temperature: string | null;
-  }[];
-  /** Interesse per unit-grootte (uit size_id). */
+  /** Herkomst per kanaal ("waar komen leads vandaan"). */
+  sources: { label: string; leads: number; share: number; hot: number }[];
+  /** Instappagina van portal-leads ("waar zijn ze binnengekomen"). */
+  entryPages: { label: string; count: number }[];
+  /** Per-lead detail (nieuwste eerst), uitklapbaar in de UI. */
+  leads: LeadDetail[];
   sizeInterest: { label: string; count: number }[];
 };
 
@@ -115,13 +123,86 @@ function friendlySize(size: string | null): string {
   return map[size] ?? size;
 }
 
+// Klik-/gedragssignalen uit de CLP-chat (attributes.buyingSignals).
+function signalLabel(sig: string): string {
+  const map: Record<string, string> = {
+    availability_yes: "Beschikbaarheid gecheckt",
+    lead_complete: "Leadformulier voltooid",
+    lead_phone: "Telefoonnummer achtergelaten",
+    size_specific: "Specifieke unit-grootte bekeken",
+    unit_detail_single: "Unit-detail bekeken",
+    unit_detail_multi: "Meerdere units bekeken",
+    mortgage_calc: "Hypotheek/rendement berekend",
+    rent_match: "Huur-match aangevraagd",
+    rendement_info: "Rendement-info bekeken",
+  };
+  return map[sig] ?? sig.replace(/_/g, " ");
+}
+
+// Instappagina van portal-leads (attributes.source_page / gateContext).
+function pageLabel(page: string | null, gate: string | null): string {
+  if (page) {
+    const map: Record<string, string> = {
+      "/prijs": "Prijs-pagina",
+      "/documenten": "Documenten-overzicht",
+      "/documenten/brochure": "Brochure",
+      "/documenten/prijslijst": "Prijslijst",
+    };
+    return map[page] ?? page;
+  }
+  if (gate) return gate.charAt(0).toUpperCase() + gate.slice(1);
+  return "Onbekende pagina";
+}
+
+function humanize(v: string): string {
+  return v.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase());
+}
+
+function attrStr(attrs: Record<string, unknown> | null, key: string): string | null {
+  const v = attrs?.[key];
+  return typeof v === "string" ? v : null;
+}
+
+/** Bouwt herkomst-omschrijving + klik-lijst voor één lead. */
+function buildJourney(row: LeadRow): { origin: string; clicks: string[] } {
+  const attrs = row.attributes ?? {};
+  const isClp = (row.source ?? "") === "clp_dehofman";
+
+  if (isClp) {
+    const parts: string[] = ["Chat-landingspagina"];
+    if (row.intent_id) parts.push(humanize(row.intent_id));
+    if (row.persona) parts.push(humanize(row.persona));
+    const signals = Array.isArray(attrs["buyingSignals"])
+      ? (attrs["buyingSignals"] as unknown[]).filter(
+          (x): x is string => typeof x === "string",
+        )
+      : [];
+    return { origin: parts.join(" · "), clicks: signals.map(signalLabel) };
+  }
+
+  // Portal / insider / overige
+  const page = attrStr(attrs, "source_page");
+  const gate = attrStr(attrs, "gateContext");
+  const label = attrStr(attrs, "source_label"); // bv "footer"
+  const topic = attrStr(attrs, "topic");
+  const clicks: string[] = [];
+  if (gate) clicks.push(`Lead-gate op ${pageLabel(page, gate)}`);
+  else if (page) clicks.push(`Formulier op ${pageLabel(page, gate)}`);
+  if (topic) clicks.push(`Interesse: ${humanize(topic)}`);
+
+  const originBits: string[] = [pageLabel(page, gate)];
+  if (label) originBits.push(`via ${label}`);
+  return { origin: originBits.join(" "), clicks };
+}
+
 async function fetchDeHofmanLeads(): Promise<LeadRow[] | null> {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
   if (!url || !key) return null;
 
   const select =
-    "id,first_name,last_name,email,source,project,registration_date,temperature,status,size_id,persona,crm_stage";
+    "id,first_name,last_name,email,source,project,registration_date," +
+    "temperature,status,size_id,persona,intent_id,timeline_id,crm_stage,attributes";
   const endpoint =
     `${url}/rest/v1/leads?deleted_at=is.null&${DH_FILTER}` +
     `&select=${select}&order=registration_date.desc&limit=5000`;
@@ -143,7 +224,7 @@ async function fetchDeHofmanLeads(): Promise<LeadRow[] | null> {
 }
 
 function inRange(row: LeadRow, since: number | null): boolean {
-  if (since === null) return true; // "all"
+  if (since === null) return true;
   if (!row.registration_date) return false;
   return new Date(row.registration_date).getTime() >= since;
 }
@@ -161,7 +242,8 @@ export async function getLeadsData(range: TimeRange): Promise<LeadsData> {
       overview: { leads: 0, leadsTrend: null, hot: 0, qualified: 0, reservations: 0 },
       funnel: [],
       sources: [],
-      recent: [],
+      entryPages: [],
+      leads: [],
       sizeInterest: [],
     };
   }
@@ -188,15 +270,14 @@ export async function getLeadsData(range: TimeRange): Promise<LeadsData> {
   const reservations = inPeriod.filter((r) => (r.source ?? "").includes("reservation")).length;
 
   const leadsTrend =
-    days === null || inPrev.length === 0
-      ? days === null
-        ? null
-        : leads > 0
+    days === null
+      ? null
+      : inPrev.length === 0
+        ? leads > 0
           ? 100
           : 0
-      : Math.round(((leads - inPrev.length) / inPrev.length) * 100);
+        : Math.round(((leads - inPrev.length) / inPrev.length) * 100);
 
-  // Funnel (kwalificatie, monotoon dalend op basis van huidige crm_stage).
   const contacted = inPeriod.filter((r) => CONTACTED_STAGES.has(r.crm_stage ?? "")).length;
   const negotiation = inPeriod.filter((r) => r.crm_stage === "onderhandeling").length;
   const pct = (n: number) => (leads > 0 ? (n / leads) * 100 : 0);
@@ -207,7 +288,7 @@ export async function getLeadsData(range: TimeRange): Promise<LeadsData> {
     { label: "In onderhandeling", count: negotiation, percent: pct(negotiation) },
   ];
 
-  // Herkomst: groepeer op source.
+  // Herkomst per kanaal.
   const bySource = new Map<string, { leads: number; hot: number }>();
   for (const r of inPeriod) {
     const label = friendlySource(r.source);
@@ -225,21 +306,37 @@ export async function getLeadsData(range: TimeRange): Promise<LeadsData> {
     }))
     .sort((a, b) => b.leads - a.leads);
 
-  // Recente activiteit: nieuwste leads (over alle tijd, niet periode-gefilterd).
-  const recent = rows.slice(0, 12).map((r) => {
-    const naam = r.first_name?.trim() || "Onbekende lead";
-    const emailMasked = r.email ? maskEmail(r.email) : "geen e-mail";
+  // Instappagina van portal-leads.
+  const byPage = new Map<string, number>();
+  for (const r of inPeriod) {
+    if (!(r.source ?? "").startsWith("dehofman_portal")) continue;
+    const label = pageLabel(
+      attrStr(r.attributes, "source_page"),
+      attrStr(r.attributes, "gateContext"),
+    );
+    byPage.set(label, (byPage.get(label) ?? 0) + 1);
+  }
+  const entryPages = [...byPage.entries()]
+    .map(([label, count]) => ({ label, count }))
+    .sort((a, b) => b.count - a.count);
+
+  // Per-lead detail (nieuwste 40 over alle tijd).
+  const leadsDetail: LeadDetail[] = rows.slice(0, 40).map((r) => {
+    const { origin, clicks } = buildJourney(r);
     return {
       id: r.id,
       ts: r.registration_date ?? new Date(now).toISOString(),
       type: eventType(r.source),
-      name: naam,
-      detail: `${friendlySource(r.source)} · ${emailMasked}`,
+      name: r.first_name?.trim() || "Onbekende lead",
+      email: r.email ? maskEmail(r.email) : "geen e-mail",
+      sourceLabel: friendlySource(r.source),
+      crmStage: r.crm_stage,
       temperature: r.temperature,
+      origin,
+      clicks,
     };
   });
 
-  // Interesse per unit-grootte.
   const bySize = new Map<string, number>();
   for (const r of inPeriod) {
     const label = friendlySize(r.size_id);
@@ -255,7 +352,8 @@ export async function getLeadsData(range: TimeRange): Promise<LeadsData> {
     overview: { leads, leadsTrend, hot, qualified, reservations },
     funnel,
     sources,
-    recent,
+    entryPages,
+    leads: leadsDetail,
     sizeInterest,
   };
 }

@@ -211,9 +211,83 @@ export async function AdminDashboard({ range }: { range: TimeRange }) {
           </div>
         </section>
 
-        {/* Grootte-interesse + Recente activiteit side-by-side */}
-        <section className="grid lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-1">
+        {/* Per-lead detail — bron + wat de persoon aanklikte */}
+        <section>
+          <h2 className="text-xl font-extrabold text-repp-navy tracking-tight mb-1">
+            Leads · klik voor detail
+          </h2>
+          <p className="text-sm text-repp-navy/60 mb-4">
+            Nieuwste leads. Klap een lead uit om de bron en de aangeklikte
+            stappen te zien.
+          </p>
+          <div className="rounded-2xl bg-white border border-repp-gray divide-y divide-repp-gray/60 overflow-hidden">
+            {data.leads.length === 0 ? (
+              <EmptyRow>Nog geen leads.</EmptyRow>
+            ) : (
+              data.leads.map((l) => (
+                <details key={l.id} className="group">
+                  <summary className="list-none [&::-webkit-details-marker]:hidden px-4 py-3 flex items-center justify-between gap-4 cursor-pointer hover:bg-surface-muted/40">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="text-repp-navy/30 transition-transform group-open:rotate-90">
+                        ▸
+                      </span>
+                      <EventTypeBadge type={l.type} />
+                      <span className="text-sm font-bold text-repp-navy truncate">
+                        {l.name}
+                      </span>
+                      {l.temperature === "hot" && (
+                        <span className="text-[10px] uppercase font-bold text-rose-600">
+                          hot
+                        </span>
+                      )}
+                      <span className="text-xs text-repp-navy/55 truncate hidden sm:inline">
+                        · {l.sourceLabel}
+                      </span>
+                    </div>
+                    <span className="text-[11px] text-repp-navy/45 whitespace-nowrap">
+                      {relativeTime(l.ts)}
+                    </span>
+                  </summary>
+                  <div className="px-4 pb-4 pl-11 space-y-3">
+                    <div className="grid sm:grid-cols-2 gap-x-6 gap-y-2">
+                      <DetailRow label="Bron">{l.sourceLabel}</DetailRow>
+                      <DetailRow label="Herkomst">{l.origin}</DetailRow>
+                      <DetailRow label="CRM-fase">
+                        {l.crmStage ? stageLabel(l.crmStage) : "—"}
+                      </DetailRow>
+                      <DetailRow label="E-mail">{l.email}</DetailRow>
+                    </div>
+                    <div>
+                      <p className="text-[11px] uppercase tracking-wider text-repp-navy/50 font-semibold mb-1.5">
+                        Aangeklikt / gedaan
+                      </p>
+                      {l.clicks.length === 0 ? (
+                        <p className="text-sm text-repp-navy/45">
+                          Geen klik-signalen vastgelegd voor deze lead.
+                        </p>
+                      ) : (
+                        <div className="flex flex-wrap gap-1.5">
+                          {l.clicks.map((c, i) => (
+                            <span
+                              key={i}
+                              className="text-xs font-medium bg-repp-blue/10 text-repp-navy px-2 py-1 rounded-full"
+                            >
+                              {c}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </details>
+              ))
+            )}
+          </div>
+        </section>
+
+        {/* Interesse per grootte + instappagina */}
+        <section className="grid lg:grid-cols-2 gap-6">
+          <div>
             <h2 className="text-xl font-extrabold text-repp-navy tracking-tight mb-4">
               Interesse per grootte
             </h2>
@@ -236,47 +310,34 @@ export async function AdminDashboard({ range }: { range: TimeRange }) {
                 ))
               )}
             </div>
-            <p className="mt-3 text-xs text-repp-navy/50 leading-relaxed">
-              Views/favorieten per losse unit volgen met Plausible (stap 2).
-            </p>
           </div>
-
-          <div className="lg:col-span-2">
+          <div>
             <h2 className="text-xl font-extrabold text-repp-navy tracking-tight mb-4">
-              Recente activiteit
+              Instappagina (portal)
             </h2>
             <div className="rounded-2xl bg-white border border-repp-gray divide-y divide-repp-gray/60">
-              {data.recent.length === 0 ? (
-                <EmptyRow>Nog geen leads.</EmptyRow>
+              {data.entryPages.length === 0 ? (
+                <EmptyRow>Geen portal-leads in deze periode.</EmptyRow>
               ) : (
-                data.recent.map((e) => (
+                data.entryPages.map((p) => (
                   <div
-                    key={e.id}
-                    className="px-4 py-3 flex items-start justify-between gap-4"
+                    key={p.label}
+                    className="px-4 py-3 flex items-center justify-between"
                   >
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2">
-                        <EventTypeBadge type={e.type} />
-                        <span className="text-sm font-bold text-repp-navy">
-                          {e.name}
-                        </span>
-                        {e.temperature === "hot" && (
-                          <span className="text-[10px] uppercase font-bold text-rose-600">
-                            hot
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-xs text-repp-navy/65 mt-1 truncate">
-                        {e.detail}
-                      </p>
-                    </div>
-                    <span className="text-[11px] text-repp-navy/45 whitespace-nowrap">
-                      {relativeTime(e.ts)}
+                    <span className="text-sm font-medium text-repp-navy">
+                      {p.label}
+                    </span>
+                    <span className="text-sm font-bold text-repp-navy tabular-nums">
+                      {p.count}
                     </span>
                   </div>
                 ))
               )}
             </div>
+            <p className="mt-3 text-xs text-repp-navy/50 leading-relaxed">
+              Waar portal-leads het formulier tegenkwamen. Views per losse unit
+              volgen met Plausible (stap 2).
+            </p>
           </div>
         </section>
 
@@ -382,6 +443,34 @@ function EmptyRow({ children }: { children: React.ReactNode }) {
   return (
     <p className="text-sm text-repp-navy/50 text-center py-6">{children}</p>
   );
+}
+
+function DetailRow({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex items-baseline gap-2">
+      <span className="text-[11px] uppercase tracking-wider text-repp-navy/45 font-semibold w-20 shrink-0">
+        {label}
+      </span>
+      <span className="text-sm text-repp-navy break-words">{children}</span>
+    </div>
+  );
+}
+
+function stageLabel(stage: string): string {
+  const map: Record<string, string> = {
+    nieuw: "Nieuw",
+    in_gesprek: "In gesprek",
+    gekwalificeerd: "Gekwalificeerd",
+    onderhandeling: "In onderhandeling",
+    lange_termijn: "Lange termijn",
+  };
+  return map[stage] ?? stage.replace(/_/g, " ");
 }
 
 function EventTypeBadge({ type }: { type: EventType }) {
