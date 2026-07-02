@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { isAdminAuthenticated } from "@/lib/admin/auth";
 import { AdminLogin } from "@/components/admin/AdminLogin";
 import { AdminDashboard } from "@/components/admin/AdminDashboard";
-import type { TimeRange } from "@/lib/admin/mock-data";
+import type { TimeRange } from "@/lib/admin/leads-data";
 
 export const metadata: Metadata = {
   title: "REPP Admin",
