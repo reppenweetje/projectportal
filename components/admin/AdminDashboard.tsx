@@ -4,6 +4,7 @@ import {
   type EventType,
   type TimeRange,
 } from "@/lib/admin/leads-data";
+import { getPlausibleData } from "@/lib/admin/plausible-data";
 
 const RANGE_LABELS: Record<TimeRange, string> = {
   today: "Vandaag",
@@ -13,8 +14,14 @@ const RANGE_LABELS: Record<TimeRange, string> = {
 };
 
 export async function AdminDashboard({ range }: { range: TimeRange }) {
-  const data = await getLeadsData(range);
-  const plausibleConnected = !!process.env.PLAUSIBLE_API_KEY;
+  const [data, plausible] = await Promise.all([
+    getLeadsData(range),
+    getPlausibleData(range),
+  ]);
+
+  const visitors = plausible.visitors;
+  const conversion =
+    visitors && visitors > 0 ? (data.overview.leads / visitors) * 100 : null;
 
   return (
     <div className="min-h-screen bg-surface-muted">
@@ -52,12 +59,19 @@ export async function AdminDashboard({ range }: { range: TimeRange }) {
       {data.connected ? (
         <div className="bg-emerald-50 text-emerald-800 border-b border-emerald-200 text-xs px-5 py-2 text-center">
           <span className="font-bold">Live data.</span> Echte leads uit Supabase
-          ({data.totalAllTime.toLocaleString("nl-NL")} De Hofman-leads totaal).
-          Bezoekers en verkeersbron volgen zodra Plausible gekoppeld is — zie{" "}
-          <a href="#integraties" className="underline font-semibold">
-            Integratie-status
-          </a>
-          .
+          ({data.totalAllTime.toLocaleString("nl-NL")} De Hofman-leads totaal)
+          {plausible.connected ? (
+            <> + bezoekers en verkeersbron uit Plausible.</>
+          ) : (
+            <>
+              . Bezoekers en verkeersbron volgen zodra de Plausible Stats-API
+              werkt — zie{" "}
+              <a href="#integraties" className="underline font-semibold">
+                Integratie-status
+              </a>
+              .
+            </>
+          )}
         </div>
       ) : (
         <div className="bg-rose-50 text-rose-800 border-b border-rose-200 text-xs px-5 py-2 text-center">
@@ -93,11 +107,21 @@ export async function AdminDashboard({ range }: { range: TimeRange }) {
           </div>
 
           {/* Overview cards */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
+            <Stat
+              label="Bezoekers"
+              value={visitors !== null ? visitors.toLocaleString("nl-NL") : "—"}
+              hint={visitors !== null ? "Plausible" : "Plausible niet gekoppeld"}
+            />
             <Stat
               label="Leads binnen"
               value={data.overview.leads.toLocaleString("nl-NL")}
               trend={data.overview.leadsTrend ?? undefined}
+            />
+            <Stat
+              label="Conversie"
+              value={conversion !== null ? `${conversion.toFixed(1)}%` : "—"}
+              hint="leads / bezoekers"
             />
             <Stat
               label="Hot leads"
@@ -108,11 +132,6 @@ export async function AdminDashboard({ range }: { range: TimeRange }) {
               label="Gekwalificeerd"
               value={data.overview.qualified.toLocaleString("nl-NL")}
               hint="gekwalificeerd of verder"
-            />
-            <Stat
-              label="Bezoekers"
-              value={plausibleConnected ? "—" : "—"}
-              hint="Plausible · stap 2"
             />
           </div>
         </section>
@@ -157,6 +176,56 @@ export async function AdminDashboard({ range }: { range: TimeRange }) {
                     </div>
                   </li>
                 ))}
+              </ul>
+            )}
+          </div>
+        </section>
+
+        {/* Verkeersbron — alle bezoekers (Plausible) */}
+        <section>
+          <h2 className="text-xl font-extrabold text-repp-navy tracking-tight mb-1">
+            Verkeersbron · alle bezoekers
+          </h2>
+          <p className="text-sm text-repp-navy/60 mb-4">
+            Waar het totale <em>verkeer</em> vandaan komt (uit Plausible). Dit is
+            breder dan de lead-herkomst hierboven: ook bezoekers die (nog) geen
+            lead werden.
+          </p>
+          <div className="rounded-2xl bg-white border border-repp-gray p-5 md:p-7">
+            {!plausible.connected ? (
+              <EmptyRow>
+                {plausible.keyPresent
+                  ? `Geen Plausible-data. Controleer PLAUSIBLE_SITE_ID (nu: "${plausible.siteId}") — moet exact de sitenaam in Plausible zijn.`
+                  : "Plausible Stats-API niet gekoppeld (PLAUSIBLE_API_KEY ontbreekt)."}
+              </EmptyRow>
+            ) : plausible.sources.length === 0 ? (
+              <EmptyRow>Geen bezoekers in deze periode.</EmptyRow>
+            ) : (
+              <ul className="space-y-4">
+                {plausible.sources.map((s) => {
+                  const top = plausible.sources[0]?.visitors || 1;
+                  return (
+                    <li key={s.label}>
+                      <div className="flex items-baseline justify-between mb-1.5">
+                        <span className="text-sm font-semibold text-repp-navy">
+                          {s.label}
+                        </span>
+                        <span className="text-sm text-repp-navy/70 tabular-nums">
+                          <span className="font-bold text-repp-navy">
+                            {s.visitors.toLocaleString("nl-NL")}
+                          </span>{" "}
+                          bezoeker{s.visitors === 1 ? "" : "s"}
+                        </span>
+                      </div>
+                      <div className="relative h-3 bg-repp-gray/40 rounded-full overflow-hidden">
+                        <div
+                          className="absolute inset-y-0 left-0 rounded-full bg-repp-navy"
+                          style={{ width: `${Math.max(2, (s.visitors / top) * 100)}%` }}
+                        />
+                      </div>
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </div>
@@ -347,7 +416,7 @@ export async function AdminDashboard({ range }: { range: TimeRange }) {
             Integratie-status
           </h2>
           <div className="rounded-2xl bg-white border border-repp-gray divide-y divide-repp-gray/60">
-            {integrationStatus(data.connected, plausibleConnected).map((it) => (
+            {integrationStatus(data.connected, plausible).map((it) => (
               <div
                 key={it.name}
                 className="px-4 py-4 flex items-start justify-between gap-4"
@@ -370,8 +439,13 @@ export async function AdminDashboard({ range }: { range: TimeRange }) {
 
 function integrationStatus(
   supabaseLive: boolean,
-  plausibleLive: boolean,
+  plausible: { connected: boolean; keyPresent: boolean; siteId: string },
 ): { name: string; description: string; status: "live" | "mock" | "todo" }[] {
+  const plausibleDesc = plausible.connected
+    ? "Bezoekers en verkeersbron worden uit de Stats API gelezen."
+    : plausible.keyPresent
+      ? `Key gevonden, maar geen data. Controleer PLAUSIBLE_SITE_ID (nu: "${plausible.siteId}") — moet exact de sitenaam in Plausible zijn.`
+      : "Zet PLAUSIBLE_API_KEY in Vercel om bezoekers/verkeersbron te tonen.";
   return [
     {
       name: "Supabase leads",
@@ -388,10 +462,8 @@ function integrationStatus(
     },
     {
       name: "Plausible — Stats API",
-      status: plausibleLive ? "live" : "todo",
-      description: plausibleLive
-        ? "Bezoekers en verkeersbron worden uit de Stats API gelezen."
-        : "Zet PLAUSIBLE_API_KEY in Vercel om bezoekers/verkeersbron te tonen (stap 2).",
+      status: plausible.connected ? "live" : "todo",
+      description: plausibleDesc,
     },
     {
       name: "Vercel hosting + GitHub",
