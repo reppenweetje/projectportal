@@ -24,6 +24,13 @@ export type LeadProfile = {
   verifiedAt?: string;
   /** Random session id, useful for activity tracking later */
   sessionId?: string;
+  /**
+   * CLP-sessie-id, meegegeven door de projectsite als `?clp_session=` op de
+   * portal-link. Wordt gebruikt om portaal-acties (reservering e.d.) in het
+   * REPP CRM aan de juiste lead te koppelen. Los van `sessionId` (dat is de
+   * portal-eigen id); deze komt van de CLP en matcht de CRM-lead direct.
+   */
+  clpSession?: string;
 };
 
 function readCookie(): LeadProfile | null {
@@ -77,6 +84,8 @@ function profileFromUrl(): Partial<LeadProfile> {
   const unitType = sp.get("type");
   const interests = sp.get("interests");
   const source = sp.get("utm_source") ?? sp.get("source");
+  const clpSession = sp.get("clp_session") ?? sp.get("clpSession");
+  if (clpSession) out.clpSession = clpSession;
   if (name) out.name = name;
   if (email) out.email = email;
   if (phone) out.phone = phone;

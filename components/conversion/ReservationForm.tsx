@@ -80,6 +80,11 @@ export function ReservationForm({ project }: { project: Project }) {
           source: profile?.source ?? "direct",
           verified: isVerified,
           sessionId: profile?.sessionId,
+          // Voor het REPP CRM website-signaal: koppelt de reservering aan de
+          // juiste lead. clpSession = CLP-sessie (voorkeur), path = context.
+          clpSession: profile?.clpSession,
+          path:
+            typeof window !== "undefined" ? window.location.pathname : undefined,
         }),
       });
       if (!res.ok) {
