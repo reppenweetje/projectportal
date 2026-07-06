@@ -39,7 +39,7 @@ const buildUnit = (n: number): Unit => {
       m2EersteVerdieping: 60.7,
       m2TweedeVerdieping: 70,
       layers: 3,
-      prijsExBtw: 515500,
+      prijsExBtw: 475000,
       vvePerMaand: 160,
       status: status(n),
     };

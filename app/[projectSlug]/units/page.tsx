@@ -78,7 +78,7 @@ function UnitTypesSummary({ project }: { project: Project }) {
     {
       label: "XXL",
       m2: 191.4,
-      prijs: 515500,
+      prijs: 475000,
       perks: ["3 lagen", "191 m² over 3 verdiepingen", "Binnenkort in verkoop"],
     },
   ];
