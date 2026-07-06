@@ -47,6 +47,11 @@ export function MobileMenu({ project }: { project: Project }) {
       description: "Alle units en hun status",
     },
     {
+      href: `/${project.slug}/xxl`,
+      label: "XXL-units",
+      description: "3 lagen, 191 m² — units 7 & 14",
+    },
+    {
       href: `/${project.slug}/bereken`,
       label: "Bereken",
       description: "Maandlast of rendement",
@@ -64,10 +69,6 @@ export function MobileMenu({ project }: { project: Project }) {
   ];
 
   const secondaryItems: Item[] = [
-    {
-      href: `/${project.slug}/xxl`,
-      label: "XXL-wachtlijst",
-    },
     {
       href: `/${project.slug}/insider`,
       label: "Hofman Insider",

@@ -15,6 +15,43 @@ export const metadata: Metadata = {
   title: "XXL-units te koop — 3 lagen, 191 m² op één adres",
 };
 
+// Beeld bij de XXL-unit. Voorlopig de bestaande project-renders die het
+// XXL-verhaal het best vertellen (begane grond als werkplaats, verdiepingen
+// als kantoor/studio, hoekligging). Te vervangen door XXL-specifieke beelden
+// zodra die er zijn.
+const xxlImages = [
+  {
+    src: "/images/hofman/renders/interieur-kantoor.jpg",
+    alt: "Verdieping ingericht als kantoor met bureau, fauteuil en boekenwand",
+    caption: "1e/2e verdieping als kantoor",
+  },
+  {
+    src: "/images/hofman/renders/interieur-studio.jpg",
+    alt: "Verdieping ingericht als creatieve studio met vergadertafel en moodboards",
+    caption: "Verdieping als studio",
+  },
+  {
+    src: "/images/hofman/renders/werkplaats-vakman.jpg",
+    alt: "Werkplaats op de begane grond met bestelbus, werkbank en gereedschapsrek",
+    caption: "Begane grond als werkplaats",
+  },
+  {
+    src: "/images/hofman/renders/unit-open-overdag.jpg",
+    alt: "Open unit overdag met showroom en werkplaats achter de overheaddeur",
+    caption: "Overheaddeur 4 × 3,50 m",
+  },
+  {
+    src: "/images/hofman/renders/zijgevel-avond.jpg",
+    alt: "De Hofman bij avond, schuin hoekaanzicht met verlichte units",
+    caption: "XXL op de hoek van het blok",
+  },
+  {
+    src: "/images/hofman/renders/gevel-overdag.jpg",
+    alt: "De Hofman overdag, hoekaanzicht met entree en geparkeerde auto's",
+    caption: "De Hofman overdag",
+  },
+];
+
 export default async function XxlPage({
   params,
 }: {
@@ -78,6 +115,32 @@ export default async function XxlPage({
           </div>
         </section>
 
+        {/* Digitale rondleiding */}
+        <section className="px-5 py-16 md:py-20 bg-hofman-deep text-white">
+          <div className="mx-auto max-w-5xl">
+            <p className="text-xs uppercase tracking-[0.2em] text-repp-yellow font-semibold">
+              Digitale rondleiding
+            </p>
+            <h2 className="mt-3 text-2xl md:text-4xl font-extrabold tracking-tight">
+              Loop virtueel door de XXL-unit.
+            </h2>
+            <p className="mt-3 text-white/75 max-w-2xl">
+              Bekijk de drie lagen, de vrije hoogtes en de indeling in één
+              vloeiende tour — zonder een afspraak te maken.
+            </p>
+            <div className="mt-8 aspect-video w-full overflow-hidden rounded-2xl border border-white/10 bg-black shadow-2xl">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/IRB3hLXi2l0"
+                title="Digitale rondleiding XXL-unit — De Hofman"
+                className="h-full w-full"
+                loading="lazy"
+                allow="encrypted-media; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </section>
+
         {/* Why XXL */}
         <section className="px-5 py-16 md:py-20 bg-white">
           <div className="mx-auto max-w-5xl">
@@ -105,8 +168,41 @@ export default async function XxlPage({
           </div>
         </section>
 
+        {/* Beeld */}
+        <section className="px-5 py-16 md:py-20 bg-surface-muted">
+          <div className="mx-auto max-w-5xl">
+            <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
+              In beeld
+            </p>
+            <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight">
+              Zo kan jouw XXL eruitzien.
+            </h2>
+            <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {xxlImages.map((img) => (
+                <figure
+                  key={img.src}
+                  className="group overflow-hidden rounded-2xl border border-repp-gray bg-white"
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <Image
+                      src={img.src}
+                      alt={img.alt}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover transition duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <figcaption className="px-4 py-3 text-sm text-repp-navy/70">
+                    {img.caption}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Form */}
-        <section className="px-5 py-12 md:py-16 bg-surface-muted">
+        <section className="px-5 py-12 md:py-16 bg-white">
           <div className="mx-auto max-w-5xl">
             <div className="text-center mb-10">
               <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
