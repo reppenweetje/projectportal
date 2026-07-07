@@ -71,11 +71,10 @@ export default async function XxlPage({
     <>
       <Header project={project} />
       <main className="flex-1 has-sticky-cta">
-        {/* Hero — md+ krijgt een vaste bannerhoogte van 46vw (~2.2:1) zodat de
-            volledige gevel (dak t/m entree) in beeld staat i.p.v. strak
-            ingezoomd; content verticaal gecentreerd. Op mobile bepaalt de
-            tekst de hoogte (staand scherm), dus geen min-height daar. */}
-        <section className="relative overflow-hidden bg-hofman-deep text-white flex flex-col justify-center md:min-h-[46vw]">
+        {/* Hero — compacte hoogte zoals de header van de plattegrond-pagina
+            (pt-12 md:pt-20 pb-12); de render blijft als achtergrond zichtbaar
+            in de band. */}
+        <section className="relative overflow-hidden bg-hofman-deep text-white">
           {hero && (
             <div className="absolute inset-0">
               <Image
@@ -89,7 +88,7 @@ export default async function XxlPage({
               <div className="absolute inset-0 bg-gradient-to-b from-hofman-deep/45 via-hofman-deep/65 to-hofman-deep/95" />
             </div>
           )}
-          <div className="relative px-5 pt-16 pb-14 md:pt-24 md:pb-20">
+          <div className="relative px-5 pt-12 md:pt-20 pb-12">
             <div className="mx-auto max-w-5xl">
               <Link
                 href={`/${project.slug}/units`}
@@ -97,30 +96,27 @@ export default async function XxlPage({
               >
                 ← Alle units
               </Link>
-              {/* Links uitgelijnd, net als de foto-hero op de homepage
-                  (MinimalHero) — de gecentreerde variant week af van de rest
-                  van de site. */}
-              <p className="mt-6 text-xs uppercase tracking-[0.2em] text-repp-yellow font-semibold">
+              <p className="mt-6 text-xs uppercase tracking-[0.2em] text-repp-yellow font-semibold text-center">
                 Nu te koop · {xxlUnits.length} units
               </p>
-              <h1 className="mt-3 text-5xl md:text-7xl font-extrabold tracking-tight leading-[0.95]">
+              <h1 className="mt-3 text-5xl md:text-7xl font-extrabold tracking-tight leading-[0.95] text-center">
                 XXL-unit aan
                 <br />
                 de zichtzijde
               </h1>
-              <p className="mt-5 text-lg md:text-xl text-white/85 font-light max-w-2xl">
+              <p className="mt-5 text-lg md:text-xl text-white/85 font-light max-w-2xl mx-auto text-center">
                 3 lagen, 191 m² op de kop van het blok — pal aan de zichtzijde
                 van De Hofman. Werkplaats en opslag op de begane grond, kantoor
                 of showroom op de eerste en tweede verdieping.
               </p>
-              <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm">
+              <div className="mt-8 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm">
                 <Spec label="Begane grond" value="60,7 m²" />
                 <Spec label="1e verdieping" value="60,7 m²" />
                 <Spec label="2e verdieping" value="70 m²" />
                 <Spec label="Vrije hoogte BG" value="3,69 m" />
                 <Spec label="Vloerbelasting" value="1.000 kg/m²" />
               </div>
-              <div className="mt-8 flex">
+              <div className="mt-8 flex justify-center">
                 <a
                   href="#interesse"
                   className="inline-flex items-center bg-repp-yellow text-repp-navy text-sm font-bold px-6 py-3 rounded-full hover:brightness-95 transition shadow-lg"
@@ -287,7 +283,7 @@ export default async function XxlPage({
 
 function Spec({ label, value }: { label: string; value: string }) {
   return (
-    <div>
+    <div className="text-center">
       <p className="text-xs md:text-[13px] uppercase tracking-wider text-white/60 font-semibold">
         {label}
       </p>
