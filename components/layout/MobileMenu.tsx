@@ -53,8 +53,13 @@ export function MobileMenu({ project }: { project: Project }) {
     },
     {
       href: `/${project.slug}/bereken`,
-      label: "Bereken",
-      description: "Maandlast of rendement",
+      label: "Bereken rendement",
+      description: "Maandlast & rendement",
+    },
+    {
+      href: `/${project.slug}/koopvshuur`,
+      label: "Koop vs huur",
+      description: "Wat levert kopen op?",
     },
     {
       href: `/${project.slug}/documenten`,
