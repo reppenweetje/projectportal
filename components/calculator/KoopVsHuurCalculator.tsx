@@ -300,7 +300,7 @@ export function KoopVsHuurCalculator({ project }: { project: Project }) {
               <button
                 type="button"
                 onClick={() => setRenteOverride(null)}
-                className="mt-1 text-[11px] font-semibold text-hofman-orange hover:underline"
+                className="mt-1 text-[11px] font-semibold text-repp-navy underline underline-offset-2 hover:text-repp-blue"
               >
                 Terug naar gemiddeld tarief ({asn.rente.toFixed(2).replace(".", ",")}%)
               </button>
@@ -344,19 +344,37 @@ export function KoopVsHuurCalculator({ project }: { project: Project }) {
             <p className="mt-2 text-5xl md:text-6xl font-extrabold tracking-tight tabular-nums">
               {formatEuro(Math.round(last.voordeel))}
             </p>
-            <p className="mt-3 text-sm text-white/70 leading-relaxed">
-              De <b className="text-white">{unit.type}</b> van{" "}
-              <b className="text-white">{formatM2(unit.m2)}</b> kost je als koper
-              in jaar 1{" "}
-              <b className="text-white">{formatEuro(Math.round(model.koopMnd))}</b>{" "}
-              per maand. Als huurder betaal je{" "}
-              <b className="text-white">{formatEuro(Math.round(model.huurMnd))}</b>
-              , maar bouw je niets op. Na {horizon} jaar heb je{" "}
-              <b className="text-white">
-                {formatEuro(Math.round(vermogen - model.E))}
-              </b>{" "}
-              aan vermogen opgebouwd, bovenop je eigen inbreng.
+            {/* Eén kernzin; de onderbouwing als scanbare regels eronder
+                (bewust geen bold-rijke lopende tekst — leesdrempel was te hoog,
+                maar de informatie zelf moet volledig blijven). */}
+            <p className="mt-3 text-sm text-white/85">
+              Zoveel ben je na {horizon} jaar beter af als je de {unit.type} van{" "}
+              {formatM2(unit.m2)} koopt in plaats van huurt.
             </p>
+            <dl className="mt-4 pt-4 border-t border-white/10 space-y-1.5 text-[13px]">
+              <div className="flex items-baseline justify-between gap-3">
+                <dt className="text-white/55">Koopmaandlast in jaar 1</dt>
+                <dd className="font-semibold text-white tabular-nums">
+                  {formatEuro(Math.round(model.koopMnd))}
+                </dd>
+              </div>
+              <div className="flex items-baseline justify-between gap-3">
+                <dt className="text-white/55">
+                  Vergelijkbare huur per maand (bouwt niets op)
+                </dt>
+                <dd className="font-semibold text-white tabular-nums">
+                  {formatEuro(Math.round(model.huurMnd))}
+                </dd>
+              </div>
+              <div className="flex items-baseline justify-between gap-3">
+                <dt className="text-white/55">
+                  Opgebouwd vermogen, bovenop je eigen inbreng
+                </dt>
+                <dd className="font-semibold text-repp-yellow tabular-nums">
+                  {formatEuro(Math.round(vermogen - model.E))}
+                </dd>
+              </div>
+            </dl>
             <p className="mt-4 text-[11px] text-white/40 leading-relaxed">
               Indicatieve berekening op basis van de gekozen aannames. Geen
               aanbod of financieel advies; er kunnen geen rechten aan worden
@@ -408,6 +426,42 @@ function UnitCard({
       ? "bg-status-optie/25 text-[#8a681c]"
       : "bg-status-available/20 text-[#3f7a52]";
   const perM2 = optie.prijs / optie.m2;
+
+  // Uitverkocht = echt uit: niet klikbaar, gedimd, geen hover-affordance.
+  // Alleen het rode "Uitverkocht"-badge houdt kleur, zodat meteen duidelijk
+  // is waaróm de kaart uit staat — en dat de andere kaarten dus wél kunnen.
+  if (optie.sold) {
+    return (
+      <div
+        aria-disabled="true"
+        aria-label={`${optie.type}, ${formatM2(optie.m2)}, ${formatEuro(optie.prijs)}, ${optie.badge}`}
+        className="w-full rounded-xl border-2 border-repp-gray/70 bg-surface-muted px-4 py-3 cursor-not-allowed select-none"
+      >
+        <div className="flex items-center justify-between gap-2">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-repp-navy/35">
+            {optie.type}
+          </span>
+          <span
+            className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full ${badgeClasses}`}
+          >
+            {optie.badge}
+          </span>
+        </div>
+        <div className="mt-0.5 text-sm font-bold text-repp-navy/35">
+          {formatM2(optie.m2)}
+        </div>
+        <div className="mt-0.5 flex items-baseline justify-between gap-2">
+          <span className="text-lg font-extrabold tabular-nums text-repp-navy/35">
+            {formatEuro(optie.prijs)}
+          </span>
+          <span className="text-[11px] tabular-nums text-repp-navy/30">
+            {formatEuro(Math.round(perM2))} / m²
+          </span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <button
       type="button"
@@ -423,7 +477,7 @@ function UnitCard({
       <div className="flex items-center justify-between gap-2">
         <span
           className={`text-[11px] font-bold uppercase tracking-wider ${
-            active ? "text-repp-yellow" : "text-hofman-orange"
+            active ? "text-repp-yellow" : "text-repp-navy/60"
           }`}
         >
           {optie.type}
@@ -431,19 +485,19 @@ function UnitCard({
         <span
           className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full ${
             active ? "bg-white/15 text-white" : badgeClasses
-          } ${optie.sold ? "opacity-90" : ""}`}
+          }`}
         >
           {optie.badge}
         </span>
       </div>
-      <div className={`mt-0.5 text-sm font-bold ${active ? "text-white" : "text-repp-navy"} ${optie.sold && !active ? "opacity-60" : ""}`}>
+      <div className={`mt-0.5 text-sm font-bold ${active ? "text-white" : "text-repp-navy"}`}>
         {formatM2(optie.m2)}
       </div>
       <div className="mt-0.5 flex items-baseline justify-between gap-2">
         <span
           className={`text-lg font-extrabold tabular-nums ${
             active ? "text-repp-yellow" : "text-repp-navy"
-          } ${optie.sold && !active ? "opacity-60" : ""}`}
+          }`}
         >
           {formatEuro(optie.prijs)}
         </span>
@@ -492,7 +546,7 @@ function MaandlastenKaart({
           sub="hypotheek + lasten"
           bedrag={model.koopMnd}
           pct={(model.koopMnd / maxMnd) * 100}
-          kleur="bg-hofman-orange"
+          kleur="bg-repp-navy"
         />
       </div>
       <Toelichting>
@@ -741,11 +795,11 @@ function VoordeelGrafiek({
             strokeWidth={1.5}
             strokeDasharray="4 4"
           />
-          <path d={geo.areaD} fill="rgba(245,158,11,0.13)" />
+          <path d={geo.areaD} fill="rgba(15,15,112,0.06)" />
           <path
             d={geo.pathD}
             fill="none"
-            stroke="#f59e0b"
+            stroke="#0f0f70"
             strokeWidth={3}
             strokeLinejoin="round"
             strokeLinecap="round"
@@ -760,12 +814,18 @@ function VoordeelGrafiek({
                 stroke="#0f0f70"
                 strokeWidth={2.5}
               />
+              {/* Witte halo (paint-order: stroke) zodat het label leesbaar
+                  blijft waar het over de lijn of gridlijnen valt. */}
               <text
                 x={Math.min(geo.kantelPt.cx + 12, geo.W - 170)}
-                y={geo.kantelPt.cy - 12}
-                fontSize={11.5}
+                y={geo.kantelPt.cy - 14}
+                fontSize={12}
                 fontWeight={700}
                 fill="#0f0f70"
+                stroke="#ffffff"
+                strokeWidth={4}
+                paintOrder="stroke"
+                strokeLinejoin="round"
               >
                 vanaf jaar {geo.kantel} wint kopen
               </text>
@@ -774,8 +834,10 @@ function VoordeelGrafiek({
           <circle
             cx={geo.lastP.cx}
             cy={geo.lastP.cy}
-            r={5.5}
-            fill="#f59e0b"
+            r={6}
+            fill="#edff00"
+            stroke="#0f0f70"
+            strokeWidth={2.5}
           />
           <text
             x={geo.lastP.cx - 10}
@@ -831,7 +893,7 @@ function VoordeelGrafiek({
       </div>
       <div className="mt-2 flex flex-wrap gap-5 text-[11px] text-repp-navy/60">
         <span className="inline-flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-hofman-orange" />
+          <span className="w-2.5 h-2.5 rounded-full bg-repp-navy" />
           Voordeel koper t.o.v. huurder
         </span>
         <span className="inline-flex items-center gap-1.5">
@@ -872,7 +934,7 @@ function OpbouwKaart({
         <Stat
           label="Jouw vermogen in steen"
           value={formatEuro(Math.round(vermogen))}
-          gold
+          highlight
         />
         <Stat
           label="Wat je anders aan huur kwijt was"
@@ -895,26 +957,32 @@ function OpbouwKaart({
 function Stat({
   label,
   value,
-  gold,
+  highlight,
 }: {
   label: string;
   value: string;
-  gold?: boolean;
+  /** Dé kernwaarde van de kaart: navy vlak met geel bedrag (huisstijl-accent),
+   *  zodat 'ie echt naar voren komt i.p.v. het eerdere goud/geel dat wegviel. */
+  highlight?: boolean;
 }) {
   return (
     <div
       className={`flex flex-col rounded-lg border p-3.5 ${
-        gold
-          ? "bg-[#faf5e9] border-[#e8d5a8]"
+        highlight
+          ? "bg-repp-navy border-repp-navy"
           : "bg-surface-muted border-repp-gray"
       }`}
     >
-      <span className="text-[10px] font-bold uppercase tracking-wide text-repp-navy/50 leading-tight">
+      <span
+        className={`text-[10px] font-bold uppercase tracking-wide leading-tight ${
+          highlight ? "text-white/60" : "text-repp-navy/50"
+        }`}
+      >
         {label}
       </span>
       <span
         className={`mt-auto pt-2.5 text-lg font-extrabold tabular-nums ${
-          gold ? "text-[#8a681c]" : "text-repp-navy"
+          highlight ? "text-repp-yellow" : "text-repp-navy"
         }`}
       >
         {value}
@@ -975,10 +1043,10 @@ function AannamesDetails({
   return (
     <details className="rounded-2xl border border-dashed border-repp-gray bg-white group">
       <summary className="flex items-center gap-2 cursor-pointer list-none px-5 py-4 text-sm font-semibold text-repp-navy">
-        <span className="text-hofman-orange text-lg leading-none group-open:hidden">
+        <span className="text-repp-navy/50 text-lg leading-none group-open:hidden">
           +
         </span>
-        <span className="text-hofman-orange text-lg leading-none hidden group-open:inline">
+        <span className="text-repp-navy/50 text-lg leading-none hidden group-open:inline">
           −
         </span>
         Alle aannames en de volledige rekensom
@@ -1057,7 +1125,7 @@ function Slider({
     <label className="block">
       <div className="flex items-baseline justify-between gap-3">
         <span className="text-sm font-semibold text-repp-navy">{label}</span>
-        <span className="text-sm font-bold text-hofman-orange tabular-nums whitespace-nowrap">
+        <span className="text-sm font-bold text-repp-navy tabular-nums whitespace-nowrap">
           {valueLabel}
         </span>
       </div>
@@ -1113,10 +1181,10 @@ function Toelichting({ children }: { children: React.ReactNode }) {
   return (
     <details className="mt-4 border-t border-repp-gray group">
       <summary className="flex items-center gap-2 cursor-pointer list-none py-3 pb-1 text-xs font-semibold text-repp-navy/60 hover:text-repp-navy">
-        <span className="text-hofman-orange text-[15px] leading-none w-3 text-center group-open:hidden">
+        <span className="text-repp-navy/50 text-[15px] leading-none w-3 text-center group-open:hidden">
           +
         </span>
-        <span className="text-hofman-orange text-[15px] leading-none w-3 text-center hidden group-open:inline">
+        <span className="text-repp-navy/50 text-[15px] leading-none w-3 text-center hidden group-open:inline">
           −
         </span>
         Toelichting
