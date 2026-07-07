@@ -97,27 +97,30 @@ export default async function XxlPage({
               >
                 ← Alle units
               </Link>
-              <p className="mt-6 text-xs uppercase tracking-[0.2em] text-repp-yellow font-semibold text-center">
+              {/* Links uitgelijnd, net als de foto-hero op de homepage
+                  (MinimalHero) — de gecentreerde variant week af van de rest
+                  van de site. */}
+              <p className="mt-6 text-xs uppercase tracking-[0.2em] text-repp-yellow font-semibold">
                 Nu te koop · {xxlUnits.length} units
               </p>
-              <h1 className="mt-3 text-5xl md:text-7xl font-extrabold tracking-tight leading-[0.95] text-center">
+              <h1 className="mt-3 text-5xl md:text-7xl font-extrabold tracking-tight leading-[0.95]">
                 XXL-unit aan
                 <br />
                 de zichtzijde
               </h1>
-              <p className="mt-5 text-lg md:text-xl text-white/85 font-light max-w-2xl mx-auto text-center">
+              <p className="mt-5 text-lg md:text-xl text-white/85 font-light max-w-2xl">
                 3 lagen, 191 m² op de kop van het blok — pal aan de zichtzijde
                 van De Hofman. Werkplaats en opslag op de begane grond, kantoor
                 of showroom op de eerste en tweede verdieping.
               </p>
-              <div className="mt-8 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm">
+              <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm">
                 <Spec label="Begane grond" value="60,7 m²" />
                 <Spec label="1e verdieping" value="60,7 m²" />
                 <Spec label="2e verdieping" value="70 m²" />
                 <Spec label="Vrije hoogte BG" value="3,69 m" />
                 <Spec label="Vloerbelasting" value="1.000 kg/m²" />
               </div>
-              <div className="mt-8 flex justify-center">
+              <div className="mt-8 flex">
                 <a
                   href="#interesse"
                   className="inline-flex items-center bg-repp-yellow text-repp-navy text-sm font-bold px-6 py-3 rounded-full hover:brightness-95 transition shadow-lg"
@@ -284,7 +287,7 @@ export default async function XxlPage({
 
 function Spec({ label, value }: { label: string; value: string }) {
   return (
-    <div className="text-center">
+    <div>
       <p className="text-xs md:text-[13px] uppercase tracking-wider text-white/60 font-semibold">
         {label}
       </p>
