@@ -79,7 +79,7 @@ function UnitTypesSummary({ project }: { project: Project }) {
       label: "XXL",
       m2: 191.4,
       prijs: 475000,
-      perks: ["3 lagen", "191 m² over 3 verdiepingen", "Binnenkort in verkoop"],
+      perks: ["3 lagen", "191 m² over 3 verdiepingen", "Pal aan de zichtzijde"],
     },
   ];
   return (
@@ -92,12 +92,38 @@ function UnitTypesSummary({ project }: { project: Project }) {
           Ze schalen mee met jou.
         </h2>
         <div className="mt-10 grid md:grid-cols-3 gap-4">
-          {types.map((t) => (
+          {types.map((t) => {
+            // Badge data-gedreven uit de unit-statussen, zelfde regels als de
+            // koop-vs-huur unitkaarten: 0 = Uitverkocht, 1 = "Laatste units"
+            // (bewust meervoud, commerciële copy), meer = "X beschikbaar".
+            const beschikbaar = project.units.filter(
+              (u) => u.type === t.label && u.status === "available",
+            ).length;
+            const badge =
+              beschikbaar === 0
+                ? "Uitverkocht"
+                : beschikbaar === 1
+                  ? "Laatste units"
+                  : `${beschikbaar} beschikbaar`;
+            const badgeCls =
+              beschikbaar === 0
+                ? "bg-status-sold/15 text-status-sold"
+                : beschikbaar === 1
+                  ? "bg-status-optie/25 text-[#8a681c]"
+                  : "bg-status-available/20 text-[#3f7a52]";
+            return (
             <div
               key={t.label}
               className="rounded-2xl border border-repp-gray bg-white p-6"
             >
-              <p className="text-5xl font-extrabold text-repp-navy">{t.label}</p>
+              <div className="flex items-start justify-between gap-2">
+                <p className="text-5xl font-extrabold text-repp-navy">{t.label}</p>
+                <span
+                  className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full ${badgeCls}`}
+                >
+                  {badge}
+                </span>
+              </div>
               <p className="mt-2 text-sm text-repp-navy/60">{formatM2(t.m2)} bvo</p>
               <p className="mt-4 text-2xl font-bold text-repp-navy">
                 {t.label === "XXL" ? "vanaf " : ""}
@@ -113,7 +139,8 @@ function UnitTypesSummary({ project }: { project: Project }) {
                 ))}
               </ul>
             </div>
-          ))}
+            );
+          })}
         </div>
         <div className="mt-12 text-center">
           <Link
