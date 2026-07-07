@@ -25,6 +25,11 @@ const xxlImages = [
     caption: "Begane grond als werkplaats",
   },
   {
+    src: "/images/hofman/xxl/xxl-showroom.jpg",
+    alt: "Ruime verdieping van de XXL-unit ingericht als showroom met presentatie-eilanden",
+    caption: "Ruimte voor showroom of presentatie",
+  },
+  {
     src: "/images/hofman/xxl/xxl-kantoor-pantry.jpg",
     alt: "Verdieping van de XXL-unit als kantoor met werkplekken, vergadertafel en pantry",
     caption: "Verdieping als kantoor met pantry",
@@ -33,11 +38,6 @@ const xxlImages = [
     src: "/images/hofman/xxl/xxl-werkplekken.jpg",
     alt: "Werkplekken langs de raampartij van de XXL-unit met weids uitzicht over de polder",
     caption: "Werkplekken met weids uitzicht",
-  },
-  {
-    src: "/images/hofman/xxl/xxl-showroom.jpg",
-    alt: "Ruime verdieping van de XXL-unit ingericht als showroom met presentatie-eilanden",
-    caption: "Ruimte voor showroom of presentatie",
   },
   {
     src: "/images/hofman/xxl/xxl-dakterras.jpg",
