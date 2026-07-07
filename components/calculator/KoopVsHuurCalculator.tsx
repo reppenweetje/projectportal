@@ -341,47 +341,19 @@ export function KoopVsHuurCalculator({ project }: { project: Project }) {
             <p className="text-xs uppercase tracking-wider text-repp-yellow font-semibold">
               Jouw voordeel na {horizon} jaar kopen i.p.v. huren
             </p>
+            {/* Bewust kaal: één getal + één zin (verzoek Jann). Het sterretje
+                verwijst naar de disclaimer-voetnoot onderaan de tool; de
+                cijfermatige onderbouwing staat in de maandlasten- en
+                opbouw-kaarten eronder. */}
             <p className="mt-2 text-5xl md:text-6xl font-extrabold tracking-tight tabular-nums">
               {formatEuro(Math.round(last.voordeel))}
+              <span className="text-white/50 text-3xl md:text-4xl align-super">
+                *
+              </span>
             </p>
-            {/* Eén kernzin; de onderbouwing als scanbare regels eronder
-                (bewust geen bold-rijke lopende tekst — leesdrempel was te hoog,
-                maar de informatie zelf moet volledig blijven). */}
             <p className="mt-3 text-sm text-white/85">
               Zoveel ben je na {horizon} jaar beter af als je de {unit.type} van{" "}
               {formatM2(unit.m2)} koopt in plaats van huurt.
-            </p>
-            <dl className="mt-4 pt-4 border-t border-white/10 space-y-1.5 text-[13px]">
-              <div className="flex items-baseline justify-between gap-3">
-                <dt className="text-white/55">Koopmaandlast in jaar 1</dt>
-                <dd className="font-semibold text-white tabular-nums">
-                  {formatEuro(Math.round(model.koopMnd))}
-                </dd>
-              </div>
-              <div className="flex items-baseline justify-between gap-3">
-                <dt className="text-white/55">
-                  Vergelijkbare huur per maand{" "}
-                  <span className="text-white underline decoration-repp-yellow decoration-2 underline-offset-2">
-                    (bouwt niets op)
-                  </span>
-                </dt>
-                <dd className="font-semibold text-white tabular-nums">
-                  {formatEuro(Math.round(model.huurMnd))}
-                </dd>
-              </div>
-              <div className="flex items-baseline justify-between gap-3">
-                <dt className="text-white/55">
-                  Opgebouwd vermogen, bovenop je eigen inbreng
-                </dt>
-                <dd className="font-semibold text-repp-yellow tabular-nums">
-                  {formatEuro(Math.round(vermogen - model.E))}
-                </dd>
-              </div>
-            </dl>
-            <p className="mt-4 text-[11px] text-white/40 leading-relaxed">
-              Indicatieve berekening op basis van de gekozen aannames. Geen
-              aanbod of financieel advies; er kunnen geen rechten aan worden
-              ontleend.
             </p>
           </div>
 
@@ -408,6 +380,14 @@ export function KoopVsHuurCalculator({ project }: { project: Project }) {
 
         </div>
       </div>
+
+      {/* Disclaimer-voetnoot: hoort bij het sterretje achter het voordeel-getal
+          in de donkerblauwe kaart. Bewust onderaan de tool zodat de kaart zelf
+          kaal blijft; juridisch dekkend via de asterisk-koppeling. */}
+      <p className="mt-8 text-[11px] text-repp-navy/45 leading-relaxed">
+        * Indicatieve berekening op basis van de gekozen aannames. Geen aanbod
+        of financieel advies; er kunnen geen rechten aan worden ontleend.
+      </p>
     </div>
   );
 }
