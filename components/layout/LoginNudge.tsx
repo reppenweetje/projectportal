@@ -66,8 +66,11 @@ export function LoginNudge({ project }: { project: Project }) {
             <span className="text-repp-yellow font-bold leading-snug">
               {headline}
             </span>
+            {/* Benefit-zin i.p.v. instructie — de "Maak account"-knop hiernaast
+                zegt al hóe, dus hier alleen wát je ermee krijgt. */}
             <span className="text-white/80 leading-snug hidden sm:inline">
-              Maak een account voor toegang tot alle info.
+              Bekijk direct alle prijzen, documenten en de actuele
+              beschikbaarheid.
             </span>
           </div>
 
