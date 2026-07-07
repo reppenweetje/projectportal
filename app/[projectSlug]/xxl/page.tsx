@@ -15,40 +15,34 @@ export const metadata: Metadata = {
   title: "XXL-units te koop — 3 lagen, 191 m² op één adres",
 };
 
-// Beeld bij de XXL-unit. Voorlopig de bestaande project-renders die het
-// XXL-verhaal het best vertellen (begane grond als werkplaats, verdiepingen
-// als kantoor/studio, hoekligging). Te vervangen door XXL-specifieke beelden
-// zodra die er zijn.
+// XXL-specifieke renders (units 7 & 14): begane grond als werkplaats,
+// verdiepingen als kantoor/showroom en het eigen dakterras. Geoptimaliseerd
+// voor web in public/images/hofman/xxl/.
 const xxlImages = [
   {
-    src: "/images/hofman/renders/interieur-kantoor.jpg",
-    alt: "Verdieping ingericht als kantoor met bureau, fauteuil en boekenwand",
-    caption: "1e/2e verdieping als kantoor",
-  },
-  {
-    src: "/images/hofman/renders/interieur-studio.jpg",
-    alt: "Verdieping ingericht als creatieve studio met vergadertafel en moodboards",
-    caption: "Verdieping als studio",
-  },
-  {
-    src: "/images/hofman/renders/werkplaats-vakman.jpg",
-    alt: "Werkplaats op de begane grond met bestelbus, werkbank en gereedschapsrek",
+    src: "/images/hofman/xxl/xxl-werkplaats.jpg",
+    alt: "Begane grond van de XXL-unit als werkplaats met gereedschapswand, werkbank en zicht op de polder",
     caption: "Begane grond als werkplaats",
   },
   {
-    src: "/images/hofman/renders/unit-open-overdag.jpg",
-    alt: "Open unit overdag met showroom en werkplaats achter de overheaddeur",
-    caption: "Overheaddeur 4 × 3,50 m",
+    src: "/images/hofman/xxl/xxl-kantoor-pantry.jpg",
+    alt: "Verdieping van de XXL-unit als kantoor met werkplekken, vergadertafel en pantry",
+    caption: "Verdieping als kantoor met pantry",
   },
   {
-    src: "/images/hofman/renders/zijgevel-avond.jpg",
-    alt: "De Hofman bij avond, schuin hoekaanzicht met verlichte units",
-    caption: "XXL op de hoek van het blok",
+    src: "/images/hofman/xxl/xxl-werkplekken.jpg",
+    alt: "Werkplekken langs de raampartij van de XXL-unit met weids uitzicht over de polder",
+    caption: "Werkplekken met weids uitzicht",
   },
   {
-    src: "/images/hofman/renders/gevel-overdag.jpg",
-    alt: "De Hofman overdag, hoekaanzicht met entree en geparkeerde auto's",
-    caption: "De Hofman overdag",
+    src: "/images/hofman/xxl/xxl-showroom.jpg",
+    alt: "Ruime verdieping van de XXL-unit ingericht als showroom met presentatie-eilanden",
+    caption: "Ruimte voor showroom of presentatie",
+  },
+  {
+    src: "/images/hofman/xxl/xxl-dakterras.jpg",
+    alt: "Eigen dakterras van de XXL-unit met loungeset, parasol en beplanting",
+    caption: "Eigen dakterras",
   },
 ];
 
@@ -183,7 +177,7 @@ export default async function XxlPage({
                   key={img.src}
                   className="group overflow-hidden rounded-2xl border border-repp-gray bg-white"
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden">
+                  <div className="relative aspect-video overflow-hidden">
                     <Image
                       src={img.src}
                       alt={img.alt}
