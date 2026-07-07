@@ -6,11 +6,29 @@ import { HeaderIdentity } from "./HeaderIdentity";
 import { LoginNudge } from "./LoginNudge";
 import { MobileMenu } from "./MobileMenu";
 
+type NavChild = { href: string; label: string; description?: string };
+type NavItem = { href: string; label: string; children?: NavChild[] };
+
 export function Header({ project }: { project: Project }) {
-  const items = [
+  const items: NavItem[] = [
     { href: `/${project.slug}/units`, label: "Plattegrond" },
     { href: `/${project.slug}/xxl`, label: "XXL-units" },
-    { href: `/${project.slug}/bereken`, label: "Bereken" },
+    {
+      href: `/${project.slug}/bereken`,
+      label: "Bereken",
+      children: [
+        {
+          href: `/${project.slug}/bereken`,
+          label: "Rendement",
+          description: "Maandlast & rendement",
+        },
+        {
+          href: `/${project.slug}/koopvshuur`,
+          label: "Koop vs huur",
+          description: "Wat levert kopen op?",
+        },
+      ],
+    },
     { href: `/${project.slug}/documenten`, label: "Documenten" },
   ];
 
@@ -42,15 +60,61 @@ export function Header({ project }: { project: Project }) {
         {/* Desktop nav — tighter spacing zodat "Reserveer een unit" past
             zonder overflow op smallere desktop-vensters. */}
         <nav className="hidden md:flex items-center gap-0.5">
-          {items.map((i) => (
-            <Link
-              key={i.href}
-              href={i.href}
-              className="inline-flex px-2.5 py-2 text-sm font-semibold text-white hover:text-repp-yellow transition"
-            >
-              {i.label}
-            </Link>
-          ))}
+          {items.map((i) =>
+            i.children ? (
+              <div key={i.href} className="relative group">
+                <Link
+                  href={i.href}
+                  className="inline-flex items-center gap-1 px-2.5 py-2 text-sm font-semibold text-white hover:text-repp-yellow transition"
+                >
+                  {i.label}
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="w-3.5 h-3.5 opacity-70"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden
+                  >
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </Link>
+                {/* CSS-only dropdown: zichtbaar bij hover of toetsenbord-focus.
+                    De pt-2 zit binnen .group zodat de muis van trigger naar menu
+                    kan zonder de hover te verliezen. */}
+                <div className="absolute left-0 top-full z-40 hidden pt-2 group-hover:block group-focus-within:block">
+                  <div className="min-w-[14rem] overflow-hidden rounded-xl border border-repp-gray bg-white shadow-xl">
+                    {i.children.map((c) => (
+                      <Link
+                        key={c.href + c.label}
+                        href={c.href}
+                        className="block px-4 py-2.5 hover:bg-surface-muted transition"
+                      >
+                        <span className="block text-sm font-semibold text-repp-navy">
+                          {c.label}
+                        </span>
+                        {c.description && (
+                          <span className="block text-xs text-repp-navy/55">
+                            {c.description}
+                          </span>
+                        )}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <Link
+                key={i.href}
+                href={i.href}
+                className="inline-flex px-2.5 py-2 text-sm font-semibold text-white hover:text-repp-yellow transition"
+              >
+                {i.label}
+              </Link>
+            ),
+          )}
           <Link
             href={`/${project.slug}/documenten/brochure`}
             className="inline-flex items-center gap-1.5 px-2.5 py-2 text-sm font-semibold text-white hover:text-repp-yellow transition"
