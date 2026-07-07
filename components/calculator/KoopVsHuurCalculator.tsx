@@ -427,18 +427,19 @@ function UnitCard({
       : "bg-status-available/20 text-[#3f7a52]";
   const perM2 = optie.prijs / optie.m2;
 
-  // Uitverkocht = echt uit: niet klikbaar, gedimd, geen hover-affordance.
-  // Alleen het rode "Uitverkocht"-badge houdt kleur, zodat meteen duidelijk
-  // is waaróm de kaart uit staat — en dat de andere kaarten dus wél kunnen.
+  // Uitverkocht = echt uit: niet klikbaar, geen hover-affordance, en het
+  // héle vlak (incl. het badge) uniform gedimd via één opacity op de kaart —
+  // alsof 'ie is uitgegrijsd. De inhoud houdt binnenin de normale kleuren,
+  // zodat de demping overal gelijk oogt.
   if (optie.sold) {
     return (
       <div
         aria-disabled="true"
         aria-label={`${optie.type}, ${formatM2(optie.m2)}, ${formatEuro(optie.prijs)}, ${optie.badge}`}
-        className="w-full rounded-xl border-2 border-repp-gray/70 bg-surface-muted px-4 py-3 cursor-not-allowed select-none"
+        className="w-full rounded-xl border-2 border-repp-gray bg-surface-muted px-4 py-3 cursor-not-allowed select-none opacity-50"
       >
         <div className="flex items-center justify-between gap-2">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-repp-navy/35">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-repp-navy/60">
             {optie.type}
           </span>
           <span
@@ -447,14 +448,14 @@ function UnitCard({
             {optie.badge}
           </span>
         </div>
-        <div className="mt-0.5 text-sm font-bold text-repp-navy/35">
+        <div className="mt-0.5 text-sm font-bold text-repp-navy">
           {formatM2(optie.m2)}
         </div>
         <div className="mt-0.5 flex items-baseline justify-between gap-2">
-          <span className="text-lg font-extrabold tabular-nums text-repp-navy/35">
+          <span className="text-lg font-extrabold tabular-nums text-repp-navy">
             {formatEuro(optie.prijs)}
           </span>
-          <span className="text-[11px] tabular-nums text-repp-navy/30">
+          <span className="text-[11px] tabular-nums text-repp-navy/50">
             {formatEuro(Math.round(perM2))} / m²
           </span>
         </div>
