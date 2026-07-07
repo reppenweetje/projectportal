@@ -92,12 +92,18 @@ export default async function XxlPage({
               de band staat; de terug-link staat absoluut in de hoek en duwt de
               content dus niet meer omlaag. */}
           <div className="relative px-5 py-12 md:py-16">
-            <Link
-              href={`/${project.slug}/units`}
-              className="absolute top-5 left-5 md:top-6 md:left-6 z-10 text-sm text-white/70 hover:text-white inline-flex items-center gap-1"
-            >
-              ← Alle units
-            </Link>
+            {/* Zelfde container-breedte als de header (max-w-6xl) zodat de
+                terug-link exact uitlijnt met het REPP-logo erboven. */}
+            <div className="absolute top-5 md:top-6 inset-x-0 z-10 pointer-events-none">
+              <div className="mx-auto max-w-6xl px-4 sm:px-5">
+                <Link
+                  href={`/${project.slug}/units`}
+                  className="pointer-events-auto text-sm text-white/70 hover:text-white inline-flex items-center gap-1"
+                >
+                  ← Alle units
+                </Link>
+              </div>
+            </div>
             <div className="mx-auto max-w-5xl">
               <p className="text-xs uppercase tracking-[0.2em] text-repp-yellow font-semibold text-center">
                 Nu te koop · {xxlUnits.length} units
