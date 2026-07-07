@@ -141,12 +141,12 @@ export default async function XxlPage({
         </section>
 
         {/* Why XXL */}
-        <section className="px-5 py-16 md:py-20 bg-white">
+        <section className="px-5 py-16 md:py-20 bg-hofman-deep text-white">
           <div className="mx-auto max-w-5xl">
-            <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
+            <p className="text-xs uppercase tracking-[0.2em] text-repp-yellow font-semibold">
               Wat de XXL anders maakt
             </p>
-            <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight">
+            <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-white tracking-tight">
               Werkplaats, kantoor en opslag op één adres.
             </h2>
             <ul className="mt-8 grid sm:grid-cols-3 gap-4">
@@ -249,15 +249,15 @@ function Card({
 }) {
   return (
     <li
-      className={`rounded-2xl p-6 ${
-        accent
-          ? "bg-repp-yellow/15 border border-repp-yellow/40"
-          : "bg-surface-muted border border-repp-gray"
+      className={`rounded-2xl p-6 bg-white/[0.04] border ${
+        accent ? "border-repp-yellow/50" : "border-white/10"
       }`}
     >
-      <p className="font-bold text-repp-navy">{title}</p>
+      <p className={`font-bold ${accent ? "text-repp-yellow" : "text-white"}`}>
+        {title}
+      </p>
       <p
-        className="mt-2 text-sm text-repp-navy/70 leading-relaxed"
+        className="mt-2 text-sm text-white/65 leading-relaxed"
         dangerouslySetInnerHTML={{ __html: body }}
       />
     </li>
