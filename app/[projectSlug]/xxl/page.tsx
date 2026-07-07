@@ -141,12 +141,12 @@ export default async function XxlPage({
         </section>
 
         {/* Why XXL */}
-        <section className="px-5 py-16 md:py-20 bg-hofman-deep text-white">
+        <section className="px-5 py-16 md:py-20 bg-white">
           <div className="mx-auto max-w-5xl">
-            <p className="text-xs uppercase tracking-[0.2em] text-repp-yellow font-semibold">
+            <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
               Wat de XXL anders maakt
             </p>
-            <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-white tracking-tight">
+            <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight">
               Werkplaats, kantoor en opslag op één adres.
             </h2>
             <ul className="mt-8 grid sm:grid-cols-3 gap-4">
@@ -157,7 +157,6 @@ export default async function XxlPage({
               <Card
                 title="Een hele extra verdieping"
                 body="70 m² extra op de tweede verdieping, bovenop je werkvloer. Ruimte voor kantoor, vergaderen of extra opslag."
-                accent
               />
               <Card
                 title="Beperkt aanbod"
@@ -238,28 +237,36 @@ function Spec({ label, value }: { label: string; value: string }) {
   );
 }
 
-function Card({
-  title,
-  body,
-  accent,
-}: {
-  title: string;
-  body: string;
-  accent?: boolean;
-}) {
+function Card({ title, body }: { title: string; body: string }) {
   return (
-    <li
-      className={`rounded-2xl p-6 bg-white/[0.04] border ${
-        accent ? "border-repp-yellow/50" : "border-white/10"
-      }`}
-    >
-      <p className={`font-bold ${accent ? "text-repp-yellow" : "text-white"}`}>
-        {title}
-      </p>
-      <p
-        className="mt-2 text-sm text-white/65 leading-relaxed"
-        dangerouslySetInnerHTML={{ __html: body }}
-      />
+    <li className="flex gap-3 items-start rounded-2xl bg-white border border-repp-gray shadow-sm px-5 py-4 md:p-6">
+      <div className="shrink-0 w-8 h-8 rounded-full bg-repp-navy text-white grid place-items-center">
+        <CheckIcon />
+      </div>
+      <div className="min-w-0">
+        <p className="font-bold text-repp-navy leading-tight">{title}</p>
+        <p
+          className="mt-1 text-sm text-repp-navy/70 leading-relaxed"
+          dangerouslySetInnerHTML={{ __html: body }}
+        />
+      </div>
     </li>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="w-5 h-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
   );
 }
