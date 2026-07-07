@@ -71,10 +71,11 @@ export default async function XxlPage({
     <>
       <Header project={project} />
       <main className="flex-1 has-sticky-cta">
-        {/* Hero — compacte hoogte zoals de header van de plattegrond-pagina
-            (pt-12 md:pt-20 pb-12); de render blijft als achtergrond zichtbaar
-            in de band. */}
-        <section className="relative overflow-hidden bg-hofman-deep text-white">
+        {/* Hero — zelfde hoogte als de homepage-hero (68vh) zodat de render
+            als volwaardige banner in beeld staat; content blijft verticaal
+            gecentreerd. min-h i.p.v. vaste hoogte zodat de content op kleine
+            schermen nooit wordt afgeknipt. */}
+        <section className="relative overflow-hidden bg-hofman-deep text-white flex flex-col justify-center min-h-[68vh]">
           {hero && (
             <div className="absolute inset-0">
               <Image
