@@ -360,7 +360,10 @@ export function KoopVsHuurCalculator({ project }: { project: Project }) {
               </div>
               <div className="flex items-baseline justify-between gap-3">
                 <dt className="text-white/55">
-                  Vergelijkbare huur per maand (bouwt niets op)
+                  Vergelijkbare huur per maand{" "}
+                  <span className="text-white underline decoration-repp-yellow decoration-2 underline-offset-2">
+                    (bouwt niets op)
+                  </span>
                 </dt>
                 <dd className="font-semibold text-white tabular-nums">
                   {formatEuro(Math.round(model.huurMnd))}
