@@ -81,9 +81,9 @@ export default async function XxlPage({
                 fill
                 priority
                 sizes="100vw"
-                className="object-cover object-center opacity-70"
+                className="object-cover object-center opacity-60"
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-hofman-deep/30 via-hofman-deep/55 to-hofman-deep/90" />
+              <div className="absolute inset-0 bg-gradient-to-b from-hofman-deep/45 via-hofman-deep/65 to-hofman-deep/95" />
             </div>
           )}
           <div className="relative px-5 pt-16 pb-14 md:pt-24 md:pb-20">
