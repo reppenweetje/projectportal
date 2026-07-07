@@ -130,8 +130,12 @@ function RoadIndicator({ size }: { size: Size }) {
         />
       </div>
       {size !== "mini" && (
+        // bg-[#c7c7dc] = repp-navy/20 geblend met de surface-muted-achtergrond
+        // (#f5f5f7): 0.8·245 + 0.2·15 ≈ 199 per kanaal. Dekt de dashed
+        // centerline af zodat die niet dóór de straatnaam loopt; px-2 geeft
+        // wat lucht boven/onder de tekst (padding zit vóór de rotatie).
         <span
-          className="hidden md:block relative text-sm uppercase tracking-[0.18em] text-repp-navy font-bold whitespace-nowrap origin-center"
+          className="hidden md:block relative text-sm uppercase tracking-[0.18em] text-repp-navy font-bold whitespace-nowrap origin-center px-2 bg-[#c7c7dc]"
           style={{ transform: "rotate(-90deg)" }}
         >
           A. Hofmanweg
