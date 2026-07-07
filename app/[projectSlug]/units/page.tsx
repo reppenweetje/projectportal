@@ -111,34 +111,67 @@ function UnitTypesSummary({ project }: { project: Project }) {
                 : beschikbaar === 1
                   ? "bg-status-optie/25 text-[#8a681c]"
                   : "bg-status-available/20 text-[#3f7a52]";
-            return (
-            <div
-              key={t.label}
-              className="rounded-2xl border border-repp-gray bg-white p-6"
-            >
-              <div className="flex items-start justify-between gap-2">
-                <p className="text-5xl font-extrabold text-repp-navy">{t.label}</p>
-                <span
-                  className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full ${badgeCls}`}
-                >
-                  {badge}
-                </span>
+
+            // Klikbaar: XXL naar de eigen XXL-pagina, andere types naar de
+            // detailpagina van een beschikbare unit. Uitverkochte types
+            // (geen beschikbare unit) blijven niet-klikbaar.
+            const repUnit = project.units.find(
+              (u) => u.type === t.label && u.status === "available",
+            );
+            const href =
+              t.label === "XXL"
+                ? `/${project.slug}/xxl`
+                : repUnit
+                  ? `/${project.slug}/units/${repUnit.slug}`
+                  : null;
+
+            const inner = (
+              <>
+                <div className="flex items-start justify-between gap-2">
+                  <p className="text-5xl font-extrabold text-repp-navy">{t.label}</p>
+                  <span
+                    className={`text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full ${badgeCls}`}
+                  >
+                    {badge}
+                  </span>
+                </div>
+                <p className="mt-2 text-sm text-repp-navy/60">{formatM2(t.m2)} bvo</p>
+                <p className="mt-4 text-2xl font-bold text-repp-navy">
+                  {t.label === "XXL" ? "vanaf " : ""}
+                  {formatEuro(t.prijs)}
+                </p>
+                <p className="text-xs text-repp-navy/60">excl. btw</p>
+                <ul className="mt-5 space-y-2 text-sm text-repp-navy/70">
+                  {t.perks.map((p) => (
+                    <li key={p} className="flex items-start gap-2">
+                      <span className="text-repp-blue">·</span>
+                      <span>{p}</span>
+                    </li>
+                  ))}
+                </ul>
+                {href && (
+                  <p className="mt-5 text-sm font-semibold text-repp-blue">
+                    {t.label === "XXL" ? "Bekijk de XXL-units →" : "Bekijk de unit →"}
+                  </p>
+                )}
+              </>
+            );
+
+            return href ? (
+              <Link
+                key={t.label}
+                href={href}
+                className="block rounded-2xl border border-repp-gray bg-white p-6 transition hover:border-repp-navy/40 hover:shadow-md"
+              >
+                {inner}
+              </Link>
+            ) : (
+              <div
+                key={t.label}
+                className="rounded-2xl border border-repp-gray bg-white p-6"
+              >
+                {inner}
               </div>
-              <p className="mt-2 text-sm text-repp-navy/60">{formatM2(t.m2)} bvo</p>
-              <p className="mt-4 text-2xl font-bold text-repp-navy">
-                {t.label === "XXL" ? "vanaf " : ""}
-                {formatEuro(t.prijs)}
-              </p>
-              <p className="text-xs text-repp-navy/60">excl. btw</p>
-              <ul className="mt-5 space-y-2 text-sm text-repp-navy/70">
-                {t.perks.map((p) => (
-                  <li key={p} className="flex items-start gap-2">
-                    <span className="text-repp-blue">·</span>
-                    <span>{p}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
             );
           })}
         </div>
