@@ -71,8 +71,11 @@ export default async function XxlPage({
     <>
       <Header project={project} />
       <main className="flex-1 has-sticky-cta">
-        {/* Hero */}
-        <section className="relative overflow-hidden bg-hofman-deep text-white">
+        {/* Hero — md+ krijgt een vaste bannerhoogte van 46vw (~2.2:1) zodat de
+            volledige gevel (dak t/m entree) in beeld staat i.p.v. strak
+            ingezoomd; content verticaal gecentreerd. Op mobile bepaalt de
+            tekst de hoogte (staand scherm), dus geen min-height daar. */}
+        <section className="relative overflow-hidden bg-hofman-deep text-white flex flex-col justify-center md:min-h-[46vw]">
           {hero && (
             <div className="absolute inset-0">
               <Image
