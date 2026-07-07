@@ -57,9 +57,10 @@ export function Header({ project }: { project: Project }) {
           />
         </Link>
 
-        {/* Desktop nav — tighter spacing zodat "Reserveer een unit" past
-            zonder overflow op smallere desktop-vensters. */}
-        <nav className="hidden md:flex items-center gap-0.5">
+        {/* Desktop nav — pas vanaf lg: met alle items + brochure + CTA is de
+            nav ~610px en overflowt hij tussen 768 en 1023px (123px op 800px).
+            Daaronder toont het hamburger-menu, dat alles al bevat. */}
+        <nav className="hidden lg:flex items-center gap-0.5">
           {items.map((i) =>
             i.children ? (
               <div key={i.href} className="relative group">
@@ -155,7 +156,7 @@ export function Header({ project }: { project: Project }) {
             de lead-gate. Korte label "Brochure" zodat de hamburger niet
             off-screen valt op iPhone SE-formaat (375px). Desktop houdt de
             "Reserveer een unit"-CTA. */}
-        <div className="flex md:hidden items-center gap-1">
+        <div className="flex lg:hidden items-center gap-1">
           <Link
             href={`/${project.slug}/documenten`}
             className="inline-flex items-center bg-repp-yellow text-repp-navy text-xs font-bold px-3 py-1.5 rounded-full hover:brightness-95 transition whitespace-nowrap"
