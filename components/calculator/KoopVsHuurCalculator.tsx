@@ -341,19 +341,26 @@ export function KoopVsHuurCalculator({ project }: { project: Project }) {
             <p className="text-xs uppercase tracking-wider text-repp-yellow font-semibold">
               Jouw voordeel na {horizon} jaar kopen i.p.v. huren
             </p>
-            {/* Bewust kaal: één getal + één zin (verzoek Jann). Het sterretje
-                verwijst naar de disclaimer-voetnoot onderaan de tool; de
-                cijfermatige onderbouwing staat in de maandlasten- en
-                opbouw-kaarten eronder. */}
+            {/* Het sterretje verwijst naar de disclaimer-voetnoot onderaan de
+                tool; de kaart zelf houdt de oorspronkelijke uitlegtekst. */}
             <p className="mt-2 text-5xl md:text-6xl font-extrabold tracking-tight tabular-nums">
               {formatEuro(Math.round(last.voordeel))}
               <span className="text-white/50 text-3xl md:text-4xl align-super">
                 *
               </span>
             </p>
-            <p className="mt-3 text-sm text-white/85">
-              Zoveel ben je na {horizon} jaar beter af als je de {unit.type} van{" "}
-              {formatM2(unit.m2)} koopt in plaats van huurt.
+            <p className="mt-3 text-sm text-white/70 leading-relaxed">
+              De <b className="text-white">{unit.type}</b> van{" "}
+              <b className="text-white">{formatM2(unit.m2)}</b> kost je als koper
+              in jaar 1{" "}
+              <b className="text-white">{formatEuro(Math.round(model.koopMnd))}</b>{" "}
+              per maand. Als huurder betaal je{" "}
+              <b className="text-white">{formatEuro(Math.round(model.huurMnd))}</b>
+              , maar bouw je niets op. Na {horizon} jaar heb je{" "}
+              <b className="text-white">
+                {formatEuro(Math.round(vermogen - model.E))}
+              </b>{" "}
+              aan vermogen opgebouwd, bovenop je eigen inbreng.
             </p>
           </div>
 
