@@ -62,7 +62,10 @@ export default async function XxlPage({
   if (!project) notFound();
 
   const xxlUnits = project.units.filter((u) => u.type === "XXL");
-  const hero = project.gallery[0];
+  const hero = {
+    src: "/images/hofman/xxl/xxl-voorzijde.jpg",
+    alt: "Vooraanzicht van de XXL-unit met grote glasgevel en eigen entree aan de straatzijde",
+  };
 
   return (
     <>
@@ -78,9 +81,9 @@ export default async function XxlPage({
                 fill
                 priority
                 sizes="100vw"
-                className="object-cover opacity-40"
+                className="object-cover opacity-65"
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-hofman-deep/60 via-hofman-deep/70 to-hofman-deep" />
+              <div className="absolute inset-0 bg-gradient-to-b from-hofman-deep/35 via-hofman-deep/50 to-hofman-deep/90" />
             </div>
           )}
           <div className="relative px-5 pt-16 pb-14 md:pt-24 md:pb-20">
@@ -111,6 +114,14 @@ export default async function XxlPage({
                 <Spec label="Vrije hoogte BG" value="3,69 m" />
                 <Spec label="Vloerbelasting" value="1.000 kg/m²" />
               </div>
+              <div className="mt-8 flex justify-center">
+                <a
+                  href="#interesse"
+                  className="inline-flex items-center bg-repp-yellow text-repp-navy text-sm font-bold px-6 py-3 rounded-full hover:brightness-95 transition shadow-lg"
+                >
+                  Interesse? Laat het weten →
+                </a>
+              </div>
             </div>
           </div>
         </section>
@@ -131,30 +142,12 @@ export default async function XxlPage({
               worden.
             </p>
             <div className="mt-8">
-              <UnitGrid
-                project={project}
-                mode="link"
-                highlightSlugs={["unit-7", "unit-14"]}
-              />
+              <UnitGrid project={project} mode="link" />
               <p className="mt-3 text-center text-sm text-repp-navy/60">
-                Units 7 en 14 (geel omkaderd) liggen op de koppen van het blok,
-                aan de A. Hofmanweg-zijde.
+                De XXL-units 7 en 14 liggen op de koppen van het blok, pal aan de
+                A. Hofmanweg-zijde.
               </p>
             </div>
-            <figure className="mt-8 overflow-hidden rounded-2xl border border-repp-gray shadow-sm">
-              <div className="relative aspect-video">
-                <Image
-                  src="/images/hofman/xxl/xxl-voorzijde.jpg"
-                  alt="Vooraanzicht van de XXL-unit met grote glasgevel en eigen entree aan de straatzijde"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 1024px"
-                  className="object-cover"
-                />
-              </div>
-              <figcaption className="px-4 py-3 text-sm text-repp-navy/70 text-center">
-                De XXL aan de voorzijde: glasgevel over drie lagen, eigen entree.
-              </figcaption>
-            </figure>
           </div>
         </section>
 
@@ -167,7 +160,11 @@ export default async function XxlPage({
             <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight text-center">
               Werkplaats, kantoor en opslag op één adres.
             </h2>
-            <ul className="mt-8 grid sm:grid-cols-3 gap-4">
+            <ul className="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <Card
+                title="Aan de zichtzijde"
+                body="Op de kop van het blok, pal aan de A. Hofmanweg. Volop zicht vanaf de weg — dé plek voor showroom of merkzichtbaarheid."
+              />
               <Card
                 title="3 lagen, 191 m²"
                 body="Werkplaats &amp; opslag op de begane grond, kantoor of showroom op de eerste en tweede verdieping."
@@ -181,6 +178,14 @@ export default async function XxlPage({
                 body="Slechts 2 XXL-units in heel De Hofman: Unit 7 en Unit 14, op de uiteinden van het blok."
               />
             </ul>
+            <div className="mt-10 flex justify-center">
+              <a
+                href="#interesse"
+                className="inline-flex items-center bg-repp-navy text-white text-sm font-bold px-6 py-3 rounded-full hover:bg-repp-blue transition"
+              >
+                Interesse in een XXL? →
+              </a>
+            </div>
           </div>
         </section>
 
@@ -244,7 +249,7 @@ export default async function XxlPage({
         </section>
 
         {/* Form */}
-        <section className="px-5 py-12 md:py-16 bg-white">
+        <section id="interesse" className="px-5 py-12 md:py-16 bg-white scroll-mt-20">
           <div className="mx-auto max-w-5xl">
             <div className="text-center mb-10">
               <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">

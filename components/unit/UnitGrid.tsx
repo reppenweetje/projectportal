@@ -291,7 +291,6 @@ function Legenda() {
     { color: "bg-status-available", label: "Beschikbaar" },
     { color: "bg-status-optie", label: "Verkocht onder voorbehoud" },
     { color: "bg-status-sold", label: "Verkocht" },
-    { color: "bg-white border border-repp-navy/30", label: "Binnenkort in verkoop" },
   ];
   return (
     <div className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-xs text-repp-navy/70 justify-center">

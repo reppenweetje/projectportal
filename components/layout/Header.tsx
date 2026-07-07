@@ -107,10 +107,16 @@ export function Header({ project }: { project: Project }) {
                 </div>
               </div>
             ) : (
+              // XXL-units krijgt standaard de gele accent-kleur zodat het
+              // opvalt in de nav (het is het premium-aanbod van het project).
               <Link
                 key={i.href}
                 href={i.href}
-                className="inline-flex px-2.5 py-2 text-sm font-semibold text-white hover:text-repp-yellow transition"
+                className={`inline-flex px-2.5 py-2 text-sm font-semibold transition ${
+                  i.href.endsWith("/xxl")
+                    ? "text-repp-yellow hover:brightness-110"
+                    : "text-white hover:text-repp-yellow"
+                }`}
               >
                 {i.label}
               </Link>
