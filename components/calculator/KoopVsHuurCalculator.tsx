@@ -10,16 +10,37 @@ import { formatEuro, formatM2 } from "@/lib/types";
  * de projectdata), schuif met huur/inbreng/rente en zie het voordeel,
  * de maandlasten en de vermogensopbouw over de tijd.
  *
- * Model: annuïtaire hypotheek (25 jr). Eigenaarslasten = VVE-bijdrage uit de
- * projectdata (geïndexeerd 2%/jr). Huur geïndexeerd 3%/jr. Voordeel =
- * (waarde − restschuld) − eigen inbreng − (cumulatieve koopkosten − cumulatieve
- * huur). Zie de "Alle aannames"-sectie voor de volledige uitleg + disclaimer.
+ * Model: hypotheek 25 jr, annuïtair of lineair (toggle). Eigenaarslasten =
+ * VVE-bijdrage uit de projectdata (geïndexeerd 2%/jr). Huur geïndexeerd 3%/jr.
+ * Voordeel = (waarde − restschuld) − eigen inbreng − (cumulatieve koopkosten −
+ * cumulatieve huur). Zie de "Alle aannames"-sectie voor uitleg + disclaimer.
+ *
+ * Rente-default volgt de ASN Bedrijfshypotheek-tarieven (lineair, < €500.000,
+ * 5 jaar rentevast, per 26 juni 2026): de tariefgroep hangt af van de
+ * loan-to-value en dus van de eigen inbreng. Schuiven aan de rente-slider
+ * overschrijft het ASN-tarief; de reset-knop zet 'm terug.
  */
 
 const LOOPTIJD_JR = 25;
 const HUUR_INDEX = 0.03;
 const VVE_INDEX = 0.02;
 const KOSTEN_EENMALIG = 0.02; // notaris + financiering, % van koopsom
+
+type AflossingsVorm = "annuitair" | "lineair";
+
+// ASN Bedrijfshypotheek < €500.000 (alle De Hofman-units vallen hieronder),
+// kolom 5 jaar rentevast, per 26 juni 2026. LTV = lening / koopsom.
+const ASN_TARIEVEN = [
+  { maxLtv: 55, rente: 4.67, groep: "≤ 55%" },
+  { maxLtv: 70, rente: 4.82, groep: "> 55% en ≤ 70%" },
+  { maxLtv: 80, rente: 4.97, groep: "> 70% en ≤ 80%" },
+  { maxLtv: 90, rente: 5.22, groep: "> 80% en ≤ 90%" },
+  { maxLtv: 100, rente: 6.22, groep: "> 90%" },
+] as const;
+
+function asnTarief(ltv: number) {
+  return ASN_TARIEVEN.find((t) => ltv <= t.maxLtv) ?? ASN_TARIEVEN[ASN_TARIEVEN.length - 1];
+}
 
 const GROEI_SCENARIOS = [
   { pct: 0, titel: "Voorzichtig" },
@@ -97,18 +118,54 @@ export function KoopVsHuurCalculator({ project }: { project: Project }) {
   const [unitIndex, setUnitIndex] = useState(startIndex === -1 ? 0 : startIndex);
   const [huurM2, setHuurM2] = useState(145);
   const [inbrengPct, setInbrengPct] = useState(20);
-  const [rente, setRente] = useState(5.0);
+  const [vorm, setVorm] = useState<AflossingsVorm>("annuitair");
+  // null = volg het ASN-tarief bij de huidige LTV; een getal = handmatige keuze.
+  const [renteOverride, setRenteOverride] = useState<number | null>(null);
   const [groei, setGroei] = useState(2);
   const [horizon, setHorizon] = useState(10);
 
   const unit = opties[unitIndex] ?? opties[0];
+  const ltv = 100 - inbrengPct;
+  const asn = asnTarief(ltv);
+  const rente = renteOverride ?? asn.rente;
 
   const model = useMemo(() => {
+    // Effectieve rente hier afleiden i.p.v. de buiten-scope `rente` als
+    // dependency gebruiken: de React Compiler kan die afgeleide const niet
+    // als stabiel bewijzen (react-hooks/preserve-manual-memoization).
+    const rente = renteOverride ?? asnTarief(100 - inbrengPct).rente;
     const K = unit.prijs;
     const m2 = unit.m2;
     const E = (K * inbrengPct) / 100;
     const L = K - E;
-    const mndHyp = annuiteit(L, rente, LOOPTIJD_JR);
+    const i = rente / 100 / 12;
+    const n = LOOPTIJD_JR * 12;
+    const pAnn = annuiteit(L, rente, LOOPTIJD_JR);
+    const aflLin = L / n; // lineair: vaste aflossing per maand
+
+    // Hypotheekbetaling + restschuld per jaar, per aflossingsvorm.
+    // Annuïtair: vaste termijn. Lineair: vaste aflossing + rente over het
+    // aflopende saldo, dus de maandlast daalt elk jaar.
+    const hypJaar = (t: number): { betaaldJr: number; schuld: number } => {
+      if (vorm === "annuitair") {
+        return {
+          betaaldJr: pAnn * 12,
+          schuld: Math.max(
+            0,
+            restschuld(L, rente, LOOPTIJD_JR, Math.min(t, LOOPTIJD_JR)),
+          ),
+        };
+      }
+      let renteJr = 0;
+      for (let m = (t - 1) * 12; m < t * 12; m++) {
+        renteJr += Math.max(0, L - aflLin * m) * i;
+      }
+      return {
+        betaaldJr: Math.min(aflLin * 12, Math.max(0, L - aflLin * (t - 1) * 12)) + renteJr,
+        schuld: Math.max(0, L - aflLin * t * 12),
+      };
+    };
+
     const reeks: {
       t: number;
       voordeel: number;
@@ -118,33 +175,38 @@ export function KoopVsHuurCalculator({ project }: { project: Project }) {
     }[] = [];
     let cumKoop = K * KOSTEN_EENMALIG;
     let cumHuur = 0;
+    let hypMnd1 = 0;
+    let hypMnd10 = 0;
     for (let t = 1; t <= 20; t++) {
       const huurJr = m2 * huurM2 * Math.pow(1 + HUUR_INDEX, t - 1);
       const vveJr = unit.vve * 12 * Math.pow(1 + VVE_INDEX, t - 1);
+      const { betaaldJr, schuld } = hypJaar(t);
+      if (t === 1) hypMnd1 = betaaldJr / 12;
+      if (t === 10) hypMnd10 = betaaldJr / 12;
       cumHuur += huurJr;
-      cumKoop += mndHyp * 12 + vveJr;
+      cumKoop += betaaldJr + vveJr;
       const waarde = K * Math.pow(1 + groei / 100, t);
-      const schuld = Math.max(
-        0,
-        restschuld(L, rente, LOOPTIJD_JR, Math.min(t, LOOPTIJD_JR)),
-      );
       const voordeel = waarde - schuld - E - (cumKoop - cumHuur);
       reeks.push({ t, voordeel, waarde, schuld, cumHuur });
     }
-    const aflMnd1 = (L - restschuld(L, rente, LOOPTIJD_JR, 1)) / 12;
+    const aflMnd1 =
+      vorm === "annuitair"
+        ? (L - restschuld(L, rente, LOOPTIJD_JR, 1)) / 12
+        : aflLin;
     return {
       K,
       m2,
       E,
       L,
-      mndHyp,
+      mndHyp: hypMnd1,
+      hypMnd10,
       vveMnd: unit.vve,
       huurMnd: (m2 * huurM2) / 12,
-      koopMnd: mndHyp + unit.vve,
+      koopMnd: hypMnd1 + unit.vve,
       aflMnd1,
       reeks,
     };
-  }, [unit, huurM2, inbrengPct, rente, groei]);
+  }, [unit, huurM2, inbrengPct, renteOverride, groei, vorm]);
 
   const last = model.reeks[horizon - 1];
   const vermogen = last.waarde - last.schuld;
@@ -204,16 +266,44 @@ export function KoopVsHuurCalculator({ project }: { project: Project }) {
             onChange={setInbrengPct}
           />
 
-          <Slider
-            label="Hypotheekrente"
-            valueLabel={`${rente.toFixed(1).replace(".", ",")}%`}
-            min={3.5}
-            max={6.5}
-            step={0.1}
-            value={rente}
-            onChange={setRente}
-            note="Zakelijke financiering, annuïtair, 25 jaar."
-          />
+          <Field label="Aflossingsvorm">
+            <div className="grid grid-cols-2 gap-2">
+              <ChipButton
+                active={vorm === "annuitair"}
+                onClick={() => setVorm("annuitair")}
+                title="Annuïtair"
+                sub="vaste maandlast"
+              />
+              <ChipButton
+                active={vorm === "lineair"}
+                onClick={() => setVorm("lineair")}
+                title="Lineair"
+                sub="maandlast daalt"
+              />
+            </div>
+          </Field>
+
+          <div>
+            <Slider
+              label="Hypotheekrente"
+              valueLabel={`${rente.toFixed(2).replace(".", ",")}%`}
+              min={3.5}
+              max={6.5}
+              step={0.01}
+              value={rente}
+              onChange={(v) => setRenteOverride(v)}
+              note={`ASN Bedrijfshypotheek (lineair, 5 jaar rentevast, per 26 juni 2026), tariefgroep LTV ${asn.groep}: ${asn.rente.toFixed(2).replace(".", ",")}%. Looptijd 25 jaar.`}
+            />
+            {renteOverride !== null && renteOverride !== asn.rente && (
+              <button
+                type="button"
+                onClick={() => setRenteOverride(null)}
+                className="mt-1 text-[11px] font-semibold text-hofman-orange hover:underline"
+              >
+                Terug naar ASN-tarief ({asn.rente.toFixed(2).replace(".", ",")}%)
+              </button>
+            )}
+          </div>
 
           <Field label="Waardeontwikkeling unit">
             <div className="grid grid-cols-3 gap-2">
@@ -272,7 +362,7 @@ export function KoopVsHuurCalculator({ project }: { project: Project }) {
             </p>
           </div>
 
-          <MaandlastenKaart model={model} />
+          <MaandlastenKaart model={model} vorm={vorm} />
 
           <VoordeelGrafiek
             reeks={model.reeks}
@@ -288,6 +378,9 @@ export function KoopVsHuurCalculator({ project }: { project: Project }) {
             huurM2={huurM2}
             rente={rente}
             groei={groei}
+            vorm={vorm}
+            asnGroep={asn.groep}
+            renteHandmatig={renteOverride !== null && renteOverride !== asn.rente}
           />
 
         </div>
@@ -366,14 +459,17 @@ function UnitCard({
 
 function MaandlastenKaart({
   model,
+  vorm,
 }: {
   model: {
     koopMnd: number;
     huurMnd: number;
     mndHyp: number;
+    hypMnd10: number;
     vveMnd: number;
     aflMnd1: number;
   };
+  vorm: AflossingsVorm;
 }) {
   const maxMnd = Math.max(model.koopMnd, model.huurMnd);
   return (
@@ -400,15 +496,24 @@ function MaandlastenKaart({
       <Toelichting>
         <p>
           Koopmaandlast <b>{formatEuro(Math.round(model.koopMnd))}</b> ={" "}
-          hypotheek <b>{formatEuro(Math.round(model.mndHyp))}</b> (annuïtair, 25
-          jaar) + eigenaarslasten <b>{formatEuro(Math.round(model.vveMnd))}</b>.
-          Daarvan is <b>{formatEuro(Math.round(model.aflMnd1))}</b> per maand
-          aflossing: geen kostenpost, maar sparen in je eigen pand.
+          hypotheek <b>{formatEuro(Math.round(model.mndHyp))}</b> (
+          {vorm === "annuitair" ? "annuïtair" : "lineair"}, 25 jaar) +
+          eigenaarslasten <b>{formatEuro(Math.round(model.vveMnd))}</b>. Daarvan
+          is <b>{formatEuro(Math.round(model.aflMnd1))}</b> per maand aflossing:
+          geen kostenpost, maar sparen in je eigen pand.
         </p>
         <p className="mt-2">
           De eigenaarslasten zijn de VVE-bijdrage uit de projectdata en{" "}
-          <b>indicatief</b>; OZB en eigen verzekering kunnen erbij komen. De
-          hypotheeklast blijft vast, de huur stijgt elk jaar mee met indexatie.
+          <b>indicatief</b>; OZB en eigen verzekering kunnen erbij komen.{" "}
+          {vorm === "annuitair" ? (
+            <>De hypotheeklast blijft vast, de huur stijgt elk jaar mee met
+            indexatie.</>
+          ) : (
+            <>Bij lineair daalt je maandlast elk jaar (in jaar 10 is de
+            hypotheek nog{" "}
+            <b>{formatEuro(Math.round(model.hypMnd10))}</b> per maand), terwijl
+            de huur elk jaar stijgt.</>
+          )}
         </p>
       </Toelichting>
     </div>
@@ -824,13 +929,20 @@ function AannamesDetails({
   huurM2,
   rente,
   groei,
+  vorm,
+  asnGroep,
+  renteHandmatig,
 }: {
   model: { K: number; m2: number; L: number };
   unit: UnitOptie;
   huurM2: number;
   rente: number;
   groei: number;
+  vorm: AflossingsVorm;
+  asnGroep: string;
+  renteHandmatig: boolean;
 }) {
+  const ltv = Math.round((model.L / model.K) * 100);
   const rows: [string, string][] = [
     ["Unit", `${unit.type} · ${formatM2(model.m2)}`],
     [
@@ -839,9 +951,15 @@ function AannamesDetails({
     ],
     [
       "Financiering",
-      `${formatEuro(Math.round(model.L))}, annuïtair, ${LOOPTIJD_JR} jaar, ${rente
-        .toFixed(1)
+      `${formatEuro(Math.round(model.L))}, ${vorm === "annuitair" ? "annuïtair" : "lineair"}, ${LOOPTIJD_JR} jaar, ${rente
+        .toFixed(2)
         .replace(".", ",")}%`,
+    ],
+    [
+      "Rentetarief",
+      renteHandmatig
+        ? "handmatig ingesteld"
+        : `ASN Bedrijfshypotheek lineair, 5 jaar rentevast, tariefgroep LTV ${asnGroep} (LTV hier ${ltv}%), per 26 juni 2026`,
     ],
     ["Eenmalige kosten (notaris, financiering)", "2% van de koopsom"],
     [
