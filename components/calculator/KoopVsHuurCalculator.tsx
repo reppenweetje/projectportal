@@ -781,7 +781,9 @@ function OpbouwKaart({
       <h3 className="text-xs uppercase tracking-wider text-repp-navy font-bold">
         De opbouw na {horizon} jaar
       </h3>
-      <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-3">
+      {/* Bewust 2×2 (geen 4 kolommen): in de twee-koloms layout is deze kaart
+          ~420px breed en clippen bedragen als € 291.949 op 4 smalle kaartjes. */}
+      <div className="mt-4 grid grid-cols-2 gap-3">
         <Stat label="Waarde van je unit" value={formatEuro(Math.round(last.waarde))} />
         <Stat label="Nog openstaande lening" value={formatEuro(Math.round(last.schuld))} />
         <Stat
