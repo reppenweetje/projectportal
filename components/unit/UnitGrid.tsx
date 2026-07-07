@@ -223,15 +223,21 @@ function UnitCell({
   const m2Size = size === "mini" ? "hidden" : "hidden md:block text-[10px]";
   const labelHiddenOnMobile = "hidden md:block";
 
-  // Dim alle niet-gefocuste cellen zodat de current/emphasized-units poppen
+  // Dim alle niet-gefocuste cellen zodat de current/emphasized-units poppen.
+  // "wat lichter van kleur" i.p.v. bijna onzichtbaar, zodat de rest van het
+  // blok als context leesbaar blijft.
   const dimNonCurrent =
     hasFocus && !isCurrent && !isEmphasized
-      ? "opacity-35 saturate-50 hover:opacity-100 hover:saturate-100"
+      ? "opacity-55 saturate-[.65] hover:opacity-100 hover:saturate-100"
       : "";
 
-  const currentEmphasis =
-    isCurrent || isEmphasized
-      ? "ring-2 ring-repp-yellow ring-offset-2 ring-offset-surface-muted z-10 scale-110"
+  // De "je bent hier"-cel (detailpagina) mag opschalen — die staat op zichzelf.
+  // Ge-highlighte XXL-units NIET opschalen: op de koppen van het blok liepen
+  // de vergrote cellen over de buren/straat heen. Alleen een accent-ring.
+  const currentEmphasis = isCurrent
+    ? "ring-2 ring-repp-yellow ring-offset-2 ring-offset-surface-muted z-10 scale-110"
+    : isEmphasized
+      ? "ring-2 ring-repp-yellow ring-offset-2 ring-offset-surface-muted z-10"
       : "";
 
   const inner = (

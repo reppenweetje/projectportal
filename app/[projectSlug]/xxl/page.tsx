@@ -81,9 +81,9 @@ export default async function XxlPage({
                 fill
                 priority
                 sizes="100vw"
-                className="object-cover opacity-65"
+                className="object-cover object-center opacity-80"
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-hofman-deep/35 via-hofman-deep/50 to-hofman-deep/90" />
+              <div className="absolute inset-0 bg-gradient-to-b from-hofman-deep/20 via-hofman-deep/40 to-hofman-deep/85" />
             </div>
           )}
           <div className="relative px-5 pt-16 pb-14 md:pt-24 md:pb-20">
@@ -142,7 +142,11 @@ export default async function XxlPage({
               worden.
             </p>
             <div className="mt-8">
-              <UnitGrid project={project} mode="link" />
+              <UnitGrid
+                project={project}
+                mode="link"
+                highlightSlugs={["unit-7", "unit-14"]}
+              />
               <p className="mt-3 text-center text-sm text-repp-navy/60">
                 De XXL-units 7 en 14 liggen op de koppen van het blok, pal aan de
                 A. Hofmanweg-zijde.
@@ -232,7 +236,7 @@ export default async function XxlPage({
               Loop virtueel door de XXL-unit.
             </h2>
             <p className="mt-3 text-white/75 max-w-2xl mx-auto text-center">
-              Bekijk de drie lagen, de vrije hoogtes en de indeling in één
+              Bekijk de 3 lagen, de vrije hoogtes en de indeling in één
               vloeiende tour — zonder een afspraak te maken.
             </p>
             <div className="mt-8 aspect-video w-full overflow-hidden rounded-2xl border border-white/10 bg-black shadow-2xl">
@@ -278,10 +282,10 @@ export default async function XxlPage({
 function Spec({ label, value }: { label: string; value: string }) {
   return (
     <div className="text-center">
-      <p className="text-[11px] uppercase tracking-wider text-white/50 font-semibold">
+      <p className="text-xs md:text-[13px] uppercase tracking-wider text-white/60 font-semibold">
         {label}
       </p>
-      <p className="mt-0.5 font-bold text-white">{value}</p>
+      <p className="mt-1 text-lg md:text-xl font-bold text-white">{value}</p>
     </div>
   );
 }
