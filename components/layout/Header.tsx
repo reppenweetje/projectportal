@@ -9,7 +9,7 @@ import { MobileMenu } from "./MobileMenu";
 export function Header({ project }: { project: Project }) {
   const items = [
     { href: `/${project.slug}/units`, label: "Plattegrond" },
-    { href: `/${project.slug}/xxl`, label: "XXL" },
+    { href: `/${project.slug}/xxl`, label: "XXL-units" },
     { href: `/${project.slug}/bereken`, label: "Bereken" },
     { href: `/${project.slug}/documenten`, label: "Documenten" },
   ];

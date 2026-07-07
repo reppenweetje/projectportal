@@ -90,20 +90,20 @@ export default async function XxlPage({
               >
                 ← Alle units
               </Link>
-              <p className="mt-6 text-xs uppercase tracking-[0.2em] text-repp-yellow font-semibold">
+              <p className="mt-6 text-xs uppercase tracking-[0.2em] text-repp-yellow font-semibold text-center">
                 Nu te koop · {xxlUnits.length} units
               </p>
-              <h1 className="mt-3 text-5xl md:text-7xl font-extrabold tracking-tight leading-[0.95]">
+              <h1 className="mt-3 text-5xl md:text-7xl font-extrabold tracking-tight leading-[0.95] text-center">
                 XXL-unit met
                 <br />
                 3 volle lagen
               </h1>
-              <p className="mt-5 text-lg md:text-xl text-white/85 font-light max-w-2xl">
+              <p className="mt-5 text-lg md:text-xl text-white/85 font-light max-w-2xl mx-auto text-center">
                 3 lagen, 191 m², op de hoek van het blok. Werkplaats en opslag
                 op de begane grond, kantoor of showroom op de eerste en tweede
                 verdieping.
               </p>
-              <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm">
+              <div className="mt-8 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm">
                 <Spec label="Begane grond" value="60,7 m²" />
                 <Spec label="1e verdieping" value="60,7 m²" />
                 <Spec label="2e verdieping" value="70 m²" />
@@ -117,13 +117,13 @@ export default async function XxlPage({
         {/* Digitale rondleiding */}
         <section className="px-5 py-16 md:py-20 bg-hofman-deep text-white">
           <div className="mx-auto max-w-5xl">
-            <p className="text-xs uppercase tracking-[0.2em] text-repp-yellow font-semibold">
+            <p className="text-xs uppercase tracking-[0.2em] text-repp-yellow font-semibold text-center">
               Digitale rondleiding
             </p>
-            <h2 className="mt-3 text-2xl md:text-4xl font-extrabold tracking-tight">
+            <h2 className="mt-3 text-2xl md:text-4xl font-extrabold tracking-tight text-center">
               Loop virtueel door de XXL-unit.
             </h2>
-            <p className="mt-3 text-white/75 max-w-2xl">
+            <p className="mt-3 text-white/75 max-w-2xl mx-auto text-center">
               Bekijk de drie lagen, de vrije hoogtes en de indeling in één
               vloeiende tour — zonder een afspraak te maken.
             </p>
@@ -143,10 +143,10 @@ export default async function XxlPage({
         {/* Why XXL */}
         <section className="px-5 py-16 md:py-20 bg-white">
           <div className="mx-auto max-w-5xl">
-            <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
+            <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold text-center">
               Wat de XXL anders maakt
             </p>
-            <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight">
+            <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight text-center">
               Werkplaats, kantoor en opslag op één adres.
             </h2>
             <ul className="mt-8 grid sm:grid-cols-3 gap-4">
@@ -169,10 +169,10 @@ export default async function XxlPage({
         {/* Beeld */}
         <section className="px-5 py-16 md:py-20 bg-surface-muted">
           <div className="mx-auto max-w-5xl">
-            <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
+            <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold text-center">
               In beeld
             </p>
-            <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight">
+            <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight text-center">
               Zo kan jouw XXL eruitzien.
             </h2>
             <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -228,7 +228,7 @@ export default async function XxlPage({
 
 function Spec({ label, value }: { label: string; value: string }) {
   return (
-    <div>
+    <div className="text-center">
       <p className="text-[11px] uppercase tracking-wider text-white/50 font-semibold">
         {label}
       </p>
