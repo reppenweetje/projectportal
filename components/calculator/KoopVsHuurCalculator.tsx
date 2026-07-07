@@ -540,7 +540,7 @@ function MaandlastenKaart({
           sub="weg, elke maand"
           bedrag={model.huurMnd}
           pct={(model.huurMnd / maxMnd) * 100}
-          kleur="bg-repp-gray"
+          kleur="bg-repp-navy"
         />
         <Balk
           naam="Kopen"
