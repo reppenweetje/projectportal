@@ -21,6 +21,7 @@
  */
 
 import { useState } from "react";
+import Link from "next/link";
 import type { Project } from "@/lib/types";
 import { countByStatus } from "@/lib/projects/de-hofman";
 import { useLeadProfile } from "@/lib/personalization";
@@ -63,9 +64,14 @@ export function LoginNudge({ project }: { project: Project }) {
         <div className="mx-auto max-w-6xl px-4 sm:px-5 py-2.5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
           {/* Primary message */}
           <div className="flex items-center gap-3 min-w-0 text-xs sm:text-sm">
-            <span className="text-repp-yellow font-bold leading-snug">
+            {/* Klikbaar naar de plattegrond: wie op de schaarste-kop klikt wil
+                zien wélke units er nog zijn. */}
+            <Link
+              href={`/${project.slug}/units`}
+              className="text-repp-yellow font-bold leading-snug underline-offset-2 hover:underline whitespace-nowrap"
+            >
               {headline}
-            </span>
+            </Link>
             {/* Benefit-zin i.p.v. instructie — de "Maak account"-knop hiernaast
                 zegt al hóe, dus hier alleen wát je ermee krijgt. */}
             <span className="text-white/80 leading-snug hidden sm:inline">
