@@ -97,7 +97,7 @@ export function KoopVsHuurCalculator({ project }: { project: Project }) {
   );
   const [unitIndex, setUnitIndex] = useState(startIndex === -1 ? 0 : startIndex);
   const [huurM2, setHuurM2] = useState(145);
-  const [inbrengPct, setInbrengPct] = useState(10);
+  const [inbrengPct, setInbrengPct] = useState(20);
   const [rente, setRente] = useState(5.0);
   const [groei, setGroei] = useState(2);
   const [horizon, setHorizon] = useState(10);
