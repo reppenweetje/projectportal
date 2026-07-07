@@ -14,9 +14,10 @@ export function MinimalHero({ project }: { project: Project }) {
           sizes="100vw"
           className="object-cover"
         />
-        {/* Subtle gradient: lichte top, zware bottom zodat title leesbaar
-            blijft op het donkere onderste deel van het hero-blok. */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/75" />
+        {/* Donkere hofman-deep-laag over de hele afbeelding (zelfde tint als
+            de XXL-hero) zodat titel, tagline en knoppen overal goed leesbaar
+            zijn — de eerdere via-transparent liet het midden onbeschermd. */}
+        <div className="absolute inset-0 bg-gradient-to-b from-hofman-deep/35 via-hofman-deep/30 to-hofman-deep/90" />
 
         <div className="absolute inset-0 flex flex-col">
           <div className="flex-1" />
