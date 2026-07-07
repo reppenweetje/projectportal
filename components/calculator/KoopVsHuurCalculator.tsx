@@ -336,7 +336,11 @@ export function KoopVsHuurCalculator({ project }: { project: Project }) {
         </div>
 
         {/* ===== RESULTAAT ===== */}
-        <div className="space-y-6 self-start">
+        {/* lg:pt-8 (32px) = hoogte van het "Kies je unit"-label + marge in de
+            linkerkolom (gemeten), zodat de navy resultaatkaart gelijk loopt met
+            de navy unit-kaart ernaast. Op mobile stapelen de kolommen, dus geen
+            offset. */}
+        <div className="space-y-6 self-start lg:pt-8">
           <div className="rounded-2xl bg-repp-navy text-white p-6 md:p-8">
             <p className="text-xs uppercase tracking-wider text-repp-yellow font-semibold">
               Jouw voordeel na {horizon} jaar kopen i.p.v. huren
