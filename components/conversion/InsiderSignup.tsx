@@ -17,7 +17,7 @@ type Variant = "full" | "compact";
 const TOPIC_LABELS: Record<Topic, string> = {
   alles: "Alles wat relevant is",
   prijzen: "Alleen prijswijzigingen",
-  xxl: "Alleen XXL-verkoop",
+  xxl: "Alleen XXL-nieuws",
   status: "Alleen statuswijzigingen",
 };
 
@@ -132,9 +132,8 @@ export function InsiderSignup({
         </p>
         <p className={`mt-2 text-sm ${helperCls}`}>
           Jij krijgt vanaf nu als eerste belangrijk nieuws over {project.name}:
-          statuswijzigingen, prijsindexaties, de start van de XXL-verkoop en
-          bouwmijlpalen. Voor reguliere bezoekers is dat nieuws meestal te
-          laat.
+          statuswijzigingen, prijsindexaties, XXL-nieuws en bouwmijlpalen.
+          Voor reguliere bezoekers is dat nieuws meestal te laat.
         </p>
         <p className={`mt-3 text-[11px] ${helperCls}`}>
           Geen spam. Uitschrijven kan altijd via een link in iedere mail.
