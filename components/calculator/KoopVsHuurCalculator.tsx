@@ -76,7 +76,7 @@ export function KoopVsHuurCalculator({ project }: { project: Project }) {
           beschikbaar === 0
             ? "Uitverkocht"
             : beschikbaar === 1
-              ? "Laatste unit"
+              ? "Laatste units"
               : `${beschikbaar} beschikbaar`;
         return {
           type,
