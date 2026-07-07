@@ -44,6 +44,11 @@ const xxlImages = [
     alt: "Eigen dakterras van de XXL-unit met loungeset, parasol en beplanting",
     caption: "Eigen dakterras",
   },
+  {
+    src: "/images/hofman/xxl/xxl-luchtfoto.jpg",
+    alt: "Luchtfoto van de XXL-unit op de kop van het blok met het dakterras van bovenaf",
+    caption: "De XXL op de kop van het blok",
+  },
 ];
 
 export default async function XxlPage({
