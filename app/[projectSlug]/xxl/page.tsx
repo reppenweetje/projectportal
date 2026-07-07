@@ -8,6 +8,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyCTA } from "@/components/layout/StickyCTA";
 import { XxlInterestForm } from "@/components/conversion/XxlInterestForm";
+import { UnitGrid } from "@/components/unit/UnitGrid";
 
 type Params = { projectSlug: string };
 
@@ -94,14 +95,14 @@ export default async function XxlPage({
                 Nu te koop · {xxlUnits.length} units
               </p>
               <h1 className="mt-3 text-5xl md:text-7xl font-extrabold tracking-tight leading-[0.95] text-center">
-                XXL-unit met
+                XXL-unit aan
                 <br />
-                3 volle lagen
+                de zichtzijde
               </h1>
               <p className="mt-5 text-lg md:text-xl text-white/85 font-light max-w-2xl mx-auto text-center">
-                3 lagen, 191 m², op de hoek van het blok. Werkplaats en opslag
-                op de begane grond, kantoor of showroom op de eerste en tweede
-                verdieping.
+                3 lagen, 191 m² op de kop van het blok — pal aan de zichtzijde
+                van De Hofman. Werkplaats en opslag op de begane grond, kantoor
+                of showroom op de eerste en tweede verdieping.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm">
                 <Spec label="Begane grond" value="60,7 m²" />
@@ -114,34 +115,51 @@ export default async function XxlPage({
           </div>
         </section>
 
-        {/* Digitale rondleiding */}
-        <section className="px-5 py-16 md:py-20 bg-hofman-deep text-white">
+        {/* Aan de zichtzijde — USP direct onder de banner */}
+        <section className="px-5 py-16 md:py-20 bg-white">
           <div className="mx-auto max-w-5xl">
-            <p className="text-xs uppercase tracking-[0.2em] text-repp-yellow font-semibold text-center">
-              Digitale rondleiding
+            <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold text-center">
+              De beste plek in het blok
             </p>
-            <h2 className="mt-3 text-2xl md:text-4xl font-extrabold tracking-tight text-center">
-              Loop virtueel door de XXL-unit.
+            <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight text-center">
+              De enige units pal aan de voorzijde.
             </h2>
-            <p className="mt-3 text-white/75 max-w-2xl mx-auto text-center">
-              Bekijk de drie lagen, de vrije hoogtes en de indeling in één
-              vloeiende tour — zonder een afspraak te maken.
+            <p className="mt-3 text-repp-navy/70 max-w-2xl mx-auto text-center">
+              De XXL-units (7 en 14) staan op de koppen van het blok, direct aan
+              de straatzijde. Een grote glasgevel, eigen entree en volop zicht
+              vanaf de weg — dé plek als je showroom, kantoor of merk gezien mag
+              worden.
             </p>
-            <div className="mt-8 aspect-video w-full overflow-hidden rounded-2xl border border-white/10 bg-black shadow-2xl">
-              <iframe
-                src="https://www.youtube-nocookie.com/embed/IRB3hLXi2l0"
-                title="Digitale rondleiding XXL-unit — De Hofman"
-                className="h-full w-full"
-                loading="lazy"
-                allow="encrypted-media; picture-in-picture; web-share"
-                allowFullScreen
+            <div className="mt-8">
+              <UnitGrid
+                project={project}
+                mode="link"
+                highlightSlugs={["unit-7", "unit-14"]}
               />
+              <p className="mt-3 text-center text-sm text-repp-navy/60">
+                Units 7 en 14 (geel omkaderd) liggen op de koppen van het blok,
+                aan de A. Hofmanweg-zijde.
+              </p>
             </div>
+            <figure className="mt-8 overflow-hidden rounded-2xl border border-repp-gray shadow-sm">
+              <div className="relative aspect-video">
+                <Image
+                  src="/images/hofman/xxl/xxl-voorzijde.jpg"
+                  alt="Vooraanzicht van de XXL-unit met grote glasgevel en eigen entree aan de straatzijde"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 1024px"
+                  className="object-cover"
+                />
+              </div>
+              <figcaption className="px-4 py-3 text-sm text-repp-navy/70 text-center">
+                De XXL aan de voorzijde: glasgevel over drie lagen, eigen entree.
+              </figcaption>
+            </figure>
           </div>
         </section>
 
         {/* Why XXL */}
-        <section className="px-5 py-16 md:py-20 bg-white">
+        <section className="px-5 py-16 md:py-20 bg-surface-muted">
           <div className="mx-auto max-w-5xl">
             <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold text-center">
               Wat de XXL anders maakt
@@ -167,7 +185,7 @@ export default async function XxlPage({
         </section>
 
         {/* Beeld */}
-        <section className="px-5 py-16 md:py-20 bg-surface-muted">
+        <section className="px-5 py-16 md:py-20 bg-white">
           <div className="mx-auto max-w-5xl">
             <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold text-center">
               In beeld
@@ -195,6 +213,32 @@ export default async function XxlPage({
                   </figcaption>
                 </figure>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Digitale rondleiding */}
+        <section className="px-5 py-16 md:py-20 bg-hofman-deep text-white">
+          <div className="mx-auto max-w-5xl">
+            <p className="text-xs uppercase tracking-[0.2em] text-repp-yellow font-semibold text-center">
+              Digitale rondleiding
+            </p>
+            <h2 className="mt-3 text-2xl md:text-4xl font-extrabold tracking-tight text-center">
+              Loop virtueel door de XXL-unit.
+            </h2>
+            <p className="mt-3 text-white/75 max-w-2xl mx-auto text-center">
+              Bekijk de drie lagen, de vrije hoogtes en de indeling in één
+              vloeiende tour — zonder een afspraak te maken.
+            </p>
+            <div className="mt-8 aspect-video w-full overflow-hidden rounded-2xl border border-white/10 bg-black shadow-2xl">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/IRB3hLXi2l0"
+                title="Digitale rondleiding XXL-unit — De Hofman"
+                className="h-full w-full"
+                loading="lazy"
+                allow="encrypted-media; picture-in-picture; web-share"
+                allowFullScreen
+              />
             </div>
           </div>
         </section>

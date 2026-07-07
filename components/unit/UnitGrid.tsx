@@ -36,14 +36,19 @@ export function UnitGrid({
   mode = "modal",
   size = "default",
   currentSlug,
+  highlightSlugs,
 }: {
   project: Project;
   mode?: Mode;
   size?: Size;
-  /** When set, that unit gets a "you are here" highlight */
+  /** When set, that unit gets a "you are here" highlight (and is non-clickable) */
   currentSlug?: string;
+  /** When set, these units get an accent ring en de overige worden gedimd
+   * (blijven wél klikbaar). Handig om bv. de XXL-units te benadrukken. */
+  highlightSlugs?: string[];
 }) {
   const [previewUnit, setPreviewUnit] = useState<Unit | null>(null);
+  const emphasized = new Set(highlightSlugs ?? []);
 
   // Rij 1 (units 1-7) bovenaan, rij 2 (units 8-14) onderaan — matched
   // de fysieke lay-out van het blok in de Waarderpolder (rij met de
@@ -70,6 +75,7 @@ export function UnitGrid({
               project={project}
               size={size}
               currentSlug={currentSlug}
+              emphasized={emphasized}
               mode={mode}
               onPreview={setPreviewUnit}
             />
@@ -78,6 +84,7 @@ export function UnitGrid({
               project={project}
               size={size}
               currentSlug={currentSlug}
+              emphasized={emphasized}
               mode={mode}
               onPreview={setPreviewUnit}
             />
@@ -139,6 +146,7 @@ function Row({
   project,
   size,
   currentSlug,
+  emphasized,
   mode,
   onPreview,
 }: {
@@ -146,10 +154,11 @@ function Row({
   project: Project;
   size: Size;
   currentSlug?: string;
+  emphasized: Set<string>;
   mode: Mode;
   onPreview: (u: Unit) => void;
 }) {
-  const hasCurrent = Boolean(currentSlug);
+  const hasFocus = Boolean(currentSlug) || emphasized.size > 0;
   return (
     <div className={size === "mini" ? "grid grid-cols-7 gap-1" : "grid grid-cols-7 gap-1.5 md:gap-2"}>
       {units.map((u) => (
@@ -159,7 +168,8 @@ function Row({
           unit={u}
           size={size}
           isCurrent={currentSlug === u.slug}
-          hasCurrent={hasCurrent}
+          isEmphasized={emphasized.has(u.slug)}
+          hasFocus={hasFocus}
           mode={mode}
           onPreview={onPreview}
         />
@@ -173,7 +183,8 @@ function UnitCell({
   unit,
   size,
   isCurrent,
-  hasCurrent,
+  isEmphasized,
+  hasFocus,
   mode,
   onPreview,
 }: {
@@ -181,8 +192,10 @@ function UnitCell({
   unit: Unit;
   size: Size;
   isCurrent: boolean;
-  /** true when ANY unit in the grid is the "current" one (so non-current ones can be dimmed) */
-  hasCurrent: boolean;
+  /** accent-ring maar blijft klikbaar (bv. XXL-units) */
+  isEmphasized: boolean;
+  /** true when a current OR emphasized unit is set (so the rest can be dimmed) */
+  hasFocus: boolean;
   mode: Mode;
   onPreview: (u: Unit) => void;
 }) {
@@ -210,13 +223,16 @@ function UnitCell({
   const m2Size = size === "mini" ? "hidden" : "hidden md:block text-[10px]";
   const labelHiddenOnMobile = "hidden md:block";
 
-  // When a current unit is set, dim all other cells so the current one pops
+  // Dim alle niet-gefocuste cellen zodat de current/emphasized-units poppen
   const dimNonCurrent =
-    hasCurrent && !isCurrent ? "opacity-35 saturate-50 hover:opacity-100 hover:saturate-100" : "";
+    hasFocus && !isCurrent && !isEmphasized
+      ? "opacity-35 saturate-50 hover:opacity-100 hover:saturate-100"
+      : "";
 
-  const currentEmphasis = isCurrent
-    ? "ring-2 ring-repp-yellow ring-offset-2 ring-offset-surface-muted z-10 scale-110"
-    : "";
+  const currentEmphasis =
+    isCurrent || isEmphasized
+      ? "ring-2 ring-repp-yellow ring-offset-2 ring-offset-surface-muted z-10 scale-110"
+      : "";
 
   const inner = (
     <div
