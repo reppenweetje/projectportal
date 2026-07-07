@@ -63,7 +63,7 @@ export default async function XxlPage({
 
   const xxlUnits = project.units.filter((u) => u.type === "XXL");
   const hero = {
-    src: "/images/hofman/xxl/xxl-voorzijde-v2.jpg",
+    src: "/images/hofman/xxl/xxl-voorzijde-v3.jpg",
     alt: "Vooraanzicht van de XXL-unit met grote glasgevel en eigen entree aan de straatzijde",
   };
 
