@@ -88,15 +88,18 @@ export default async function XxlPage({
               <div className="absolute inset-0 bg-gradient-to-b from-hofman-deep/45 via-hofman-deep/65 to-hofman-deep/95" />
             </div>
           )}
-          <div className="relative px-5 pt-12 md:pt-20 pb-12">
+          {/* Symmetrische padding zodat de content verticaal in het midden van
+              de band staat; de terug-link staat absoluut in de hoek en duwt de
+              content dus niet meer omlaag. */}
+          <div className="relative px-5 py-12 md:py-16">
+            <Link
+              href={`/${project.slug}/units`}
+              className="absolute top-5 left-5 md:top-6 md:left-6 z-10 text-sm text-white/70 hover:text-white inline-flex items-center gap-1"
+            >
+              ← Alle units
+            </Link>
             <div className="mx-auto max-w-5xl">
-              <Link
-                href={`/${project.slug}/units`}
-                className="text-sm text-white/70 hover:text-white inline-flex items-center gap-1"
-              >
-                ← Alle units
-              </Link>
-              <p className="mt-6 text-xs uppercase tracking-[0.2em] text-repp-yellow font-semibold text-center">
+              <p className="text-xs uppercase tracking-[0.2em] text-repp-yellow font-semibold text-center">
                 Nu te koop · {xxlUnits.length} units
               </p>
               <h1 className="mt-3 text-5xl md:text-7xl font-extrabold tracking-tight leading-[0.95] text-center">
