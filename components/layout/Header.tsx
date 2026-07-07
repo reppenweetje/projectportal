@@ -176,7 +176,7 @@ export function Header({ project }: { project: Project }) {
     {/* LoginNudge buiten sticky header zodat 'ie wegscrollt met content
         ipv permanent ruimte te pakken op mobile. Rendert alleen voor
         uitgelogde bezoekers (interne useLeadProfile check). */}
-    <LoginNudge />
+    <LoginNudge project={project} />
     </>
   );
 }

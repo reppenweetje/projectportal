@@ -21,12 +21,14 @@
  */
 
 import { useState } from "react";
+import type { Project } from "@/lib/types";
+import { countByStatus } from "@/lib/projects/de-hofman";
 import { useLeadProfile } from "@/lib/personalization";
 import { useRouter } from "next/navigation";
 import { LeadCaptureDialog } from "@/components/conversion/LeadCaptureDialog";
 import { MagicLinkModal } from "@/components/conversion/MagicLinkModal";
 
-export function LoginNudge() {
+export function LoginNudge({ project }: { project: Project }) {
   const profile = useLeadProfile();
   const router = useRouter();
   const [signupOpen, setSignupOpen] = useState(false);
@@ -34,6 +36,19 @@ export function LoginNudge() {
 
   // Logged-in users zien geen nudge
   if (profile?.name) return null;
+
+  // Headline data-gedreven, zelfde schaal als de PersonalizationBanner:
+  // "De verkoop is open" zegt aanbod (net gestart); in de eindfase werkt
+  // schaarste beter — dus vanaf ≤5 beschikbare units tonen we het aantal.
+  const beschikbaar = countByStatus(project).available;
+  const headline =
+    beschikbaar === 0
+      ? "Alle units zijn voorlopig vergeven."
+      : beschikbaar === 1
+        ? "Laatste unit beschikbaar!"
+        : beschikbaar <= 5
+          ? `Nog maar ${beschikbaar} units beschikbaar!`
+          : "De verkoop is open!";
 
   function onSignupSuccess() {
     setSignupOpen(false);
@@ -49,7 +64,7 @@ export function LoginNudge() {
           {/* Primary message */}
           <div className="flex items-center gap-3 min-w-0 text-xs sm:text-sm">
             <span className="text-repp-yellow font-bold leading-snug">
-              De verkoop is open!
+              {headline}
             </span>
             <span className="text-white/80 leading-snug hidden sm:inline">
               Maak een account voor toegang tot alle info.

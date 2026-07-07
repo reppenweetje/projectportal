@@ -94,8 +94,8 @@ export function Footer({ project }: { project: Project }) {
             Hofman Insider
           </p>
           <p className="text-sm mt-2 text-white/65 leading-relaxed">
-            Als eerste bericht bij statuswijzigingen, prijsindexaties en de
-            start van de XXL-verkoop.
+            Als eerste bericht bij statuswijzigingen, prijsindexaties en
+            bouwmijlpalen.
           </p>
           <div className="mt-3">
             <InsiderSignup

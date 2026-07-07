@@ -49,8 +49,8 @@ export default async function InsiderPage({
                 body="Komt een unit weer vrij omdat een reservering afvalt? Jij hoort het direct."
               />
               <Benefit
-                title="Start XXL-verkoop"
-                body="Zodra de XXL-units in actieve verkoop gaan krijgen Insiders voorrang."
+                title="XXL-nieuws"
+                body="Nieuws over de laatste twee XXL-units aan de zichtzijde — Insiders horen het eerst."
               />
               <Benefit
                 title="Prijsindexaties"

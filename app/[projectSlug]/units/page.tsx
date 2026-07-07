@@ -137,7 +137,6 @@ function UnitTypesSummary({ project }: { project: Project }) {
                 </div>
                 <p className="mt-2 text-sm text-repp-navy/60">{formatM2(t.m2)} bvo</p>
                 <p className="mt-4 text-2xl font-bold text-repp-navy">
-                  {t.label === "XXL" ? "vanaf " : ""}
                   {formatEuro(t.prijs)}
                 </p>
                 <p className="text-xs text-repp-navy/60">excl. btw</p>
