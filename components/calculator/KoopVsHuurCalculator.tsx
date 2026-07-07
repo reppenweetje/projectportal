@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Project, Unit } from "@/lib/types";
 import { formatEuro, formatM2 } from "@/lib/types";
@@ -291,29 +290,6 @@ export function KoopVsHuurCalculator({ project }: { project: Project }) {
             groei={groei}
           />
 
-          <div className="rounded-2xl bg-surface-muted border border-repp-gray p-6 text-center">
-            <p className="text-lg font-bold text-repp-navy">
-              Klopt dit voor jouw situatie? Reken het na met ons.
-            </p>
-            <p className="mt-1 text-sm text-repp-navy/70">
-              Ontvang deze berekening op maat, of kom de units bekijken op de
-              Waarderpolder.
-            </p>
-            <div className="mt-4 flex flex-wrap gap-3 justify-center">
-              <Link
-                href={`/${project.slug}/reserveren`}
-                className="inline-flex items-center bg-repp-yellow text-repp-navy font-bold px-5 py-3 rounded-full hover:brightness-95 transition"
-              >
-                Plan een bezichtiging
-              </Link>
-              <Link
-                href={`/${project.slug}/units`}
-                className="inline-flex items-center bg-white text-repp-navy font-semibold px-5 py-3 rounded-full border border-repp-gray hover:border-repp-navy transition"
-              >
-                Bekijk de units
-              </Link>
-            </div>
-          </div>
         </div>
       </div>
     </div>
