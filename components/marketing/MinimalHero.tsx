@@ -5,19 +5,19 @@ import type { Project } from "@/lib/types";
 export function MinimalHero({ project }: { project: Project }) {
   return (
     <section className="relative">
-      <div className="relative h-[68vh] min-h-[480px] max-h-[760px] w-full overflow-hidden">
+      <div className="relative h-[68vh] min-h-[480px] max-h-[760px] w-full overflow-hidden bg-hofman-deep">
+        {/* Zelfde donkerte-recept als de XXL-hero: afbeelding op 60% opacity
+            boven een hofman-deep-vlak + dezelfde gradient, zodat de tekst
+            overal goed leesbaar is. */}
         <Image
           src={project.heroImage.src}
           alt={project.heroImage.alt}
           fill
           priority
           sizes="100vw"
-          className="object-cover"
+          className="object-cover opacity-60"
         />
-        {/* Donkere hofman-deep-laag over de hele afbeelding (zelfde tint als
-            de XXL-hero) zodat titel, tagline en knoppen overal goed leesbaar
-            zijn — de eerdere via-transparent liet het midden onbeschermd. */}
-        <div className="absolute inset-0 bg-gradient-to-b from-hofman-deep/35 via-hofman-deep/30 to-hofman-deep/90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-hofman-deep/45 via-hofman-deep/65 to-hofman-deep/95" />
 
         <div className="absolute inset-0 flex flex-col">
           <div className="flex-1" />
