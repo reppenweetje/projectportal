@@ -8,6 +8,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyCTA } from "@/components/layout/StickyCTA";
 import { XxlInterestForm } from "@/components/conversion/XxlInterestForm";
+import { UnitGrid } from "@/components/unit/UnitGrid";
 
 type Params = { projectSlug: string };
 
@@ -129,6 +130,17 @@ export default async function XxlPage({
               vanaf de weg — dé plek als je showroom, kantoor of merk gezien mag
               worden.
             </p>
+            <div className="mt-8">
+              <UnitGrid
+                project={project}
+                mode="link"
+                highlightSlugs={["unit-7", "unit-14"]}
+              />
+              <p className="mt-3 text-center text-sm text-repp-navy/60">
+                Units 7 en 14 (geel omkaderd) liggen op de koppen van het blok,
+                aan de A. Hofmanweg-zijde.
+              </p>
+            </div>
             <figure className="mt-8 overflow-hidden rounded-2xl border border-repp-gray shadow-sm">
               <div className="relative aspect-video">
                 <Image
