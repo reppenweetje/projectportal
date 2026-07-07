@@ -522,7 +522,7 @@ function MaandlastenKaart({
   return (
     <div className="rounded-2xl border border-repp-gray bg-white p-6">
       <h3 className="text-xs uppercase tracking-wider text-repp-navy font-bold">
-        Maandlasten in jaar 1
+        Maandlasten in jaar 1<span className="text-repp-navy/45">*</span>
       </h3>
       <div className="mt-4 space-y-3">
         <Balk
@@ -727,7 +727,7 @@ function VoordeelGrafiek({
   return (
     <div className="rounded-2xl border border-repp-gray bg-white p-6">
       <h3 className="text-xs uppercase tracking-wider text-repp-navy font-bold">
-        Jouw voordeel groeit elk jaar
+        Jouw voordeel groeit elk jaar<span className="text-repp-navy/45">*</span>
       </h3>
       <div ref={wrapRef} className="relative mt-4">
         <svg
@@ -915,7 +915,7 @@ function OpbouwKaart({
   return (
     <div className="rounded-2xl border border-repp-gray bg-white p-6">
       <h3 className="text-xs uppercase tracking-wider text-repp-navy font-bold">
-        De opbouw na {horizon} jaar
+        De opbouw na {horizon} jaar<span className="text-repp-navy/45">*</span>
       </h3>
       {/* Bewust 2×2 (geen 4 kolommen): in de twee-koloms layout is deze kaart
           ~420px breed en clippen bedragen als € 291.949 op 4 smalle kaartjes. */}
