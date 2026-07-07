@@ -547,7 +547,7 @@ function MaandlastenKaart({
           sub="hypotheek + lasten"
           bedrag={model.koopMnd}
           pct={(model.koopMnd / maxMnd) * 100}
-          kleur="bg-repp-navy"
+          kleur="bg-repp-yellow"
         />
       </div>
       <Toelichting>
