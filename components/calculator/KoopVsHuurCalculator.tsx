@@ -28,7 +28,9 @@ const KOSTEN_EENMALIG = 0.02; // notaris + financiering, % van koopsom
 
 type AflossingsVorm = "annuitair" | "lineair";
 
-// ASN Bedrijfshypotheek < €500.000 (alle De Hofman-units vallen hieronder),
+// Bron (intern, NIET in de UI benoemen per Jann 7 jul 2026): ASN
+// Bedrijfshypotheek < €500.000 (alle De Hofman-units vallen hieronder),
+// in de UI heet dit "gemiddeld rentepunt per 1 juli 2026".
 // kolom 5 jaar rentevast, per 26 juni 2026. LTV = lening / koopsom.
 const ASN_TARIEVEN = [
   { maxLtv: 55, rente: 4.67, groep: "≤ 55%" },
@@ -292,7 +294,7 @@ export function KoopVsHuurCalculator({ project }: { project: Project }) {
               step={0.01}
               value={rente}
               onChange={(v) => setRenteOverride(v)}
-              note={`ASN Bedrijfshypotheek (lineair, 5 jaar rentevast, per 26 juni 2026), tariefgroep LTV ${asn.groep}: ${asn.rente.toFixed(2).replace(".", ",")}%. Looptijd 25 jaar.`}
+              note={`Gemiddeld rentepunt per 1 juli 2026 bij deze eigen inbreng (LTV ${asn.groep}): ${asn.rente.toFixed(2).replace(".", ",")}%. Zakelijke financiering, 5 jaar rentevast, looptijd 25 jaar.`}
             />
             {renteOverride !== null && renteOverride !== asn.rente && (
               <button
@@ -300,7 +302,7 @@ export function KoopVsHuurCalculator({ project }: { project: Project }) {
                 onClick={() => setRenteOverride(null)}
                 className="mt-1 text-[11px] font-semibold text-hofman-orange hover:underline"
               >
-                Terug naar ASN-tarief ({asn.rente.toFixed(2).replace(".", ",")}%)
+                Terug naar gemiddeld tarief ({asn.rente.toFixed(2).replace(".", ",")}%)
               </button>
             )}
           </div>
@@ -959,7 +961,7 @@ function AannamesDetails({
       "Rentetarief",
       renteHandmatig
         ? "handmatig ingesteld"
-        : `ASN Bedrijfshypotheek lineair, 5 jaar rentevast, tariefgroep LTV ${asnGroep} (LTV hier ${ltv}%), per 26 juni 2026`,
+        : `gemiddeld rentepunt per 1 juli 2026, 5 jaar rentevast, tariefgroep LTV ${asnGroep} (LTV hier ${ltv}%)`,
     ],
     ["Eenmalige kosten (notaris, financiering)", "2% van de koopsom"],
     [
