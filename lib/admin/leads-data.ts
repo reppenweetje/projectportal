@@ -9,6 +9,8 @@
 // `connected:false` en toont de UI eerlijk "niet gekoppeld" i.p.v. verzonnen
 // cijfers (data-truth: geen fake data).
 
+import { getUnit } from "@/lib/projects/de-hofman";
+
 export type TimeRange = "today" | "week" | "month" | "all";
 
 // Welke leads horen bij De Hofman. De `project`-kolom is historisch rommelig
@@ -63,6 +65,12 @@ export type LeadDetail = {
   origin: string;
   /** Wat de persoon heeft aangeklikt / gedaan (leesbare labels). */
   clicks: string[];
+  /** Bij een reservering: welke unit is gereserveerd (bv. "Unit 13 · XXL"). */
+  reservedUnit: string | null;
+  /** Bij een reservering: wanneer de lead gebeld wil worden. */
+  contactMoment: string | null;
+  /** Vrije opmerking die de lead bij de reservering achterliet. */
+  note: string | null;
 };
 
 export type LeadsData = {
@@ -156,6 +164,30 @@ function pageLabel(page: string | null, gate: string | null): string {
 
 function humanize(v: string): string {
   return v.replace(/_/g, " ").replace(/^\w/, (c) => c.toUpperCase());
+}
+
+// Reserverings-unit: "unit-13" → "Unit 13 · XXL" via de projectcatalog,
+// met een nette fallback als de unit niet (meer) in de catalog staat.
+function reservedUnitLabel(
+  attrs: Record<string, unknown> | null,
+  projectSlug: string,
+): string | null {
+  const unitId = attrStr(attrs, "unit_id");
+  if (!unitId) return null;
+  const found = getUnit(projectSlug, unitId);
+  if (found) return `Unit ${found.unit.number} · ${found.unit.type}`;
+  const m = /^unit-(\d+)$/.exec(unitId);
+  return m ? `Unit ${m[1]}` : unitId;
+}
+
+function contactMomentLabel(v: string | null): string | null {
+  if (!v) return null;
+  const map: Record<string, string> = {
+    asap: "Zo snel mogelijk",
+    this_week: "Deze week",
+    no_pref: "Geen voorkeur",
+  };
+  return map[v] ?? v;
 }
 
 function attrStr(attrs: Record<string, unknown> | null, key: string): string | null {
@@ -323,6 +355,7 @@ export async function getLeadsData(range: TimeRange): Promise<LeadsData> {
   // Per-lead detail (nieuwste 40 over alle tijd).
   const leadsDetail: LeadDetail[] = rows.slice(0, 40).map((r) => {
     const { origin, clicks } = buildJourney(r);
+    const projectSlug = attrStr(r.attributes, "project") ?? "de-hofman";
     return {
       id: r.id,
       ts: r.registration_date ?? new Date(now).toISOString(),
@@ -334,6 +367,9 @@ export async function getLeadsData(range: TimeRange): Promise<LeadsData> {
       temperature: r.temperature,
       origin,
       clicks,
+      reservedUnit: reservedUnitLabel(r.attributes, projectSlug),
+      contactMoment: contactMomentLabel(attrStr(r.attributes, "contact_moment")),
+      note: attrStr(r.attributes, "note"),
     };
   });
 

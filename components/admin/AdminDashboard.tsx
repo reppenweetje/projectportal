@@ -309,6 +309,11 @@ export async function AdminDashboard({ range }: { range: TimeRange }) {
                           hot
                         </span>
                       )}
+                      {l.reservedUnit && (
+                        <span className="text-[11px] font-bold text-repp-navy bg-repp-yellow/40 px-1.5 py-0.5 rounded whitespace-nowrap">
+                          {l.reservedUnit}
+                        </span>
+                      )}
                       <span className="text-xs text-repp-navy/55 truncate hidden sm:inline">
                         · {l.sourceLabel}
                       </span>
@@ -318,6 +323,18 @@ export async function AdminDashboard({ range }: { range: TimeRange }) {
                     </span>
                   </summary>
                   <div className="px-4 pb-4 pl-11 space-y-3">
+                    {(l.reservedUnit || l.contactMoment) && (
+                      <div className="rounded-lg bg-repp-yellow/15 border border-repp-yellow/40 px-3 py-2.5 grid sm:grid-cols-2 gap-x-6 gap-y-1">
+                        {l.reservedUnit && (
+                          <DetailRow label="Unit">
+                            <span className="font-bold">{l.reservedUnit}</span>
+                          </DetailRow>
+                        )}
+                        {l.contactMoment && (
+                          <DetailRow label="Contact">{l.contactMoment}</DetailRow>
+                        )}
+                      </div>
+                    )}
                     <div className="grid sm:grid-cols-2 gap-x-6 gap-y-2">
                       <DetailRow label="Bron">{l.sourceLabel}</DetailRow>
                       <DetailRow label="Herkomst">{l.origin}</DetailRow>
@@ -326,6 +343,16 @@ export async function AdminDashboard({ range }: { range: TimeRange }) {
                       </DetailRow>
                       <DetailRow label="E-mail">{l.email}</DetailRow>
                     </div>
+                    {l.note && (
+                      <div>
+                        <p className="text-[11px] uppercase tracking-wider text-repp-navy/50 font-semibold mb-1.5">
+                          Opmerking
+                        </p>
+                        <p className="text-sm text-repp-navy/80 whitespace-pre-line leading-relaxed">
+                          {l.note}
+                        </p>
+                      </div>
+                    )}
                     <div>
                       <p className="text-[11px] uppercase tracking-wider text-repp-navy/50 font-semibold mb-1.5">
                         Aangeklikt / gedaan
