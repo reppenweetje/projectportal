@@ -23,8 +23,8 @@ const specsXXL: UnitSpecs = {
 // dedicated XXL-registratie (/xxl), niet de standaard reserveer-flow.
 // Totaal nog echt vrij: 3 units (7, 13, 14)
 const status = (n: number): Unit["status"] => {
-  if ([1, 2, 3, 8, 9, 10, 11].includes(n)) return "sold";
-  if ([4, 5, 6, 12].includes(n)) return "verkocht_ovb";
+  if ([1, 2, 3, 5, 8, 9, 10, 11].includes(n)) return "sold";
+  if ([4, 6, 12].includes(n)) return "verkocht_ovb";
   return "available";  // 7, 13, 14
 };
 
