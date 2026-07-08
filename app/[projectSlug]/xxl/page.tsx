@@ -8,6 +8,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyCTA } from "@/components/layout/StickyCTA";
 import { XxlInterestForm } from "@/components/conversion/XxlInterestForm";
+import { XxlTourVideo } from "@/components/marketing/XxlTourVideo";
 import { UnitGrid } from "@/components/unit/UnitGrid";
 
 type Params = { projectSlug: string };
@@ -251,16 +252,7 @@ export default async function XxlPage({
               Bekijk de 3 lagen, de vrije hoogtes en de indeling in één
               vloeiende tour — zonder een afspraak te maken.
             </p>
-            <div className="mt-8 aspect-video w-full overflow-hidden rounded-2xl border border-white/10 bg-black shadow-2xl">
-              <iframe
-                src="https://www.youtube-nocookie.com/embed/IRB3hLXi2l0"
-                title="Digitale rondleiding XXL-unit — De Hofman"
-                className="h-full w-full"
-                loading="lazy"
-                allow="encrypted-media; picture-in-picture; web-share"
-                allowFullScreen
-              />
-            </div>
+            <XxlTourVideo />
           </div>
         </section>
 
