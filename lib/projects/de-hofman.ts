@@ -21,11 +21,11 @@ const specsXXL: UnitSpecs = {
 //   Beschikbaar (groen):                7, 13, 14
 // 7 en 14 zijn de XXL-units: nu in verkoop. Aanmelden loopt via de
 // dedicated XXL-registratie (/xxl), niet de standaard reserveer-flow.
-// Totaal nog echt vrij: 3 units (7, 13, 14)
+// Totaal nog echt vrij: 2 units (7, 14 — de XXL's)
 const status = (n: number): Unit["status"] => {
   if ([1, 2, 3, 5, 8, 9, 10, 11, 12].includes(n)) return "sold";
-  if ([4, 6].includes(n)) return "verkocht_ovb";
-  return "available";  // 7, 13, 14
+  if ([4, 6, 13].includes(n)) return "verkocht_ovb";
+  return "available";  // 7, 14
 };
 
 const buildUnit = (n: number): Unit => {
