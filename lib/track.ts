@@ -31,15 +31,29 @@ type PlausibleFn = (
 ) => void;
 
 /**
- * Stuur een custom event naar Plausible.
+ * Stuur een custom event naar Plausible én naar de GTM dataLayer.
  * Faalt nooit — analytics-fouten mogen nooit user-flow breken.
+ *
+ * De dataLayer-push maakt elk event beschikbaar als Custom Event-trigger in
+ * Google Tag Manager (bv. om een Google Ads-conversie te vuren). Pushen mag
+ * altijd: het slaat niets op. Of de resulterende Google-tag daadwerkelijk
+ * cookies zet, bepaalt Consent Mode v2 (default-denied tot de banner-keuze).
  */
 export function track(event: EventName, props?: EventProps): void {
   if (typeof window === "undefined") return;
-  const w = window as Window & { plausible?: PlausibleFn };
+  const w = window as Window & {
+    plausible?: PlausibleFn;
+    dataLayer?: Record<string, unknown>[];
+  };
   try {
     w.plausible?.(event, props ? { props } : undefined);
   } catch {
     // Slik analytics-fouten — silent fail beter dan crash.
+  }
+  try {
+    w.dataLayer = w.dataLayer || [];
+    w.dataLayer.push({ event, ...(props ?? {}) });
+  } catch {
+    // idem — dataLayer-push mag de flow nooit breken.
   }
 }

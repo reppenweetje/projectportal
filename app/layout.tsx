@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Montserrat } from "next/font/google";
 import Script from "next/script";
 import AttributionTracker from "@/components/analytics/AttributionTracker";
+import GoogleTagManager from "@/components/analytics/GoogleTagManager";
 import ConsentBanner from "@/components/consent/ConsentBanner";
 import MetaPixelLoader from "@/components/consent/MetaPixelLoader";
 import "./globals.css";
@@ -79,6 +80,13 @@ export default function RootLayout({
   // simpelweg via Vercel env var aan zetten.
   const metaPixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID?.trim();
 
+  // Google Tag Manager-container via env. Niet gezet -> GTM wordt niet geladen
+  // (dev/preview draait zonder). In productie zet je NEXT_PUBLIC_GTM_ID op de
+  // container-ID (GTM-XXXXXXX); van daaruit beheer je Google Ads/GA4-tags
+  // zonder code-deploy. Consent Mode v2 (default-denied hierboven) gate't de
+  // cookies; conversie-events komen binnen via de dataLayer-push in lib/track.
+  const gtmId = process.env.NEXT_PUBLIC_GTM_ID?.trim();
+
   return (
     <html lang="nl" className={`${montserrat.variable} h-full antialiased`}>
       <head>
@@ -119,6 +127,10 @@ export default function RootLayout({
             in lib/metaPixel.ts blijven no-op zolang window.fbq nog niet bestaat. */}
       </head>
       <body className="min-h-full flex flex-col bg-surface text-ink">
+        {/* Google Tag Manager (Consent Mode v2 advanced). Laadt altijd; de
+            default-denied staat hierboven zorgt dat Google-tags zonder
+            toestemming alleen cookieloos pingen. Geen gtmId -> no-op. */}
+        {gtmId && <GoogleTagManager gtmId={gtmId} />}
         {/* Legt marketing-herkomst (utm/fbclid/gclid) vast in repp_attr cookie
             zodat conversie-events alleen voor betaald ad-verkeer vuren. */}
         <AttributionTracker />
