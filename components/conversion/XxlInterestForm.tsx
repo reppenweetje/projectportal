@@ -270,12 +270,11 @@ export function XxlInterestForm({ project }: { project: Project }) {
 
         <ul className="space-y-2 text-sm">
           <PriceRow
-            label="Vanaf"
+            label="Prijs"
             value={
               sample ? `${formatEuro(sample.prijsExBtw)} excl. btw` : ""
             }
           />
-          <PriceRow label="VVE / maand" value="€ 160" muted />
         </ul>
 
         <div className="pt-4 border-t border-white/10 text-xs text-white/70 leading-relaxed space-y-2">

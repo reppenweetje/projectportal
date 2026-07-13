@@ -14,7 +14,7 @@ import { UnitGrid } from "@/components/unit/UnitGrid";
 type Params = { projectSlug: string };
 
 export const metadata: Metadata = {
-  title: "XXL-units te koop — 3 lagen, 191 m² op één adres",
+  title: "XXL-units te koop · 3 lagen, 191 m² op één adres",
 };
 
 // XXL-specifieke renders (units 7 & 14): begane grond als werkplaats,
@@ -72,10 +72,10 @@ export default async function XxlPage({
     <>
       <Header project={project} />
       <main className="flex-1 has-sticky-cta">
-        {/* Hero — zelfde hoogte als de homepage-hero (68vh) zodat de render
-            als volwaardige banner in beeld staat; content blijft verticaal
-            gecentreerd. min-h i.p.v. vaste hoogte zodat de content op kleine
-            schermen nooit wordt afgeknipt. */}
+        {/* Hero met dezelfde hoogte als de homepage-hero (68vh) zodat de
+            render als volwaardige banner in beeld staat; content blijft
+            verticaal gecentreerd. min-h i.p.v. vaste hoogte zodat de content
+            op kleine schermen nooit wordt afgeknipt. */}
         <section className="relative overflow-hidden bg-hofman-deep text-white flex flex-col justify-center min-h-[68vh]">
           {hero && (
             <div className="absolute inset-0">
@@ -116,7 +116,7 @@ export default async function XxlPage({
                 de zichtzijde
               </h1>
               <p className="mt-5 text-lg md:text-xl text-white/85 font-light max-w-2xl mx-auto text-center">
-                3 lagen, 191 m² op de kop van het blok — pal aan de zichtzijde
+                3 lagen, 191 m² op de kop van het blok, pal aan de zichtzijde
                 van De Hofman. Werkplaats en opslag op de begane grond, kantoor
                 of showroom op de eerste en tweede verdieping.
               </p>
@@ -124,8 +124,8 @@ export default async function XxlPage({
                 <Spec label="Begane grond" value="60,7 m²" />
                 <Spec label="1e verdieping" value="60,7 m²" />
                 <Spec label="2e verdieping" value="70 m²" />
+                <Spec label="Dakterras" value="42,5 m²" />
                 <Spec label="Vrije hoogte BG" value="3,69 m" />
-                <Spec label="Vloerbelasting" value="1.000 kg/m²" />
               </div>
               <div className="mt-8 flex justify-center">
                 <a
@@ -139,7 +139,7 @@ export default async function XxlPage({
           </div>
         </section>
 
-        {/* Aan de zichtzijde — USP direct onder de banner */}
+        {/* Aan de zichtzijde: USP direct onder de banner */}
         <section className="px-5 py-16 md:py-20 bg-white">
           <div className="mx-auto max-w-5xl">
             <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold text-center">
@@ -151,9 +151,21 @@ export default async function XxlPage({
             <p className="mt-3 text-repp-navy/70 max-w-2xl mx-auto text-center">
               De XXL-units (7 en 14) staan op de koppen van het blok, direct aan
               de straatzijde. Een grote glasgevel, eigen entree en volop zicht
-              vanaf de weg — dé plek als je showroom, kantoor of merk gezien mag
+              vanaf de weg. Dé plek als je showroom, kantoor of merk gezien mag
               worden.
             </p>
+            {/* De voorzijde-render nog een keer volledig in beeld (niet
+                bijgesneden zoals in de banner), zodat de gevel goed te zien is. */}
+            <figure className="mt-8 overflow-hidden rounded-2xl border border-repp-gray bg-white">
+              <Image
+                src={hero.src}
+                alt={hero.alt}
+                width={1840}
+                height={1081}
+                sizes="(max-width: 1024px) 100vw, 960px"
+                className="w-full h-auto"
+              />
+            </figure>
             <div className="mt-8">
               <UnitGrid
                 project={project}
@@ -177,10 +189,10 @@ export default async function XxlPage({
             <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight text-center">
               Werkplaats, kantoor en opslag op één adres.
             </h2>
-            <ul className="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <ul className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <Card
                 title="Aan de zichtzijde"
-                body="Op de kop van het blok, pal aan de A. Hofmanweg. Volop zicht vanaf de weg — dé plek voor showroom of merkzichtbaarheid."
+                body="Op de kop van het blok, pal aan de A. Hofmanweg. Volop zicht vanaf de weg. Dé plek voor showroom of merkzichtbaarheid."
               />
               <Card
                 title="3 lagen, 191 m²"
@@ -189,6 +201,14 @@ export default async function XxlPage({
               <Card
                 title="Een hele extra verdieping"
                 body="70 m² extra op de tweede verdieping, bovenop je werkvloer. Ruimte voor kantoor, vergaderen of extra opslag."
+              />
+              <Card
+                title="Eigen dakterras"
+                body="Een eigen dakterras van 42,5 m² bovenop de unit, met vrij uitzicht over de Waarderpolder."
+              />
+              <Card
+                title="Koppelbaar"
+                body="Units 7 en 14 zijn samen te koppelen tot ruim 380 m², voor wie de maximale ruimte zoekt."
               />
               <Card
                 title="Beperkt aanbod"
@@ -250,7 +270,7 @@ export default async function XxlPage({
             </h2>
             <p className="mt-3 text-white/75 max-w-2xl mx-auto text-center">
               Bekijk de 3 lagen, de vrije hoogtes en de indeling in één
-              vloeiende tour — zonder een afspraak te maken.
+              vloeiende tour, zonder een afspraak te maken.
             </p>
             <XxlTourVideo />
           </div>
