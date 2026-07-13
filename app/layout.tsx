@@ -2,7 +2,13 @@ import type { Metadata, Viewport } from "next";
 import { Montserrat } from "next/font/google";
 import Script from "next/script";
 import AttributionTracker from "@/components/analytics/AttributionTracker";
+import ConsentBanner from "@/components/consent/ConsentBanner";
+import MetaPixelLoader from "@/components/consent/MetaPixelLoader";
 import "./globals.css";
+
+// Cookiebeleid-link voor de consent-banner. Wijs naar de pagina/verklaring
+// die uitlegt welke cookies we plaatsen (vereist voor informed consent).
+const PRIVACY_HREF = "/cookiebeleid";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -76,6 +82,16 @@ export default function RootLayout({
   return (
     <html lang="nl" className={`${montserrat.variable} h-full antialiased`}>
       <head>
+        {/* Google Consent Mode v2 — MOET vóór alle Google-tags (GTM/Ads/GA4)
+            én vóór de Meta Pixel-loader draaien. Zet alle toestemming default
+            op "denied" (opt-in). De banner stuurt daarna een `update` zodra de
+            bezoeker kiest. functionality/security_storage staan granted want
+            dat zijn noodzakelijke, niet-tracking cookies. wait_for_update geeft
+            de banner even tijd voordat tags eventueel cookieloos vuren. */}
+        <Script id="consent-mode-default" strategy="beforeInteractive">
+          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',functionality_storage:'granted',security_storage:'granted',wait_for_update:500});gtag('set','ads_data_redaction',true);gtag('set','url_passthrough',true);`}
+        </Script>
+
         {/* Meta domain verification voor dehofman.nl. Vereist door Meta
             Business Manager om iOS 14+ attribution + Aggregated Event
             Measurement te kunnen gebruiken. Tag MOET in <head> staan,
@@ -97,37 +113,21 @@ export default function RootLayout({
           {`window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()`}
         </Script>
 
-        {/* Meta Pixel — fired event-based vanuit client components via
-            lib/metaPixel.ts. Lead-event triggert bij eerste walk-in lead
-            (LeadCaptureForm submit success). Optimaliseert ad-campagnes
-            op echte conversies, niet op page-views. PageView fired hier
-            wel eenmalig zodat retargeting-audience op site-bezoek werkt. */}
-        {metaPixelId && (
-          <>
-            <Script id="meta-pixel" strategy="afterInteractive">
-              {`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${metaPixelId}');fbq('track','PageView');`}
-            </Script>
-            <noscript>
-              {/* Fallback voor users met JS disabled — moet IN body
-                  per HTML5 spec. Next.js noscript in head wordt door
-                  Next automatisch verplaatst naar correct positie. */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                height="1"
-                width="1"
-                style={{ display: "none" }}
-                src={`https://www.facebook.com/tr?id=${metaPixelId}&ev=PageView&noscript=1`}
-                alt=""
-              />
-            </noscript>
-          </>
-        )}
+        {/* Meta Pixel wordt NIET meer onvoorwaardelijk hier geladen. Sinds de
+            consent-gate laadt 'ie via <MetaPixelLoader> in de body, pas nadat
+            de bezoeker marketing-cookies accepteert (AVG/ePrivacy). De helpers
+            in lib/metaPixel.ts blijven no-op zolang window.fbq nog niet bestaat. */}
       </head>
       <body className="min-h-full flex flex-col bg-surface text-ink">
         {/* Legt marketing-herkomst (utm/fbclid/gclid) vast in repp_attr cookie
             zodat conversie-events alleen voor betaald ad-verkeer vuren. */}
         <AttributionTracker />
+        {/* Meta Pixel achter de marketing-consent. Geen pixelId -> no-op. */}
+        {metaPixelId && <MetaPixelLoader pixelId={metaPixelId} />}
         {children}
+        {/* Cookie-consent banner (Consent Mode v2). Niet-blokkerend; regelt de
+            toestemming voor GA4/Google Ads (via Consent Mode) én de Meta Pixel. */}
+        <ConsentBanner privacyHref={PRIVACY_HREF} />
       </body>
     </html>
   );
