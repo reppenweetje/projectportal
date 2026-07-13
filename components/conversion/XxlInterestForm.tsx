@@ -154,7 +154,7 @@ export function XxlInterestForm({ project }: { project: Project }) {
             <Pill
               active={unitKeuze === "beide"}
               onClick={() => setUnitKeuze("beide")}
-              label="Allebei"
+              label="Allebei koppelen"
             />
             <Pill
               active={unitKeuze === "geen_voorkeur"}
@@ -297,7 +297,7 @@ export function XxlInterestForm({ project }: { project: Project }) {
 function unitLabel(k: UnitKeuze): string {
   if (k === "unit-7") return "Unit 7";
   if (k === "unit-14") return "Unit 14";
-  if (k === "beide") return "Allebei";
+  if (k === "beide") return "Allebei koppelen";
   return "Geen voorkeur";
 }
 
