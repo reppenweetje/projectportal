@@ -7,17 +7,12 @@ import { formatEuro } from "@/lib/types";
 /**
  * UnitTypePicker — chips om tussen unit-types te kiezen voor de calculator.
  *
- * Per user-feedback PDF Claude input koopomgeving item 1: in plaats van
- * een lange dropdown met alle 14 units toon je alleen de TYPES (L, XL).
- * Voor de calculator is dat genoeg context — gebruikers willen weten wat
- * een L of XL kost, niet welke specifieke unit. Voor unit-specifieke
- * berekeningen kunnen ze later op een individuele unit-pagina kijken.
- *
- * XXL wordt nog niet getoond (coming_soon). Bij toekomstige uitbreiding
- * kan SHOWN_TYPES uitgebreid worden.
+ * De L- en XL-units zijn uitverkocht; alleen de XXL is nog te koop, dus de
+ * calculator rekent nu met de XXL. Zodra er weer andere types beschikbaar
+ * komen kan SHOWN_TYPES uitgebreid worden en verschijnen de chips vanzelf.
  */
 
-const SHOWN_TYPES = ["L", "XL"] as const;
+const SHOWN_TYPES = ["XXL"] as const;
 export type CalculatorUnitType = (typeof SHOWN_TYPES)[number];
 
 /**
@@ -56,7 +51,11 @@ export function UnitTypePicker({
   }, [project]);
 
   return (
-    <div className="grid grid-cols-2 gap-2">
+    <div
+      className={`grid gap-2 ${
+        options.length === 1 ? "grid-cols-1" : "grid-cols-2"
+      }`}
+    >
       {options.map(({ type, unit }) => {
         const active = selectedType === type;
         return (
@@ -79,7 +78,7 @@ export function UnitTypePicker({
                 active ? "text-white/70" : "text-repp-navy/60"
               }`}
             >
-              vanaf {formatEuro(unit.prijsExBtw)}
+              {formatEuro(unit.prijsExBtw)} excl. btw
             </span>
           </button>
         );

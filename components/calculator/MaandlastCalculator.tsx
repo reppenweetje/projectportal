@@ -24,7 +24,7 @@ function annuity(principal: number, annualRatePct: number, years: number) {
 
 export function MaandlastCalculator({ project }: { project: Project }) {
   const sellableUnits = project.units.filter((u) => u.status !== "coming_soon");
-  const [selectedType, setSelectedType] = useState<CalculatorUnitType>("L");
+  const [selectedType, setSelectedType] = useState<CalculatorUnitType>("XXL");
   const [ownPercent, setOwnPercent] = useState(DEFAULT_OWN_PERCENT);
   const [rentePct, setRentePct] = useState(DEFAULT_INTEREST);
   const [termYears, setTermYears] = useState(DEFAULT_TERM_YEARS);

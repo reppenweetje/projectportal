@@ -25,7 +25,7 @@ function annuity(principal: number, annualRatePct: number, years: number) {
 
 export function RendementCalculator({ project }: { project: Project }) {
   const sellableUnits = project.units.filter((u) => u.status !== "coming_soon");
-  const [selectedType, setSelectedType] = useState<CalculatorUnitType>("L");
+  const [selectedType, setSelectedType] = useState<CalculatorUnitType>("XXL");
   const [huurPerM2Jaar, setHuurPerM2Jaar] = useState(DEFAULT_HUUR_PER_M2_PER_JAAR);
   const [ownPercent, setOwnPercent] = useState(DEFAULT_OWN_PERCENT);
   const [rentePct, setRentePct] = useState(DEFAULT_INTEREST);
