@@ -157,18 +157,37 @@ export function RendementCalculator({ project }: { project: Project }) {
           </div>
 
           <div className="mt-6 pt-6 border-t border-white/10 space-y-2">
-            <Link
-              href={`/${project.slug}/reserveren?unit=${unit.slug}`}
-              className="block w-full bg-repp-yellow text-repp-navy text-center font-bold px-4 py-3.5 rounded-full hover:brightness-95 transition"
-            >
-              Reserveer Unit {unit.number} →
-            </Link>
-            <Link
-              href={`/${project.slug}/units/${unit.slug}`}
-              className="block w-full text-center text-sm text-white/80 hover:text-white py-1.5"
-            >
-              Eerst meer info over Unit {unit.number}
-            </Link>
+            {unit.type === "XXL" ? (
+              <>
+                <Link
+                  href={`/${project.slug}/xxl#interesse`}
+                  className="block w-full bg-repp-yellow text-repp-navy text-center font-bold px-4 py-3.5 rounded-full hover:brightness-95 transition"
+                >
+                  Interesse in de XXL →
+                </Link>
+                <Link
+                  href={`/${project.slug}/xxl`}
+                  className="block w-full text-center text-sm text-white/80 hover:text-white py-1.5"
+                >
+                  Meer over de XXL-units
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  href={`/${project.slug}/reserveren?unit=${unit.slug}`}
+                  className="block w-full bg-repp-yellow text-repp-navy text-center font-bold px-4 py-3.5 rounded-full hover:brightness-95 transition"
+                >
+                  Reserveer Unit {unit.number} →
+                </Link>
+                <Link
+                  href={`/${project.slug}/units/${unit.slug}`}
+                  className="block w-full text-center text-sm text-white/80 hover:text-white py-1.5"
+                >
+                  Eerst meer info over Unit {unit.number}
+                </Link>
+              </>
+            )}
           </div>
 
           <p className="mt-4 text-[11px] text-white/40 leading-relaxed">
