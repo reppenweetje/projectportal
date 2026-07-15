@@ -60,7 +60,9 @@ export function LeadCaptureForm({
     const data = new FormData(form);
 
     // Honeypot: bots vullen vaak elk veld in. Mensen zien dit niet.
-    const honeypot = String(data.get("company") ?? "");
+    // Neutrale veldnaam (geen "company"/"Bedrijfsnaam") zodat password
+    // managers en autofill het niet voor echte bezoekers invullen.
+    const honeypot = String(data.get("contact_ref") ?? "");
     if (honeypot) {
       // Doe alsof het lukt; bots krijgen geen feedback.
       setState({ kind: "submitting" });
@@ -320,10 +322,9 @@ export function LeadCaptureForm({
           overflow: "hidden",
         }}
       >
-        <label>
-          Bedrijfsnaam
-          <input name="company" type="text" tabIndex={-1} autoComplete="off" />
-        </label>
+        {/* Geen "Bedrijfsnaam"-label: autofill leest label-tekst en zou het
+            veld anders voor een echte bezoeker invullen. */}
+        <input name="contact_ref" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
       {state.kind === "error" && (

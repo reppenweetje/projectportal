@@ -27,17 +27,17 @@ export function Honeypot({
         overflow: "hidden",
       }}
     >
-      <label>
-        Bedrijfsnaam
-        <input
-          name={HONEYPOT_FIELD}
-          type="text"
-          tabIndex={-1}
-          autoComplete="off"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-        />
-      </label>
+      {/* Geen zichtbaar <label> (bv. "Bedrijfsnaam"): autofill leest ook
+          label-tekst en zou het veld dan alsnog voor een echte bezoeker
+          invullen. Alleen een neutrale name + autocomplete=off. */}
+      <input
+        name={HONEYPOT_FIELD}
+        type="text"
+        tabIndex={-1}
+        autoComplete="off"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
     </div>
   );
 }

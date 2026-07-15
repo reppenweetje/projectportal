@@ -73,13 +73,15 @@ export function LeadGateOverlay({
     const form = event.currentTarget;
     const data = new FormData(form);
 
-    // Honeypot: bots vullen vaak elk veld in. Mensen zien dit niet.
-    const honeypot = String(data.get("company") ?? "");
-    if (honeypot) {
-      // Doe alsof alles is gelukt om bots niet wijzer te maken.
-      setState({ kind: "submitting" });
-      return;
-    }
+    // GEEN honeypot op deze gate. Dit is de belangrijkste conversie-vorm
+    // (toegang tot brochure/documenten). Een verborgen "Bedrijfsnaam"-veld
+    // werd door password managers (1Password) en in-app-browser-autofill
+    // ingevuld bij echte bezoekers → honeypot tript → submit hing eeuwig op
+    // "Bezig…" en de bezoeker kreeg NOOIT een dh_session, dus geen toegang.
+    // Bots die de gate willen misbruiken kunnen de client-check sowieso
+    // omzeilen (direct POST naar lead-upsert); rate-limiting op portal-resolve
+    // vangt abuse af. Liever een enkele bot-lead die sales wegfiltert dan een
+    // echte koper buitensluiten.
 
     const firstName = String(data.get("first_name") ?? "").trim();
     const email = String(data.get("email") ?? "").trim();
@@ -286,28 +288,6 @@ export function LeadGateOverlay({
                 className="rounded-full px-4 py-2.5 border border-repp-gray bg-white text-repp-navy placeholder-repp-navy/40 focus:outline-none focus:ring-2 focus:ring-repp-blue disabled:opacity-60"
               />
             </label>
-
-            {/* Honeypot: visueel verborgen, voor bots wel beschikbaar. */}
-            <div
-              aria-hidden="true"
-              style={{
-                position: "absolute",
-                left: "-9999px",
-                width: 1,
-                height: 1,
-                overflow: "hidden",
-              }}
-            >
-              <label>
-                Bedrijfsnaam
-                <input
-                  name="company"
-                  type="text"
-                  tabIndex={-1}
-                  autoComplete="off"
-                />
-              </label>
-            </div>
 
             {state.kind === "error" && (
               <p className="text-sm text-red-600">{state.message}</p>
