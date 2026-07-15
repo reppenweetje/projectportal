@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 /**
- * XxlUseCases — carrousel met invulmogelijkheden voor de XXL-unit. Toont per
+ * XxlUseCases: carrousel met invulmogelijkheden voor de XXL-unit. Toont per
  * slide een use-case (showroom, opslag, studio, werkplaats, kantoor, dakterras)
  * met een render en een korte omschrijving, zodat een ondernemer ziet wat er
  * met de 3 lagen + dakterras kan.
@@ -26,7 +26,7 @@ const USE_CASES: UseCase[] = [
     src: "/images/hofman/xxl/xxl-boutique.jpg",
     alt: "XXL-unit ingericht als boutique met kledingrekken, spiegels en een loungehoek",
     title: "Boutique of showroom",
-    body: "Grote glasgevel en volop daglicht aan de zichtzijde — dé plek om je merk of collectie te tonen.",
+    body: "Grote glasgevel en volop daglicht aan de zichtzijde. Dé plek om je merk of collectie te tonen.",
   },
   {
     src: "/images/hofman/xxl/xxl-opslag.jpg",
@@ -38,13 +38,13 @@ const USE_CASES: UseCase[] = [
     src: "/images/hofman/xxl/xxl-studio.jpg",
     alt: "XXL-unit als creatief bureau met werkplekken, moodboards en designposters",
     title: "Creatief bureau of studio",
-    body: "Rustige verdiepingen met veel licht en uitzicht over de polder — een studio of kantoor voor je team.",
+    body: "Rustige verdiepingen met veel licht en uitzicht over de polder. Een studio of kantoor voor je team.",
   },
   {
     src: "/images/hofman/xxl/xxl-werkplaats.jpg",
     alt: "Begane grond van de XXL-unit als werkplaats met gereedschapswand en werkbank",
     title: "Werkplaats",
-    body: "Begane grond met vrije hoogte van 3,69 m, gereedschapswand en werkbanken — plus opslag onder één dak.",
+    body: "Begane grond met vrije hoogte van 3,69 m, gereedschapswand en werkbanken, plus opslag onder één dak.",
   },
   {
     src: "/images/hofman/xxl/xxl-kantoor-pantry.jpg",
