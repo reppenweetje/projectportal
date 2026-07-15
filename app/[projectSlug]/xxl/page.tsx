@@ -215,12 +215,12 @@ export default async function XxlPage({
               Voor wie is de XXL?
             </p>
             <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight text-center">
-              Zoveel kan er in de XXL.
+              Zo kun je de XXL inrichten.
             </h2>
             <p className="mt-3 text-repp-navy/70 max-w-2xl mx-auto text-center">
-              3 lagen plus een eigen dakterras: van boutique of werkplaats tot
-              opslag, studio of kantoor. Swipe door de mogelijkheden en zie wat
-              er in jouw XXL past.
+              3 lagen plus een eigen dakterras bieden alle ruimte. Deze
+              voorbeelden laten zien hoe je de unit kunt indelen: van werkplaats
+              en opslag tot showroom, studio of kantoor.
             </p>
             <XxlUseCases />
           </div>
