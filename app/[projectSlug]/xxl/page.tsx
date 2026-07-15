@@ -9,6 +9,7 @@ import { Footer } from "@/components/layout/Footer";
 import { StickyCTA } from "@/components/layout/StickyCTA";
 import { XxlInterestForm } from "@/components/conversion/XxlInterestForm";
 import { XxlTourVideo } from "@/components/marketing/XxlTourVideo";
+import { XxlUseCases } from "@/components/marketing/XxlUseCases";
 import { UnitGrid } from "@/components/unit/UnitGrid";
 
 type Params = { projectSlug: string };
@@ -16,42 +17,6 @@ type Params = { projectSlug: string };
 export const metadata: Metadata = {
   title: "XXL-units te koop · 3 lagen, 191 m² op één adres",
 };
-
-// XXL-specifieke renders (units 7 & 14): begane grond als werkplaats,
-// verdiepingen als kantoor/showroom en het eigen dakterras. Geoptimaliseerd
-// voor web in public/images/hofman/xxl/.
-const xxlImages = [
-  {
-    src: "/images/hofman/xxl/xxl-werkplaats.jpg",
-    alt: "Begane grond van de XXL-unit als werkplaats met gereedschapswand, werkbank en zicht op de polder",
-    caption: "Begane grond als werkplaats",
-  },
-  {
-    src: "/images/hofman/xxl/xxl-showroom.jpg",
-    alt: "Ruime verdieping van de XXL-unit ingericht als showroom met presentatie-eilanden",
-    caption: "Ruimte voor showroom of presentatie",
-  },
-  {
-    src: "/images/hofman/xxl/xxl-kantoor-pantry.jpg",
-    alt: "Verdieping van de XXL-unit als kantoor met werkplekken, vergadertafel en pantry",
-    caption: "Verdieping als kantoor met pantry",
-  },
-  {
-    src: "/images/hofman/xxl/xxl-werkplekken.jpg",
-    alt: "Werkplekken langs de raampartij van de XXL-unit met weids uitzicht over de polder",
-    caption: "Werkplekken met weids uitzicht",
-  },
-  {
-    src: "/images/hofman/xxl/xxl-dakterras.jpg",
-    alt: "Eigen dakterras van de XXL-unit met loungeset, parasol en beplanting",
-    caption: "Eigen dakterras",
-  },
-  {
-    src: "/images/hofman/xxl/xxl-luchtfoto.jpg",
-    alt: "Luchtfoto van de XXL-unit op de kop van het blok met het dakterras van bovenaf",
-    caption: "De XXL op de kop van het blok",
-  },
-];
 
 export default async function XxlPage({
   params,
@@ -226,39 +191,6 @@ export default async function XxlPage({
           </div>
         </section>
 
-        {/* Beeld */}
-        <section className="px-5 py-16 md:py-20 bg-white">
-          <div className="mx-auto max-w-5xl">
-            <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold text-center">
-              In beeld
-            </p>
-            <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight text-center">
-              Zo kan jouw XXL eruitzien.
-            </h2>
-            <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {xxlImages.map((img) => (
-                <figure
-                  key={img.src}
-                  className="group overflow-hidden rounded-2xl border border-repp-gray bg-white"
-                >
-                  <div className="relative aspect-video overflow-hidden">
-                    <Image
-                      src={img.src}
-                      alt={img.alt}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover transition duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                  <figcaption className="px-4 py-3 text-sm text-repp-navy/70">
-                    {img.caption}
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Digitale rondleiding */}
         <section className="px-5 py-16 md:py-20 bg-hofman-deep text-white">
           <div className="mx-auto max-w-5xl">
@@ -273,6 +205,24 @@ export default async function XxlPage({
               vloeiende tour, zonder een afspraak te maken.
             </p>
             <XxlTourVideo />
+          </div>
+        </section>
+
+        {/* Voor wie: use-cases in een carrousel */}
+        <section className="px-5 py-16 md:py-20 bg-surface-muted">
+          <div className="mx-auto max-w-5xl">
+            <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold text-center">
+              Voor wie is de XXL?
+            </p>
+            <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight text-center">
+              Zoveel kan er in de XXL.
+            </h2>
+            <p className="mt-3 text-repp-navy/70 max-w-2xl mx-auto text-center">
+              3 lagen plus een eigen dakterras: van boutique of werkplaats tot
+              opslag, studio of kantoor. Swipe door de mogelijkheden en zie wat
+              er in jouw XXL past.
+            </p>
+            <XxlUseCases />
           </div>
         </section>
 
