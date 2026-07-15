@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { updateProfile, useLeadProfile } from "@/lib/personalization";
 import { fireMetaLead } from "@/lib/metaPixel";
+import { track } from "@/lib/track";
 import { HONEYPOT_FIELD, isHoneypotTripped } from "@/lib/botGuard";
 import { Honeypot } from "@/components/conversion/Honeypot";
 import { PrivacyConsent } from "@/components/legal/PrivacyConsent";
@@ -68,6 +69,10 @@ export function EmailCaptureForm({
       }).catch(() => {});
       // Optional task (mail, etc.)
       if (onSubmit) await onSubmit({ name, email });
+      // Plausible + dataLayer: elke lead-submit telt als interest_captured,
+      // zodat Google (via de GTM Custom Event-trigger) deze exit-popup-leads
+      // net als de andere formulieren als conversie meeneemt.
+      track("interest_captured", { source });
       // Meta-conversie: alleen voor Meta-ad-verkeer, max 1x per bezoeker
       // (gate + dedup in lib/metaPixel.ts).
       fireMetaLead("email-capture", { source });
