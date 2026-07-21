@@ -31,13 +31,20 @@ type PlausibleFn = (
 ) => void;
 
 /**
- * Stuur een custom event naar Plausible én naar de GTM dataLayer.
+ * Stuur een custom event naar Plausible, de GTM dataLayer én — als de
+ * bezoeker ingelogd is — naar ons eigen per-lead eventlog via /api/track.
  * Faalt nooit — analytics-fouten mogen nooit user-flow breken.
  *
  * De dataLayer-push maakt elk event beschikbaar als Custom Event-trigger in
  * Google Tag Manager (bv. om een Google Ads-conversie te vuren). Pushen mag
  * altijd: het slaat niets op. Of de resulterende Google-tag daadwerkelijk
  * cookies zet, bepaalt Consent Mode v2 (default-denied tot de banner-keuze).
+ *
+ * De /api/track-post is het enige kanaal dat gedrag aan een concrete lead
+ * koppelt: die route leest server-side het HttpOnly dh_session-cookie en
+ * schrijft — alléén voor ingelogde leads — naar de Supabase-tabel
+ * `lead_events`, zodat het CRM per lead kan tonen wat iemand deed. Plausible/
+ * GTM blijven anoniem/aggregaat. Uitgelogde bezoekers: no-op server-side.
  */
 export function track(event: EventName, props?: EventProps): void {
   if (typeof window === "undefined") return;
@@ -56,4 +63,27 @@ export function track(event: EventName, props?: EventProps): void {
   } catch {
     // idem — dataLayer-push mag de flow nooit breken.
   }
+  try {
+    trackLeadEvent(event, props);
+  } catch {
+    // Per-lead logging is best-effort; nooit de flow breken.
+  }
+}
+
+/**
+ * Best-effort POST naar /api/track. `keepalive` zodat het event ook afgaat
+ * als de gebruiker meteen wegnavigeert (bv. na een download of CTA-klik).
+ * Antwoord wordt bewust genegeerd — de server bepaalt zelf of er (ingelogd)
+ * iets gelogd wordt. Fouten worden geslikt.
+ */
+function trackLeadEvent(event: EventName, props?: EventProps): void {
+  void fetch("/api/track", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ event, props: props ?? {} }),
+    keepalive: true,
+    credentials: "same-origin",
+  }).catch(() => {
+    // Silent fail — analytics mag de UX nooit raken.
+  });
 }
