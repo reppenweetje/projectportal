@@ -21,6 +21,8 @@
 
 import { randomUUID } from "node:crypto";
 
+import { readAttributionCookie } from "./attribution-server";
+
 export type WalkinSource =
   | "dehofman_portal_reservation"
   | "dehofman_portal_insider"
@@ -105,6 +107,14 @@ export async function upsertWalkinLead(lead: WalkinLead): Promise<UpsertResult> 
   if (lead.unit_id) attributes.unit_id = lead.unit_id;
   if (lead.note) attributes.note = lead.note;
   if (lead.contact_moment) attributes.contact_moment = lead.contact_moment;
+
+  // Marketing-herkomst uit het repp_attr-cookie. Eén lees-actie hier dekt alle
+  // conversie-routes die deze helper gebruiken, dus interest, insider,
+  // reservation, xxl-interest, portal-update, report en notify-status hoeven
+  // er zelf niets voor te doen. Zonder cookie blijft het veld weg.
+  const attribution = await readAttributionCookie();
+  if (attribution) attributes.attribution = attribution;
+
   if (Object.keys(attributes).length > 0) payload.attributes = attributes;
 
   try {
