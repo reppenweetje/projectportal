@@ -56,14 +56,19 @@ export async function POST(req: Request) {
     b.props && typeof b.props === "object" && !Array.isArray(b.props)
       ? (b.props as Record<string, unknown>)
       : {};
+  const portalToken =
+    typeof b.portal_token === "string" ? b.portal_token.trim() : "";
 
   if (!event || !ALLOWED_EVENTS.has(event)) {
     return NextResponse.json({ error: "invalid_event" }, { status: 400 });
   }
 
-  // Sessie server-side uitlezen. Geen sessie -> uitgelogd -> niets loggen.
+  // Sessie server-side uitlezen. Ontbreekt die, dan mag de caller een
+  // portal_token meegeven — nodig op het gate-conversie-moment, waar de
+  // cookies pas na de ?t=-redirect gezet worden. Het portal_token geeft
+  // via ?t= sowieso al toegang, dus dit verzwakt het model niet.
   const { sessionToken } = await getPortalSession();
-  if (!sessionToken) {
+  if (!sessionToken && !portalToken) {
     return NextResponse.json({ ok: true, logged: false });
   }
 
@@ -84,7 +89,8 @@ export async function POST(req: Request) {
         apikey: SUPABASE_ANON_KEY,
       },
       body: JSON.stringify({
-        session_token: sessionToken,
+        session_token: sessionToken ?? undefined,
+        portal_token: portalToken || undefined,
         event_name: event,
         props,
         project: "de-hofman",

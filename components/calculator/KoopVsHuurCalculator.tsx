@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Project, Unit } from "@/lib/types";
 import { formatEuro, formatM2 } from "@/lib/types";
+import { track } from "@/lib/track";
 
 /**
  * KoopVsHuurCalculator — laat een ondernemer zien wat kopen bij De Hofman
@@ -212,6 +213,49 @@ export function KoopVsHuurCalculator({ project }: { project: Project }) {
 
   const last = model.reeks[horizon - 1];
   const vermogen = last.waarde - last.schuld;
+
+  // Calculator afgerond. Eenmalig per mount, en pas nadat de bezoeker zelf
+  // iets heeft aangepast — de eerste render is nog geen "resultaat". We
+  // debouncen 2,5s zodat een sliderbeweging niet tientallen events oplevert;
+  // wat we loggen is dus de stand waar iemand op uitkomt, niet elke tussenstap.
+  const calcFiredRef = useRef(false);
+  const calcTouchedRef = useRef(false);
+  useEffect(() => {
+    if (!calcTouchedRef.current) {
+      // Sla de initiele render over; hierna telt elke wijziging als interactie.
+      calcTouchedRef.current = true;
+      return;
+    }
+    if (calcFiredRef.current) return;
+    const timer = setTimeout(() => {
+      if (calcFiredRef.current) return;
+      calcFiredRef.current = true;
+      track("calculator_completed", {
+        unitType: unit.type,
+        m2: unit.m2,
+        koopsom: Math.round(unit.prijs),
+        huurPerM2: huurM2,
+        inbrengPct,
+        vorm,
+        rentePct: rente,
+        horizonJaar: horizon,
+        koopMaandlast: Math.round(model.koopMnd),
+        huurMaandlast: Math.round(model.huurMnd),
+        vermogenNaHorizon: Math.round(vermogen),
+      });
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, [
+    unit,
+    huurM2,
+    inbrengPct,
+    vorm,
+    rente,
+    groei,
+    horizon,
+    model,
+    vermogen,
+  ]);
 
   return (
     <div className="rounded-2xl border border-repp-gray bg-white p-6 md:p-10">

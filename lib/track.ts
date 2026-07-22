@@ -46,7 +46,22 @@ type PlausibleFn = (
  * `lead_events`, zodat het CRM per lead kan tonen wat iemand deed. Plausible/
  * GTM blijven anoniem/aggregaat. Uitgelogde bezoekers: no-op server-side.
  */
-export function track(event: EventName, props?: EventProps): void {
+export type TrackOptions = {
+  /**
+   * Portal-token van de lead. Meegeven op conversie-momenten waar het
+   * dh_session-cookie nog NIET gezet is — met name de gate-submit, waar de
+   * cookies pas na de `?t=`-redirect landen. Zonder dit zou juist het
+   * belangrijkste event (de conversie zelf) nooit aan een lead gekoppeld
+   * worden. Server-side resolvet dit naar hetzelfde lead_id als de sessie.
+   */
+  portalToken?: string;
+};
+
+export function track(
+  event: EventName,
+  props?: EventProps,
+  opts?: TrackOptions,
+): void {
   if (typeof window === "undefined") return;
   const w = window as Window & {
     plausible?: PlausibleFn;
@@ -64,7 +79,7 @@ export function track(event: EventName, props?: EventProps): void {
     // idem — dataLayer-push mag de flow nooit breken.
   }
   try {
-    trackLeadEvent(event, props);
+    trackLeadEvent(event, props, opts);
   } catch {
     // Per-lead logging is best-effort; nooit de flow breken.
   }
@@ -76,11 +91,21 @@ export function track(event: EventName, props?: EventProps): void {
  * Antwoord wordt bewust genegeerd — de server bepaalt zelf of er (ingelogd)
  * iets gelogd wordt. Fouten worden geslikt.
  */
-function trackLeadEvent(event: EventName, props?: EventProps): void {
+function trackLeadEvent(
+  event: EventName,
+  props?: EventProps,
+  opts?: TrackOptions,
+): void {
   void fetch("/api/track", {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify({ event, props: props ?? {} }),
+    body: JSON.stringify({
+      event,
+      props: props ?? {},
+      // Alleen meesturen als de caller 'm heeft; anders valt de server
+      // terug op het dh_session-cookie.
+      ...(opts?.portalToken ? { portal_token: opts.portalToken } : {}),
+    }),
     keepalive: true,
     credentials: "same-origin",
   }).catch(() => {

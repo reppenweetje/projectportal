@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import type { Project, Unit } from "@/lib/types";
@@ -57,6 +57,23 @@ export function ReservationForm({ project }: { project: Project }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile]);
+
+  // Formulier geopend. Eenmalig per mount, zodat het verschil tussen
+  // "begonnen" en "verstuurd" zichtbaar wordt in de lead-tijdlijn: wie
+  // hier stopt, is een afhaker die sales kan opvolgen.
+  const startedRef = useRef(false);
+  useEffect(() => {
+    if (startedRef.current) return;
+    startedRef.current = true;
+    track("reservation_started", {
+      unit: initialUnit.slug,
+      unitType: initialUnit.type,
+      unitStatus: initialUnit.status,
+      intent: isWachtlijst ? "wachtlijst" : "reservering",
+    });
+    // Bewust alleen op mount — niet opnieuw bij unit-wissel in de dropdown.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const aanbetaling = Math.round(unit.prijsExBtw * 0.05);
   const isVerified = Boolean(profile?.verified);

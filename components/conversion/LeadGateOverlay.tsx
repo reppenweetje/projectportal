@@ -186,10 +186,15 @@ export function LeadGateOverlay({
 
       // ─── Stap 3: analytics ────────────────────────────────────────────
       try {
-        track("interest_captured", {
-          source: "portal_gate",
-          context: gateContext,
-        });
+        // portalToken expliciet meegeven: de dh_session-cookie wordt pas
+        // gezet door de ?t=-redirect in stap 4 hieronder. Zonder token zou
+        // dit event server-side als "anoniem" wegvallen en missen we juist
+        // de conversie zelf in het CRM.
+        track(
+          "interest_captured",
+          { source: "portal_gate", context: gateContext },
+          { portalToken },
+        );
         // Meta-conversie: alleen voor Meta-ad-verkeer, max 1x per bezoeker
         // (gate + dedup in lib/metaPixel.ts). Vóór de redirect hieronder,
         // anders navigeert de pagina weg voordat het event verstuurd is.
