@@ -31,6 +31,7 @@
 
 import { useState, type FormEvent } from "react";
 import { track } from "@/lib/track";
+import { getAttribution } from "@/lib/attribution";
 import { fireMetaLead } from "@/lib/metaPixel";
 import { PrivacyConsent } from "@/components/legal/PrivacyConsent";
 
@@ -109,6 +110,7 @@ export function LeadGateOverlay({
     try {
       const sessionId = generateSessionId();
       const now = new Date().toISOString();
+      const attribution = getAttribution();
 
       // ─── Stap 1: lead-upsert → portal_token ───────────────────────────
       const upsertRes = await fetch(`${SUPABASE_URL}/functions/v1/lead-upsert`, {
@@ -128,7 +130,16 @@ export function LeadGateOverlay({
           status: "lead_captured",
           started_at: now,
           last_event_at: now,
-          attributes: { gateContext, source_page: typeof window !== "undefined" ? window.location.pathname : null },
+          // Marketing-herkomst meesturen. De gate praat rechtstreeks met
+          // lead-upsert en gaat dus langs lib/lead-sync heen, waar
+          // readAttributionCookie() voor de walk-in-routes staat. Zonder dit
+          // regeltje mist juist de belangrijkste instroom zijn herkomst.
+          // repp_attr is bewust niet HttpOnly, dus de client kan 'm lezen.
+          attributes: {
+            gateContext,
+            source_page: typeof window !== "undefined" ? window.location.pathname : null,
+            ...(attribution ? { attribution } : {}),
+          },
           consents: [
             {
               scope: "lead-capture-portal",
