@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Project, Unit } from "@/lib/types";
 import { formatEuro } from "@/lib/types";
+import { track } from "@/lib/track";
 import {
   UnitTypePicker,
   representativeUnitForType,
@@ -48,6 +49,39 @@ export function RendementCalculator({ project }: { project: Project }) {
   const vveJaar = unit.vvePerMaand * 12;
   const cashflowJaar = huurEffectief - maandLasten * 12 - vveJaar;
   const cashflowMnd = cashflowJaar / 12;
+
+  // Calculator afgerond — beleggingsvariant. Zelfde debounce als de andere
+  // calculators: pas nadat de bezoeker zelf iets aanpaste, eenmalig, 2,5s na de
+  // laatste wijziging. Beleggingsspecifieke uitkomsten (rendement, cashflow)
+  // gaan als extra props mee; unittype én koopsom zijn het kernsignaal.
+  const calcFiredRef = useRef(false);
+  const calcTouchedRef = useRef(false);
+  useEffect(() => {
+    if (!calcTouchedRef.current) {
+      calcTouchedRef.current = true;
+      return;
+    }
+    if (calcFiredRef.current) return;
+    const timer = setTimeout(() => {
+      if (calcFiredRef.current) return;
+      calcFiredRef.current = true;
+      track("calculator_completed", {
+        unitType: unit.type,
+        m2: unit.m2BVO,
+        koopsom: Math.round(koopsom),
+        huurPerM2: huurPerM2Jaar,
+        inbrengPct: ownPercent,
+        rentePct,
+        horizonJaar: termYears,
+        vorm: "belegging",
+        brutoRendementPct: Math.round(brutoRendement * 10) / 10,
+        cashflowMnd: Math.round(cashflowMnd),
+      });
+    }, 2500);
+    return () => clearTimeout(timer);
+    // Bewust alleen op de invoer die de bezoeker zelf verandert.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedType, huurPerM2Jaar, ownPercent, rentePct, termYears, leegstandPct]);
 
   return (
     <div className="rounded-2xl border border-repp-gray bg-white p-6 md:p-10">

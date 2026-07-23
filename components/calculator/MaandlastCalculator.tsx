@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Project, Unit } from "@/lib/types";
 import { formatEuro } from "@/lib/types";
+import { track } from "@/lib/track";
 import {
   UnitTypePicker,
   representativeUnitForType,
@@ -42,6 +43,37 @@ export function MaandlastCalculator({ project }: { project: Project }) {
   const maandHypotheek = annuity(lening, rentePct, termYears);
   const totaalMaand = maandHypotheek + unit.vvePerMaand;
   const verschilMetHuur = huidigeHuur - totaalMaand;
+
+  // Calculator afgerond. Zelfde patroon als KoopVsHuurCalculator: eenmalig per
+  // mount, pas nadat de bezoeker zelf iets aanpaste, en gedebouncet op 2,5s
+  // zodat een sliderbeweging niet tientallen events oplevert. We loggen de
+  // eindstand — unittype én bedrag, het sterkste intentiesignaal.
+  const calcFiredRef = useRef(false);
+  const calcTouchedRef = useRef(false);
+  useEffect(() => {
+    if (!calcTouchedRef.current) {
+      calcTouchedRef.current = true;
+      return;
+    }
+    if (calcFiredRef.current) return;
+    const timer = setTimeout(() => {
+      if (calcFiredRef.current) return;
+      calcFiredRef.current = true;
+      track("calculator_completed", {
+        unitType: unit.type,
+        m2: unit.m2BVO,
+        koopsom: Math.round(koopsom),
+        inbrengPct: ownPercent,
+        rentePct,
+        horizonJaar: termYears,
+        koopMaandlast: Math.round(totaalMaand),
+        huurMaandlast: Math.round(huidigeHuur),
+      });
+    }, 2500);
+    return () => clearTimeout(timer);
+    // Bewust alleen op de invoer die de bezoeker zelf verandert.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedType, ownPercent, rentePct, termYears, huidigeHuur]);
 
   return (
     <div className="rounded-2xl border border-repp-gray bg-white p-6 md:p-10">
