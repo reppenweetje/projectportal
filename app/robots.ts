@@ -5,14 +5,7 @@
  */
 
 import type { MetadataRoute } from 'next';
-
-function getSiteUrl(): string {
-  const url = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-  if (url) return url.replace(/\/$/, '');
-  const vercel = process.env.NEXT_PUBLIC_VERCEL_URL;
-  if (vercel) return `https://${vercel}`;
-  return 'http://localhost:3000';
-}
+import { getSiteUrl } from '@/lib/site-url';
 
 export default function robots(): MetadataRoute.Robots {
   const base = getSiteUrl();

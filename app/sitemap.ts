@@ -12,16 +12,9 @@
 
 import type { MetadataRoute } from 'next';
 import { projects } from '@/lib/projects/de-hofman';
+import { getSiteUrl } from '@/lib/site-url';
 
 const DEFAULT_PROJECT = process.env.NEXT_PUBLIC_DEFAULT_PROJECT?.trim();
-
-function getSiteUrl(): string {
-  const url = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-  if (url) return url.replace(/\/$/, '');
-  const vercel = process.env.NEXT_PUBLIC_VERCEL_URL;
-  if (vercel) return `https://${vercel}`;
-  return 'http://localhost:3000';
-}
 
 function pathFor(slug: string, subpath?: string): string {
   if (DEFAULT_PROJECT === slug) {

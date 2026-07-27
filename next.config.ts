@@ -11,6 +11,15 @@ const nextConfig: NextConfig = {
     "/api/download/[slug]": ["./private/docs/de-hofman/**/*"],
   },
 
+  // Crawlers (o.a. Google's favicon-fetcher) proberen standaard /favicon.ico,
+  // los van de <link rel="icon"> in de head. Next serveert onze favicon als
+  // /icon.png (app/icon.png), dus zonder dit gaf /favicon.ico een 404. Deze
+  // rewrite laat /favicon.ico dezelfde PNG-bytes uitleveren (blijft image/png,
+  // wat crawlers accepteren) zodat er geen dood favicon-pad meer is.
+  async rewrites() {
+    return [{ source: "/favicon.ico", destination: "/icon.png" }];
+  },
+
   // Basis security headers — Vercel zet HSTS al automatisch op het edge,
   // deze dekken extra surfaces. Geen CSP omdat we Plausible inline
   // bootstrap én next/script gebruiken — strict-CSP zou die breken.

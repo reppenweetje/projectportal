@@ -5,6 +5,7 @@ import AttributionTracker from "@/components/analytics/AttributionTracker";
 import GoogleTagManager from "@/components/analytics/GoogleTagManager";
 import ConsentBanner from "@/components/consent/ConsentBanner";
 import MetaPixelLoader from "@/components/consent/MetaPixelLoader";
+import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
 
 // Cookiebeleid-link voor de consent-banner. Wijs naar de pagina/verklaring
@@ -26,14 +27,6 @@ const montserrat = Montserrat({
   display: "swap",
   weight: ["300", "400", "500", "600", "700", "800"],
 });
-
-function getSiteUrl(): string {
-  const url = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-  if (url) return url.replace(/\/$/, "");
-  const vercel = process.env.NEXT_PUBLIC_VERCEL_URL;
-  if (vercel) return `https://${vercel}`;
-  return "http://localhost:3000";
-}
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
