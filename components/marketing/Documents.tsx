@@ -102,9 +102,10 @@ function DocCard({
   projectSlug: string;
   onClick: () => void;
 }) {
-  // Vierkant card (aspect-square). Icon top-left, titel onder, Bekijk
-  // helemaal onderaan. Cmd/Ctrl+click blijft natural-link gedrag voor
-  // nieuwe-tabblad. SEO crawlers krijgen ook de echte URL te zien.
+  // Compacte card: hoogte volgt de inhoud (geen vaste vierkant meer). Icon
+  // top-left, titel onder, Bekijk onderaan. h-full houdt de kaarten per rij
+  // even hoog zodat "Bekijk" uitlijnt. Cmd/Ctrl+click blijft natural-link
+  // gedrag voor nieuwe-tabblad. SEO crawlers krijgen ook de echte URL te zien.
   return (
     <Link
       href={`/${projectSlug}/documenten/${doc.slug}`}
@@ -113,7 +114,7 @@ function DocCard({
         e.preventDefault();
         onClick();
       }}
-      className="group flex aspect-square flex-col rounded-2xl border border-repp-gray bg-white p-4 md:p-5 hover:border-repp-navy hover:shadow-md transition"
+      className="group flex h-full flex-col rounded-2xl border border-repp-gray bg-white p-4 md:p-5 hover:border-repp-navy hover:shadow-md transition"
     >
       <div className="shrink-0">
         <DocIcon slug={doc.slug} />
