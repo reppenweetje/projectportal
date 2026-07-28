@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
   // serverless function. Zonder dit → 404 op Vercel (bestand niet meegebundeld).
   outputFileTracingIncludes: {
     "/api/download/[slug]": ["./private/docs/de-hofman/**/*"],
+    "/api/download-all": ["./private/docs/de-hofman/**/*"],
   },
 
   // Crawlers (o.a. Google's favicon-fetcher) proberen standaard /favicon.ico,
