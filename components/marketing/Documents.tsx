@@ -26,9 +26,42 @@ export function Documents({ project }: { project: Project }) {
     router.push(`/${project.slug}/documenten/${doc.slug}`);
   }
 
+  // Trigger de zip-download via een tijdelijke anchor. De route zet
+  // Content-Disposition: attachment, dus de pagina navigeert niet weg.
+  function downloadAll() {
+    const a = document.createElement("a");
+    a.href = "/api/download-all";
+    a.download = "";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+
   return (
     <>
-      <div className="space-y-10">
+      <div className="space-y-8">
+        {/* Opvallende banner: hele pakket in één keer, achter dezelfde
+            lead-gate als de losse documenten. */}
+        <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-repp-navy text-white px-5 py-4 md:px-6 md:py-5">
+          <div className="min-w-0">
+            <p className="font-extrabold text-base md:text-lg">
+              Alle documenten in één keer
+            </p>
+            <p className="text-sm text-white/70 mt-0.5">
+              Download alle {project.documents.length} documenten in één
+              zip-bestand.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => gateOrRun(downloadAll)}
+            className="shrink-0 inline-flex items-center gap-2 rounded-full bg-repp-yellow text-repp-navy font-bold px-5 py-3 hover:brightness-95 shadow-md hover:shadow-lg transition"
+          >
+            <DownloadGlyph />
+            Download alles
+          </button>
+        </div>
+
         <DocSection
           title="Essentieel"
           subtitle="Project, prijzen, plattegronden en beelden. Start hier."
@@ -48,6 +81,25 @@ export function Documents({ project }: { project: Project }) {
       </div>
       {dialog}
     </>
+  );
+}
+
+function DownloadGlyph() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="w-5 h-5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+      <polyline points="7 10 12 15 17 10" />
+      <line x1="12" y1="15" x2="12" y2="3" />
+    </svg>
   );
 }
 
