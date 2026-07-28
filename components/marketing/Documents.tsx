@@ -78,7 +78,7 @@ function DocSection({
           <p className="text-sm text-repp-navy/60 mt-0.5">{subtitle}</p>
         </div>
       </div>
-      <ul className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
         {docs.map((d) => (
           <li key={d.slug}>
             <DocCard
@@ -102,9 +102,10 @@ function DocCard({
   projectSlug: string;
   onClick: () => void;
 }) {
-  // Vierkant card (aspect-square). Icon top-left, titel onder, Bekijk
-  // helemaal onderaan. Cmd/Ctrl+click blijft natural-link gedrag voor
-  // nieuwe-tabblad. SEO crawlers krijgen ook de echte URL te zien.
+  // Compacte, horizontale card: icoon links, titel + tekst + Bekijk ernaast
+  // (zelfde opzet als de USP-tegels). h-full houdt de kaarten per rij even
+  // hoog. Cmd/Ctrl+click blijft natural-link gedrag voor nieuwe-tabblad. SEO
+  // crawlers krijgen ook de echte URL te zien.
   return (
     <Link
       href={`/${projectSlug}/documenten/${doc.slug}`}
@@ -113,23 +114,23 @@ function DocCard({
         e.preventDefault();
         onClick();
       }}
-      className="group flex aspect-square flex-col rounded-2xl border border-repp-gray bg-white p-4 md:p-5 hover:border-repp-navy hover:shadow-md transition"
+      className="group flex h-full flex-row gap-3 md:gap-4 rounded-2xl border border-repp-gray bg-white p-4 md:p-5 hover:border-repp-navy hover:shadow-md transition"
     >
       <div className="shrink-0">
         <DocIcon slug={doc.slug} />
       </div>
-      <div className="mt-3 flex-1 min-w-0">
+      <div className="min-w-0 flex-1">
         <p className="font-semibold text-repp-navy text-sm md:text-base leading-tight break-words hyphens-auto">
           {doc.label}
         </p>
         <p className="mt-1 text-xs text-repp-navy/60 leading-snug line-clamp-2">
           {doc.body}
         </p>
+        <span className="mt-2 text-xs text-repp-blue font-semibold inline-flex items-center gap-1 group-hover:gap-1.5 transition-all">
+          Bekijk
+          <span className="group-hover:translate-x-0.5 transition">→</span>
+        </span>
       </div>
-      <span className="mt-3 text-xs text-repp-blue font-semibold inline-flex items-center gap-1 group-hover:gap-1.5 transition-all">
-        Bekijk
-        <span className="group-hover:translate-x-0.5 transition">→</span>
-      </span>
     </Link>
   );
 }
