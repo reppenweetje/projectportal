@@ -15,16 +15,16 @@ const specsXXL: UnitSpecs = {
   vrijeHoogteTweedeVerdieping: "2,72 m",
 };
 
-// Verdeling volgens REPP's actuele situatieplattegrond (6-7-2026):
-//   Verkocht (rood):                    1, 2, 3, 8, 9, 10, 11
-//   Verkocht onder voorbehoud (oranje): 4, 5, 6, 12
-//   Beschikbaar (groen):                7, 13, 14
+// Actuele verdeling volgens REPP:
+//   Verkocht:                    1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12
+//   Verkocht onder voorbehoud:   13
+//   Beschikbaar:                 7, 14
 // 7 en 14 zijn de XXL-units: nu in verkoop. Aanmelden loopt via de
 // dedicated XXL-registratie (/xxl), niet de standaard reserveer-flow.
-// Totaal nog echt vrij: 2 units (7, 14 — de XXL's)
+// Totaal nog echt vrij: 2 units (7 en 14, de XXL's).
 const status = (n: number): Unit["status"] => {
-  if ([1, 2, 3, 4, 5, 8, 9, 10, 11, 12].includes(n)) return "sold";
-  if ([6, 13].includes(n)) return "verkocht_ovb";
+  if ([1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12].includes(n)) return "sold";
+  if ([13].includes(n)) return "verkocht_ovb";
   return "available";  // 7, 14
 };
 
