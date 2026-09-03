@@ -86,8 +86,8 @@ export default async function XxlPage({
                 of showroom op de eerste en tweede verdieping.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm">
-                <Spec label="Begane grond" value="60,7 m²" />
-                <Spec label="1e verdieping" value="60,7 m²" />
+                <Spec label="Begane grond" value="60 m²" />
+                <Spec label="1e verdieping" value="60 m²" />
                 <Spec label="2e verdieping" value="70 m²" />
                 <Spec label="Dakterras" value="42,5 m²" />
                 <Spec label="Vrije hoogte BG" value="3,69 m" />
