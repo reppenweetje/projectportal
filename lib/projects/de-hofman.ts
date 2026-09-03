@@ -16,15 +16,13 @@ const specsXXL: UnitSpecs = {
 };
 
 // Actuele verdeling volgens REPP:
-//   Verkocht:                    1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12
-//   Verkocht onder voorbehoud:   13
+//   Verkocht:                    1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13
 //   Beschikbaar:                 7, 14
 // 7 en 14 zijn de XXL-units: nu in verkoop. Aanmelden loopt via de
 // dedicated XXL-registratie (/xxl), niet de standaard reserveer-flow.
 // Totaal nog echt vrij: 2 units (7 en 14, de XXL's).
 const status = (n: number): Unit["status"] => {
-  if ([1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12].includes(n)) return "sold";
-  if ([13].includes(n)) return "verkocht_ovb";
+  if ([1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13].includes(n)) return "sold";
   return "available";  // 7, 14
 };
 
