@@ -15,6 +15,8 @@ import type { Project } from "@/lib/types";
  *
  * Single source van images = project.gallery, gesorteerd op weight.
  */
+const DRAG_THRESHOLD_PX = 12;
+
 export function Gallery({ project }: { project: Project }) {
   const images = [...project.gallery].sort(
     (a, b) => (b.weight ?? 0) - (a.weight ?? 0),
@@ -59,7 +61,9 @@ export function Gallery({ project }: { project: Project }) {
     const s = drag.current;
     if (!el || !s.down) return;
     const dx = e.clientX - s.startX;
-    if (!s.moved && Math.abs(dx) > 4) {
+    // Drempel ruim genoeg dat een klik met wat hand-/trackpadbeweging nog
+    // als klik telt; pas daarboven wordt het slepen.
+    if (!s.moved && Math.abs(dx) > DRAG_THRESHOLD_PX) {
       s.moved = true;
       // Pas bij echt slepen de pointer vangen. Doen we dit al bij pointerdown,
       // dan wordt ook het click-event naar de strip omgeleid en komt een
