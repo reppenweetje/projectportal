@@ -116,8 +116,9 @@ export function Gallery({ project }: { project: Project }) {
             Een blik op De Hofman
           </h2>
           <p className="mt-3 text-sm text-repp-navy/60">
-            Tik op een impressie voor een grotere weergave. Sleep, swipe of
-            scroll door alle {images.length} beelden.
+            Tik op een impressie voor een grotere weergave en zoom daarin met
+            klikken, scrollen of knijpen. Sleep, swipe of scroll door alle{" "}
+            {images.length} beelden.
           </p>
         </div>
       </div>
@@ -205,12 +206,21 @@ function Lightbox({
   // scroll-back, pull-to-refresh blijft werken).
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const [touchStartY, setTouchStartY] = useState<number | null>(null);
+  // Zoomstand van de afbeelding. Zolang er is ingezoomd, bladert een veeg
+  // niet door (die verschuift dan de afbeelding) en bladeren reset de zoom.
+  const [zoomed, setZoomed] = useState(false);
 
   function onTouchStart(e: React.TouchEvent) {
+    if (e.touches.length !== 1) {
+      setTouchStartX(null);
+      setTouchStartY(null);
+      return;
+    }
     setTouchStartX(e.touches[0].clientX);
     setTouchStartY(e.touches[0].clientY);
   }
   function onTouchEnd(e: React.TouchEvent) {
+    if (zoomed) return;
     if (touchStartX === null || touchStartY === null) return;
     const dx = e.changedTouches[0].clientX - touchStartX;
     const dy = e.changedTouches[0].clientY - touchStartY;
@@ -315,22 +325,237 @@ function Lightbox({
         className="relative w-full h-full max-w-6xl max-h-[88vh] mx-4 my-12 md:my-16"
         onClick={(e) => e.stopPropagation()}
       >
-        <Image
+        <ZoomableImage
+          key={img.src}
           src={img.src}
           alt={img.alt}
-          fill
-          sizes="100vw"
-          className="object-contain"
-          priority
+          onZoomChange={setZoomed}
         />
         {img.caption && (
-          <p className="absolute inset-x-0 -bottom-10 text-center text-sm text-white/85 font-medium px-4">
+          <p className="absolute inset-x-0 -bottom-10 text-center text-sm text-white/85 font-medium px-4 pointer-events-none">
             {img.caption}{" "}
             <span className="text-white/50">
               ({index + 1}/{images.length})
             </span>
+            <span className="hidden md:inline text-white/40">
+              {" "}
+              · {zoomed ? "Klik om uit te zoomen" : "Klik of scroll om in te zoomen"}
+            </span>
           </p>
         )}
+      </div>
+    </div>
+  );
+}
+
+// ─── Zoombare afbeelding in de lightbox ───────────────────────────────────
+//
+// Echt inzoomen op de impressie, niet alleen groot tonen:
+//   - Klik/tap: zoomt in op het aangeklikte punt; nogmaals klikken zoomt uit.
+//   - Scrollwiel/trackpad: traploos in- en uitzoomen rond de cursor.
+//   - Slepen (muis of één vinger) verschuift de ingezoomde afbeelding.
+//   - Knijpen met twee vingers zoomt op touch.
+// Alles via pointer events op één element, zodat er geen click-retargeting
+// speelt zoals eerder in de strip. Een klik herkennen we zelf op pointerup
+// zonder noemenswaardige beweging.
+
+const ZOOM_MIN = 1;
+const ZOOM_MAX = 3;
+const ZOOM_CLICK = 2.2;
+
+type PointerInfo = { x: number; y: number };
+
+function ZoomableImage({
+  src,
+  alt,
+  onZoomChange,
+}: {
+  src: string;
+  alt: string;
+  onZoomChange: (zoomed: boolean) => void;
+}) {
+  const boxRef = useRef<HTMLDivElement>(null);
+  const [view, setView] = useState({ scale: 1, x: 0, y: 0 });
+  const [animate, setAnimate] = useState(true);
+  const pointers = useRef(new Map<number, PointerInfo>());
+  const gesture = useRef({
+    moved: false,
+    lastX: 0,
+    lastY: 0,
+    pinchStartDist: 0,
+    pinchStartScale: 1,
+  });
+
+  useEffect(() => {
+    onZoomChange(view.scale > 1.01);
+  }, [view.scale, onZoomChange]);
+
+  // Houdt de afbeelding binnen het kader: bij scale 1 exact gecentreerd,
+  // ingezoomd nooit verder verschoven dan de rand.
+  const clamp = useCallback((scale: number, x: number, y: number) => {
+    const el = boxRef.current;
+    if (!el) return { scale, x, y };
+    const w = el.clientWidth;
+    const h = el.clientHeight;
+    const minX = w - w * scale;
+    const minY = h - h * scale;
+    return {
+      scale,
+      x: Math.min(0, Math.max(minX, x)),
+      y: Math.min(0, Math.max(minY, y)),
+    };
+  }, []);
+
+  // Zoomt naar `next` en houdt daarbij het punt (px, py) onder de cursor.
+  const zoomAt = useCallback(
+    (next: number, px: number, py: number, withAnimation: boolean) => {
+      const scale = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, next));
+      setAnimate(withAnimation);
+      setView((v) => {
+        const ratio = scale / v.scale;
+        return clamp(scale, px - (px - v.x) * ratio, py - (py - v.y) * ratio);
+      });
+    },
+    [clamp],
+  );
+
+  function localPoint(e: { clientX: number; clientY: number }) {
+    const r = boxRef.current?.getBoundingClientRect();
+    return r ? { x: e.clientX - r.left, y: e.clientY - r.top } : { x: 0, y: 0 };
+  }
+
+  function onPointerDown(e: React.PointerEvent) {
+    const el = boxRef.current;
+    if (!el) return;
+    el.setPointerCapture(e.pointerId);
+    pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    const g = gesture.current;
+    if (pointers.current.size === 1) {
+      g.moved = false;
+      g.lastX = e.clientX;
+      g.lastY = e.clientY;
+    } else if (pointers.current.size === 2) {
+      const [a, b] = [...pointers.current.values()];
+      g.pinchStartDist = Math.hypot(a.x - b.x, a.y - b.y);
+      g.pinchStartScale = view.scale;
+      g.moved = true;
+    }
+  }
+
+  function onPointerMove(e: React.PointerEvent) {
+    if (!pointers.current.has(e.pointerId)) return;
+    pointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    const g = gesture.current;
+
+    if (pointers.current.size === 2) {
+      // Knijpen: schaal t.o.v. startafstand, rond het midden van de vingers.
+      const [a, b] = [...pointers.current.values()];
+      const dist = Math.hypot(a.x - b.x, a.y - b.y);
+      if (g.pinchStartDist > 0) {
+        const mid = localPoint({ clientX: (a.x + b.x) / 2, clientY: (a.y + b.y) / 2 });
+        zoomAt((dist / g.pinchStartDist) * g.pinchStartScale, mid.x, mid.y, false);
+      }
+      return;
+    }
+
+    const dx = e.clientX - g.lastX;
+    const dy = e.clientY - g.lastY;
+    if (Math.abs(e.clientX - g.lastX) > 3 || Math.abs(e.clientY - g.lastY) > 3) {
+      g.moved = true;
+    }
+    if (view.scale > 1 && g.moved) {
+      // Slepen: verschuiven, zonder animatie zodat het direct volgt.
+      g.lastX = e.clientX;
+      g.lastY = e.clientY;
+      setAnimate(false);
+      setView((v) => clamp(v.scale, v.x + dx, v.y + dy));
+    }
+  }
+
+  function onPointerUp(e: React.PointerEvent) {
+    const el = boxRef.current;
+    const wasSingle = pointers.current.size === 1;
+    pointers.current.delete(e.pointerId);
+    if (el?.hasPointerCapture?.(e.pointerId)) el.releasePointerCapture(e.pointerId);
+    const g = gesture.current;
+    if (wasSingle && !g.moved) {
+      // Klik/tap zonder beweging: in- of uitzoomen op dit punt.
+      const p = localPoint(e);
+      if (view.scale > 1.01) zoomAt(1, p.x, p.y, true);
+      else zoomAt(ZOOM_CLICK, p.x, p.y, true);
+      return;
+    }
+    if (pointers.current.size === 0) {
+      // Na knijpen/slepen: (bijna) volledig uitgezoomd exact terug naar 1,
+      // zodat de afbeelding weer strak gecentreerd staat.
+      setView((v) => (v.scale <= 1.01 ? { scale: 1, x: 0, y: 0 } : v));
+    }
+  }
+
+  function onPointerCancel(e: React.PointerEvent) {
+    pointers.current.delete(e.pointerId);
+  }
+
+  // Scrollwiel/trackpad: niet-passief registreren zodat preventDefault de
+  // pagina onder de lightbox niet laat scrollen.
+  useEffect(() => {
+    const el = boxRef.current;
+    if (!el) return;
+    function onWheel(e: WheelEvent) {
+      e.preventDefault();
+      const r = el!.getBoundingClientRect();
+      const factor = Math.exp(-e.deltaY * 0.0022);
+      setAnimate(false);
+      setView((v) => {
+        const scale = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, v.scale * factor));
+        const px = e.clientX - r.left;
+        const py = e.clientY - r.top;
+        const ratio = scale / v.scale;
+        return clamp(scale, px - (px - v.x) * ratio, py - (py - v.y) * ratio);
+      });
+    }
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, [clamp]);
+
+  const zoomed = view.scale > 1.01;
+
+  return (
+    <div
+      ref={boxRef}
+      data-zoom-scale={view.scale.toFixed(2)}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      onPointerCancel={onPointerCancel}
+      onDragStart={(e) => e.preventDefault()}
+      className={`absolute inset-0 overflow-hidden select-none ${
+        zoomed ? "cursor-grab active:cursor-grabbing" : "cursor-zoom-in"
+      }`}
+      style={{ touchAction: "none" }}
+      aria-label={zoomed ? "Ingezoomd; klik om uit te zoomen" : "Klik om in te zoomen"}
+    >
+      <div
+        className="absolute inset-0"
+        style={{
+          transform: `translate(${view.x}px, ${view.y}px) scale(${view.scale})`,
+          transformOrigin: "0 0",
+          transition: animate ? "transform 220ms ease-out" : "none",
+          willChange: "transform",
+        }}
+      >
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          // Ruim genoeg voor inzoomen: Next levert dan het bronbestand
+          // (2200 px) i.p.v. een schermbreed verkleinde variant.
+          sizes="2200px"
+          quality={85}
+          className="object-contain pointer-events-none"
+          priority
+          draggable={false}
+        />
       </div>
     </div>
   );
