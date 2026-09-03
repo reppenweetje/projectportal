@@ -173,7 +173,7 @@ export default async function XxlPage({
               />
               <Card
                 title="Koppelbaar"
-                body="Units 7 en 14 zijn samen te koppelen: 121,4 m² begane grond, 121,4 m² eerste verdieping, 140 m² tweede verdieping en 85 m² dakterras."
+                body="Units 7 en 14 zijn samen te koppelen: 120 m² begane grond, 120 m² eerste verdieping, 140 m² tweede verdieping en 85 m² dakterras."
               />
               <Card
                 title="Beperkt aanbod"
