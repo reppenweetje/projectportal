@@ -269,7 +269,7 @@ function UnitCell({
         )}
       </div>
       <div className={`${m2Size} opacity-70 text-right tabular-nums`}>
-        {Math.round(unit.m2BVO)}m²
+        {unit.m2BVO.toLocaleString("nl-NL", { maximumFractionDigits: 2 })}m²
       </div>
     </div>
   );

@@ -77,9 +77,9 @@ function UnitTypesSummary({ project }: { project: Project }) {
     },
     {
       label: "XXL",
-      m2: 191.4,
+      m2: 189.16,
       prijs: 475000,
-      perks: ["3 lagen", "191 m² over 3 verdiepingen", "Pal aan de zichtzijde"],
+      perks: ["3 lagen", "189,16 m² over 3 verdiepingen", "Pal aan de zichtzijde"],
     },
   ];
   return (
