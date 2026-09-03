@@ -53,19 +53,24 @@ export function Gallery({ project }: { project: Project }) {
       startScroll: el.scrollLeft,
       moved: false,
     };
-    // Pointer capture houdt move/up-events bij dit element, ook als de
-    // cursor snel buiten de strip beweegt. Scroll-snap zetten we uit tijdens
-    // het slepen, anders snapt de browser steeds terug en voelt het stroef.
-    el.setPointerCapture(e.pointerId);
-    el.style.scrollSnapType = "none";
   }
   function onPointerMove(e: React.PointerEvent) {
     const el = stripRef.current;
     const s = drag.current;
     if (!el || !s.down) return;
     const dx = e.clientX - s.startX;
-    if (Math.abs(dx) > 4) s.moved = true;
-    el.scrollLeft = s.startScroll - dx;
+    if (!s.moved && Math.abs(dx) > 4) {
+      s.moved = true;
+      // Pas bij echt slepen de pointer vangen. Doen we dit al bij pointerdown,
+      // dan wordt ook het click-event naar de strip omgeleid en komt een
+      // gewone klik nooit bij de image-knop aan: de lightbox opent dan niet.
+      // Pointer capture houdt move/up-events bij dit element, ook als de
+      // cursor snel buiten de strip beweegt. Scroll-snap zetten we uit
+      // tijdens het slepen, anders snapt de browser steeds terug.
+      el.setPointerCapture(e.pointerId);
+      el.style.scrollSnapType = "none";
+    }
+    if (s.moved) el.scrollLeft = s.startScroll - dx;
   }
   function endDrag(e: React.PointerEvent) {
     const el = stripRef.current;
