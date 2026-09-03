@@ -15,7 +15,7 @@ import { UnitGrid } from "@/components/unit/UnitGrid";
 type Params = { projectSlug: string };
 
 export const metadata: Metadata = {
-  title: "XXL-units te koop · 3 lagen, 189,16 m² op één adres",
+  title: "XXL-units te koop · 3 lagen, ca. 190 m² op één adres",
 };
 
 export default async function XxlPage({
@@ -81,7 +81,7 @@ export default async function XxlPage({
                 de zichtzijde
               </h1>
               <p className="mt-5 text-lg md:text-xl text-white/85 font-light max-w-2xl mx-auto text-center">
-                3 lagen, 189,16 m² op de kop van het blok, pal aan de zichtzijde
+                3 lagen, ca. 190 m² op de kop van het blok, pal aan de zichtzijde
                 van De Hofman. Werkplaats en opslag op de begane grond, kantoor
                 of showroom op de eerste en tweede verdieping.
               </p>
@@ -160,7 +160,7 @@ export default async function XxlPage({
                 body="Op de kop van het blok, pal aan de A. Hofmanweg. Volop zicht vanaf de weg. Dé plek voor showroom of merkzichtbaarheid."
               />
               <Card
-                title="3 lagen, 189,16 m²"
+                title="3 lagen, ca. 190 m²"
                 body="Werkplaats &amp; opslag op de begane grond, kantoor of showroom op de eerste en tweede verdieping."
               />
               <Card

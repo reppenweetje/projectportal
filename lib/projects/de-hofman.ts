@@ -34,7 +34,7 @@ const buildUnit = (n: number): Unit => {
       number: n,
       slug: `unit-${n}`,
       type: "XXL",
-      m2BVO: 189.16,
+      m2BVO: 190,
       m2BeganeGrond: 60.7,
       m2EersteVerdieping: 60.7,
       m2TweedeVerdieping: 70,
@@ -326,7 +326,7 @@ export const deHofman: Project = {
     },
     {
       q: "Wat maakt de XXL-units anders?",
-      a: "De twee XXL-units (Unit 7 en 14) zijn met 189,16 m² over 3 lagen de grootste in De Hofman, op de uiteinden van het blok. Werkplaats en opslag op de begane grond, kantoor of showroom op de eerste en tweede verdieping. De L- en XL-units zijn 2 lagen. De XXL-units zijn nu te koop. Meld je aan via de XXL-pagina, dan nemen we contact op om jouw scenario door te spreken.",
+      a: "De twee XXL-units (Unit 7 en 14) zijn met ca. 190 m² over 3 lagen de grootste in De Hofman, op de uiteinden van het blok. Werkplaats en opslag op de begane grond, kantoor of showroom op de eerste en tweede verdieping. De L- en XL-units zijn 2 lagen. De XXL-units zijn nu te koop. Meld je aan via de XXL-pagina, dan nemen we contact op om jouw scenario door te spreken.",
     },
     {
       q: "Is de reservering bindend?",
