@@ -260,7 +260,7 @@ export function XxlInterestForm({ project }: { project: Project }) {
       <aside className="rounded-2xl bg-repp-navy text-white p-6 self-start lg:sticky lg:top-24 space-y-5">
         <div>
           <p className="text-xs uppercase tracking-wider text-repp-yellow font-semibold">
-            XXL · 191,4 m²
+            XXL · 189,16 m²
           </p>
           <p className="mt-2 text-2xl font-extrabold">3 lagen</p>
           <p className="text-sm text-white/60 mt-0.5">
@@ -281,7 +281,7 @@ export function XxlInterestForm({ project }: { project: Project }) {
           <p>
             <span className="text-repp-yellow font-semibold">Status:</span>{" "}
             Nu te koop. De XXL wordt opgeleverd als 3-laags bedrijfsunit van
-            191 m².
+            189,16 m².
           </p>
           <p>
             <span className="text-repp-yellow font-semibold">Aanmelden:</span>{" "}

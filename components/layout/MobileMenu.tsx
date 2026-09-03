@@ -49,7 +49,7 @@ export function MobileMenu({ project }: { project: Project }) {
     {
       href: `/${project.slug}/xxl`,
       label: "XXL-units",
-      description: "3 lagen, 191 m² — units 7 & 14",
+      description: "3 lagen, 189,16 m² — units 7 & 14",
     },
     {
       href: `/${project.slug}/bereken`,

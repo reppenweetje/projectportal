@@ -139,4 +139,4 @@ export const formatEuro = (amount: number): string =>
   }).format(amount);
 
 export const formatM2 = (m2: number): string =>
-  `${m2.toLocaleString("nl-NL", { maximumFractionDigits: 1 })} m²`;
+  `${m2.toLocaleString("nl-NL", { maximumFractionDigits: 2 })} m²`;
