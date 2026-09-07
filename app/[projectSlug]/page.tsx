@@ -105,12 +105,13 @@ export default async function ProjectHomePage({
       <Header project={project} />
       <PersonalizationBanner project={project} />
       <main className="flex-1 has-sticky-cta">
-        {/* 0. Laatste-kans banner: groot en oranje zodra er nog maar
-            één of enkele units te koop zijn. Verdwijnt vanzelf bij 0. */}
-        <LastUnitBanner project={project} />
-
-        {/* 1. Hook — sfeerbeeld + intent CTAs */}
-        <MinimalHero project={project} />
+        {/* 1. Hook — sfeerbeeld + intent CTAs, met bovenin de oranje
+            laatste-kans kaart zodra er nog maar één of enkele units te koop
+            zijn (verdwijnt vanzelf bij 0). */}
+        <MinimalHero
+          project={project}
+          banner={<LastUnitBanner project={project} />}
+        />
 
         {/* 1b. USP-bullets direct na de hero — vier-zes redenen waarom */}
         <USPHighlights project={project} />
