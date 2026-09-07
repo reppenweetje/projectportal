@@ -9,7 +9,15 @@ import { MobileMenu } from "./MobileMenu";
 type NavChild = { href: string; label: string; description?: string };
 type NavItem = { href: string; label: string; children?: NavChild[] };
 
-export function Header({ project }: { project: Project }) {
+export function Header({
+  project,
+  loginNudge = true,
+}: {
+  project: Project;
+  /** Strook "Maak account" onder de header. Uit op pagina's die daar zelf
+      al een grote CTA hebben (homepage: de laatste-unit kaart in de hero). */
+  loginNudge?: boolean;
+}) {
   const items: NavItem[] = [
     { href: `/${project.slug}/units`, label: "Plattegrond" },
     { href: `/${project.slug}/xxl`, label: "XXL-units" },
@@ -176,7 +184,7 @@ export function Header({ project }: { project: Project }) {
     {/* LoginNudge buiten sticky header zodat 'ie wegscrollt met content
         ipv permanent ruimte te pakken op mobile. Rendert alleen voor
         uitgelogde bezoekers (interne useLeadProfile check). */}
-    <LoginNudge project={project} />
+    {loginNudge && <LoginNudge project={project} />}
     </>
   );
 }

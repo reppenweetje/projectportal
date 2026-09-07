@@ -102,7 +102,9 @@ export default async function ProjectHomePage({
   return (
     <>
       <ProjectJsonLd project={project} baseUrl={siteUrl} />
-      <Header project={project} />
+      {/* Geen login-strook onder de header: de oranje laatste-unit kaart
+          in de hero neemt die plek in. */}
+      <Header project={project} loginNudge={false} />
       <PersonalizationBanner project={project} />
       <main className="flex-1 has-sticky-cta">
         {/* 1. Hook — sfeerbeeld + intent CTAs, met bovenin de oranje
