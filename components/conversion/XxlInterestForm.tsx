@@ -19,6 +19,10 @@ export function XxlInterestForm({ project }: { project: Project }) {
   const sample = xxlUnits[0];
 
   const [unitKeuze, setUnitKeuze] = useState<UnitKeuze>("geen_voorkeur");
+  // Unit 7 is verkocht onder voorbehoud: aanmelden kan nog (wachtlijst),
+  // maar dat benoemen we in de keuzeknoppen.
+  const unit7Ovb =
+    project.units.find((u) => u.number === 7)?.status === "verkocht_ovb";
   const [naam, setNaam] = useState("");
   const [bedrijfsnaam, setBedrijfsnaam] = useState("");
   const [email, setEmail] = useState("");
@@ -90,8 +94,9 @@ export function XxlInterestForm({ project }: { project: Project }) {
           Top, je aanmelding is binnen
         </h2>
         <p className="mt-3 text-repp-navy/75 max-w-xl mx-auto">
-          De XXL-units (Unit 7 en 14) zijn nu te koop. We nemen contact met je
-          op om jouw voorkeur en scenario door te spreken.
+          Unit 14 is nu te koop; unit 7 is verkocht onder voorbehoud van
+          financiering. We nemen contact met je op om jouw voorkeur en
+          scenario door te spreken.
         </p>
         <div className="mt-6 inline-block rounded-2xl bg-white border border-repp-gray p-5 text-left">
           <p className="text-xs uppercase tracking-wider text-repp-navy/50 font-semibold">
@@ -144,7 +149,7 @@ export function XxlInterestForm({ project }: { project: Project }) {
             <Pill
               active={unitKeuze === "unit-7"}
               onClick={() => setUnitKeuze("unit-7")}
-              label="Unit 7"
+              label={unit7Ovb ? "Unit 7 · wachtlijst" : "Unit 7"}
             />
             <Pill
               active={unitKeuze === "unit-14"}
@@ -154,7 +159,7 @@ export function XxlInterestForm({ project }: { project: Project }) {
             <Pill
               active={unitKeuze === "beide"}
               onClick={() => setUnitKeuze("beide")}
-              label="Koppelen"
+              label={unit7Ovb ? "Koppelen · wachtlijst" : "Koppelen"}
             />
             <Pill
               active={unitKeuze === "geen_voorkeur"}
@@ -280,8 +285,9 @@ export function XxlInterestForm({ project }: { project: Project }) {
         <div className="pt-4 border-t border-white/10 text-xs text-white/70 leading-relaxed space-y-2">
           <p>
             <span className="text-repp-yellow font-semibold">Status:</span>{" "}
-            Nu te koop. De XXL wordt opgeleverd als 3-laags bedrijfsunit van
-            ca. 190 m².
+            Unit 14 nu te koop; unit 7 verkocht onder voorbehoud van
+            financiering. De XXL wordt opgeleverd als 3-laags bedrijfsunit
+            van ca. 190 m².
           </p>
           <p>
             <span className="text-repp-yellow font-semibold">Aanmelden:</span>{" "}
