@@ -28,6 +28,7 @@ export default async function XxlPage({
   if (!project) notFound();
 
   const xxlUnits = project.units.filter((u) => u.type === "XXL");
+  const xxlAvailable = xxlUnits.filter((u) => u.status === "available");
   const hero = {
     src: "/images/hofman/xxl/xxl-voorzijde-v3.jpg",
     alt: "Vooraanzicht van de XXL-unit met grote glasgevel en eigen entree aan de straatzijde",
@@ -73,7 +74,7 @@ export default async function XxlPage({
             </div>
             <div className="mx-auto max-w-5xl">
               <p className="text-xs uppercase tracking-[0.2em] text-repp-yellow font-semibold text-center">
-                Nu te koop · {xxlUnits.length} units
+                Nu te koop · {xxlAvailable.length} van {xxlUnits.length} units
               </p>
               <h1 className="mt-3 text-5xl md:text-7xl font-extrabold tracking-tight leading-[0.95] text-center">
                 XXL-unit aan
@@ -172,12 +173,12 @@ export default async function XxlPage({
                 body="Een eigen dakterras van 42,5 m² bovenop de unit, met vrij uitzicht over de Waarderpolder."
               />
               <Card
-                title="Koppelbaar"
-                body="Units 7 en 14 zijn samen te koppelen: 120 m² begane grond, 120 m² eerste verdieping, 140 m² tweede verdieping en 85 m² dakterras."
+                title="Unit 7 onder voorbehoud"
+                body="Unit 7 is verkocht onder voorbehoud van financiering. Gaat die verkoop niet door, dan krijgen aanmelders als eerste bericht; units 7 en 14 zijn dan samen te koppelen tot ca. 380 m²."
               />
               <Card
                 title="Beperkt aanbod"
-                body="Slechts 2 XXL-units in heel De Hofman: Unit 7 en Unit 14, op de uiteinden van het blok."
+                body="Slechts 2 XXL-units in heel De Hofman, op de uiteinden van het blok. Unit 14 is de laatste die nu te koop is."
               />
             </ul>
             <div className="mt-10 flex justify-center">
@@ -237,8 +238,9 @@ export default async function XxlPage({
                 Interesse in een XXL?
               </h2>
               <p className="mt-3 text-repp-navy/70 max-w-xl mx-auto">
-                De XXL-units zijn nu te koop. Vul je voorkeur in, dan nemen we
-                contact op om jouw scenario door te spreken.
+                Unit 14 is nu te koop; unit 7 is verkocht onder voorbehoud van
+                financiering. Vul je voorkeur in, dan nemen we contact op om
+                jouw scenario door te spreken.
               </p>
             </div>
             <Suspense fallback={null}>

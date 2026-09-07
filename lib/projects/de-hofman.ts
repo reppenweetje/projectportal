@@ -17,13 +17,15 @@ const specsXXL: UnitSpecs = {
 
 // Actuele verdeling volgens REPP:
 //   Verkocht:                    1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13
-//   Beschikbaar:                 7, 14
-// 7 en 14 zijn de XXL-units: nu in verkoop. Aanmelden loopt via de
-// dedicated XXL-registratie (/xxl), niet de standaard reserveer-flow.
-// Totaal nog echt vrij: 2 units (7 en 14, de XXL's).
+//   Verkocht onder voorbehoud:   7 (voorbehoud van financiering)
+//   Beschikbaar:                 14
+// 7 en 14 zijn de XXL-units. Aanmelden loopt via de dedicated
+// XXL-registratie (/xxl), niet de standaard reserveer-flow.
+// Totaal nog echt vrij: 1 unit (14, XXL).
 const status = (n: number): Unit["status"] => {
   if ([1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13].includes(n)) return "sold";
-  return "available";  // 7, 14
+  if (n === 7) return "verkocht_ovb";
+  return "available";  // 14
 };
 
 const buildUnit = (n: number): Unit => {
@@ -324,7 +326,7 @@ export const deHofman: Project = {
     },
     {
       q: "Wat maakt de XXL-units anders?",
-      a: "De twee XXL-units (Unit 7 en 14) zijn met ca. 190 m² over 3 lagen de grootste in De Hofman, op de uiteinden van het blok. Werkplaats en opslag op de begane grond, kantoor of showroom op de eerste en tweede verdieping. De L- en XL-units zijn 2 lagen. De XXL-units zijn nu te koop. Meld je aan via de XXL-pagina, dan nemen we contact op om jouw scenario door te spreken.",
+      a: "De twee XXL-units (Unit 7 en 14) zijn met ca. 190 m² over 3 lagen de grootste in De Hofman, op de uiteinden van het blok. Werkplaats en opslag op de begane grond, kantoor of showroom op de eerste en tweede verdieping. De L- en XL-units zijn 2 lagen. Unit 7 is verkocht onder voorbehoud van financiering; unit 14 is nu te koop. Meld je aan via de XXL-pagina, dan nemen we contact op om jouw scenario door te spreken.",
     },
     {
       q: "Is de reservering bindend?",

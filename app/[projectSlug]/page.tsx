@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyCTA } from "@/components/layout/StickyCTA";
 import { MinimalHero } from "@/components/marketing/MinimalHero";
+import { LastUnitBanner } from "@/components/marketing/LastUnitBanner";
 import { USPHighlights } from "@/components/marketing/USPHighlights";
 import { TrustStack } from "@/components/marketing/TrustStack";
 import { Testimonials } from "@/components/marketing/Testimonials";
@@ -104,6 +105,10 @@ export default async function ProjectHomePage({
       <Header project={project} />
       <PersonalizationBanner project={project} />
       <main className="flex-1 has-sticky-cta">
+        {/* 0. Laatste-kans banner: groot en oranje zodra er nog maar
+            één of enkele units te koop zijn. Verdwijnt vanzelf bij 0. */}
+        <LastUnitBanner project={project} />
+
         {/* 1. Hook — sfeerbeeld + intent CTAs */}
         <MinimalHero project={project} />
 
