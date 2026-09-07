@@ -1,11 +1,21 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { ReactNode } from "react";
 import type { Project } from "@/lib/types";
 
-export function MinimalHero({ project }: { project: Project }) {
+export function MinimalHero({
+  project,
+  banner,
+}: {
+  project: Project;
+  /** Optionele kaart bovenin de hero (bijv. LastUnitBanner). */
+  banner?: ReactNode;
+}) {
   return (
     <section className="relative">
-      <div className="relative h-[68vh] min-h-[480px] max-h-[760px] w-full overflow-hidden bg-hofman-deep">
+      {/* min-h i.p.v. vaste hoogte: met een banner erin mag de hero
+          meegroeien, zodat kaart en titel elkaar nooit overlappen. */}
+      <div className="relative min-h-[68vh] sm:min-h-[480px] sm:max-h-none w-full overflow-hidden bg-hofman-deep flex flex-col">
         {/* Zelfde donkerte-recept als de XXL-hero: afbeelding op 60% opacity
             boven een hofman-deep-vlak + dezelfde gradient, zodat de tekst
             overal goed leesbaar is. */}
@@ -19,8 +29,13 @@ export function MinimalHero({ project }: { project: Project }) {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-hofman-deep/40 via-hofman-deep/55 to-hofman-deep/90" />
 
-        <div className="absolute inset-0 flex flex-col">
-          <div className="flex-1" />
+        <div className="relative flex-1 flex flex-col">
+          {banner && (
+            <div className="px-5 pt-5 sm:pt-7">
+              <div className="mx-auto max-w-5xl">{banner}</div>
+            </div>
+          )}
+          <div className="flex-1 min-h-8 sm:min-h-12" />
           <div className="px-5 pb-8 sm:pb-14 md:pb-20">
             <div className="mx-auto max-w-5xl">
               <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-white/80 font-semibold">
