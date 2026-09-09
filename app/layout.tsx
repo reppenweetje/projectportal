@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     template: "%s | De Hofman",
   },
   description:
-    "Koop je eigen bedrijfsunit in De Hofman, Waarderpolder Haarlem. 14 hoogwaardige units vanaf €239.500 v.o.n. — zonder overdrachtsbelasting. Plug-and-play opgeleverd Q3 2027.",
+    "Koop je eigen bedrijfsunit in De Hofman, Waarderpolder Haarlem. 14 hoogwaardige units, 13 verkocht; laatste XXL-unit (ca. 190 m²) €475.000 v.o.n. — zonder overdrachtsbelasting. Plug-and-play opgeleverd Q3 2027.",
   applicationName: "De Hofman · REPP",
   authors: [{ name: "REPP Bedrijfsmakelaar", url: "https://repp.nl" }],
   creator: "REPP Bedrijfsmakelaar",

@@ -22,9 +22,10 @@ export function OrientationCard({ project }: { project: Project }) {
           <li className="flex gap-2">
             <span className="text-repp-blue font-bold">02</span>
             <span>
-              Drie types: L (105 m², {formatEuro(239500)}), XL (113 m²,{" "}
-              {formatEuro(259500)}), XXL (ca. 190 m², vanaf {formatEuro(475000)}).
-              Alle prijzen excl. BTW.
+              Drie types: L (105 m², {formatEuro(239500)}, uitverkocht), XL
+              (113 m², {formatEuro(259500)}, uitverkocht), XXL (ca. 190 m²,{" "}
+              {formatEuro(475000)}, unit 14 nog te koop). Alle prijzen v.o.n.,
+              excl. BTW.
             </span>
           </li>
           <li className="flex gap-2">

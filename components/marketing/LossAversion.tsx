@@ -3,12 +3,13 @@ import type { Project } from "@/lib/types";
 import { formatEuro } from "@/lib/types";
 
 const HUUR_PER_M2_PER_JAAR = 165; // realistisch voor Waarderpolder
-const REPRESENTATIVE_M2 = 105; // L unit
+const REPRESENTATIVE_M2 = 190; // XXL unit 14 (laatste beschikbare unit)
+const REPRESENTATIVE_PRIJS = 475000; // koopsom unit 14, v.o.n. excl. btw
+const OVERDRACHTSBELASTING = 0.104; // 10,4% bij bestaande bouw, 0% bij nieuwbouw v.o.n.
 
 export function LossAversion({ project }: { project: Project }) {
-  const { marktPerM2Min, marktPerM2Max, eigenPerM2 } = project.prijsVergelijking;
-  const savingsPerM2 = marktPerM2Min - eigenPerM2; // 250
-  const savingsForLUnit = savingsPerM2 * REPRESENTATIVE_M2;
+  const { marktPerM2Min, marktPerM2Max } = project.prijsVergelijking;
+  const overdrachtsbelastingBespaard = Math.round(REPRESENTATIVE_PRIJS * OVERDRACHTSBELASTING);
   const huurPerJaar = HUUR_PER_M2_PER_JAAR * REPRESENTATIVE_M2;
 
   return (
@@ -31,10 +32,10 @@ export function LossAversion({ project }: { project: Project }) {
             body="Geld dat je elk jaar weggeeft. Bij een eigen pand bouw je in dezelfde maandlast vermogen op, én profiteer je van waardestijging."
           />
           <Card
-            badge="Voordeel t.o.v. de markt"
-            big={`±${formatEuro(savingsForLUnit)}`}
-            sub={`€${savingsPerM2}/m² goedkoper × ${REPRESENTATIVE_M2} m²`}
-            body={`Vergelijkbare nieuwbouw in de Waarderpolder: €${marktPerM2Min.toLocaleString("nl-NL")}–€${marktPerM2Max.toLocaleString("nl-NL")}/m². Bij De Hofman: €${eigenPerM2.toLocaleString("nl-NL")}/m². Dat zit direct in jouw eigen vermogen.`}
+            badge="Voordeel t.o.v. bestaande bouw"
+            big={`±${formatEuro(overdrachtsbelastingBespaard)}`}
+            sub={`géén 10,4% overdrachtsbelasting over ${formatEuro(REPRESENTATIVE_PRIJS)}`}
+            body={`Nieuwbouw v.o.n.: geen overdrachtsbelasting, en nutsaansluitingen (elders €3.000–€5.000) en een eigen parkeerplaats zijn al inbegrepen. Vergelijkbare nieuwbouw in de Waarderpolder: €${marktPerM2Min.toLocaleString("nl-NL")}–€${marktPerM2Max.toLocaleString("nl-NL")}/m².`}
             highlight
           />
         </div>
@@ -55,7 +56,7 @@ export function LossAversion({ project }: { project: Project }) {
         </div>
 
         <p className="mt-6 text-[11px] text-white/40 text-center">
-          Indicatieve cijfers op basis van een L-unit van 105 m² en marktconforme huurprijzen.
+          Indicatieve cijfers op basis van XXL-unit 14 van ca. 190 m² (€475.000 v.o.n., excl. btw) en marktconforme huurprijzen.
           Aan deze indicaties kunnen geen rechten worden ontleend.
         </p>
       </div>
