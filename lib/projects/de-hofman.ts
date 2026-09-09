@@ -99,7 +99,7 @@ export const deHofman: Project = {
   name: "De Hofman",
   tagline: "Omdat Haarlem werkt.",
   city: "Haarlem",
-  address: "A. Hofmanweg 23, Waarderpolder",
+  address: "A. Hofmanweg 23-27, Waarderpolder",
   totalUnits: 14,
   vveInitial: 950,
   units: Array.from({ length: 14 }, (_, i) => buildUnit(i + 1)),
