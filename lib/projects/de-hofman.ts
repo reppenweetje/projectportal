@@ -30,24 +30,8 @@ const status = (n: number): Unit["status"] => {
 
 const buildUnit = (n: number): Unit => {
   // Oppervlaktes volgens prijslijst REPP (9 september 2026):
-  //   Unit 7:  60,7 + 60,7 + 70 = 191,4 m² bvo
-  //   Unit 14: ca. 60 + ca. 60 + ca. 70 = ca. 190 m² bvo
-  if (n === 7) {
-    return {
-      number: n,
-      slug: `unit-${n}`,
-      type: "XXL",
-      m2BVO: 191.4,
-      m2BeganeGrond: 60.7,
-      m2EersteVerdieping: 60.7,
-      m2TweedeVerdieping: 70,
-      layers: 3,
-      prijsExBtw: 475000,
-      vvePerMaand: 160,
-      status: status(n),
-    };
-  }
-  if (n === 14) {
+  //   Unit 7 en 14: ca. 60 + ca. 60 + ca. 70 = ca. 190 m² bvo
+  if (n === 7 || n === 14) {
     return {
       number: n,
       slug: `unit-${n}`,
@@ -352,7 +336,7 @@ export const deHofman: Project = {
     },
     {
       q: "Wat maakt de XXL-units anders?",
-      a: "De twee XXL-units (Unit 7 met 191,4 m² en Unit 14 met ca. 190 m², beide 3 lagen) zijn de grootste in De Hofman, op de uiteinden van het blok. Werkplaats en opslag op de begane grond, kantoor of showroom op de eerste en tweede verdieping. De L- en XL-units zijn 2 lagen. Unit 7 is verkocht onder voorbehoud van financiering; unit 14 is nu te koop. Meld je aan via de XXL-pagina, dan nemen we contact op om jouw scenario door te spreken.",
+      a: "De twee XXL-units (Unit 7 en Unit 14, beide ca. 190 m² over 3 lagen) zijn de grootste in De Hofman, op de uiteinden van het blok. Werkplaats en opslag op de begane grond, kantoor of showroom op de eerste en tweede verdieping. De L- en XL-units zijn 2 lagen. Unit 7 is verkocht onder voorbehoud van financiering; unit 14 is nu te koop. Meld je aan via de XXL-pagina, dan nemen we contact op om jouw scenario door te spreken.",
     },
     {
       q: "Is de reservering bindend?",
