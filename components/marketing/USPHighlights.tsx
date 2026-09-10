@@ -50,8 +50,8 @@ function USPSet(): USP[] {
     },
     {
       icon: <CheckIcon />,
-      title: "Vanaf €239.500",
-      body: "Scherpste prijs per m² in de Waarderpolder. L-unit van 105 m² incl. parkeerplaats.",
+      title: "Laatste unit: €475.000",
+      body: "XXL-unit 14, ca. 190 m² over 3 lagen, v.o.n. en incl. parkeerplaats en nutsaansluitingen. L en XL zijn uitverkocht.",
     },
   ];
 }

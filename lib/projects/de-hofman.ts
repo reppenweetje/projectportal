@@ -29,6 +29,8 @@ const status = (n: number): Unit["status"] => {
 };
 
 const buildUnit = (n: number): Unit => {
+  // Oppervlaktes volgens prijslijst REPP (9 september 2026):
+  //   Unit 7 en 14: ca. 60 + ca. 60 + ca. 70 = ca. 190 m² bvo
   if (n === 7 || n === 14) {
     return {
       number: n,
@@ -81,7 +83,7 @@ export const deHofman: Project = {
   name: "De Hofman",
   tagline: "Omdat Haarlem werkt.",
   city: "Haarlem",
-  address: "A. Hofmanweg 23, Waarderpolder",
+  address: "A. Hofmanweg 23-27, Waarderpolder",
   totalUnits: 14,
   vveInitial: 950,
   units: Array.from({ length: 14 }, (_, i) => buildUnit(i + 1)),
@@ -116,22 +118,30 @@ export const deHofman: Project = {
       primaryCtaLabel: "Bekijk rendement",
     },
   ],
+  // eigenPerM2 = laatste beschikbare unit (14, XXL): €475.000 / ca. 190 m².
+  // De uitverkochte L- en XL-units lagen op €2.281 resp. €2.296 per m².
   prijsVergelijking: {
     marktPerM2Min: 2500,
     marktPerM2Max: 3058,
-    eigenPerM2: 2250,
+    eigenPerM2: 2500,
   },
   prijsBenchmarks: [
     {
       label: "De Hofman L",
-      sublabel: "Nieuwbouw",
+      sublabel: "Nieuwbouw · uitverkocht",
       pricePerM2: 2281,
       isHofman: true,
     },
     {
       label: "De Hofman XL",
-      sublabel: "Nieuwbouw",
+      sublabel: "Nieuwbouw · uitverkocht",
       pricePerM2: 2296,
+      isHofman: true,
+    },
+    {
+      label: "De Hofman XXL",
+      sublabel: "Nieuwbouw · unit 14 te koop",
+      pricePerM2: 2500,
       isHofman: true,
     },
     {
@@ -294,11 +304,11 @@ export const deHofman: Project = {
   faqs: [
     {
       q: "Wat is 'v.o.n.' en zit er nog overdrachtsbelasting bovenop?",
-      a: "V.o.n. staat voor Vrij Op Naam: alle kosten voor de overdracht (notaris, kadaster, splitsing) zijn al in de koopsom verwerkt. Bovendien betaal je bij nieuwbouw geen 10,4% overdrachtsbelasting. Bij een unit van €239.500 scheelt dat alleen al ruim €24.000 vergeleken met bestaande bouw. Geen verrassingen achteraf.",
+      a: "V.o.n. staat voor Vrij Op Naam: alle kosten voor de overdracht (notaris, kadaster, splitsing) zijn al in de koopsom verwerkt. Bovendien betaal je bij nieuwbouw geen 10,4% overdrachtsbelasting. Bij de XXL-unit van €475.000 scheelt dat alleen al ruim €49.000 vergeleken met bestaande bouw. Geen verrassingen achteraf.",
     },
     {
       q: "Kan ik de BTW terugvragen?",
-      a: "Ja. De 21% BTW (~€50.295 bij een L-unit) is volledig terugvorderbaar voor zowel zakelijke kopers als particuliere beleggers die de unit verhuren. Je betaalt het wel eerst, maar krijgt het in de eerstvolgende BTW-aangifte terug. Dit maakt de effectieve koopsom voor zakelijke gebruikers fors lager dan een vergelijkbare bestaande unit zonder BTW-teruggave.",
+      a: "Ja. De 21% BTW (€99.750 bij de XXL-unit van €475.000) is volledig terugvorderbaar voor zowel zakelijke kopers als particuliere beleggers die de unit verhuren. Je betaalt het wel eerst, maar krijgt het in de eerstvolgende BTW-aangifte terug. Dit maakt de effectieve koopsom voor zakelijke gebruikers fors lager dan een vergelijkbare bestaande unit zonder BTW-teruggave.",
     },
     {
       q: "Hoeveel betaal ik per maand aan VVE?",
@@ -310,11 +320,11 @@ export const deHofman: Project = {
     },
     {
       q: "Welk rendement kan ik verwachten als belegger?",
-      a: "Indicatief 6–8% bruto aanvangsrendement, afhankelijk van het unit-type, huurprijs en eigen inbreng. In de Waarderpolder liggen huren voor vergelijkbare nieuwbouw rond €145–€180 per m² per jaar. Bij een L-unit (105 m²) komt dat neer op circa €15.000–€19.000 huurinkomsten per jaar. Reken het zelf precies uit op de Bereken-pagina met jouw eigen inbreng en huurprijs. Aan deze indicatie kunnen geen rechten worden ontleend.",
+      a: "Indicatief 6–8% bruto aanvangsrendement, afhankelijk van het unit-type, huurprijs en eigen inbreng. In de Waarderpolder liggen huren voor vergelijkbare nieuwbouw rond €145–€180 per m² per jaar. Bij de XXL-unit (ca. 190 m²) komt dat neer op circa €27.500–€34.000 huurinkomsten per jaar. Reken het zelf precies uit op de Bereken-pagina met jouw eigen inbreng en huurprijs. Aan deze indicatie kunnen geen rechten worden ontleend.",
     },
     {
       q: "Hoeveel eigen inbreng heb ik nodig?",
-      a: "Voor eigen gebruik: zakelijke hypotheek tot circa 70% van de marktwaarde (dus 30% eigen inbreng, bij een L-unit zo'n €72.000). Voor verhuur als belegger: houd rekening met 35 tot 40% eigen inbreng. Onze partner Credion regelt vrijblijvend een financieringsscan op basis van jouw situatie. Vaak blijken de mogelijkheden gunstiger dan kopers vooraf inschatten.",
+      a: "Voor eigen gebruik: zakelijke hypotheek tot circa 70% van de marktwaarde (dus 30% eigen inbreng, bij de XXL-unit van €475.000 zo'n €142.500). Voor verhuur als belegger: houd rekening met 35 tot 40% eigen inbreng. Onze partner Credion regelt vrijblijvend een financieringsscan op basis van jouw situatie. Vaak blijken de mogelijkheden gunstiger dan kopers vooraf inschatten.",
     },
     {
       q: "Wanneer is de oplevering?",
@@ -326,7 +336,7 @@ export const deHofman: Project = {
     },
     {
       q: "Wat maakt de XXL-units anders?",
-      a: "De twee XXL-units (Unit 7 en 14) zijn met ca. 190 m² over 3 lagen de grootste in De Hofman, op de uiteinden van het blok. Werkplaats en opslag op de begane grond, kantoor of showroom op de eerste en tweede verdieping. De L- en XL-units zijn 2 lagen. Unit 7 is verkocht onder voorbehoud van financiering; unit 14 is nu te koop. Meld je aan via de XXL-pagina, dan nemen we contact op om jouw scenario door te spreken.",
+      a: "De twee XXL-units (Unit 7 en Unit 14, beide ca. 190 m² over 3 lagen) zijn de grootste in De Hofman, op de uiteinden van het blok. Werkplaats en opslag op de begane grond, kantoor of showroom op de eerste en tweede verdieping. De L- en XL-units zijn 2 lagen. Unit 7 is verkocht onder voorbehoud van financiering; unit 14 is nu te koop. Meld je aan via de XXL-pagina, dan nemen we contact op om jouw scenario door te spreken.",
     },
     {
       q: "Is de reservering bindend?",
@@ -334,11 +344,11 @@ export const deHofman: Project = {
     },
     {
       q: "Wat is de scherpste prijs van de Waarderpolder?",
-      a: "Vergelijkbare nieuwbouw bedrijfsunits in de Waarderpolder kosten momenteel tussen €2.500 en €3.058 per m². Bij De Hofman zit je op €2.250 per m², en aansluitkosten voor nutsvoorzieningen (€3.000 tot €5.000 elders) zijn al inbegrepen. Dat scheelt minimaal €250 per m². Bij een L-unit van 105 m² houd je daarmee meer dan €26.000 in eigen vermogen i.p.v. in de aankoopprijs.",
+      a: "Vergelijkbare nieuwbouw bedrijfsunits in de Waarderpolder kosten momenteel tussen €2.500 en €3.058 per m². De L- en XL-units van De Hofman lagen op €2.281 tot €2.296 per m² en zijn inmiddels uitverkocht. De laatste XXL-unit (unit 14, ca. 190 m² over 3 lagen) kost €475.000, circa €2.500 per m², en daarbij zijn de aansluitkosten voor nutsvoorzieningen (€3.000 tot €5.000 elders) en een eigen parkeerplaats al inbegrepen. Vrij op naam, dus ook zonder 10,4% overdrachtsbelasting.",
     },
     {
       q: "Wat als ik nu niet beslis?",
-      a: "Eerlijk: meer dan 50% is al verkocht in een paar maanden. De L-units gaan het snelst; er zijn er nog enkele vrij. Wij dwingen je niet, maar de markt is wat hij is: nieuwbouw in de Waarderpolder is schaars en wordt schaarser. Wil je niet meteen reserveren? Schrijf je dan in voor 'Hofman Insider', dan krijg je als eerste bericht over prijsindexaties en statuswijzigingen.",
+      a: "Eerlijk: 13 van de 14 units zijn verkocht of verkocht onder voorbehoud. De L- en XL-units zijn uitverkocht; alleen XXL-unit 14 is nog te koop. Wij dwingen je niet, maar de markt is wat hij is: nieuwbouw in de Waarderpolder is schaars en wordt schaarser. Wil je niet meteen reserveren? Schrijf je dan in voor 'Hofman Insider', dan krijg je als eerste bericht over prijsindexaties en statuswijzigingen.",
     },
   ],
   documents: [

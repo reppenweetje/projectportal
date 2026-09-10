@@ -31,7 +31,7 @@ export async function generateMetadata({
   if (!project) return { title: "Project niet gevonden" };
 
   const title = `${project.name}, ${project.city}`;
-  const description = `${project.tagline} ${project.totalUnits} hoogwaardige bedrijfsunits in de Waarderpolder. Koop je eigen pand vanaf €239.500 v.o.n., zonder overdrachtsbelasting.`;
+  const description = `${project.tagline} ${project.totalUnits} hoogwaardige bedrijfsunits in de Waarderpolder. 13 van de 14 verkocht; laatste XXL-unit (ca. 190 m²) te koop voor €475.000 v.o.n., zonder overdrachtsbelasting.`;
   const heroImage = project.heroImage?.src;
 
   return {
