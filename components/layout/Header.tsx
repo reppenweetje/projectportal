@@ -1,7 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { Project } from "@/lib/types";
-import { PRIMARY_CTA_HREF, PRIMARY_CTA_LABEL } from "@/lib/site-config";
+import {
+  PRIMARY_CTA_HREF,
+  PRIMARY_CTA_LABEL,
+  PRIMARY_CTA_LABEL_SHORT,
+} from "@/lib/site-config";
 import { HeaderFavorites } from "./HeaderFavorites";
 import { HeaderIdentity } from "./HeaderIdentity";
 import { LoginNudge } from "./LoginNudge";
@@ -39,14 +43,16 @@ export function Header({
         <Link
           href="/"
           aria-label={`${project.name}, REPP`}
-          className="shrink-0"
+          className="min-w-0"
         >
           <Image
             src="/images/logos/repp-bedrijfsmakelaar-wit.svg"
             alt="REPP Bedrijfsmakelaar"
             width={84}
             height={24}
-            className="h-5 sm:h-6 w-auto"
+            // Kleiner op smalle telefoons: met de volle breedte duwde het
+            // logo de CTA en het hamburger-menu van het scherm op 375 px.
+            className="h-4 sm:h-5 md:h-6 w-auto max-w-full object-contain object-left"
             priority
           />
         </Link>
@@ -73,14 +79,15 @@ export function Header({
           </Link>
         </nav>
 
-        {/* Mobiel: primaire CTA + hamburger. */}
+        {/* Mobiel: primaire CTA + hamburger. Kort label, anders duwt de
+            knop het hamburger-menu van het scherm op een iPhone SE. */}
         <div className="flex lg:hidden items-center gap-1">
           <Link
             href={PRIMARY_CTA_HREF}
             data-cta="nav"
-            className="inline-flex items-center bg-repp-yellow text-repp-navy text-xs font-bold px-3 py-1.5 rounded-full hover:brightness-95 transition whitespace-nowrap"
+            className="inline-flex items-center bg-repp-yellow text-repp-navy text-[11px] font-bold px-2.5 py-1.5 rounded-full hover:brightness-95 transition whitespace-nowrap"
           >
-            {PRIMARY_CTA_LABEL}
+            {PRIMARY_CTA_LABEL_SHORT}
           </Link>
           <MobileMenu project={project} />
         </div>

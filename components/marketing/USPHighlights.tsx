@@ -1,6 +1,11 @@
 import Link from "next/link";
 import type { Project } from "@/lib/types";
-import { PRIMARY_CTA_HREF, PRIMARY_CTA_LABEL } from "@/lib/site-config";
+import {
+  PRIMARY_CTA_HREF,
+  PRIMARY_CTA_LABEL,
+  SECONDARY_CTA_HREF,
+  SECONDARY_CTA_LABEL,
+} from "@/lib/site-config";
 
 /**
  * USPHighlights: zes redenen om nu voor unit 14 te kiezen. Feitelijk,
@@ -69,13 +74,20 @@ export function USPHighlights({ project }: { project: Project }) {
             </li>
           ))}
         </ul>
-        <div className="mt-8 flex justify-center">
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
           <Link
             href={PRIMARY_CTA_HREF}
             data-cta="redenen"
             className="inline-flex items-center bg-repp-yellow text-repp-navy font-bold px-6 py-3.5 rounded-full hover:brightness-95 transition"
           >
             {PRIMARY_CTA_LABEL}
+          </Link>
+          <Link
+            href={SECONDARY_CTA_HREF}
+            data-cta="redenen-sparren"
+            className="text-sm font-semibold text-repp-navy/70 hover:text-repp-navy"
+          >
+            {SECONDARY_CTA_LABEL} →
           </Link>
         </div>
       </div>

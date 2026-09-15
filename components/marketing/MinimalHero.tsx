@@ -5,6 +5,8 @@ import { formatEuro } from "@/lib/types";
 import {
   PRIMARY_CTA_HREF,
   PRIMARY_CTA_LABEL,
+  SECONDARY_CTA_HREF,
+  SECONDARY_CTA_LABEL,
   UNIT14_IMAGE,
   XXL_AREA_LABEL,
   XXL_PRICE,
@@ -55,13 +57,20 @@ export function MinimalHero({ project }: { project: Project }) {
             <Check>v.o.n. · btw terugvorderbaar</Check>
           </ul>
 
-          <div className="mt-8 flex justify-center">
+          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
             <Link
               href={PRIMARY_CTA_HREF}
               data-cta="hero"
               className="inline-flex items-center bg-repp-yellow text-repp-navy text-sm font-bold px-6 py-3 rounded-full hover:brightness-95 transition shadow-lg"
             >
               {PRIMARY_CTA_LABEL}
+            </Link>
+            <Link
+              href={SECONDARY_CTA_HREF}
+              data-cta="hero-sparren"
+              className="text-sm font-semibold text-white/85 hover:text-white underline-offset-4 hover:underline"
+            >
+              {SECONDARY_CTA_LABEL} →
             </Link>
           </div>
           <div className="mt-3 text-center">

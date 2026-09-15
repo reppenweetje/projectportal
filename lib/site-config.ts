@@ -17,9 +17,11 @@ export const XXL_AREA_LABEL = "ca. 190 m²";
 export const VVE_MONTHLY = 160;
 export const RENT_PER_M2_YEAR = 145;
 
-export const PRIMARY_CTA_LABEL = "Ik wil unit 14";
+export const PRIMARY_CTA_LABEL = "Reserveer unit 14";
+/** Korte variant voor krappe plekken, zoals de mobiele header. */
+export const PRIMARY_CTA_LABEL_SHORT = "Reserveer";
 export const PRIMARY_CTA_HREF = "/xxl#aanmelden";
-export const SECONDARY_CTA_LABEL = "Sparren over de mogelijkheden";
+export const SECONDARY_CTA_LABEL = "Ik wil de mogelijkheden bespreken";
 export const SECONDARY_CTA_HREF = "/xxl?intent=sparren#aanmelden";
 
 export const WHATSAPP_HREF =

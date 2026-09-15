@@ -5,6 +5,8 @@ import {
   PRIMARY_CTA_HREF,
   PRIMARY_CTA_LABEL,
   RENT_PER_M2_YEAR,
+  SECONDARY_CTA_HREF,
+  SECONDARY_CTA_LABEL,
   XXL_AREA_LABEL,
   XXL_PRICE,
 } from "@/lib/site-config";
@@ -56,8 +58,18 @@ export function LossAversion({ project }: { project: Project }) {
             {PRIMARY_CTA_LABEL}
           </Link>
           <Link
-            href="/bereken"
+            href={SECONDARY_CTA_HREF}
+            data-cta="verlies-sparren"
             className="inline-flex items-center text-white/80 hover:text-white text-sm font-semibold py-2"
+          >
+            {SECONDARY_CTA_LABEL} →
+          </Link>
+        </div>
+
+        <div className="mt-3 text-center">
+          <Link
+            href="/bereken"
+            className="inline-flex items-center text-white/60 hover:text-white text-sm py-2"
           >
             Reken het uit voor jouw situatie →
           </Link>
