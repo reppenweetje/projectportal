@@ -7,6 +7,7 @@ import { StickyCTA } from "@/components/layout/StickyCTA";
 import { MinimalHero } from "@/components/marketing/MinimalHero";
 import { StatusStrip } from "@/components/marketing/StatusStrip";
 import { Unit14Intro } from "@/components/marketing/Unit14Intro";
+import { HomeUseCases } from "@/components/marketing/HomeUseCases";
 import { USPHighlights } from "@/components/marketing/USPHighlights";
 import { LossAversion } from "@/components/marketing/LossAversion";
 import { HeroCalculator } from "@/components/calculator/HeroCalculator";
@@ -119,34 +120,37 @@ export default async function ProjectHomePage({
         {/* 3. Dit is unit 14 */}
         <Unit14Intro />
 
-        {/* 4. Zes redenen */}
+        {/* 4. Zo kun je unit 14 inrichten */}
+        <HomeUseCases />
+
+        {/* 5. Zes redenen */}
         <USPHighlights project={project} />
 
-        {/* 5. Wat het je kost om niet te kiezen */}
+        {/* 6. Wat het je kost om niet te kiezen */}
         <LossAversion project={project} />
 
-        {/* 6. Maandlast unit 14 */}
+        {/* 7. Maandlast unit 14 */}
         <HeroCalculator project={project} />
 
-        {/* 7. Beeldcarrousel, unit 14 vooraan */}
+        {/* 8. Beeldcarrousel, unit 14 vooraan */}
         <Gallery project={project} />
 
-        {/* 8. Partners */}
+        {/* 9. Partners */}
         <TrustStack project={project} />
 
-        {/* 9. Referenties: je toekomstige buren */}
+        {/* 10. Referenties: je toekomstige buren */}
         <Testimonials project={project} />
 
-        {/* 10. Waarom is unit 14 er nog? */}
+        {/* 11. Waarom is unit 14 er nog? */}
         <WhyStillAvailable />
 
-        {/* 11. FAQ */}
+        {/* 12. FAQ */}
         <HomeFAQ />
 
-        {/* 12. Documenten */}
+        {/* 13. Documenten */}
         <KeyDocuments project={project} />
 
-        {/* 13. Aanmeldblok met formulier */}
+        {/* 14. Aanmeldblok met formulier */}
         <HomeLeadForm project={project} />
       </main>
       <Footer project={project} />
