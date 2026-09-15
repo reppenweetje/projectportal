@@ -7,8 +7,8 @@ import { Unit14SpecList } from "@/components/unit/Unit14Specs";
  * "Dit is unit 14": gecentreerde kop en tekst, daaronder het beeld op volle
  * breedte en de specs. Zelfde opbouw als de secties op /xxl.
  *
- * Beeld is bewust het dakterras en niet de voorgevel: die staat al in de
- * hero, twee schermen hoger.
+ * Beeld is bewust het hoekaanzicht en niet de voorgevel: die staat al in
+ * de hero, twee schermen hoger.
  */
 export function Unit14Intro() {
   return (
@@ -28,10 +28,10 @@ export function Unit14Intro() {
 
         <figure className="mt-8 overflow-hidden rounded-2xl border border-repp-gray bg-surface-muted">
           <Image
-            src="/images/hofman/xxl/xxl-dakterras.jpg"
-            alt="Het eigen dakterras van XXL unit 14 met zitplek en uitzicht over de Waarderpolder"
-            width={1840}
-            height={1035}
+            src="/images/hofman/renders/entree-fietsen.jpg"
+            alt="Hoekaanzicht overdag van de kop van het blok van De Hofman, met de XXL-unit over drie lagen en de eigen entree"
+            width={2200}
+            height={1238}
             sizes="(max-width: 1024px) 100vw, 960px"
             className="w-full h-auto"
           />
