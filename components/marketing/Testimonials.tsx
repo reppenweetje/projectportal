@@ -36,6 +36,10 @@ export function Testimonials({ project }: { project: Project }) {
             <TestimonialCard key={t.id} testimonial={t} />
           ))}
         </div>
+
+        <p className="mt-6 md:mt-8 px-5 text-center text-sm font-semibold text-repp-navy/70">
+          Dit zijn je toekomstige buren in het blok.
+        </p>
       </div>
     </section>
   );

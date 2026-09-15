@@ -10,6 +10,8 @@ type Params = { projectSlug: string };
 
 export const metadata: Metadata = {
   title: "Mijn favorieten",
+  alternates: { canonical: "/favorieten" },
+  robots: { index: false, follow: true },
 };
 
 export default async function FavorietenPage({

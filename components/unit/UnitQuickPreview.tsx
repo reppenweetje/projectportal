@@ -139,7 +139,7 @@ export function UnitQuickPreview({
 
           <div className="mt-6 space-y-2">
             <Link
-              href={`/${project.slug}/units/${unit.slug}`}
+              href={`/units/${unit.slug}`}
               className="block w-full bg-repp-navy text-white text-center font-bold px-4 py-3.5 rounded-full hover:bg-repp-blue transition"
               onClick={onClose}
             >
@@ -149,8 +149,8 @@ export function UnitQuickPreview({
               <Link
                 href={
                   unit.type === "XXL"
-                    ? `/${project.slug}/xxl`
-                    : `/${project.slug}/reserveren?unit=${unit.slug}${unit.status === "verkocht_ovb" ? "&intent=wachtlijst" : ""}`
+                    ? `/xxl`
+                    : `/reserveren?unit=${unit.slug}${unit.status === "verkocht_ovb" ? "&intent=wachtlijst" : ""}`
                 }
                 className="flex-1 block bg-repp-yellow text-repp-navy text-center font-bold px-4 py-3 rounded-full hover:brightness-95 transition"
                 onClick={onClose}

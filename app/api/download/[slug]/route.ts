@@ -50,7 +50,7 @@ export async function GET(
   }
 
   // Vind het document op slug in de project-catalog. We pakken
-  // het eerste project dat 'm heeft — bij multi-project setup
+  // het eerste project dat 'm heeft, bij multi-project setup
   // moet de URL waarschijnlijk /<projectSlug>/download/<docSlug>
   // worden.
   const project = projects[0];
@@ -63,7 +63,7 @@ export async function GET(
   }
 
   // Mapping doc.href ("/docs/de-hofman/brochure.pdf") naar absolute fs-path.
-  // De map zit nu in private/ (buiten /public) — zie next.config.ts
+  // De map zit nu in private/ (buiten /public), zie next.config.ts
   // outputFileTracingIncludes zodat Vercel 'm meebundelt.
   const rel = doc.href.replace(/^\//, "");
   const fsPath = join(process.cwd(), "private", rel);
@@ -80,7 +80,7 @@ export async function GET(
   // Anders → echte download (attachment).
   const inline = new URL(request.url).searchParams.get("inline") === "1";
 
-  // Filename: "De Hofman <label>.pdf" — label.lowercase voor match met
+  // Filename: "De Hofman <label>.pdf", label.lowercase voor match met
   // gebruikers wens ("De Hofman brochure", "De Hofman prijslijst").
   const filename = `${project.name} ${doc.label.toLowerCase()}.pdf`;
 

@@ -28,7 +28,7 @@ export function SaveForLater({
 
   // Voor walk-ins zonder account: signup-dialog openen ipv direct
   // favoriet opslaan. Reden: favorieten zijn alleen waardevol als we
-  // de lead later kunnen mailen bij statuswijziging — anoniem opslaan
+  // de lead later kunnen mailen bij statuswijziging, anoniem opslaan
   // in localStorage helpt sales niet. Na signup wordt favoriet automatisch
   // opgeslagen + notify-flag aangezet zodat de lead direct profiteert.
   function onFavoriteClick() {

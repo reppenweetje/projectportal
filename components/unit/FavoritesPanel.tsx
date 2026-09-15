@@ -26,7 +26,7 @@ export function FavoritesPanel({ project }: { project: Project }) {
           later te vergelijken of erop terug te komen.
         </p>
         <Link
-          href={`/${project.slug}/units`}
+          href={`/units`}
           className="mt-6 inline-flex items-center bg-repp-navy text-white font-semibold px-5 py-3 rounded-full hover:bg-repp-blue transition"
         >
           Bekijk alle units →
@@ -45,7 +45,7 @@ export function FavoritesPanel({ project }: { project: Project }) {
         {units.map((u) => (
           <li key={u.slug}>
             <Link
-              href={`/${project.slug}/units/${u.slug}`}
+              href={`/units/${u.slug}`}
               className="group flex items-center justify-between gap-4 rounded-2xl border border-repp-gray bg-white p-5 hover:border-repp-navy hover:shadow-md transition"
             >
               <div>

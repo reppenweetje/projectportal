@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * LeadGateOverlay — modal-style lead capture voor walk-in bezoekers.
+ * LeadGateOverlay, modal-style lead capture voor walk-in bezoekers.
  *
  * Server-side LeadGate beslist of deze overlay nodig is. Hier renderen we
  * de gated content geblurd op de achtergrond + een centered card met form.

@@ -5,7 +5,7 @@ import type { Project, Unit } from "@/lib/types";
 import { formatEuro } from "@/lib/types";
 
 /**
- * UnitTypePicker — chips om tussen unit-types te kiezen voor de calculator.
+ * UnitTypePicker, chips om tussen unit-types te kiezen voor de calculator.
  *
  * Alle drie de types worden getoond. Types zonder beschikbare unit (L en XL
  * zijn uitverkocht) staan gedimd met "Uitverkocht" en zijn niet klikbaar;

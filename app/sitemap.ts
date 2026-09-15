@@ -1,5 +1,5 @@
 /**
- * Sitemap — mode-aware.
+ * Sitemap, mode-aware.
  *
  * Single-project mode (NEXT_PUBLIC_DEFAULT_PROJECT gezet):
  *   Toont de project-URLs zonder slug-prefix (`/`, `/units`, `/units/[slug]`).
@@ -49,7 +49,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority,
     }));
 
-    // Unit-detail pagina's — alleen units met echte slug
+    // Unit-detail pagina's, alleen units met echte slug
     const unitEntries = project.units
       .filter((u) => !!u.slug)
       .map((unit) => ({

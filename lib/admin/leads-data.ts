@@ -2,7 +2,7 @@
 //
 // Leest ECHTE De Hofman-leads uit de Supabase `leads`-tabel via PostgREST met
 // de service-role key (server-only env var, nooit NEXT_PUBLIC_). Read-only:
-// we doen alleen een GET, geen schemawijziging, geen writes — de leads-tabel
+// we doen alleen een GET, geen schemawijziging, geen writes, de leads-tabel
 // wordt gedeeld met CLP + WhatsApp-bot en mag niet gemuteerd worden.
 //
 // Geen mock/fallback: ontbreekt de key of faalt de fetch, dan is

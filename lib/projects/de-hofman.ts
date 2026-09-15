@@ -30,7 +30,7 @@ const status = (n: number): Unit["status"] => {
 
 const buildUnit = (n: number): Unit => {
   // Oppervlaktes volgens prijslijst REPP (9 september 2026):
-  //   Unit 7 en 14: ca. 60 + ca. 60 + ca. 70 = ca. 190 m² bvo
+  //   Unit 7 en 14: ca. 60 + ca. 60 + ca. 70 = ca. 190 m²
   if (n === 7 || n === 14) {
     return {
       number: n,
@@ -191,6 +191,31 @@ export const deHofman: Project = {
     caption: "Impressie · De Hofman bij avond",
   },
   gallery: [
+    // XXL unit 14 vooraan (hoogste gewicht), daarna de projectbeelden.
+    {
+      src: "/images/hofman/xxl/xxl-voorzijde-v3.jpg",
+      alt: "Vooraanzicht van XXL unit 14 met grote glasgevel en eigen entree aan de straatzijde",
+      caption: "Unit 14: de voorzijde aan de A. Hofmanweg",
+      weight: 140,
+    },
+    {
+      src: "/images/hofman/xxl/xxl-dakterras.jpg",
+      alt: "Het eigen dakterras van XXL unit 14 met uitzicht over de Waarderpolder",
+      caption: "Unit 14: eigen dakterras van 42,5 m²",
+      weight: 130,
+    },
+    {
+      src: "/images/hofman/xxl/xxl-kantoor-koffiehoek.jpg",
+      alt: "Kantoorverdieping van XXL unit 14 met koffiehoek",
+      caption: "Unit 14: kantoorverdieping met koffiehoek",
+      weight: 120,
+    },
+    {
+      src: "/images/hofman/xxl/xxl-werkplaats.jpg",
+      alt: "Werkplaats op de begane grond van XXL unit 14",
+      caption: "Unit 14: werkplaats op de begane grond",
+      weight: 110,
+    },
     {
       src: `${baseRender}/zijgevel-avond.jpg`,
       alt: "De Hofman bij avond, schuin hoekaanzicht met verlichte units",

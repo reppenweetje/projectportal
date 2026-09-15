@@ -9,7 +9,7 @@ import { useLeadCapture } from "@/lib/use-lead-capture";
 type State = "idle" | "sending" | "done" | "error";
 
 /**
- * MailReportButton — verstuurt een calculator-rapport per mail.
+ * MailReportButton, verstuurt een calculator-rapport per mail.
  *
  * Voor walk-in bezoekers zonder lead-cookie: klik triggert eerst de
  * LeadCaptureDialog (vraagt naam + email + telefoon optioneel + uitlegt

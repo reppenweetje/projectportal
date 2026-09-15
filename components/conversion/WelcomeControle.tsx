@@ -38,7 +38,7 @@ export function WelcomeControle({ project }: { project: Project }) {
   // Cold visit (no profile, no URL params): bounce to home
   useEffect(() => {
     if (profile === null) {
-      // null means hook hasn't found anything yet — wait one tick
+      // null means hook hasn't found anything yet, wait one tick
       return;
     }
     if (
@@ -47,12 +47,12 @@ export function WelcomeControle({ project }: { project: Project }) {
       !profile.email &&
       !profile.phone
     ) {
-      router.replace(`/${project.slug}`);
+      router.replace(`/`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile]);
 
-  const next = params.get("next") ?? `/${project.slug}`;
+  const next = params.get("next") ?? `/`;
 
   if (!profile || (!profile.name && !profile.email && !profile.phone)) {
     return null;
@@ -82,7 +82,7 @@ export function WelcomeControle({ project }: { project: Project }) {
           modus: updated.modus ?? null,
         }),
       }).catch((err) => {
-        // Silent fail — cookie is al bijgewerkt, server-sync is bonus.
+        // Silent fail, cookie is al bijgewerkt, server-sync is bonus.
         console.error("[welkom] portal-update failed", err);
       });
     }
@@ -93,7 +93,7 @@ export function WelcomeControle({ project }: { project: Project }) {
 
   function onNotMe() {
     clearLeadProfile();
-    router.replace(`/${project.slug}`);
+    router.replace(`/`);
   }
 
   if (mode === "done") {
@@ -190,7 +190,7 @@ export function WelcomeControle({ project }: { project: Project }) {
 
       <p className="mt-6 text-[11px] text-repp-navy/45 leading-relaxed">
         We gebruiken je gegevens alleen om jou te helpen bij {project.name} en
-        delen ze niet met derden — zie onze{" "}
+        delen ze niet met derden. Zie onze{" "}
         <a
           href="https://repp.nl/wp-content/uploads/2025/03/PRIVACY-VERKLARING.pdf"
           target="_blank"
@@ -213,7 +213,7 @@ export function WelcomeControle({ project }: { project: Project }) {
       <div className="mt-6 pt-6 border-t border-repp-gray text-xs text-repp-navy/50 flex items-center justify-between">
         <span>Geen account, geen wachtwoord. Werkt alleen op dit apparaat.</span>
         <Link
-          href={`/${project.slug}`}
+          href={`/`}
           className="underline hover:text-repp-navy"
         >
           Liever direct rondkijken
@@ -262,7 +262,7 @@ function Field({
         />
       ) : (
         <p className="mt-0.5 font-bold text-repp-navy">
-          {value || <span className="text-repp-navy/40">— niet bekend —</span>}
+          {value || <span className="text-repp-navy/40">niet bekend</span>}
         </p>
       )}
     </div>
@@ -307,7 +307,7 @@ function ModusField({
         </div>
       ) : (
         <p className="mt-0.5 font-bold text-repp-navy">
-          {labels[value] || <span className="text-repp-navy/40">— onbekend —</span>}
+          {labels[value] || <span className="text-repp-navy/40">onbekend</span>}
         </p>
       )}
     </div>

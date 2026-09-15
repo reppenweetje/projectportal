@@ -15,7 +15,7 @@ const PRIVACY_HREF = "/cookiebeleid";
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  // viewportFit cover voor iPhone-notch / dynamic island — content kan tot
+  // viewportFit cover voor iPhone-notch / dynamic island, content kan tot
   // randen lopen, env(safe-area-inset-*) regelt padding waar nodig.
   viewportFit: "cover",
   themeColor: "#0f0f70",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     template: "%s | De Hofman",
   },
   description:
-    "Koop je eigen bedrijfsunit in De Hofman, Waarderpolder Haarlem. 14 hoogwaardige units, 13 verkocht; laatste XXL-unit (ca. 190 m²) €475.000 v.o.n. — zonder overdrachtsbelasting. Plug-and-play opgeleverd Q3 2027.",
+    "Nog 1 van 14 units te koop in De Hofman, Waarderpolder Haarlem. XXL unit 14, ca. 190 m² over 3 lagen, € 475.000 v.o.n. zonder overdrachtsbelasting. Verwachte oplevering Q3 2027.",
   applicationName: "De Hofman · REPP",
   authors: [{ name: "REPP Bedrijfsmakelaar", url: "https://repp.nl" }],
   creator: "REPP Bedrijfsmakelaar",
@@ -59,9 +59,9 @@ export const metadata: Metadata = {
   // gepicked door Next.js (App Router convention). Vierkant + raster
   // zodat Google 'm als zoekresultaat-favicon accepteert; de oude brede
   // wordmark-SVG werd door Google afgekeurd (niet vierkant → globe).
-  alternates: {
-    canonical: getSiteUrl(),
-  },
+  //
+  // Geen sitebrede canonical hier: elke pagina zet zijn eigen canonical
+  // op het definitieve (korte) pad via `alternates.canonical`.
 };
 
 export default function RootLayout({
@@ -83,7 +83,7 @@ export default function RootLayout({
   return (
     <html lang="nl" className={`${montserrat.variable} h-full antialiased`}>
       <head>
-        {/* Google Consent Mode v2 — MOET vóór alle Google-tags (GTM/Ads/GA4)
+        {/* Google Consent Mode v2, MOET vóór alle Google-tags (GTM/Ads/GA4)
             én vóór de Meta Pixel-loader draaien. Zet alle toestemming default
             op "denied" (opt-in). De banner stuurt daarna een `update` zodra de
             bezoeker kiest. functionality/security_storage staan granted want
@@ -102,7 +102,7 @@ export default function RootLayout({
           content="isp530fvb5yb9qmcpcoeqjsuyyakap"
         />
 
-        {/* Plausible analytics — privacy-friendly, geen cookies, geen PII.
+        {/* Plausible analytics, privacy-friendly, geen cookies, geen PII.
             afterInteractive = laadt na page-interactive zodat LCP/INP niet wordt
             geraakt. Project script-tag van Plausible.io. */}
         <Script

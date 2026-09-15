@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getUnit } from "@/lib/projects/de-hofman";
+import { XXL_AREA_LABEL } from "@/lib/site-config";
+import { WhatsAppLink } from "@/components/conversion/WhatsAppLink";
 import { formatEuro, formatM2 } from "@/lib/types";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -23,9 +25,11 @@ export async function generateMetadata({
   const found = getUnit(projectSlug, unitSlug);
   if (!found) return { title: "Unit niet gevonden" };
   const { project, unit } = found;
+  const area = unit.type === "XXL" ? XXL_AREA_LABEL : formatM2(unit.m2BVO);
   return {
     title: `Unit ${unit.number} (${unit.type}), ${project.name}`,
-    description: `${unit.type}-unit ${formatM2(unit.m2BVO)} in ${project.name}. ${formatEuro(unit.prijsExBtw)} excl. btw.`,
+    description: `${unit.type}-unit ${area} in ${project.name}. ${formatEuro(unit.prijsExBtw)} excl. btw.`,
+    alternates: { canonical: `/units/${unit.slug}` },
   };
 }
 
@@ -62,7 +66,7 @@ export default async function UnitDetailPage({
         <section className="px-5 pt-8 md:pt-10">
           <div className="mx-auto max-w-5xl">
             <Link
-              href={`/${project.slug}/units`}
+              href={`/units`}
               className="text-sm text-repp-navy/60 hover:text-repp-navy inline-flex items-center gap-1"
             >
               ← Alle units
@@ -92,7 +96,7 @@ export default async function UnitDetailPage({
           </div>
         </section>
 
-        {/* Plattegrond LEFT (small) + Carousel RIGHT (big) — stacked on mobile */}
+        {/* Plattegrond LEFT (small) + Carousel RIGHT (big), stacked on mobile */}
         <section className="px-5">
           <div className="mx-auto max-w-5xl grid gap-4 md:grid-cols-3">
             <aside className="md:col-span-1">
@@ -106,7 +110,7 @@ export default async function UnitDetailPage({
                 currentSlug={unit.slug}
               />
               <Link
-                href={`/${project.slug}/units`}
+                href={`/units`}
                 className="mt-3 block text-center text-xs text-repp-blue hover:text-repp-navy font-semibold"
               >
                 Alle units bekijken →
@@ -120,7 +124,7 @@ export default async function UnitDetailPage({
               <p className="mt-2 text-[11px] text-repp-navy/40">
                 Impressies van het project. Plattegrond per type in de{" "}
                 <Link
-                  href={`/${project.slug}/documenten/plattegronden`}
+                  href={`/documenten/plattegronden`}
                   className="underline hover:text-repp-blue"
                 >
                   plattegronden-PDF
@@ -211,21 +215,21 @@ export default async function UnitDetailPage({
 
                 {unit.type === "XXL" && isReservable ? (
                   <Link
-                    href={`/${project.slug}/xxl`}
+                    href={`/xxl`}
                     className="mt-5 block bg-repp-yellow text-repp-navy text-center font-bold text-base px-4 py-4 rounded-full hover:brightness-95 shadow-lg shadow-black/20"
                   >
                     Meld je aan voor Unit {unit.number}
                   </Link>
                 ) : isReservable ? (
                   <Link
-                    href={`/${project.slug}/reserveren?unit=${unit.slug}`}
+                    href={`/reserveren?unit=${unit.slug}`}
                     className="mt-5 block bg-repp-yellow text-repp-navy text-center font-bold text-base px-4 py-4 rounded-full hover:brightness-95 shadow-lg shadow-black/20"
                   >
                     Reserveer Unit {unit.number}
                   </Link>
                 ) : isWachtlijst ? (
                   <Link
-                    href={`/${project.slug}/reserveren?unit=${unit.slug}&intent=wachtlijst`}
+                    href={`/reserveren?unit=${unit.slug}&intent=wachtlijst`}
                     className="mt-5 block bg-repp-yellow text-repp-navy text-center font-bold text-base px-4 py-4 rounded-full hover:brightness-95 shadow-lg shadow-black/20"
                   >
                     Op de wachtlijst voor Unit {unit.number}
@@ -238,19 +242,18 @@ export default async function UnitDetailPage({
 
                 <div className="mt-3 grid grid-cols-2 gap-2">
                   <Link
-                    href={`/${project.slug}/bereken?unit=${unit.slug}`}
+                    href={`/bereken?unit=${unit.slug}`}
                     className="block text-center text-xs text-white/80 hover:text-white py-2 border border-white/10 rounded-full"
                   >
                     Bereken maandlast
                   </Link>
-                  <a
+                  <WhatsAppLink
                     href={buildWhatsAppLink(project.whatsAppNumber, waMessage)}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    cta="unit-detail"
                     className="block text-center text-xs text-white/80 hover:text-white py-2 border border-white/10 rounded-full"
                   >
                     WhatsApp
-                  </a>
+                  </WhatsAppLink>
                 </div>
               </div>
 

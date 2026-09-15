@@ -50,7 +50,7 @@ export function UnitGrid({
   const [previewUnit, setPreviewUnit] = useState<Unit | null>(null);
   const emphasized = new Set(highlightSlugs ?? []);
 
-  // Rij 1 (units 1-7) bovenaan, rij 2 (units 8-14) onderaan — matched
+  // Rij 1 (units 1-7) bovenaan, rij 2 (units 8-14) onderaan, matched
   // de fysieke lay-out van het blok in de Waarderpolder (rij met de
   // lage nummers ligt aan de A. Hofmanweg-zijde).
   const top = project.units
@@ -72,7 +72,6 @@ export function UnitGrid({
           <div className={`flex-1 ${size === "mini" ? "space-y-1" : "space-y-2"}`}>
             <Row
               units={top}
-              project={project}
               size={size}
               currentSlug={currentSlug}
               emphasized={emphasized}
@@ -81,7 +80,6 @@ export function UnitGrid({
             />
             <Row
               units={bottom}
-              project={project}
               size={size}
               currentSlug={currentSlug}
               emphasized={emphasized}
@@ -117,9 +115,9 @@ function RoadIndicator({ size }: { size: Size }) {
   const widthCls = size === "mini" ? "w-5" : "w-6 md:w-12";
   return (
     <div className={`relative ${widthCls} flex items-center justify-center`}>
-      {/* Asphalt-style strip — donkerder zodat tekst-contrast hoger is */}
+      {/* Asphalt-style strip, donkerder zodat tekst-contrast hoger is */}
       <div className="absolute inset-y-1 right-1 left-1 rounded-md bg-repp-navy/20">
-        {/* dashed road centerline — transparante gaps, navy dashes */}
+        {/* dashed road centerline, transparante gaps, navy dashes */}
         <div
           className="absolute inset-y-2 left-1/2 -translate-x-1/2 w-0.5 text-repp-navy/70"
           style={{
@@ -147,7 +145,6 @@ function RoadIndicator({ size }: { size: Size }) {
 
 function Row({
   units,
-  project,
   size,
   currentSlug,
   emphasized,
@@ -155,7 +152,6 @@ function Row({
   onPreview,
 }: {
   units: Unit[];
-  project: Project;
   size: Size;
   currentSlug?: string;
   emphasized: Set<string>;
@@ -168,7 +164,6 @@ function Row({
       {units.map((u) => (
         <UnitCell
           key={u.slug}
-          project={project}
           unit={u}
           size={size}
           isCurrent={currentSlug === u.slug}
@@ -183,7 +178,6 @@ function Row({
 }
 
 function UnitCell({
-  project,
   unit,
   size,
   isCurrent,
@@ -192,7 +186,6 @@ function UnitCell({
   mode,
   onPreview,
 }: {
-  project: Project;
   unit: Unit;
   size: Size;
   isCurrent: boolean;
@@ -235,7 +228,7 @@ function UnitCell({
       ? "opacity-55 saturate-[.65] hover:opacity-100 hover:saturate-100"
       : "";
 
-  // De "je bent hier"-cel (detailpagina) mag opschalen — die staat op zichzelf.
+  // De "je bent hier"-cel (detailpagina) mag opschalen, die staat op zichzelf.
   // Ge-highlighte XXL-units NIET opschalen: op de koppen van het blok liepen
   // de vergrote cellen over de buren/straat heen. Alleen een accent-ring.
   const currentEmphasis = isCurrent
@@ -278,7 +271,7 @@ function UnitCell({
 
   if (mode === "link") {
     return (
-      <Link href={`/${project.slug}/units/${unit.slug}`} className="block">
+      <Link href={`/units/${unit.slug}`} className="block">
         {inner}
       </Link>
     );

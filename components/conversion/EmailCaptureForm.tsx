@@ -110,7 +110,7 @@ export function EmailCaptureForm({
   const errCls = tone === "dark" ? "text-rose-200" : "text-red-600";
 
   return (
-    // Form is altijd vertikaal — wordt o.a. in modals gebruikt waar de
+    // Form is altijd vertikaal, wordt o.a. in modals gebruikt waar de
     // horizontale variant fields squeezed in onleesbare smalle pills.
     // Naam → Email → Submit-knop stacked + privacy-tekst eronder.
     <form onSubmit={handle} className="flex flex-col gap-2.5">

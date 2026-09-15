@@ -3,15 +3,15 @@
  *
  * De client-kant (lib/attribution.ts, gemount via AttributionTracker) schrijft
  * dit cookie bij de eerste pageview met een herkomst-signaal. Het is bewust
- * geen HttpOnly-cookie — de client moet 'm zelf kunnen schrijven en lezen voor
- * de pixel-poort — dus komt 'ie gewoon mee met elke same-origin request en is
+ * geen HttpOnly-cookie, de client moet 'm zelf kunnen schrijven en lezen voor
+ * de pixel-poort, dus komt 'ie gewoon mee met elke same-origin request en is
  * hij hier in een route handler leesbaar.
  *
  * Gebruikt door lead-sync.ts om de herkomst op de leadrij vast te leggen, zodat
  * sales bij het bellen ziet via welk platform iemand binnenkwam. Zonder dit
  * bleef attributie hangen in Plausible: anoniem en niet aan een naam te koppelen.
  *
- * Faalt nooit hard — een ontbrekend of stuk cookie levert null, en de lead
+ * Faalt nooit hard, een ontbrekend of stuk cookie levert null, en de lead
  * wordt gewoon zonder herkomst weggeschreven.
  */
 

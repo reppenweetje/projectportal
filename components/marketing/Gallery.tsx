@@ -5,7 +5,7 @@ import Image from "next/image";
 import type { Project } from "@/lib/types";
 
 /**
- * Gallery — sfeer-carrousel met click-to-expand lightbox.
+ * Gallery, sfeer-carrousel met click-to-expand lightbox.
  *
  * Werkt op:
  *   - Desktop: klik image → opent fullscreen lightbox. Pijltjes-toetsen
@@ -41,7 +41,7 @@ export function Gallery({ project }: { project: Project }) {
   const drag = useRef({ down: false, startX: 0, startScroll: 0, moved: false });
 
   function onPointerDown(e: React.PointerEvent) {
-    // Touch laten we native scrollen — alleen de moved-vlag resetten zodat
+    // Touch laten we native scrollen, alleen de moved-vlag resetten zodat
     // een tap na een eerdere muis-sleep niet per ongeluk geblokkeerd wordt.
     if (e.pointerType !== "mouse") {
       drag.current.moved = false;
@@ -113,7 +113,7 @@ export function Gallery({ project }: { project: Project }) {
             In beeld
           </p>
           <h2 className="mt-3 text-3xl md:text-5xl font-extrabold text-repp-navy tracking-tight">
-            Een blik op De Hofman
+            Een blik op unit 14 en De Hofman
           </h2>
           <p className="mt-3 text-sm text-repp-navy/60">
             Tik op een impressie voor een grotere weergave en zoom daarin met
@@ -201,7 +201,7 @@ function Lightbox({
   onNext: () => void;
 }) {
   const img = images[index];
-  // Touch swipe state — vanggrip op horizontale veeg ≥ 50px om door
+  // Touch swipe state, vanggrip op horizontale veeg ≥ 50px om door
   // images te bladeren. Verticale gestures laten we erdoor (browser
   // scroll-back, pull-to-refresh blijft werken).
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
@@ -242,7 +242,7 @@ function Lightbox({
       onTouchStart={onTouchStart}
       onTouchEnd={onTouchEnd}
     >
-      {/* Close button — top-right, met safe-area inset voor notch */}
+      {/* Close button, top-right, met safe-area inset voor notch */}
       <button
         type="button"
         onClick={(e) => {
@@ -271,7 +271,7 @@ function Lightbox({
         </svg>
       </button>
 
-      {/* Prev button — desktop alleen, mobiel = swipe */}
+      {/* Prev button, desktop alleen, mobiel = swipe */}
       <button
         type="button"
         onClick={(e) => {
@@ -319,7 +319,7 @@ function Lightbox({
         </svg>
       </button>
 
-      {/* The image itself — click op image zelf moet niet doorbubblen
+      {/* The image itself, click op image zelf moet niet doorbubblen
           naar de backdrop-close. */}
       <div
         className="relative w-full h-full max-w-6xl max-h-[88vh] mx-4 my-12 md:my-16"

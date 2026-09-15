@@ -1,17 +1,17 @@
 "use client";
 
 /**
- * LeadCaptureDialog — modal-popup voor action-getriggerde lead-capture.
+ * LeadCaptureDialog, modal-popup voor action-getriggerde lead-capture.
  *
  * Wordt geopend wanneer een walk-in bezoeker iets gated probeert te doen
  * (document openen / rapport mailen). Vraagt voornaam + email + (optioneel)
- * telefoonnummer, met copy die uitlegt WAAROM we de gegevens vragen — dat
+ * telefoonnummer, met copy die uitlegt WAAROM we de gegevens vragen, dat
  * verhoogt conversie significant.
  *
  * Na succesvol submit:
  *   1. cookies zijn geset op dehofman.nl (via /api/portal-session)
  *   2. lead staat in Brevo lijst 289 + Supabase
- *   3. onSuccess() callback runt — caller voert de oorspronkelijke
+ *   3. onSuccess() callback runt, caller voert de oorspronkelijke
  *      actie uit (doc openen, rapport sturen, etc.)
  *
  * Bij sluiten zonder submit: niets gebeurt.

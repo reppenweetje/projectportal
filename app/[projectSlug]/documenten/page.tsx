@@ -13,6 +13,9 @@ type Params = { projectSlug: string };
 
 export const metadata: Metadata = {
   title: "Alle documenten",
+  description:
+    "Brochure, prijslijst, plattegronden, optielijst en de juridische stukken van De Hofman. Bekijk of download ze direct.",
+  alternates: { canonical: "/documenten" },
 };
 
 export default async function DocumentenPage({
@@ -63,7 +66,7 @@ export default async function DocumentenPage({
         <section className="px-5 py-5 md:py-7">
           <div className="mx-auto max-w-5xl">
             {/* Lijst is publiek, popup verschijnt pas bij klik op een
-                document-kaart — zie Documents component voor de gate. */}
+                document-kaart, zie Documents component voor de gate. */}
             <InfoTabs
               documenten={<Documents project={project} />}
               faq={<FAQ project={project} />}

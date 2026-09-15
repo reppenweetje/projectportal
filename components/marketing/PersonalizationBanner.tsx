@@ -21,7 +21,6 @@ export function PersonalizationBanner({ project }: { project: Project }) {
   if (profile.verified) {
     return (
       <VerifiedBanner
-        project={project}
         profile={profile}
         stillAvailable={stillAvailable}
         onClose={() => setDismissed(true)}
@@ -31,7 +30,6 @@ export function PersonalizationBanner({ project }: { project: Project }) {
 
   return (
     <NeedsVerifyBanner
-      project={project}
       profile={profile}
       onClose={() => setDismissed(true)}
     />
@@ -39,12 +37,10 @@ export function PersonalizationBanner({ project }: { project: Project }) {
 }
 
 function VerifiedBanner({
-  project,
   profile,
   stillAvailable,
   onClose,
 }: {
-  project: Project;
   profile: NonNullable<ReturnType<typeof useLeadProfile>>;
   stillAvailable: number;
   onClose: () => void;
@@ -63,11 +59,11 @@ function VerifiedBanner({
           ? `er zijn nog ${stillAvailable} units beschikbaar.`
           : "de verkoop is open.";
 
-  // CTA leidt naar de plattegrond — leads willen vrijwel altijd eerst
+  // CTA leidt naar de plattegrond, leads willen vrijwel altijd eerst
   // zien welke units nog beschikbaar zijn voordat ze verder kwalificeren.
   // Modus-routing naar /bereken voelde te smal; /units geeft het complete
   // beeld inclusief prijzen + status per unit.
-  const ctaLink = `/${project.slug}/units`;
+  const ctaLink = `/units`;
 
   return (
     <div className="bg-repp-yellow text-repp-navy">
@@ -101,11 +97,9 @@ function VerifiedBanner({
 }
 
 function NeedsVerifyBanner({
-  project,
   profile,
   onClose,
 }: {
-  project: Project;
   profile: NonNullable<ReturnType<typeof useLeadProfile>>;
   onClose: () => void;
 }) {
@@ -121,7 +115,7 @@ function NeedsVerifyBanner({
         </p>
         <div className="flex items-center gap-2 shrink-0">
           <Link
-            href={`/${project.slug}/welkom`}
+            href={`/welkom`}
             className="bg-repp-yellow text-repp-navy text-xs font-bold px-3 py-1.5 rounded-full hover:brightness-95 transition whitespace-nowrap"
           >
             Controleer →

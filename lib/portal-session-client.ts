@@ -36,9 +36,9 @@ function readProfileCookie(): PortalProfile | null {
   if (!raw) return null;
   const value = raw.slice(PROFILE_COOKIE.length + 1);
   // Client doet GEEN HMAC-verificatie (zou PORTAL_COOKIE_SECRET in client
-  // bundle vereisen — onveilig). We lezen alleen de payload-helft. Als
+  // bundle vereisen, onveilig). We lezen alleen de payload-helft. Als
   // iemand het cookie vervalst zien ze hooguit hun eigen "Welkom terug"-
-  // greeting — geen toegang tot gated content (dat checkt server-side).
+  // greeting, geen toegang tot gated content (dat checkt server-side).
   const parts = value.split(".");
   if (parts.length !== 2) return null;
   const body = parts[0];

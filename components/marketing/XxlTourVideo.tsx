@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * XxlTourVideo — de YouTube-rondleiding op de XXL-pagina die pas gaat spelen
+ * XxlTourVideo, de YouTube-rondleiding op de XXL-pagina die pas gaat spelen
  * wanneer de video daadwerkelijk in beeld komt (IntersectionObserver), niet
  * al bij het openen van de pagina.
  *
@@ -70,7 +70,7 @@ export function XxlTourVideo() {
       <iframe
         ref={iframeRef}
         src={src}
-        title="Digitale rondleiding XXL-unit — De Hofman"
+        title="Digitale rondleiding XXL-unit, De Hofman"
         className="h-full w-full"
         loading="lazy"
         allow="autoplay; encrypted-media; picture-in-picture; web-share"

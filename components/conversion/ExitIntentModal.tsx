@@ -24,7 +24,7 @@ export function ExitIntentModal({ project }: { project: Project }) {
     if (typeof window === "undefined") return;
     if (window.sessionStorage.getItem(SESSION_KEY)) return;
 
-    // Desktop only — skip on touch devices
+    // Desktop only, skip on touch devices
     const isTouch = window.matchMedia("(pointer: coarse)").matches;
     if (isTouch) return;
 

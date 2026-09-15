@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: "Uitleg-flow · De Hofman",
   description:
     "Een blik achter de schermen van De Hofman portal: lead-routes, account-systeem, automations en error-handling.",
+  alternates: { canonical: "/uitleg-flow" },
   robots: { index: false, follow: false },
 };
 
@@ -71,7 +72,7 @@ export default async function UitlegFlowPage({
           </nav>
 
           {/* 1. Lead-routes */}
-          <Section id="routes" eyebrow="Stap 1" title="Lead-routes — 3 manieren om binnen te komen">
+          <Section id="routes" eyebrow="Stap 1" title="Lead-routes, 3 manieren om binnen te komen">
             <p className="mb-8">
               Een lead kan via drie verschillende kanalen bij ons komen.
               Elk kanaal verzamelt andere data en triggert andere opvolging.
@@ -91,7 +92,7 @@ export default async function UitlegFlowPage({
                   "Brevo lijst 286 (CLP leads) krijgt contact + PORTAL_TOKEN attribute",
                   "Bij temperature=hot: Slack #hotleads notif voor sales",
                 ]}
-                outcome="Volledige profile incl. score, persona, timeline, intent — sales kan direct kwalificeren."
+                outcome="Volledige profile incl. score, persona, timeline, intent, sales kan direct kwalificeren."
               />
 
               <RouteCard
@@ -201,7 +202,7 @@ export default async function UitlegFlowPage({
           <Section
             id="opvolging"
             eyebrow="Stap 3"
-            title="Opvolging — wie krijgt wat"
+            title="Opvolging, wie krijgt wat"
           >
             <p className="mb-8">
               Per route is de follow-up anders. Belangrijk om te weten welke
@@ -229,7 +230,7 @@ export default async function UitlegFlowPage({
               <FollowupRow
                 source="Terugkerend (via magic-link)"
                 channels={[
-                  { type: "Geen nieuwe automation", detail: "Bestaande lead — Brevo werkflow loopt al" },
+                  { type: "Geen nieuwe automation", detail: "Bestaande lead, Brevo werkflow loopt al" },
                   { type: "last_portal_visit_at update", detail: "Sales kan zien wanneer lead laatst keek" },
                 ]}
               />
@@ -238,7 +239,7 @@ export default async function UitlegFlowPage({
             <Callout title="Antwoord op je vraag" tone="navy">
               Een walk-in lead die NIET via CLP is gekomen krijgt géén
               WhatsApp-bericht dag-1. WhatsApp-flow is gekoppeld aan CLP
-              chat-transcript / afhaak-reden — die data bestaat niet voor
+              chat-transcript / afhaak-reden, die data bestaat niet voor
               walk-ins.
             </Callout>
           </Section>
@@ -316,7 +317,7 @@ export default async function UitlegFlowPage({
               tone="hot"
               wanneer="Lead bereikt temperature=hot (uit CLP-flow scoring)"
               voorbeeld={[
-                "🔥 HOT lead — dehofman",
+                "🔥 HOT lead, dehofman",
                 "Naam: Flip Jacobs",
                 "E-mail: flip@bedrijf.nl",
                 "Telefoon: +31612345678",
@@ -357,7 +358,7 @@ export default async function UitlegFlowPage({
                 ernst="kritiek"
                 titel="Supabase DB write fail"
                 wanneer="lead-upsert kan niet schrijven naar de leads tabel (PK conflict, connectivity, etc)"
-                gevolg="Lead-data is NIET opgeslagen — geen portal_token, geen Brevo, geen Zapier"
+                gevolg="Lead-data is NIET opgeslagen, geen portal_token, geen Brevo, geen Zapier"
                 actie="Bel lead terug, vraag opnieuw gegevens. Slack notif heeft email + naam + phone"
               />
               <ErrorRow
@@ -404,7 +405,7 @@ export default async function UitlegFlowPage({
           <Section
             id="recovery"
             eyebrow="Stap 7"
-            title="Handmatig herstellen — wanneer iets fout gaat"
+            title="Handmatig herstellen, wanneer iets fout gaat"
           >
             <p className="mb-6">
               Als een Slack-notif zegt &quot;Brevo upsert failed&quot;, kan
@@ -441,9 +442,9 @@ export default async function UitlegFlowPage({
               <TechCard label="CLP chatbot" stack="Vite + React 18 op Vercel · clp.repp.nl" />
               <TechCard label="Portal site" stack="Next.js 16 (App Router) op Vercel · dehofman.nl" />
               <TechCard label="Database + Edge Functions" stack="Supabase (Postgres + Deno runtime)" />
-              <TechCard label="Mail + automation" stack="Brevo (Sendinblue) — Contacts + Transactional + Automations" />
-              <TechCard label="CRM trigger" stack="Zapier — 2 webhooks (walk-in + reservation)" />
-              <TechCard label="Realtime alerts" stack="Slack — #hotleads + #errors" />
+              <TechCard label="Mail + automation" stack="Brevo (Sendinblue), Contacts + Transactional + Automations" />
+              <TechCard label="CRM trigger" stack="Zapier, 2 webhooks (walk-in + reservation)" />
+              <TechCard label="Realtime alerts" stack="Slack, #hotleads + #errors" />
               <TechCard label="Analytics" stack="Plausible (privacy-friendly, geen cookies)" />
               <TechCard label="Hosting + DNS" stack="Vercel + Cloudflare-style edge" />
             </div>

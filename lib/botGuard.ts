@@ -1,6 +1,6 @@
 /**
  * Lichtgewicht bot-afweer voor de publieke lead-formulieren. Geen externe
- * dependency, geen CAPTCHA-frictie voor echte bezoekers — puur een honeypot.
+ * dependency, geen CAPTCHA-frictie voor echte bezoekers, puur een honeypot.
  *
  * Werking: elk formulier rendert een veld dat een mens nooit ziet (visueel
  * verborgen, aria-hidden, tabindex -1, autocomplete uit). Form-spam bots
@@ -20,7 +20,7 @@
 
 export const HONEYPOT_FIELD = "contact_ref";
 
-/** True als de honeypot is ingevuld — d.w.z. vrijwel zeker een bot. */
+/** True als de honeypot is ingevuld, d.w.z. vrijwel zeker een bot. */
 export function isHoneypotTripped(value: unknown): boolean {
   return typeof value === "string" && value.trim() !== "";
 }

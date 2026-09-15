@@ -1,5 +1,5 @@
 /**
- * Cookie-consent — AVG/ePrivacy + Google Consent Mode v2.
+ * Cookie-consent, AVG/ePrivacy + Google Consent Mode v2.
  *
  * Drie categorieën:
  *   - noodzakelijk : altijd aan (functionele cookies dh_session/repp_*).
@@ -128,7 +128,7 @@ export function setConsent(choice: ConsentChoice): StoredConsent {
 
 /**
  * Her-signaleer een reeds opgeslagen keuze naar Consent Mode (bij elke page
- * load). Doet niets als er nog niet gekozen is — dan geldt de default-denied
+ * load). Doet niets als er nog niet gekozen is, dan geldt de default-denied
  * staat uit het inline script. Broadcast óók het event zodat de Pixel bij
  * een terugkerende bezoeker met marketing-consent alsnog laadt.
  */

@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import type { Project } from "@/lib/types";
 import { MaandlastCalculator } from "./MaandlastCalculator";
 import { RendementCalculator } from "./RendementCalculator";
+import type { CalculatorUnitType } from "./UnitTypePicker";
 
 type Modus = "ondernemer" | "belegger";
 
@@ -13,6 +14,12 @@ export function CalculatorTabs({ project }: { project: Project }) {
   const router = useRouter();
   const initial: Modus =
     params.get("modus") === "belegger" ? "belegger" : "ondernemer";
+  // ?unit=unit-14 (bv. vanaf de homepage) selecteert het bijbehorende
+  // unit-type voor in de calculators.
+  const unitParam = params.get("unit");
+  const initialType: CalculatorUnitType | undefined = unitParam
+    ? project.units.find((u) => u.slug === unitParam)?.type
+    : undefined;
   const [modus, setModus] = useState<Modus>(initial);
 
   useEffect(() => {
@@ -54,9 +61,9 @@ export function CalculatorTabs({ project }: { project: Project }) {
 
       <div className="mt-8 text-left">
         {modus === "ondernemer" ? (
-          <MaandlastCalculator project={project} />
+          <MaandlastCalculator project={project} initialType={initialType} />
         ) : (
-          <RendementCalculator project={project} />
+          <RendementCalculator project={project} initialType={initialType} />
         )}
       </div>
     </div>

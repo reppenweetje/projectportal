@@ -36,7 +36,7 @@ export async function AdminDashboard({ range }: { range: TimeRange }) {
           </div>
           <div className="flex items-center gap-3">
             <a
-              href="/de-hofman"
+              href="/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-white/80 hover:text-white inline-flex items-center gap-1"
@@ -65,7 +65,7 @@ export async function AdminDashboard({ range }: { range: TimeRange }) {
           ) : (
             <>
               . Bezoekers en verkeersbron volgen zodra de Plausible Stats-API
-              werkt — zie{" "}
+              werkt, zie{" "}
               <a href="#integraties" className="underline font-semibold">
                 Integratie-status
               </a>
@@ -77,7 +77,7 @@ export async function AdminDashboard({ range }: { range: TimeRange }) {
         <div className="bg-rose-50 text-rose-800 border-b border-rose-200 text-xs px-5 py-2 text-center">
           <span className="font-bold">Leads-database niet gekoppeld.</span> Zet{" "}
           <code className="font-mono">SUPABASE_SERVICE_ROLE_KEY</code> in Vercel
-          (Production) en redeploy. Tot dan toont het dashboard geen cijfers —
+          (Production) en redeploy. Tot dan toont het dashboard geen cijfers , 
           bewust geen demo-data.
         </div>
       )}
@@ -110,7 +110,7 @@ export async function AdminDashboard({ range }: { range: TimeRange }) {
           <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
             <Stat
               label="Bezoekers"
-              value={visitors !== null ? visitors.toLocaleString("nl-NL") : "—"}
+              value={visitors !== null ? visitors.toLocaleString("nl-NL") : "–"}
               hint={visitors !== null ? "Plausible" : "Plausible niet gekoppeld"}
             />
             <Stat
@@ -120,7 +120,7 @@ export async function AdminDashboard({ range }: { range: TimeRange }) {
             />
             <Stat
               label="Conversie"
-              value={conversion !== null ? `${conversion.toFixed(1)}%` : "—"}
+              value={conversion !== null ? `${conversion.toFixed(1)}%` : "–"}
               hint="leads / bezoekers"
             />
             <Stat
@@ -136,7 +136,7 @@ export async function AdminDashboard({ range }: { range: TimeRange }) {
           </div>
         </section>
 
-        {/* Herkomst leads — hoofdweergave */}
+        {/* Herkomst leads, hoofdweergave */}
         <section>
           <h2 className="text-xl font-extrabold text-repp-navy tracking-tight mb-1">
             Waar komen leads vandaan
@@ -181,7 +181,7 @@ export async function AdminDashboard({ range }: { range: TimeRange }) {
           </div>
         </section>
 
-        {/* Verkeersbron — alle bezoekers (Plausible) */}
+        {/* Verkeersbron, alle bezoekers (Plausible) */}
         <section>
           <h2 className="text-xl font-extrabold text-repp-navy tracking-tight mb-1">
             Verkeersbron · alle bezoekers
@@ -195,7 +195,7 @@ export async function AdminDashboard({ range }: { range: TimeRange }) {
             {!plausible.connected ? (
               <EmptyRow>
                 {plausible.keyPresent
-                  ? `Geen Plausible-data. Controleer PLAUSIBLE_SITE_ID (nu: "${plausible.siteId}") — moet exact de sitenaam in Plausible zijn.`
+                  ? `Geen Plausible-data. Controleer PLAUSIBLE_SITE_ID (nu: "${plausible.siteId}"), moet exact de sitenaam in Plausible zijn.`
                   : "Plausible Stats-API niet gekoppeld (PLAUSIBLE_API_KEY ontbreekt)."}
               </EmptyRow>
             ) : plausible.sources.length === 0 ? (
@@ -280,7 +280,7 @@ export async function AdminDashboard({ range }: { range: TimeRange }) {
           </div>
         </section>
 
-        {/* Per-lead detail — bron + wat de persoon aanklikte */}
+        {/* Per-lead detail, bron + wat de persoon aanklikte */}
         <section>
           <h2 className="text-xl font-extrabold text-repp-navy tracking-tight mb-1">
             Leads · klik voor detail
@@ -339,7 +339,7 @@ export async function AdminDashboard({ range }: { range: TimeRange }) {
                       <DetailRow label="Bron">{l.sourceLabel}</DetailRow>
                       <DetailRow label="Herkomst">{l.origin}</DetailRow>
                       <DetailRow label="CRM-fase">
-                        {l.crmStage ? stageLabel(l.crmStage) : "—"}
+                        {l.crmStage ? stageLabel(l.crmStage) : "–"}
                       </DetailRow>
                       <DetailRow label="E-mail">{l.email}</DetailRow>
                     </div>
@@ -471,7 +471,7 @@ function integrationStatus(
   const plausibleDesc = plausible.connected
     ? "Bezoekers en verkeersbron worden uit de Stats API gelezen."
     : plausible.keyPresent
-      ? `Key gevonden, maar geen data. Controleer PLAUSIBLE_SITE_ID (nu: "${plausible.siteId}") — moet exact de sitenaam in Plausible zijn.`
+      ? `Key gevonden, maar geen data. Controleer PLAUSIBLE_SITE_ID (nu: "${plausible.siteId}"), moet exact de sitenaam in Plausible zijn.`
       : "Zet PLAUSIBLE_API_KEY in Vercel om bezoekers/verkeersbron te tonen.";
   return [
     {
@@ -482,20 +482,20 @@ function integrationStatus(
         : "Zet SUPABASE_SERVICE_ROLE_KEY in Vercel (Production) en redeploy.",
     },
     {
-      name: "Plausible — tracking",
+      name: "Plausible, tracking",
       status: "live",
       description:
         "Pageviews + custom events worden live verzameld (script in layout.tsx).",
     },
     {
-      name: "Plausible — Stats API",
+      name: "Plausible, Stats API",
       status: plausible.connected ? "live" : "todo",
       description: plausibleDesc,
     },
     {
       name: "Vercel hosting + GitHub",
       status: "live",
-      description: "reppenweetje/projectportal — auto-deploy bij elke push.",
+      description: "reppenweetje/projectportal, auto-deploy bij elke push.",
     },
   ];
 }

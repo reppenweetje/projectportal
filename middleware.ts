@@ -1,5 +1,5 @@
 /**
- * Middleware — portal token resolve + clean URLs.
+ * Middleware, portal token resolve + clean URLs.
  *
  * Twee verantwoordelijkheden, in volgorde:
  *
@@ -143,7 +143,7 @@ function normalizeUnitType(sizeId: string | null): 'L' | 'XL' | 'XXL' | undefine
  * gevoelige acties (reserveren, downloads) checken altijd dh_session
  * server-side. `verified: true` is hier intentioneel: aankomen via een
  * uniek per-lead PORTAL_TOKEN uit een Brevo-mail is impliciete bevestiging
- * dat we de juiste persoon te pakken hebben — dus skip de welkom-controle
+ * dat we de juiste persoon te pakken hebben, dus skip de welkom-controle
  * en geef 1-click reserveerflow direct.
  */
 function buildLeadCookie(profile: ResolveProfile): string {
@@ -159,7 +159,7 @@ function buildLeadCookie(profile: ResolveProfile): string {
   if (modus) payload.modus = modus;
   const unitType = normalizeUnitType(profile.size_id);
   if (unitType) payload.unitType = unitType;
-  // ⚠️ GEEN encodeURIComponent hier — NextResponse.cookies.set() doet dat
+  // ⚠️ GEEN encodeURIComponent hier, NextResponse.cookies.set() doet dat
   // zelf. Dubbele encoding breekt de client-side readCookie() in
   // lib/personalization.ts die met 1 decode parsed. Bug-fix.
   return JSON.stringify(payload);
@@ -194,7 +194,7 @@ async function applyPortalCookies(
     maxAge: COOKIE_MAX_AGE_SECONDS,
   });
 
-  // repp_lead: NIET HttpOnly, NIET HMAC-signed — puur UX-cookie zodat
+  // repp_lead: NIET HttpOnly, NIET HMAC-signed, puur UX-cookie zodat
   // PersonalizationBanner + ReservationForm + ExitIntent direct kunnen
   // tonen wat we al weten. Auth-checks gaan via dh_session.
   response.cookies.set({
@@ -308,10 +308,10 @@ async function applyCleanUrlLogic(request: NextRequest): Promise<NextResponse> {
 export const config = {
   // Skip:
   //  - /_next (Next.js internals)
-  //  - /api (API routes — die staan op root, niet onder [projectSlug])
+  //  - /api (API routes, die staan op root, niet onder [projectSlug])
   //  - /admin (admin dashboard, eigen route)
   //  - /favicon.ico, /robots.txt, /sitemap.xml, /opengraph-image*
-  //  - alles met een extensie (.png, .jpg, .svg, etc.) — statische assets
+  //  - alles met een extensie (.png, .jpg, .svg, etc.), statische assets
   matcher: [
     '/((?!_next|api|admin|favicon|robots|sitemap|opengraph-image|.*\\..*).*)',
   ],

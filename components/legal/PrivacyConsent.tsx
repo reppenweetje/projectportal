@@ -1,5 +1,5 @@
 /**
- * PrivacyConsent — kleine helper-component die de privacy-zin onder
+ * PrivacyConsent, kleine helper-component die de privacy-zin onder
  * elk lead-capture form rendert. Centraal zodat:
  *   - URL/copy consistent is op alle plekken
  *   - tone/styling makkelijk aanpasbaar (light/dark/inline)

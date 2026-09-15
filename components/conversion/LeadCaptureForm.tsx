@@ -1,18 +1,18 @@
 "use client";
 
 /**
- * LeadCaptureForm — gedeelde form-logica voor zowel de page-gate-overlay
+ * LeadCaptureForm, gedeelde form-logica voor zowel de page-gate-overlay
  * als de action-trigger dialog.
  *
  * Submit-flow:
  *  1. POST naar Supabase lead-upsert (source: dehofman_portal) → portal_token
- *  2. POST naar Zapier-webhook (fire-and-forget) — bestaande REPP automation
+ *  2. POST naar Zapier-webhook (fire-and-forget), bestaande REPP automation
  *  3. POST naar same-origin /api/portal-session → cookies geset op dehofman.nl
  *  4. track('interest_captured') voor Plausible
- *  5. onSuccess() callback — caller bepaalt wat er gebeurt (close dialog +
+ *  5. onSuccess() callback, caller bepaalt wat er gebeurt (close dialog +
  *     run pending action, of router.refresh voor overlay)
  *
- * Geen redirects meer — alles inline, gebruiker blijft op de huidige pagina.
+ * Geen redirects meer, alles inline, gebruiker blijft op de huidige pagina.
  */
 
 import { useState, type FormEvent } from "react";
@@ -256,7 +256,7 @@ export function LeadCaptureForm({
       // de net gezette session-cookies. Resultaat: gebruiker ziet meteen
       // de "ingelogde" UI (welkom-banner, personalisatie, gated content
       // unlocked) zonder full page reload of redirect. Voorheen lag dit
-      // bij de caller — onbetrouwbaar omdat niet alle callers refresh
+      // bij de caller, onbetrouwbaar omdat niet alle callers refresh
       // deden. Nu altijd intern in LeadCaptureForm zelf.
       router.refresh();
       onSuccess();
@@ -311,7 +311,7 @@ export function LeadCaptureForm({
         />
       </label>
 
-      {/* Honeypot — visueel verborgen, bots vullen 'm wel. */}
+      {/* Honeypot, visueel verborgen, bots vullen 'm wel. */}
       <div
         aria-hidden="true"
         style={{

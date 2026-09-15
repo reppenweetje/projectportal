@@ -17,7 +17,7 @@
 //
 // Een portal-form-submit zou normaal ÉÉN INSERT zijn (random session_id
 // per submit). Dat is OK want de lead-upsert dedupliceert in Brevo op
-// email — meerdere submits van dezelfde persoon updaten één Brevo-rij.
+// email, meerdere submits van dezelfde persoon updaten één Brevo-rij.
 
 import { randomUUID } from "node:crypto";
 
@@ -37,13 +37,13 @@ export interface WalkinLead {
   email?: string | null;
   first_name?: string | null;
   phone?: string | null;
-  /** ondernemer | belegger — gemapt naar lead-upsert persona */
+  /** ondernemer | belegger, gemapt naar lead-upsert persona */
   modus?: "ondernemer" | "belegger" | null;
   unit_id?: string | null; // bv "unit-1", "unit-7"
   unit_type?: "L" | "XL" | "XXL" | null;
   /** Vrije tekst, sales-context. Gaat naar attributes.note. */
   note?: string | null;
-  /** Wanneer mogen we bellen — asap / this_week / no_pref */
+  /** Wanneer mogen we bellen, asap / this_week / no_pref */
   contact_moment?: "asap" | "this_week" | "no_pref" | null;
   /** Indien beschikbaar (lead kwam al via CLP, browser-cookie heeft 't) */
   session_id?: string;
@@ -100,7 +100,7 @@ export async function upsertWalkinLead(lead: WalkinLead): Promise<UpsertResult> 
   // het ergens tussen CLP-leads in zit.
   if (!payload.temperature) payload.temperature = "warm";
 
-  // Vrij-formulier velden in attributes-bag stoppen — lead-upsert zet ze
+  // Vrij-formulier velden in attributes-bag stoppen, lead-upsert zet ze
   // door naar Supabase als jsonb. Brevo/Zapier pakken de relevante velden
   // er weer uit (rentRange, gateContext etc).
   const attributes: Record<string, unknown> = { ...(lead.attributes ?? {}) };

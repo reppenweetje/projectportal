@@ -11,9 +11,10 @@ import { ExitIntentModal } from "@/components/conversion/ExitIntentModal";
 type Params = { projectSlug: string };
 
 export const metadata: Metadata = {
-  title: "Koop vs. huur — wat levert een eigen unit je op?",
+  title: "Koop vs huur: wat levert een eigen unit je op?",
   description:
     "Reken uit wat kopen bij De Hofman je oplevert ten opzichte van huren: maandlasten, kantelpunt en vermogensopbouw over de tijd.",
+  alternates: { canonical: "/koopvshuur" },
 };
 
 export default async function KoopVsHuurPage({

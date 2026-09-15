@@ -2,9 +2,9 @@
  * POST /api/portal-logout
  *
  * Logt de bezoeker uit door alle 3 portal-cookies te wissen:
- *   - dh_session (HttpOnly) — server-side auth voor gated content
- *   - dh_profile (signed)   — UI personalisatie via usePortalSession
- *   - repp_lead (plain)     — UI personalisatie via useLeadProfile
+ *   - dh_session (HttpOnly), server-side auth voor gated content
+ *   - dh_profile (signed)  , UI personalisatie via usePortalSession
+ *   - repp_lead (plain)    , UI personalisatie via useLeadProfile
  *
  * dh_session en dh_profile kunnen alleen server-side worden gewist (HttpOnly
  * of cross-cookie behavior). Vandaar deze same-origin route.

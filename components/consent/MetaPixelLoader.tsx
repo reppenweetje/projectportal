@@ -6,7 +6,7 @@ import { CONSENT_EVENT, getConsent, type ConsentChoice } from "@/lib/consent";
 
 /**
  * Laadt de Meta Pixel UITSLUITEND nadat de bezoeker marketing-cookies heeft
- * geaccepteerd. Voorheen laadde de Pixel onvoorwaardelijk in layout.tsx —
+ * geaccepteerd. Voorheen laadde de Pixel onvoorwaardelijk in layout.tsx , 
  * dat plaatste cookies vóór toestemming (AVG/ePrivacy-overtreding). Nu:
  *
  *   - Bij mount lezen we het opgeslagen consent-cookie. Marketing granted
@@ -16,7 +16,7 @@ import { CONSENT_EVENT, getConsent, type ConsentChoice } from "@/lib/consent";
  *   - De helpers in lib/metaPixel.ts blijven no-op zolang window.fbq nog
  *     niet bestaat (dus vóór toestemming vuurt er niks).
  *
- * Zonder pixelId (env var niet gezet) rendert dit niks — identiek gedrag
+ * Zonder pixelId (env var niet gezet) rendert dit niks, identiek gedrag
  * als voorheen op dev/preview.
  */
 export default function MetaPixelLoader({
