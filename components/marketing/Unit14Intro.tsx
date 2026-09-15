@@ -1,15 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-  PRIMARY_CTA_HREF,
-  PRIMARY_CTA_LABEL,
-  UNIT14_IMAGE,
-} from "@/lib/site-config";
+import { PRIMARY_CTA_HREF, PRIMARY_CTA_LABEL } from "@/lib/site-config";
 import { Unit14SpecList } from "@/components/unit/Unit14Specs";
 
 /**
  * "Dit is unit 14": gecentreerde kop en tekst, daaronder het beeld op volle
  * breedte en de specs. Zelfde opbouw als de secties op /xxl.
+ *
+ * Beeld is bewust het dakterras en niet de voorgevel: die staat al in de
+ * hero, twee schermen hoger.
  */
 export function Unit14Intro() {
   return (
@@ -29,10 +28,10 @@ export function Unit14Intro() {
 
         <figure className="mt-8 overflow-hidden rounded-2xl border border-repp-gray bg-surface-muted">
           <Image
-            src={UNIT14_IMAGE}
-            alt="Vooraanzicht van XXL unit 14 met grote glasgevel en eigen entree aan de A. Hofmanweg"
+            src="/images/hofman/xxl/xxl-dakterras.jpg"
+            alt="Het eigen dakterras van XXL unit 14 met zitplek en uitzicht over de Waarderpolder"
             width={1840}
-            height={1081}
+            height={1035}
             sizes="(max-width: 1024px) 100vw, 960px"
             className="w-full h-auto"
           />

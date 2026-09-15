@@ -5,29 +5,32 @@ import { formatEuro } from "@/lib/types";
 import {
   PRIMARY_CTA_HREF,
   PRIMARY_CTA_LABEL,
+  UNIT14_IMAGE,
   XXL_AREA_LABEL,
   XXL_PRICE,
 } from "@/lib/site-config";
 
 /**
- * Homepage-hero. Zelfde opbouw en donkerte-recept als de hero op /xxl:
- * beeld op 65% opacity boven hofman-deep met gradient, content gecentreerd.
- * Eén boodschap, één primaire knop. De schaarste staat al in de sitebrede
- * status-banner, dus hier geen extra chip.
+ * Homepage-hero. Zelfde opbouw als de hero op /xxl: beeld boven
+ * hofman-deep met gradient, content gecentreerd. Het vooraanzicht van
+ * unit 14 is een lichte render (witte lucht, grijze gevel), dus de
+ * verdonkering is iets zwaarder dan op /xxl om de witte tekst leesbaar
+ * te houden. Eén boodschap, één primaire knop. De schaarste staat al in
+ * de sitebrede status-banner, dus hier geen extra chip.
  */
 export function MinimalHero({ project }: { project: Project }) {
   return (
     <section className="relative overflow-hidden bg-hofman-deep text-white flex flex-col justify-center min-h-[68vh]">
       <div className="absolute inset-0">
         <Image
-          src={project.heroImage.src}
-          alt={project.heroImage.alt}
+          src={UNIT14_IMAGE}
+          alt="Vooraanzicht van XXL unit 14 van De Hofman met grote glasgevel en eigen entree"
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center opacity-65"
+          className="object-cover object-center opacity-80"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-hofman-deep/40 via-hofman-deep/55 to-hofman-deep/90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-hofman-deep/45 via-hofman-deep/50 to-hofman-deep/85" />
       </div>
 
       <div className="relative px-5 py-12 md:py-16">
