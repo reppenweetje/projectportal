@@ -54,7 +54,7 @@ export const USE_CASES: UseCase[] = [
     alt: "XXL-unit ingericht als boutique met kledingrekken, spiegels en een loungehoek",
     title: "Boutique of showroom",
     body: "Grote glasgevel en volop daglicht aan de zichtzijde. Dé plek om je merk of collectie te tonen.",
-    floor: "bg",
+    floor: "v1",
     featured: true,
   },
   {
@@ -62,7 +62,7 @@ export const USE_CASES: UseCase[] = [
     alt: "XXL-unit als creatief bureau met werkplekken, moodboards en designposters",
     title: "Creatief bureau of studio",
     body: "Rustige verdiepingen met veel licht en uitzicht over de polder. Een studio of bureau voor je team.",
-    floor: "v2",
+    floor: "v1",
     featured: true,
   },
   {
@@ -78,7 +78,7 @@ export const USE_CASES: UseCase[] = [
     alt: "Verdieping van de XXL-unit als kantoor met werkplekken en een eigen koffiehoek met pantry",
     title: "Kantoor met pantry",
     body: "Werkplekken, een vergaderhoek en een eigen koffiehoek met pantry op de verdieping.",
-    floor: "v1",
+    floor: "v2",
     featured: true,
   },
   {
@@ -86,7 +86,7 @@ export const USE_CASES: UseCase[] = [
     alt: "Verdieping van de XXL-unit als werkvoorbereidingskantoor met planborden, bureau en gereedschap",
     title: "Werkvoorbereiding & installatie",
     body: "Werkvoorbereiding, planning en administratie op één plek, met je materiaal en gereedschap binnen handbereik.",
-    floor: "v2",
+    floor: "v1",
     featured: true,
   },
   {
@@ -110,28 +110,28 @@ export const USE_CASES: UseCase[] = [
     alt: "Begane grond van de XXL-unit als showroom met presentatietafels en vakkenwanden",
     title: "Showroom met presentatieruimte",
     body: "Presentatietafels en vakkenwanden, met daglicht en zicht vanaf de straat. Voor wie zijn collectie of materialen laat zien.",
-    floor: "bg",
+    floor: "v1",
   },
   {
     src: "/images/hofman/xxl/xxl-kantoor-pantry.jpg",
     alt: "Verdieping van de XXL-unit als kantoor met vergadertafel, werkplekken en een pantry",
     title: "Kantoor met vergadertafel",
     body: "Werkplekken, een vergadertafel en een eigen pantry op één verdieping.",
-    floor: "v1",
+    floor: "v2",
   },
   {
     src: "/images/hofman/xxl/xxl-werkplekken.jpg",
     alt: "Verdieping van de XXL-unit met bureaus langs de raampartij en een tekentafel",
     title: "Werkplekken aan het raam",
     body: "Bureaus langs de raampartij, met ruimte voor tekeningen en overleg.",
-    floor: "v1",
+    floor: "v2",
   },
   {
     src: "/images/hofman/xxl/xxl-opslag.jpg",
     alt: "Verdieping van de XXL-unit met stellingen, een inpaktafel en rolrekken",
     title: "Voorraad en verzending",
     body: "Stellingen, een inpaktafel en rolrekken, vlak boven je werkvloer.",
-    floor: "v1",
+    floor: "bg",
   },
 ];
 
