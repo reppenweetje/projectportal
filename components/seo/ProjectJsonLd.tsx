@@ -1,12 +1,12 @@
 import type { Project } from "@/lib/types";
 
 /**
- * ProjectJsonLd — structured-data voor het project, voor rich Google-results.
+ * ProjectJsonLd, structured-data voor het project, voor rich Google-results.
  *
  * Gebruikt Schema.org's "RealEstateListing" + "Place" types. Renders 2
  * losse JSON-LD scripts:
- *   1. RealEstateListing — het hele blok als 1 listing met aantal units
- *   2. Organization — REPP als verkoper / makelaar
+ *   1. RealEstateListing, het hele blok als 1 listing met aantal units
+ *   2. Organization, REPP als verkoper / makelaar
  *
  * Niet-blocking want script-tag in body wordt door crawlers parsed maar
  * niet uitgevoerd. Geen invloed op LCP.

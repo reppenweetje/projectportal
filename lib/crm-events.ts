@@ -1,4 +1,4 @@
-// REPP CRM website-signalen — SERVER-ONLY helper.
+// REPP CRM website-signalen, SERVER-ONLY helper.
 //
 // Stuurt portaal-acties (reservering, wachtlijst, document-download, ...) als
 // events naar de "clp analytics"-Supabase Edge Function `clp-events-upsert`.
@@ -13,19 +13,19 @@
 // praten met de publieke anon/publishable key.
 //
 // Koppeling event → lead gebeurt op `session_id`:
-//   A. Voorkeur — de CLP-sessie die via ?clp_session= aan de portal-link is
+//   A. Voorkeur, de CLP-sessie die via ?clp_session= aan de portal-link is
 //      meegegeven. Matcht direct de bestaande CLP-lead.
-//   B. Fallback — kennen we alleen het e-mailadres, dan registreren we eerst
+//   B. Fallback, kennen we alleen het e-mailadres, dan registreren we eerst
 //      een sessie mét e-mail via `clp-leads-upsert` (self-generated uuid) en
 //      loggen we het event met diezelfde uuid. Het CRM matcht dan op e-mail.
 //
-// Best-effort: faalt stil en gooit nooit — een CRM-hiccup mag nooit een
+// Best-effort: faalt stil en gooit nooit, een CRM-hiccup mag nooit een
 // portaal-flow breken.
 
 import { randomUUID } from "node:crypto";
 
-// Host + key van het clp-analytics project. Publieke publishable key —
-// dezelfde die de projectsites in de frontend gebruiken — dus veilig als
+// Host + key van het clp-analytics project. Publieke publishable key , 
+// dezelfde die de projectsites in de frontend gebruiken, dus veilig als
 // default. Overschrijfbaar via env voor rotatie of andere omgevingen.
 const CRM_HOST =
   process.env.CLP_ANALYTICS_URL?.trim() ||
@@ -73,7 +73,7 @@ export interface SendCrmEventsResult {
 }
 
 /**
- * Optie B — registreer een sessie mét e-mail zodat het CRM het latere event
+ * Optie B, registreer een sessie mét e-mail zodat het CRM het latere event
  * op e-mail kan matchen. Returnt de zelf-gegenereerde session_id, of null als
  * de registratie faalt.
  */

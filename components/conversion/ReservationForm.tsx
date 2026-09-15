@@ -7,6 +7,7 @@ import type { Project, Unit } from "@/lib/types";
 import { formatEuro } from "@/lib/types";
 import { useLeadProfile } from "@/lib/personalization";
 import { buildWhatsAppLink } from "@/lib/utils";
+import { WhatsAppLink } from "@/components/conversion/WhatsAppLink";
 import { track } from "@/lib/track";
 import { fireMetaLead } from "@/lib/metaPixel";
 import { PrivacyConsent } from "@/components/legal/PrivacyConsent";
@@ -71,7 +72,7 @@ export function ReservationForm({ project }: { project: Project }) {
       unitStatus: initialUnit.status,
       intent: isWachtlijst ? "wachtlijst" : "reservering",
     });
-    // Bewust alleen op mount — niet opnieuw bij unit-wissel in de dropdown.
+    // Bewust alleen op mount, niet opnieuw bij unit-wissel in de dropdown.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -166,16 +167,15 @@ export function ReservationForm({ project }: { project: Project }) {
           </ol>
         </div>
         <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <a
+          <WhatsAppLink
             href={buildWhatsAppLink(project.reservationWhatsAppNumber || project.whatsAppNumber, waMsg)}
-            target="_blank"
-            rel="noopener noreferrer"
+            cta="reserveren-done"
             className="inline-flex items-center bg-repp-navy text-white text-sm font-semibold px-5 py-3 rounded-full hover:bg-repp-blue transition"
           >
             Bevestig direct via WhatsApp
-          </a>
+          </WhatsAppLink>
           <a
-            href={`/${project.slug}`}
+            href={`/`}
             className="text-sm text-repp-navy/70 hover:text-repp-navy"
           >
             Terug naar {project.name}
@@ -271,7 +271,7 @@ export function ReservationForm({ project }: { project: Project }) {
               <Detail label="Telefoon" value={telefoon} onChange={setTelefoon} />
               <p className="text-xs text-repp-navy/50 sm:col-span-2 leading-relaxed">
                 <Link
-                  href={`/${project.slug}/welkom?next=/${project.slug}/reserveren?unit=${unit.slug}`}
+                  href={`/welkom?next=/reserveren?unit=${unit.slug}`}
                   className="underline hover:text-repp-navy"
                 >
                   Volledig wijzigen via welkom-pagina

@@ -6,10 +6,11 @@ export const metadata: Metadata = {
   title: "Cookiebeleid",
   description:
     "Welke cookies De Hofman (REPP) plaatst, met welk doel en hoe je je toestemming beheert.",
+  alternates: { canonical: "/cookiebeleid" },
 };
 
 /**
- * Cookiebeleid — de "informed consent"-onderbouwing waar de banner naar linkt.
+ * Cookiebeleid, de "informed consent"-onderbouwing waar de banner naar linkt.
  * Bevat de concrete, dehofman-specifieke cookietabel (die de generieke REPP-
  * privacyverklaring niet heeft) plus een knop om de keuze te wijzigen.
  *
@@ -56,7 +57,7 @@ const ANALYTICS: Cookie[] = [
   {
     naam: "Plausible (geen cookie)",
     door: "Plausible Analytics",
-    doel: "Anoniem, cookieloos bezoek meten. Plaatst geen cookie en verwerkt geen persoonsgegevens — draait daarom altijd.",
+    doel: "Anoniem, cookieloos bezoek meten. Plaatst geen cookie en verwerkt geen persoonsgegevens. Draait daarom altijd.",
     bewaartermijn: "n.v.t.",
   },
   {
@@ -146,7 +147,7 @@ export default function CookiebeleidPage() {
           Cookiebeleid
         </h1>
         <p className="mt-4 text-base leading-relaxed text-ink-soft">
-          Deze site gebruikt cookies. Noodzakelijke cookies staan altijd aan —
+          Deze site gebruikt cookies. Noodzakelijke cookies staan altijd aan.
           die zijn nodig om de site te laten werken. Analytics- en
           marketing­cookies plaatsen we alleen met jouw toestemming. Je keuze
           leg je vast in de banner en kun je hieronder altijd wijzigen.
@@ -177,8 +178,8 @@ export default function CookiebeleidPage() {
             Privacy &amp; je rechten
           </h2>
           <p className="mt-2 text-sm leading-relaxed text-ink-soft">
-            Hoe REPP met je persoonsgegevens omgaat — en hoe je die kunt inzien,
-            corrigeren of laten verwijderen — lees je in de volledige
+            Hoe REPP met je persoonsgegevens omgaat, en hoe je die kunt inzien,
+            corrigeren of laten verwijderen, lees je in de volledige
             privacyverklaring.
           </p>
           <p className="mt-4">

@@ -1,5 +1,5 @@
 /**
- * LeadGate — Server Component wrapper voor gated content.
+ * LeadGate, Server Component wrapper voor gated content.
  *
  * Gebruik in een page.tsx (Server Component):
  *
@@ -23,7 +23,7 @@
  *
  * BELANGRIJK: dit is een ECHTE security-gate. dh_session is HttpOnly +
  * server-side gevalideerd via portal-resolve. Een bezoeker kan dh_profile
- * vervalsen, maar dat helpt ze hier niet — getPortalSession kijkt naar
+ * vervalsen, maar dat helpt ze hier niet, getPortalSession kijkt naar
  * dh_session (het bearer-token), niet naar dh_profile.
  */
 

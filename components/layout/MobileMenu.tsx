@@ -6,6 +6,11 @@ import { usePathname } from "next/navigation";
 import type { Project } from "@/lib/types";
 import { useFavoriteCount } from "@/lib/favorites";
 import { useLeadProfile } from "@/lib/personalization";
+import {
+  PRIMARY_CTA_HREF,
+  PRIMARY_CTA_LABEL,
+  XXL_AREA_LABEL,
+} from "@/lib/site-config";
 
 type Item = {
   href: string;
@@ -42,54 +47,44 @@ export function MobileMenu({ project }: { project: Project }) {
 
   const primaryItems: Item[] = [
     {
-      href: `/${project.slug}/units`,
+      href: "/xxl",
+      label: "Unit 14",
+      description: `XXL, ${XXL_AREA_LABEL} over 3 lagen`,
+    },
+    {
+      href: "/units",
       label: "Plattegrond",
       description: "Alle units en hun status",
     },
     {
-      href: `/${project.slug}/xxl`,
-      label: "XXL-units",
-      description: "3 lagen, ca. 190 m² — units 7 & 14",
+      href: "/bereken",
+      label: "Bereken",
+      description: "Maandlast, rendement en koop vs huur",
     },
     {
-      href: `/${project.slug}/bereken`,
-      label: "Bereken rendement",
-      description: "Maandlast & rendement",
-    },
-    {
-      href: `/${project.slug}/koopvshuur`,
-      label: "Koop vs huur",
-      description: "Wat levert kopen op?",
-    },
-    {
-      href: `/${project.slug}/documenten`,
-      label: "Alle documenten",
+      href: "/documenten",
+      label: "Documenten",
       description: "Brochure, prijslijst en meer",
-    },
-    {
-      href: `/${project.slug}/prijs`,
-      label: "Prijsvergelijker",
-      description: "Vergelijk met de buurt",
     },
   ];
 
   const secondaryItems: Item[] = [
     {
-      href: `/${project.slug}/insider`,
+      href: `/insider`,
       label: "Hofman Insider",
     },
   ];
 
   if (favoritesCount > 0) {
     secondaryItems.unshift({
-      href: `/${project.slug}/favorieten`,
+      href: `/favorieten`,
       label: `Favorieten (${favoritesCount})`,
     });
   }
 
   return (
     <>
-      {/* Hamburger — tightly sized (w-9 h-9), zonder hover-circle background
+      {/* Hamburger, tightly sized (w-9 h-9), zonder hover-circle background
           want op touch blijft :hover-state actief na tap waardoor er een
           witte rondje verschijnt. Lijnen iets dikker + groter zodat ze
           duidelijk leesbaar zijn naast de gele CTA. */}
@@ -126,7 +121,7 @@ export function MobileMenu({ project }: { project: Project }) {
             className="absolute inset-0 w-full h-full bg-black/50 backdrop-blur-sm cursor-default animate-[fadeIn_.15s_ease-out]"
           />
 
-          {/* Side panel — gebruikt h-[100dvh] voor iOS Safari */}
+          {/* Side panel, gebruikt h-[100dvh] voor iOS Safari */}
           <div
             className="fixed top-0 right-0 w-[88vw] max-w-sm bg-white shadow-2xl flex flex-col animate-[slideInRight_.22s_ease-out]"
             style={{ height: "100dvh" }}
@@ -167,7 +162,7 @@ export function MobileMenu({ project }: { project: Project }) {
               {profile?.name && (
                 <div className="px-5 pt-5 pb-2">
                   <Link
-                    href={`/${project.slug}/welkom`}
+                    href={`/welkom`}
                     className="block rounded-xl bg-surface-muted border border-repp-gray p-4"
                   >
                     <p className="text-[11px] uppercase tracking-wider text-repp-navy/50 font-semibold">
@@ -187,10 +182,11 @@ export function MobileMenu({ project }: { project: Project }) {
             {/* Sticky bottom CTAs */}
             <div className="shrink-0 border-t border-repp-gray p-4 space-y-2 bg-white">
               <Link
-                href={`/${project.slug}/reserveren`}
+                href={PRIMARY_CTA_HREF}
+                data-cta="nav"
                 className="block w-full bg-repp-yellow text-repp-navy text-center font-bold px-5 py-3.5 rounded-full hover:brightness-95 transition"
               >
-                Reserveer (vrijblijvend)
+                {PRIMARY_CTA_LABEL}
               </Link>
               <a
                 href={`tel:${project.makelaar.phone}`}

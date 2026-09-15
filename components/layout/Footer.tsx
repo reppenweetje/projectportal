@@ -39,7 +39,7 @@ export function Footer({ project }: { project: Project }) {
           <ul className="mt-3 text-sm space-y-1">
             <li>
               <Link
-                href={`/${project.slug}/units`}
+                href={`/units`}
                 className="hover:text-repp-yellow"
               >
                 Plattegrond
@@ -47,7 +47,7 @@ export function Footer({ project }: { project: Project }) {
             </li>
             <li>
               <Link
-                href={`/${project.slug}/bereken`}
+                href={`/bereken`}
                 className="hover:text-repp-yellow"
               >
                 Bereken
@@ -55,7 +55,7 @@ export function Footer({ project }: { project: Project }) {
             </li>
             <li>
               <Link
-                href={`/${project.slug}/documenten`}
+                href={`/documenten`}
                 className="hover:text-repp-yellow"
               >
                 Documenten
@@ -63,7 +63,7 @@ export function Footer({ project }: { project: Project }) {
             </li>
             <li>
               <Link
-                href={`/${project.slug}/insider`}
+                href={`/insider`}
                 className="hover:text-repp-yellow"
               >
                 Hofman Insider
@@ -94,8 +94,7 @@ export function Footer({ project }: { project: Project }) {
             Hofman Insider
           </p>
           <p className="text-sm mt-2 text-white/65 leading-relaxed">
-            Als eerste bericht bij statuswijzigingen, prijsindexaties en
-            bouwmijlpalen.
+            Als eerste bericht als unit 7 vrijvalt, en bij bouwmijlpalen.
           </p>
           <div className="mt-3">
             <InsiderSignup
@@ -113,7 +112,7 @@ export function Footer({ project }: { project: Project }) {
           {/* Identity-strip: óf "Ingelogd als X · Dit ben ik niet" als
               er een profile is, óf "Inloggen op je account" als de
               bezoeker uitgelogd is. Wederzijds exclusief. */}
-          <FooterIdentity projectSlug={project.slug} />
+          <FooterIdentity />
           <FooterLogin />
           <div className="flex items-center gap-2 flex-wrap">
             <PrivacyLink tone="dark" />

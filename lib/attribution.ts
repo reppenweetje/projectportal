@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Marketing-attributie — herken waar een bezoeker vandaan komt zodat we
+ * Marketing-attributie, herken waar een bezoeker vandaan komt zodat we
  * conversie-events (Meta Lead/Contact, later Google/CAPI) ALLEEN vuren voor
  * betaald advertentieverkeer en NIET voor walk-ins (direct, organisch,
  * e-mail-portaltoken).
@@ -13,13 +13,13 @@
  *   - "Last paid click wins": komt iemand later via een nieuwe ad binnen,
  *     dan overschrijven we met de verse herkomst (dat is wat Meta/Google
  *     binnen hun attributie-window ook doen). Een latere DIRECTE sessie
- *     overschrijft niets — dan blijft de laatst bekende ad-herkomst staan,
+ *     overschrijft niets, dan blijft de laatst bekende ad-herkomst staan,
  *     zolang het cookie leeft (90 dagen).
  *   - isMetaOrigin() / isGoogleOrigin() lezen het cookie op het conversie-
  *     moment terug. De pixel-helpers in lib/metaPixel.ts gebruiken dit als
  *     poort.
  *
- * Geen PII in dit cookie — puur campagne-herkomst. Veilig voor SSR (alle
+ * Geen PII in dit cookie, puur campagne-herkomst. Veilig voor SSR (alle
  * functies zijn no-op zonder document/window).
  */
 
@@ -34,9 +34,9 @@ export type Attribution = {
   campaign?: string;
   content?: string;
   term?: string;
-  /** Meta click-id — door Meta automatisch achter de ad-URL geplakt */
+  /** Meta click-id, door Meta automatisch achter de ad-URL geplakt */
   fbclid?: string;
-  /** Google click-id — door Google automatisch achter de ad-URL geplakt */
+  /** Google click-id, door Google automatisch achter de ad-URL geplakt */
   gclid?: string;
   /** Google iOS/in-app click-ids (vervangen gclid in bepaalde gevallen) */
   wbraid?: string;
@@ -102,7 +102,7 @@ export function getAttribution(): Attribution | null {
 
 /**
  * Heeft deze bezoeker een ad-klik in de huidige URL? UTM-params alleen
- * tellen óók — bv een handmatig getagde nieuwsbrieflink — maar voor de
+ * tellen óók, bv een handmatig getagde nieuwsbrieflink, maar voor de
  * conversie-poort kijken we straks specifiek naar Meta/Google.
  */
 function urlHasAttributionSignal(sp: URLSearchParams): boolean {
@@ -118,7 +118,7 @@ function urlHasAttributionSignal(sp: URLSearchParams): boolean {
 /**
  * Lees herkomst uit de huidige URL en sla 'm op. Aanroepen bij de eerste
  * client-render (AttributionTracker). Overschrijft alleen als de huidige
- * URL daadwerkelijk een herkomst-signaal heeft — anders blijft de bestaande
+ * URL daadwerkelijk een herkomst-signaal heeft, anders blijft de bestaande
  * attributie staan (zodat een directe vervolgsessie de ad-herkomst niet wist).
  */
 export function captureAttribution(): Attribution | null {
@@ -127,7 +127,7 @@ export function captureAttribution(): Attribution | null {
 
   const existing = readCookie();
   if (!urlHasAttributionSignal(sp)) {
-    // Geen nieuw signaal — laat bestaande herkomst met rust.
+    // Geen nieuw signaal, laat bestaande herkomst met rust.
     return existing;
   }
 

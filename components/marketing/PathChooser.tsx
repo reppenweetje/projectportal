@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Project } from "@/lib/types";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function PathChooser({ project }: { project: Project }) {
   return (
     <section className="px-5 pb-24 md:pb-32 pt-24 md:pt-32">
@@ -14,14 +15,14 @@ export function PathChooser({ project }: { project: Project }) {
       </div>
       <div className="mx-auto max-w-3xl grid sm:grid-cols-2 gap-4">
         <PathTile
-          href={`/${project.slug}/bereken?modus=ondernemer`}
+          href={`/bereken?modus=ondernemer`}
           eyebrow="Voor mijn bedrijf"
           title="Eigen pand"
           body="Lagere maandlast dan huur. Vermogen opbouwen in je eigen vastgoed."
           cta="Bereken + reserveer"
         />
         <PathTile
-          href={`/${project.slug}/bereken?modus=belegger`}
+          href={`/bereken?modus=belegger`}
           eyebrow="Als belegging"
           title="6–8% bruto"
           body="Schaars MRA-vastgoed met laag leegstandsrisico. Indicatief rendement."

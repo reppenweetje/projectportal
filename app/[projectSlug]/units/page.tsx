@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getProjectBySlug, countByStatus } from "@/lib/projects/de-hofman";
 import { formatEuro, formatM2, type Project } from "@/lib/types";
+import { SCARCITY_LINE_SHORT } from "@/lib/site-config";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyCTA } from "@/components/layout/StickyCTA";
@@ -12,7 +13,10 @@ import { ExitIntentModal } from "@/components/conversion/ExitIntentModal";
 type Params = { projectSlug: string };
 
 export const metadata: Metadata = {
-  title: "Alle units",
+  title: "Plattegrond en status van alle units",
+  description:
+    "De plattegrond van De Hofman met de status van alle 14 units. Nog 1 van 14 units te koop: XXL unit 14, ca. 190 m² over 3 lagen.",
+  alternates: { canonical: "/units" },
 };
 
 export default async function UnitsOverviewPage({
@@ -94,8 +98,8 @@ function UnitTypesSummary({ project }: { project: Project }) {
         <div className="mt-10 grid md:grid-cols-3 gap-4">
           {types.map((t) => {
             // Badge data-gedreven uit de unit-statussen, zelfde regels als de
-            // koop-vs-huur unitkaarten: 0 = Uitverkocht, 1 = "Laatste units"
-            // (bewust meervoud, commerciële copy), meer = "X beschikbaar".
+            // koop-vs-huur unitkaarten: 0 = Uitverkocht, 1 = de sitebrede
+            // schaarste-regel, meer = "X beschikbaar".
             const beschikbaar = project.units.filter(
               (u) => u.type === t.label && u.status === "available",
             ).length;
@@ -103,7 +107,7 @@ function UnitTypesSummary({ project }: { project: Project }) {
               beschikbaar === 0
                 ? "Uitverkocht"
                 : beschikbaar === 1
-                  ? "Laatste units"
+                  ? SCARCITY_LINE_SHORT
                   : `${beschikbaar} beschikbaar`;
             const badgeCls =
               beschikbaar === 0
@@ -120,9 +124,9 @@ function UnitTypesSummary({ project }: { project: Project }) {
             );
             const href =
               t.label === "XXL"
-                ? `/${project.slug}/xxl`
+                ? `/xxl`
                 : repUnit
-                  ? `/${project.slug}/units/${repUnit.slug}`
+                  ? `/units/${repUnit.slug}`
                   : null;
 
             const inner = (
@@ -176,7 +180,7 @@ function UnitTypesSummary({ project }: { project: Project }) {
         </div>
         <div className="mt-12 text-center">
           <Link
-            href={`/${project.slug}/bereken`}
+            href={`/bereken`}
             className="inline-flex items-center bg-repp-navy text-white text-sm font-semibold px-5 py-3 rounded-full hover:bg-repp-blue transition"
           >
             Bereken wat dit jou kost

@@ -10,7 +10,8 @@ type Params = { projectSlug: string };
 
 export const metadata: Metadata = {
   title: "Welkom",
-  robots: { index: false },
+  alternates: { canonical: "/welkom" },
+  robots: { index: false, follow: true },
 };
 
 export default async function WelkomPage({

@@ -1,7 +1,7 @@
 import Script from "next/script";
 
 /**
- * Google Tag Manager — geladen via Consent Mode v2 *advanced*.
+ * Google Tag Manager, geladen via Consent Mode v2 *advanced*.
  *
  * GTM laadt op ELKE pageload (niet achter de banner), maar de default-denied
  * consent-staat staat al vóór dit script (in app/layout.tsx head). Gevolg:

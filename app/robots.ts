@@ -1,5 +1,5 @@
 /**
- * robots.txt — laat alles crawlen, verwijs naar sitemap.
+ * robots.txt, laat alles crawlen, verwijs naar sitemap.
  *
  * Auto-gegenereerd op /robots.txt.
  */

@@ -3,13 +3,13 @@
 import Link from "next/link";
 import { useFavoriteCount } from "@/lib/favorites";
 
-export function HeaderFavorites({ projectSlug }: { projectSlug: string }) {
+export function HeaderFavorites() {
   const count = useFavoriteCount();
   if (count === 0) return null;
 
   return (
     <Link
-      href={`/${projectSlug}/favorieten`}
+      href={`/favorieten`}
       className="inline-flex items-center gap-1.5 px-3 h-9 rounded-full hover:bg-white/10 transition text-white"
       aria-label={`${count} favorieten`}
     >

@@ -4,7 +4,7 @@ import { HONEYPOT_FIELD } from "@/lib/botGuard";
 
 /**
  * Visueel verborgen honeypot-veld. Een mens ziet en bereikt dit nooit (off-
- * screen, aria-hidden, tabIndex -1). Bots vullen het wel in — zie lib/botGuard.ts.
+ * screen, aria-hidden, tabIndex -1). Bots vullen het wel in, zie lib/botGuard.ts.
  *
  * Controlled via value/onChange zodat het formulier de waarde mee kan sturen
  * in de fetch-body (server-side dubbele check).

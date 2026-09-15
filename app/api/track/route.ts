@@ -64,7 +64,7 @@ export async function POST(req: Request) {
   }
 
   // Sessie server-side uitlezen. Ontbreekt die, dan mag de caller een
-  // portal_token meegeven — nodig op het gate-conversie-moment, waar de
+  // portal_token meegeven, nodig op het gate-conversie-moment, waar de
   // cookies pas na de ?t=-redirect gezet worden. Het portal_token geeft
   // via ?t= sowieso al toegang, dus dit verzwakt het model niet.
   const { sessionToken } = await getPortalSession();
@@ -105,7 +105,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true, logged: Boolean(data?.logged) });
   } catch (err) {
     console.error("[track] portal-event forward failed", err);
-    // Nooit hard falen — de client negeert dit sowieso.
+    // Nooit hard falen, de client negeert dit sowieso.
     return NextResponse.json({ ok: true, logged: false });
   }
 }

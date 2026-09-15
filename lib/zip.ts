@@ -1,7 +1,7 @@
 import { crc32 } from "node:zlib";
 
 /**
- * createZip — bouwt een geldig ZIP-archief zonder externe dependency.
+ * createZip, bouwt een geldig ZIP-archief zonder externe dependency.
  *
  * Gebruikt de "store"-methode (geen compressie): de document-PDF's zijn zelf
  * al gecomprimeerd, dus deflaten levert nauwelijks winst en store houdt de

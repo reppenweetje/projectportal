@@ -1,10 +1,19 @@
 import Link from "next/link";
 import type { Project } from "@/lib/types";
 import { formatEuro } from "@/lib/types";
+import {
+  PRIMARY_CTA_HREF,
+  PRIMARY_CTA_LABEL,
+  RENT_PER_M2_YEAR,
+  SECONDARY_CTA_HREF,
+  SECONDARY_CTA_LABEL,
+  XXL_AREA_LABEL,
+  XXL_PRICE,
+} from "@/lib/site-config";
 
-const HUUR_PER_M2_PER_JAAR = 165; // realistisch voor Waarderpolder
-const REPRESENTATIVE_M2 = 190; // XXL unit 14 (laatste beschikbare unit)
-const REPRESENTATIVE_PRIJS = 475000; // koopsom unit 14, v.o.n. excl. btw
+const HUUR_PER_M2_PER_JAAR = RENT_PER_M2_YEAR;
+const REPRESENTATIVE_M2 = 190; // XXL unit 14 (ca. 190 m²)
+const REPRESENTATIVE_PRIJS = XXL_PRICE; // koopsom unit 14, v.o.n. excl. btw
 const OVERDRACHTSBELASTING = 0.104; // 10,4% bij bestaande bouw, 0% bij nieuwbouw v.o.n.
 
 export function LossAversion({ project }: { project: Project }) {
@@ -17,7 +26,7 @@ export function LossAversion({ project }: { project: Project }) {
       <div className="mx-auto max-w-5xl">
         <div className="text-center mb-12">
           <p className="text-xs uppercase tracking-[0.2em] text-repp-yellow font-semibold">
-            Wat het je kost om níet te kiezen
+            Wat het je kost om niet te kiezen
           </p>
           <h2 className="mt-3 text-3xl md:text-5xl font-extrabold tracking-tight">
             Twee keer per jaar verlies je dit.
@@ -28,35 +37,46 @@ export function LossAversion({ project }: { project: Project }) {
           <Card
             badge="Per jaar weg aan huur"
             big={`±${formatEuro(huurPerJaar)}`}
-            sub={`bij ${REPRESENTATIVE_M2} m² × €${HUUR_PER_M2_PER_JAAR}/m²/jr huur`}
+            sub={`bij ${XXL_AREA_LABEL} × €${HUUR_PER_M2_PER_JAAR}/m²/jr huur`}
             body="Geld dat je elk jaar weggeeft. Bij een eigen pand bouw je in dezelfde maandlast vermogen op, én profiteer je van waardestijging."
           />
           <Card
             badge="Voordeel t.o.v. bestaande bouw"
             big={`±${formatEuro(overdrachtsbelastingBespaard)}`}
             sub={`géén 10,4% overdrachtsbelasting over ${formatEuro(REPRESENTATIVE_PRIJS)}`}
-            body={`Nieuwbouw v.o.n.: geen overdrachtsbelasting, en nutsaansluitingen (elders €3.000–€5.000) en een eigen parkeerplaats zijn al inbegrepen. Vergelijkbare nieuwbouw in de Waarderpolder: €${marktPerM2Min.toLocaleString("nl-NL")}–€${marktPerM2Max.toLocaleString("nl-NL")}/m².`}
+            body={`Nieuwbouw v.o.n.: geen overdrachtsbelasting, en nutsaansluitingen (elders €3.000 tot €5.000) en een eigen parkeerplaats zijn al inbegrepen. Vergelijkbare nieuwbouw in de Waarderpolder: €${marktPerM2Min.toLocaleString("nl-NL")} tot €${marktPerM2Max.toLocaleString("nl-NL")}/m².`}
             highlight
           />
         </div>
 
-        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
           <Link
-            href={`/${project.slug}/bereken`}
+            href={PRIMARY_CTA_HREF}
+            data-cta="verlies"
             className="inline-flex items-center bg-repp-yellow text-repp-navy font-bold px-6 py-3.5 rounded-full hover:brightness-95 transition"
           >
-            Reken het uit voor jouw situatie →
+            {PRIMARY_CTA_LABEL}
           </Link>
           <Link
-            href={`/${project.slug}/units`}
+            href={SECONDARY_CTA_HREF}
+            data-cta="verlies-sparren"
             className="inline-flex items-center text-white/80 hover:text-white text-sm font-semibold py-2"
           >
-            Of bekijk de beschikbare units →
+            {SECONDARY_CTA_LABEL} →
+          </Link>
+        </div>
+
+        <div className="mt-3 text-center">
+          <Link
+            href="/bereken"
+            className="inline-flex items-center text-white/60 hover:text-white text-sm py-2"
+          >
+            Reken het uit voor jouw situatie →
           </Link>
         </div>
 
         <p className="mt-6 text-[11px] text-white/40 text-center">
-          Indicatieve cijfers op basis van XXL-unit 14 van ca. 190 m² (€475.000 v.o.n., excl. btw) en marktconforme huurprijzen.
+          Indicatieve cijfers op basis van XXL unit 14 van ca. 190 m² (€475.000 v.o.n., excl. btw) en marktconforme huurprijzen.
           Aan deze indicaties kunnen geen rechten worden ontleend.
         </p>
       </div>

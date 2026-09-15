@@ -52,7 +52,7 @@ export function UnitImageCarousel({ images }: { images: ProjectImage[] }) {
         ))}
       </div>
 
-      {/* Arrow controls — desktop */}
+      {/* Arrow controls, desktop */}
       {images.length > 1 && (
         <>
           <button

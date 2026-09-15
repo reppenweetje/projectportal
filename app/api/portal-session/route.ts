@@ -8,7 +8,7 @@
  * portal-resolve? Browsers blokkeren Set-Cookie van een third-party origin
  * (supabase.co) op de hoofd-domain (dehofman.nl). Door deze route door
  * de Next.js server (same-origin) te laten lopen kan Set-Cookie wél
- * landen — en blijft de gebruiker op de huidige pagina staan zonder
+ * landen, en blijft de gebruiker op de huidige pagina staan zonder
  * `?t=`-redirect of refresh.
  *
  * Body:  { "token": "<portal_token uuid>" }
@@ -173,7 +173,7 @@ export async function POST(req: Request) {
 
   response.cookies.set({
     name: LEAD_COOKIE,
-    // ⚠️ GEEN encodeURIComponent — NextResponse.cookies.set() encodet zelf.
+    // ⚠️ GEEN encodeURIComponent, NextResponse.cookies.set() encodet zelf.
     // Dubbel-encoded value breekt client readCookie() in personalization.ts.
     value: JSON.stringify(leadPayload),
     httpOnly: false,

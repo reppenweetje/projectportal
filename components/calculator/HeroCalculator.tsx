@@ -4,10 +4,20 @@ import Link from "next/link";
 import { useState } from "react";
 import type { Project } from "@/lib/types";
 import { formatEuro } from "@/lib/types";
+import {
+  FINANCE_ASSUMPTIONS,
+  PRIMARY_CTA_HREF,
+  PRIMARY_CTA_LABEL,
+  RENT_PER_M2_YEAR,
+  SECONDARY_CTA_HREF,
+  SECONDARY_CTA_LABEL,
+  VVE_MONTHLY,
+  XXL_AREA_LABEL,
+  XXL_PRICE,
+} from "@/lib/site-config";
 
-const TYPICAL_RENTE = 5.5;
-const TYPICAL_LOOPTIJD = 20;
-const TYPICAL_OWN_PERCENT = 30;
+const { ownPercent: OWN_PERCENT, interestPct: RENTE, termYears: LOOPTIJD } =
+  FINANCE_ASSUMPTIONS;
 
 function annuity(principal: number, annualRatePct: number, years: number) {
   const r = annualRatePct / 100 / 12;
@@ -16,19 +26,43 @@ function annuity(principal: number, annualRatePct: number, years: number) {
   return (principal * r) / (1 - Math.pow(1 + r, -n));
 }
 
-export function HeroCalculator({ project }: { project: Project }) {
-  // Use cheapest available L-unit as default
-  const defaultUnit =
-    project.units.find((u) => u.status === "available" && u.type === "L") ??
-    project.units[0];
+/** Gemiddeld aflossingsdeel per maand in jaar 1 van een annuïteit. */
+function aflossingJaar1PerMaand(
+  principal: number,
+  annualRatePct: number,
+  years: number,
+) {
+  const r = annualRatePct / 100 / 12;
+  const payment = annuity(principal, annualRatePct, years);
+  let balance = principal;
+  let repaid = 0;
+  for (let m = 0; m < 12; m++) {
+    const interest = balance * r;
+    const principalPart = payment - interest;
+    repaid += principalPart;
+    balance -= principalPart;
+  }
+  return repaid / 12;
+}
 
+/** Ca. 190 m² tegen de marktconforme huurprijs per m² per jaar. */
+const HUUR_PER_JAAR = 190 * RENT_PER_M2_YEAR;
+
+/**
+ * Geldblok op de homepage: wat je nu per jaar kwijt bent aan huur, naast de
+ * maandlast van unit 14. Zelfde aannames als /bereken en /koopvshuur
+ * (20% inbreng, 4,97%, 25 jaar annuïtair, VVE € 160).
+ */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function HeroCalculator({ project }: { project: Project }) {
   const [huidigeHuur, setHuidigeHuur] = useState(2500);
 
-  const koopsom = defaultUnit.prijsExBtw;
-  const eigenInbreng = (TYPICAL_OWN_PERCENT / 100) * koopsom;
+  const koopsom = XXL_PRICE;
+  const eigenInbreng = (OWN_PERCENT / 100) * koopsom;
   const lening = koopsom - eigenInbreng;
-  const maandHypotheek = annuity(lening, TYPICAL_RENTE, TYPICAL_LOOPTIJD);
-  const totaalMaand = Math.round(maandHypotheek + defaultUnit.vvePerMaand);
+  const maandHypotheek = annuity(lening, RENTE, LOOPTIJD);
+  const totaalMaand = Math.round(maandHypotheek + VVE_MONTHLY);
+  const aflossing = Math.round(aflossingJaar1PerMaand(lening, RENTE, LOOPTIJD));
   const verschil = huidigeHuur - totaalMaand;
 
   return (
@@ -39,11 +73,14 @@ export function HeroCalculator({ project }: { project: Project }) {
             In 10 seconden weten
           </p>
           <h2 className="mt-3 text-3xl md:text-5xl font-extrabold text-repp-navy tracking-tight">
-            Wat kost een eigen pand jou per maand?
+            Wat kost unit 14 jou per maand?
           </h2>
-          <p className="mt-3 text-repp-navy/70 max-w-xl mx-auto">
-            Vergelijk je huidige huur met de maandlast van een L-unit ({defaultUnit.type} ·{" "}
-            {formatEuro(koopsom)} excl. btw).
+          <p className="mt-3 text-repp-navy/70 max-w-2xl mx-auto">
+            Huur je nu een vergelijkbare ruimte? Bij {XXL_AREA_LABEL} tegen
+            €{RENT_PER_M2_YEAR} per m² per jaar ben je{" "}
+            {formatEuro(HUUR_PER_JAAR)} per jaar aan huur kwijt. Vergelijk dat
+            met de maandlast van unit 14 (XXL, {formatEuro(koopsom)} excl.
+            btw).
           </p>
         </div>
 
@@ -52,7 +89,7 @@ export function HeroCalculator({ project }: { project: Project }) {
             <div>
               <label className="block">
                 <span className="text-sm font-semibold text-repp-navy">
-                  Wat betaal je nu aan huur per maand?
+                  Betaal je nu huur? Vul in wat je per maand kwijt bent.
                 </span>
                 <div className="relative mt-3">
                   <span className="absolute left-5 top-1/2 -translate-y-1/2 text-repp-navy/40 text-2xl">
@@ -86,11 +123,12 @@ export function HeroCalculator({ project }: { project: Project }) {
                 ))}
               </div>
               <p className="mt-4 text-[11px] text-repp-navy/50 leading-relaxed">
-                Aanname: {TYPICAL_OWN_PERCENT}% eigen inbreng (
-                {formatEuro(Math.round(eigenInbreng))}), {TYPICAL_RENTE}% rente,{" "}
-                {TYPICAL_LOOPTIJD} jaar annuïteit. Reken het exact uit op de{" "}
+                Aanname: {OWN_PERCENT}% eigen inbreng (
+                {formatEuro(Math.round(eigenInbreng))}), {RENTE.toLocaleString("nl-NL")}% rente,{" "}
+                {LOOPTIJD} jaar annuïtair, VVE {formatEuro(VVE_MONTHLY)} per
+                maand. Dezelfde aannames als op de{" "}
                 <Link
-                  href={`/${project.slug}/bereken`}
+                  href="/bereken?unit=unit-14"
                   className="underline hover:text-repp-blue"
                 >
                   bereken-pagina
@@ -101,49 +139,56 @@ export function HeroCalculator({ project }: { project: Project }) {
 
             <div className="rounded-2xl bg-repp-navy text-white p-6 md:p-8">
               <p className="text-xs uppercase tracking-wider text-repp-yellow font-semibold">
-                Maandlast eigen pand
+                Maandlast unit 14
               </p>
               <p className="mt-2 text-5xl md:text-6xl font-extrabold tracking-tight tabular-nums">
                 {formatEuro(totaalMaand)}
               </p>
-              <p className="text-sm text-white/60">per maand</p>
+              <p className="text-sm text-white/60">per maand, inclusief VVE</p>
 
               <div className="mt-6 pt-6 border-t border-white/10">
-                {verschil > 0 ? (
+                {huidigeHuur <= 0 ? (
+                  <p className="text-sm text-white/70">
+                    Vul in wat je nu per maand kwijt bent om de vergelijking te
+                    zien.
+                  </p>
+                ) : verschil > 0 ? (
                   <>
                     <p className="text-xs uppercase tracking-wider text-white/60 font-semibold">
-                      Vergeleken met huur
+                      Vergeleken met wat je nu betaalt
                     </p>
                     <p className="mt-2 text-3xl font-bold text-repp-yellow tabular-nums">
                       {formatEuro(Math.round(verschil))} / mnd lager
                     </p>
                     <p className="mt-1 text-xs text-white/70">
-                      = {formatEuro(Math.round(verschil * 12))} per jaar, én je
-                      bouwt vermogen op in je eigen pand.
+                      Dat is {formatEuro(Math.round(verschil * 12))} per jaar,
+                      en daarnaast is {formatEuro(aflossing)} per maand
+                      aflossing in je eigen pand.
                     </p>
                   </>
                 ) : verschil < 0 ? (
                   <>
                     <p className="text-xs uppercase tracking-wider text-white/60 font-semibold">
-                      Vergeleken met huur
+                      Vergeleken met wat je nu betaalt
                     </p>
-                    <p className="mt-2 text-3xl font-bold text-white tabular-nums">
-                      {formatEuro(Math.round(-verschil))} / mnd hoger
-                    </p>
-                    <p className="mt-1 text-xs text-white/70">
-                      Maar: in plaats van weggegooide huur bouw je vermogen op in
-                      je eigen pand.
+                    <p className="mt-2 text-sm text-white/85 leading-relaxed">
+                      Je maandlast is {formatEuro(Math.round(-verschil))} hoger,
+                      en daarvan is {formatEuro(aflossing)} aflossing: dat is
+                      sparen in je eigen pand.
                     </p>
                   </>
                 ) : (
-                  <p className="text-sm text-white/70">
-                    Vul je huidige huur in om de vergelijking te zien.
+                  <p className="text-sm text-white/85">
+                    Je maandlast is gelijk aan wat je nu betaalt, en daarvan is{" "}
+                    {formatEuro(aflossing)} aflossing: dat is sparen in je eigen
+                    pand.
                   </p>
                 )}
               </div>
 
               <Link
-                href={`/${project.slug}/bereken`}
+                href="/bereken?unit=unit-14"
+                data-cta="maandlast"
                 className="mt-6 block w-full bg-repp-yellow text-repp-navy text-center font-bold px-4 py-3 rounded-full hover:brightness-95 transition"
               >
                 Reken het exact uit →
@@ -151,6 +196,29 @@ export function HeroCalculator({ project }: { project: Project }) {
             </div>
           </div>
         </div>
+
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
+          <Link
+            href={PRIMARY_CTA_HREF}
+            data-cta="maandlast"
+            className="inline-flex items-center bg-repp-yellow text-repp-navy font-bold px-6 py-3.5 rounded-full hover:brightness-95 transition"
+          >
+            {PRIMARY_CTA_LABEL}
+          </Link>
+          <Link
+            href={SECONDARY_CTA_HREF}
+            data-cta="maandlast-sparren"
+            className="text-sm font-semibold text-repp-navy/70 hover:text-repp-navy"
+          >
+            {SECONDARY_CTA_LABEL} →
+          </Link>
+        </div>
+
+        <p className="mt-6 text-[11px] text-repp-navy/40 text-center max-w-2xl mx-auto">
+          Indicatieve cijfers op basis van unit 14 van ca. 190 m² (€475.000
+          v.o.n., excl. btw) en marktconforme huurprijzen. Aan deze indicaties
+          kunnen geen rechten worden ontleend.
+        </p>
       </div>
     </section>
   );

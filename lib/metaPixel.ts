@@ -1,5 +1,5 @@
 /**
- * Meta Pixel helpers — fire conversie-events vanuit client components.
+ * Meta Pixel helpers, fire conversie-events vanuit client components.
  *
  * Architecture (zelfde patroon als de CLP):
  *
@@ -8,11 +8,11 @@
  *     wordt het script niet geladen en falen onderstaande helpers stil
  *     (no-op). Geen crashes, geen errors in console.
  *
- *   - fireMetaLead = standaard "Lead" event — ALLEEN bij eerste
+ *   - fireMetaLead = standaard "Lead" event, ALLEEN bij eerste
  *     daadwerkelijke conversie (lead-gegevens-achterlaten via een form).
  *     Max 1× per visitor want Meta's ad-algoritme optimaliseert hierop.
  *
- *   - fireMetaContact = standaard "Contact" event — voor hoog-intent
+ *   - fireMetaContact = standaard "Contact" event, voor hoog-intent
  *     acties (callback-aanvraag, WhatsApp-open, telefoonnummer-click)
  *     wanneer er al een lead is. Aparte conversie-categorie zodat Lead
  *     niet vervuild raakt met link-clicks.
@@ -24,11 +24,11 @@
  * die later komen) niet dubbel tellen.
  *
  * CONVERSIE-POORT: fireMetaLead en fireMetaContact vuren ALLEEN wanneer de
- * bezoeker via een Meta-advertentie binnenkwam (isMetaOrigin() — fbclid of
+ * bezoeker via een Meta-advertentie binnenkwam (isMetaOrigin(), fbclid of
  * utm_source=meta/facebook/... in het repp_attr cookie). Walk-ins (direct,
  * organisch, e-mail-portaltoken, Google) tellen dus NIET mee als Meta-conversie,
  * zodat Meta's ad-algoritme niet optimaliseert op verkeer dat het niet zelf
- * leverde. fireMetaCustom en de PageView (in layout.tsx) blijven ongepoort —
+ * leverde. fireMetaCustom en de PageView (in layout.tsx) blijven ongepoort , 
  * die zijn puur voor analytics/retargeting, geen conversie-optimalisatie.
  */
 
@@ -44,7 +44,7 @@ declare global {
 // Markering dat er voor deze bezoeker al één Lead-event is gevuurd. Zo telt
 // een lead die op meerdere plekken zijn gegevens achterlaat (bv eerst een
 // brochure-aanvraag, daarna een reservering) maar één keer mee als conversie.
-// TTL ruim — een Lead is een eenmalige eerste-conversie, geen herhaal-event.
+// TTL ruim, een Lead is een eenmalige eerste-conversie, geen herhaal-event.
 const LEAD_FIRED_COOKIE = "repp_lead_fired";
 const LEAD_FIRED_TTL_DAYS = 180;
 
@@ -101,7 +101,7 @@ export function fireMetaLead(
   // Poort 2: max één Lead per bezoeker. Heeft 'ie al ergens zijn gegevens
   // achtergelaten, dan vuren we niet opnieuw (geen dubbele conversies).
   if (leadAlreadyFired()) return;
-  // Pas de cookie zetten als het event echt is gevuurd — zo blokkeren we niet
+  // Pas de cookie zetten als het event echt is gevuurd, zo blokkeren we niet
   // permanent als fbq nog niet geladen was op het moment van submit.
   if (fireMetaPixelEvent("Lead", reason, extra)) {
     markLeadFired();
@@ -112,7 +112,7 @@ export function fireMetaContact(
   reason: string,
   extra: Record<string, unknown> = {},
 ): void {
-  // Zelfde poort als fireMetaLead — Contact is ook een conversie-categorie.
+  // Zelfde poort als fireMetaLead, Contact is ook een conversie-categorie.
   if (!isMetaOrigin()) return;
   fireMetaPixelEvent("Contact", reason, extra);
 }

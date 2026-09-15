@@ -2,12 +2,23 @@ import Link from "next/link";
 import type { Project } from "@/lib/types";
 import { DocIcon } from "./DocIcon";
 
-const HIGHLIGHTED = ["brochure", "prijslijst"] as const;
+// Drie kaarten: brochure, prijslijst en de plattegrond van unit 14. Voor de
+// plattegrond wijken label en beschrijving af van het documentenoverzicht.
+const HIGHLIGHTED: { slug: string; label?: string; body?: string }[] = [
+  { slug: "brochure" },
+  { slug: "prijslijst" },
+  {
+    slug: "plattegronden",
+    label: "Plattegrond XXL",
+    body: "Indeling van unit 14 per verdieping",
+  },
+];
 
 export function KeyDocuments({ project }: { project: Project }) {
-  const docs = HIGHLIGHTED.map((slug) =>
-    project.documents.find((d) => d.slug === slug),
-  ).filter((d): d is NonNullable<typeof d> => Boolean(d));
+  const docs = HIGHLIGHTED.map((h) => {
+    const d = project.documents.find((doc) => doc.slug === h.slug);
+    return d ? { ...d, label: h.label ?? d.label, body: h.body ?? d.body } : null;
+  }).filter((d): d is NonNullable<typeof d> => Boolean(d));
 
   if (docs.length === 0) return null;
 
@@ -19,15 +30,15 @@ export function KeyDocuments({ project }: { project: Project }) {
             Alvast inkijken
           </p>
           <h2 className="mt-3 text-3xl md:text-5xl font-extrabold text-repp-navy tracking-tight">
-            De stukken die je echt wilt zien
+            De stukken die je nu wil zien
           </h2>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-4">
+        <div className="grid sm:grid-cols-3 gap-4">
           {docs.map((d) => (
             <Link
               key={d.slug}
-              href={`/${project.slug}/documenten/${d.slug}`}
+              href={`/documenten/${d.slug}`}
               className="group block rounded-2xl border border-repp-gray bg-white p-7 hover:border-repp-navy hover:shadow-lg transition"
             >
               <div className="flex items-start gap-4">
@@ -36,7 +47,7 @@ export function KeyDocuments({ project }: { project: Project }) {
                   <p className="text-xs uppercase tracking-wider text-repp-navy/50 font-semibold">
                     {d.group === "essentieel" ? "Essentieel" : "Juridisch"}
                   </p>
-                  <p className="mt-1 text-2xl font-extrabold text-repp-navy">
+                  <p className="mt-1 text-xl md:text-2xl font-extrabold text-repp-navy">
                     {d.label}
                   </p>
                   <p className="mt-1 text-sm text-repp-navy/70">{d.body}</p>
@@ -54,7 +65,7 @@ export function KeyDocuments({ project }: { project: Project }) {
 
         <div className="mt-6 text-center">
           <Link
-            href={`/${project.slug}/documenten`}
+            href={`/documenten`}
             className="text-sm text-repp-navy/70 hover:text-repp-navy underline-offset-4 hover:underline"
           >
             Alle documenten bekijken →

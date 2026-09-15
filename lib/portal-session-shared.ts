@@ -1,7 +1,7 @@
 /**
  * Shared portal-session constants, types, en HMAC helpers.
  *
- * Géén imports uit `next/headers` of andere server-only modules — dit
+ * Géén imports uit `next/headers` of andere server-only modules, dit
  * bestand kan veilig in zowel server components, edge middleware, als
  * client components / hooks worden geladen.
  *
@@ -30,7 +30,7 @@ export type PortalSession =
       isReturning: true;
       /** Profielgegevens uit dh_profile (kan deels leeg zijn). */
       profile: PortalProfile;
-      /** Raw session_token waarde — alleen voor server-side gebruik. */
+      /** Raw session_token waarde, alleen voor server-side gebruik. */
       sessionToken: string;
     }
   | {
@@ -41,7 +41,7 @@ export type PortalSession =
 
 // ─── HMAC helpers (Web Crypto, werkt in edge én nodejs runtime én browser) ──
 // Browser-context gebruikt deze NIET voor verify (zou PORTAL_COOKIE_SECRET in
-// client bundle vereisen — onveilig). Maar de helpers zelf zijn neutral.
+// client bundle vereisen, onveilig). Maar de helpers zelf zijn neutral.
 
 const encoder = new TextEncoder();
 
@@ -96,7 +96,7 @@ async function hmacVerify(
  * Format: `<base64url(JSON)>.<base64url(HMAC-SHA256(JSON))>`
  *
  * Te gebruiken vanuit middleware (server-edge) en Node route handlers.
- * NIET geschikt voor browser — die mag de secret niet zien.
+ * NIET geschikt voor browser, die mag de secret niet zien.
  */
 export async function signProfile(
   payload: { first_name: string | null },

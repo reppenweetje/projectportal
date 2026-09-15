@@ -5,7 +5,7 @@
 // code, dus die is instelbaar via PLAUSIBLE_SITE_ID (default dehofman.nl).
 //
 // Faalt zacht: ontbreekt de key of klopt de site-id niet, dan connected:false
-// en toont de UI eerlijk "—" i.p.v. verzonnen bezoekersaantallen.
+// en toont de UI eerlijk ", " i.p.v. verzonnen bezoekersaantallen.
 
 import type { TimeRange } from "@/lib/admin/leads-data";
 

@@ -23,13 +23,13 @@ export function Hero({ project }: { project: Project }) {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
-              href={`/${project.slug}#units`}
+              href={`/#units`}
               className="inline-flex items-center bg-repp-yellow text-repp-navy font-semibold px-5 py-3 rounded-md hover:brightness-95 transition"
             >
               Bekijk beschikbare units
             </Link>
             <Link
-              href={`/${project.slug}#calculator`}
+              href={`/#calculator`}
               className="inline-flex items-center bg-white/10 hover:bg-white/20 text-white font-semibold px-5 py-3 rounded-md transition"
             >
               Bereken je maandlast

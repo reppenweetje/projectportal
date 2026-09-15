@@ -66,7 +66,7 @@ export async function POST(request: Request) {
 
   if (!result.ok) {
     console.error("[portal-update] lead-sync failed", result.error);
-    // Niet faal — lead heeft z'n cookie al geupdate. Server-side sync
+    // Niet faal, lead heeft z'n cookie al geupdate. Server-side sync
     // is best-effort, sales kan via Vercel logs reconstrueren.
   }
 

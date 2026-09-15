@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * MagicLinkModal — herbruikbaar modal-form waarmee een uitgelogde
+ * MagicLinkModal, herbruikbaar modal-form waarmee een uitgelogde
  * bezoeker zijn email kan opgeven en een inloglink ontvangt.
  *
  * Gebruikt door:
@@ -14,7 +14,7 @@
  *     → Next.js proxy naar Supabase portal-magic-link Edge Function
  *     → Edge Function zoekt portal_token bij email
  *     → bij match: Brevo SMTP API stuurt mail met /?t=TOKEN link
- *     → response ALTIJD ok:true (zelfs bij onbekend email — geen
+ *     → response ALTIJD ok:true (zelfs bij onbekend email, geen
  *       email-enumeratie leak)
  *
  * Error-states die we wel surface'n:
@@ -130,7 +130,7 @@ export function MagicLinkModal({
               >
                 020 261 0080
               </a>{" "}
-              — dan helpen we je meteen verder.
+              , dan helpen we je meteen verder.
             </p>
             <button
               type="button"
@@ -181,7 +181,7 @@ export function MagicLinkModal({
             />
             <p className="text-[11px] text-repp-navy/50 leading-relaxed">
               Geen account bij ons? Vul dan eerst een formulier in op de
-              site (reservering, brochure, etc.) — je krijgt automatisch
+              site (reservering, brochure, etc.). Je krijgt automatisch
               een inloglink mee.
             </p>
           </form>

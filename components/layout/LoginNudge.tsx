@@ -1,15 +1,15 @@
 "use client";
 
 /**
- * LoginNudge — banner direct onder de Header voor uitgelogde bezoekers.
+ * LoginNudge, banner direct onder de Header voor uitgelogde bezoekers.
  *
  * Twee CTAs side-by-side, met duidelijke hiërarchie:
  *
- *   1. PRIMARY (geel) — "Maak account" → opent LeadCaptureDialog met
+ *   1. PRIMARY (geel), "Maak account" → opent LeadCaptureDialog met
  *      voornaam + email + telefoon. Na submit: lead in Supabase + Brevo
  *      + Zapier, cookies geset, ingelogd. Voor walk-ins zonder account.
  *
- *   2. SECONDARY (subtiel) — "Inloglink aanvragen" → opent MagicLinkModal.
+ *   2. SECONDARY (subtiel), "Inloglink aanvragen" → opent MagicLinkModal.
  *      Voor returning leads die hun cookies kwijt zijn (incognito, ander
  *      device, gewist).
  *
@@ -17,13 +17,14 @@
  * boodschap, witter/dimmer voor secondary. Voelt als verlenging van de
  * header, niet als een aparte grey strip.
  *
- * Niet sticky — scrollt mee. Verschijnt alleen voor uitgelogde bezoekers.
+ * Niet sticky, scrollt mee. Verschijnt alleen voor uitgelogde bezoekers.
  */
 
 import { useState } from "react";
 import Link from "next/link";
 import type { Project } from "@/lib/types";
 import { countByStatus } from "@/lib/projects/de-hofman";
+import { SCARCITY_LINE } from "@/lib/site-config";
 import { useLeadProfile } from "@/lib/personalization";
 import { useRouter } from "next/navigation";
 import { LeadCaptureDialog } from "@/components/conversion/LeadCaptureDialog";
@@ -40,15 +41,15 @@ export function LoginNudge({ project }: { project: Project }) {
 
   // Headline data-gedreven, zelfde schaal als de PersonalizationBanner:
   // "De verkoop is open" zegt aanbod (net gestart); in de eindfase werkt
-  // schaarste beter — dus vanaf ≤5 beschikbare units tonen we het aantal.
+  // schaarste beter, dus vanaf ≤5 beschikbare units tonen we het aantal.
   const beschikbaar = countByStatus(project).available;
   const headline =
     beschikbaar === 0
       ? "Alle units zijn voorlopig vergeven."
       : beschikbaar === 1
-        ? "Laatste unit beschikbaar!"
+        ? SCARCITY_LINE
         : beschikbaar <= 5
-          ? `Nog maar ${beschikbaar} units beschikbaar!`
+          ? `Nog ${beschikbaar} van ${project.totalUnits} units te koop`
           : "De verkoop is open!";
 
   function onSignupSuccess() {
@@ -67,12 +68,12 @@ export function LoginNudge({ project }: { project: Project }) {
             {/* Klikbaar naar de plattegrond: wie op de schaarste-kop klikt wil
                 zien wélke units er nog zijn. */}
             <Link
-              href={`/${project.slug}/units`}
+              href={`/units`}
               className="text-repp-yellow font-bold leading-snug underline-offset-2 hover:underline whitespace-nowrap"
             >
               {headline}
             </Link>
-            {/* Benefit-zin i.p.v. instructie — de "Maak account"-knop hiernaast
+            {/* Benefit-zin i.p.v. instructie, de "Maak account"-knop hiernaast
                 zegt al hóe, dus hier alleen wát je ermee krijgt. */}
             <span className="text-white/80 leading-snug hidden sm:inline">
               Bekijk direct alle prijzen, documenten en de actuele
@@ -85,7 +86,7 @@ export function LoginNudge({ project }: { project: Project }) {
             <button
               type="button"
               onClick={() => setSignupOpen(true)}
-              // Geel met underline — subtiel, geen pill-button concurrentie
+              // Geel met underline, subtiel, geen pill-button concurrentie
               // met de gele "Reserveer" CTA in de Header.
               className="text-[11px] sm:text-xs text-repp-yellow font-bold underline underline-offset-2 hover:no-underline whitespace-nowrap"
             >
@@ -109,7 +110,7 @@ export function LoginNudge({ project }: { project: Project }) {
         onSuccess={onSignupSuccess}
         gateContext="login-nudge-signup"
         title="Maak je account aan"
-        description="Eénmalig je gegevens achterlaten, dan heb je vanaf nu direct toegang tot alle documenten, prijzen en de plattegrond. Geen wachtwoord nodig — we onthouden je via een veilige link in je mail."
+        description="Eénmalig je gegevens achterlaten, dan heb je vanaf nu direct toegang tot alle documenten, prijzen en de plattegrond. Geen wachtwoord nodig. We onthouden je via een veilige link in je mail."
         submitLabel="Maak mijn account"
       />
 

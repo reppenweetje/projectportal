@@ -7,6 +7,6 @@ export default async function InfoRedirect({
 }: {
   params: Promise<Params>;
 }) {
-  const { projectSlug } = await params;
-  redirect(`/${projectSlug}/documenten`);
+  await params;
+  redirect(`/documenten`);
 }

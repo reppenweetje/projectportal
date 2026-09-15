@@ -16,7 +16,10 @@ const LAST_UNIT_PRICE = 475000;
 type Params = { projectSlug: string };
 
 export const metadata: Metadata = {
-  title: "Scherpste prijs van de Waarderpolder",
+  title: "Prijsvergelijking Waarderpolder",
+  description:
+    "Vergelijk de prijs per m² van De Hofman met andere nieuwbouw en bestaande bedrijfsunits in de Waarderpolder, Haarlem.",
+  alternates: { canonical: "/prijs" },
 };
 
 export default async function PrijsPage({
@@ -73,7 +76,7 @@ export default async function PrijsPage({
             </div>
           </section>
 
-          {/* The savings — big number */}
+          {/* The savings, big number */}
           <section className="px-5 mt-10">
             <div className="mx-auto max-w-4xl rounded-3xl bg-repp-yellow/15 border-2 border-repp-yellow/40 p-6 md:p-10 text-center">
               <p className="text-xs uppercase tracking-[0.2em] text-repp-navy font-semibold">
@@ -140,13 +143,13 @@ export default async function PrijsPage({
             </p>
             <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
-                href={`/${project.slug}/bereken?modus=ondernemer`}
+                href={`/bereken?modus=ondernemer`}
                 className="inline-flex items-center bg-repp-navy text-white font-bold px-6 py-3.5 rounded-full hover:bg-repp-blue transition"
               >
                 Bereken maandlast →
               </Link>
               <Link
-                href={`/${project.slug}/bereken?modus=belegger`}
+                href={`/bereken?modus=belegger`}
                 className="inline-flex items-center text-repp-navy hover:text-repp-blue font-semibold px-4 py-3.5"
               >
                 Bereken rendement →

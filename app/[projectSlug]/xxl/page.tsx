@@ -4,10 +4,15 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { getProjectBySlug } from "@/lib/projects/de-hofman";
+import { UNIT14_IMAGE } from "@/lib/site-config";
+import { Unit14SpecList } from "@/components/unit/Unit14Specs";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyCTA } from "@/components/layout/StickyCTA";
-import { XxlInterestForm } from "@/components/conversion/XxlInterestForm";
+import {
+  LeadFormUnit14,
+  LeadFormUnit14Heading,
+} from "@/components/conversion/LeadFormUnit14";
 import { XxlTourVideo } from "@/components/marketing/XxlTourVideo";
 import { XxlUseCases } from "@/components/marketing/XxlUseCases";
 import { UnitGrid } from "@/components/unit/UnitGrid";
@@ -15,7 +20,11 @@ import { UnitGrid } from "@/components/unit/UnitGrid";
 type Params = { projectSlug: string };
 
 export const metadata: Metadata = {
-  title: "XXL-units te koop · 3 lagen, ca. 190 m² op één adres",
+  title: "Unit 14, de laatste XXL-unit te koop",
+  description:
+    "XXL unit 14 van De Hofman: ca. 190 m² over 3 lagen met eigen dakterras, op de kop van het blok aan de A. Hofmanweg. € 475.000 v.o.n. excl. btw. Reserveer of spar over de mogelijkheden.",
+  alternates: { canonical: "/xxl" },
+  openGraph: { images: [UNIT14_IMAGE] },
 };
 
 export default async function XxlPage({
@@ -65,7 +74,7 @@ export default async function XxlPage({
             <div className="absolute top-5 md:top-6 inset-x-0 z-10 pointer-events-none">
               <div className="mx-auto max-w-6xl px-4 sm:px-5">
                 <Link
-                  href={`/${project.slug}/units`}
+                  href={`/units`}
                   className="pointer-events-auto text-sm text-white/70 hover:text-white inline-flex items-center gap-1"
                 >
                   ← Alle units
@@ -86,16 +95,12 @@ export default async function XxlPage({
                 van De Hofman. Werkplaats en opslag op de begane grond, kantoor
                 of showroom op de eerste en tweede verdieping.
               </p>
-              <div className="mt-8 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm">
-                <Spec label="Begane grond" value="60 m²" />
-                <Spec label="1e verdieping" value="60 m²" />
-                <Spec label="2e verdieping" value="70 m²" />
-                <Spec label="Dakterras" value="42,5 m²" />
-                <Spec label="Vrije hoogte BG" value="3,69 m" />
+              <div className="mt-8">
+                <Unit14SpecList tone="dark" />
               </div>
               <div className="mt-8 flex justify-center">
                 <a
-                  href="#interesse"
+                  href="#aanmelden"
                   className="inline-flex items-center bg-repp-yellow text-repp-navy text-sm font-bold px-6 py-3 rounded-full hover:brightness-95 transition shadow-lg"
                 >
                   Interesse? Laat het weten →
@@ -183,7 +188,7 @@ export default async function XxlPage({
             </ul>
             <div className="mt-10 flex justify-center">
               <a
-                href="#interesse"
+                href="#aanmelden"
                 className="inline-flex items-center bg-repp-navy text-white text-sm font-bold px-6 py-3 rounded-full hover:bg-repp-blue transition"
               >
                 Interesse in een XXL? →
@@ -213,38 +218,30 @@ export default async function XxlPage({
         <section className="px-5 py-16 md:py-20 bg-surface-muted">
           <div className="mx-auto max-w-5xl">
             <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold text-center">
-              Voor wie is de XXL?
+              Voor wie is unit 14?
             </p>
             <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight text-center">
-              Zo kun je de XXL inrichten.
+              Zo kun je unit 14 inrichten.
             </h2>
             <p className="mt-3 text-repp-navy/70 max-w-2xl mx-auto text-center">
-              3 lagen plus een eigen dakterras bieden alle ruimte. Deze
-              voorbeelden laten zien hoe je de unit kunt indelen: van werkplaats
-              en opslag tot showroom, studio of kantoor.
+              Drie lagen plus een eigen dakterras bieden alle ruimte. Deze
+              voorbeelden laten zien hoe je de unit kunt indelen, van werkplaats
+              en opslag tot showroom, kantoor en het eigen dakterras.
             </p>
             <XxlUseCases />
           </div>
         </section>
 
-        {/* Form */}
-        <section id="interesse" className="px-5 py-12 md:py-16 bg-white scroll-mt-20">
+        {/* Aanmeldformulier. #aanmelden is het definitieve anker, #interesse
+            blijft als alias werken voor oude links. */}
+        <section id="aanmelden" className="px-5 py-12 md:py-16 bg-white">
+          <span id="interesse" aria-hidden />
           <div className="mx-auto max-w-5xl">
-            <div className="text-center mb-10">
-              <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
-                Aanmelden
-              </p>
-              <h2 className="mt-3 text-3xl md:text-5xl font-extrabold text-repp-navy tracking-tight">
-                Interesse in een XXL?
-              </h2>
-              <p className="mt-3 text-repp-navy/70 max-w-xl mx-auto">
-                Unit 14 is nu te koop; unit 7 is verkocht onder voorbehoud van
-                financiering. Vul je voorkeur in, dan nemen we contact op om
-                jouw scenario door te spreken.
-              </p>
+            <div className="mb-10">
+              <LeadFormUnit14Heading />
             </div>
             <Suspense fallback={null}>
-              <XxlInterestForm project={project} />
+              <LeadFormUnit14 project={project} context="xxl-form" />
             </Suspense>
           </div>
         </section>
@@ -252,17 +249,6 @@ export default async function XxlPage({
       <Footer project={project} />
       <StickyCTA project={project} showReserve={false} />
     </>
-  );
-}
-
-function Spec({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="text-center">
-      <p className="text-xs md:text-[13px] uppercase tracking-wider text-white/60 font-semibold">
-        {label}
-      </p>
-      <p className="mt-1 text-lg md:text-xl font-bold text-white">{value}</p>
-    </div>
   );
 }
 

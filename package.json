@@ -2,7 +2,7 @@
   "name": "repp-projectportal",
   "version": "0.1.0",
   "private": true,
-  "description": "REPP Bedrijfsmakelaar projectportal — koopomgeving voor De Hofman Haarlem en toekomstige projecten.",
+  "description": "REPP Bedrijfsmakelaar projectportal, koopomgeving voor De Hofman Haarlem en toekomstige projecten.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

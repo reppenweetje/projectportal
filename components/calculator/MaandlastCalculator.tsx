@@ -23,9 +23,15 @@ function annuity(principal: number, annualRatePct: number, years: number) {
   return (principal * r) / (1 - Math.pow(1 + r, -n));
 }
 
-export function MaandlastCalculator({ project }: { project: Project }) {
+export function MaandlastCalculator({
+  project,
+  initialType,
+}: {
+  project: Project;
+  initialType?: CalculatorUnitType;
+}) {
   const sellableUnits = project.units.filter((u) => u.status !== "coming_soon");
-  const [selectedType, setSelectedType] = useState<CalculatorUnitType>("XXL");
+  const [selectedType, setSelectedType] = useState<CalculatorUnitType>(initialType ?? "XXL");
   const [ownPercent, setOwnPercent] = useState(DEFAULT_OWN_PERCENT);
   const [rentePct, setRentePct] = useState(DEFAULT_INTEREST);
   const [termYears, setTermYears] = useState(DEFAULT_TERM_YEARS);
@@ -47,7 +53,7 @@ export function MaandlastCalculator({ project }: { project: Project }) {
   // Calculator afgerond. Zelfde patroon als KoopVsHuurCalculator: eenmalig per
   // mount, pas nadat de bezoeker zelf iets aanpaste, en gedebouncet op 2,5s
   // zodat een sliderbeweging niet tientallen events oplevert. We loggen de
-  // eindstand — unittype én bedrag, het sterkste intentiesignaal.
+  // eindstand, unittype én bedrag, het sterkste intentiesignaal.
   const calcFiredRef = useRef(false);
   const calcTouchedRef = useRef(false);
   useEffect(() => {
@@ -184,13 +190,13 @@ export function MaandlastCalculator({ project }: { project: Project }) {
             {unit.type === "XXL" ? (
               <>
                 <Link
-                  href={`/${project.slug}/xxl#interesse`}
+                  href={`/xxl#aanmelden`}
                   className="block w-full bg-repp-yellow text-repp-navy text-center font-bold px-4 py-3.5 rounded-full hover:brightness-95 transition"
                 >
                   Interesse in de XXL →
                 </Link>
                 <Link
-                  href={`/${project.slug}/xxl`}
+                  href={`/xxl`}
                   className="block w-full text-center text-sm text-white/80 hover:text-white py-1.5"
                 >
                   Meer over de XXL-units
@@ -199,13 +205,13 @@ export function MaandlastCalculator({ project }: { project: Project }) {
             ) : (
               <>
                 <Link
-                  href={`/${project.slug}/reserveren?unit=${unit.slug}`}
+                  href={`/reserveren?unit=${unit.slug}`}
                   className="block w-full bg-repp-yellow text-repp-navy text-center font-bold px-4 py-3.5 rounded-full hover:brightness-95 transition"
                 >
                   Reserveer Unit {unit.number} →
                 </Link>
                 <Link
-                  href={`/${project.slug}/units/${unit.slug}`}
+                  href={`/units/${unit.slug}`}
                   className="block w-full text-center text-sm text-white/80 hover:text-white py-1.5"
                 >
                   Eerst meer info over Unit {unit.number}

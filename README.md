@@ -2,7 +2,7 @@
 
 Koopomgeving voor REPP Bedrijfsmakelaar. Eerste project: **De Hofman Haarlem** (`/de-hofman`).
 
-Multi-project opgezet — datamodel ondersteunt meerdere projecten, deze deploy levert er één.
+Multi-project opgezet, datamodel ondersteunt meerdere projecten, deze deploy levert er één.
 
 ## Stack
 

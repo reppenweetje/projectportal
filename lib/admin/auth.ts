@@ -8,7 +8,7 @@ const SESSION_TTL_DAYS = 7;
  * Admin-wachtwoord uit env. GEEN hardcoded fallback in productie meer:
  * zonder ADMIN_PASSWORD kan niemand inloggen (fail closed). Lokaal mag een
  * dev-default zodat ontwikkelen niet blokkeert. Vroeger stond het echte
- * wachtwoord ("hofman2026") in de broncode én bundle — dat was lekbaar.
+ * wachtwoord ("hofman2026") in de broncode én bundle, dat was lekbaar.
  */
 export function getAdminPassword(): string | null {
   const p = process.env.ADMIN_PASSWORD?.trim();

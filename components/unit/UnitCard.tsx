@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Project, Unit } from "@/lib/types";
+import type { Unit } from "@/lib/types";
 import { formatEuro, formatM2 } from "@/lib/types";
 import { UnitStatusBadge } from "./UnitStatusBadge";
 import { FavoriteButton } from "./FavoriteButton";
@@ -17,14 +17,12 @@ const interactiveStatuses: Unit["status"][] = [
 ];
 
 export function UnitCard({
-  project,
   unit,
 }: {
-  project: Project;
   unit: Unit;
 }) {
   const interactive = interactiveStatuses.includes(unit.status);
-  const href = `/${project.slug}/units/${unit.slug}`;
+  const href = `/units/${unit.slug}`;
 
   const dimmed =
     unit.status === "sold" || unit.status === "verkocht_ovb"

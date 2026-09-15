@@ -2,11 +2,12 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Project, Unit } from "@/lib/types";
+import { SCARCITY_LINE_SHORT } from "@/lib/site-config";
 import { formatEuro, formatM2 } from "@/lib/types";
 import { track } from "@/lib/track";
 
 /**
- * KoopVsHuurCalculator — laat een ondernemer zien wat kopen bij De Hofman
+ * KoopVsHuurCalculator, laat een ondernemer zien wat kopen bij De Hofman
  * oplevert t.o.v. huren. Kies een unit (echte prijzen + beschikbaarheid uit
  * de projectdata), schuif met huur/inbreng/rente en zie het voordeel,
  * de maandlasten en de vermogensopbouw over de tijd.
@@ -99,7 +100,7 @@ export function KoopVsHuurCalculator({ project }: { project: Project }) {
           beschikbaar === 0
             ? "Uitverkocht"
             : beschikbaar === 1
-              ? "Laatste units"
+              ? SCARCITY_LINE_SHORT
               : `${beschikbaar} beschikbaar`;
         return {
           type,
@@ -215,7 +216,7 @@ export function KoopVsHuurCalculator({ project }: { project: Project }) {
   const vermogen = last.waarde - last.schuld;
 
   // Calculator afgerond. Eenmalig per mount, en pas nadat de bezoeker zelf
-  // iets heeft aangepast — de eerste render is nog geen "resultaat". We
+  // iets heeft aangepast, de eerste render is nog geen "resultaat". We
   // debouncen 2,5s zodat een sliderbeweging niet tientallen events oplevert;
   // wat we loggen is dus de stand waar iemand op uitkomt, niet elke tussenstap.
   const calcFiredRef = useRef(false);
@@ -466,7 +467,7 @@ function UnitCard({
   const perM2 = optie.prijs / optie.m2;
 
   // Uitverkocht = echt uit: niet klikbaar, geen hover-affordance, en het
-  // héle vlak (incl. het badge) uniform gedimd via één opacity op de kaart —
+  // héle vlak (incl. het badge) uniform gedimd via één opacity op de kaart , 
   // alsof 'ie is uitgegrijsd. De inhoud houdt binnenin de normale kleuren,
   // zodat de demping overal gelijk oogt.
   if (optie.sold) {
@@ -984,7 +985,7 @@ function OpbouwKaart({
         <p>
           Let op: je <b>vermogen in steen</b> ({formatEuro(Math.round(vermogen))})
           is inclusief je eigen inbreng van{" "}
-          <b>{formatEuro(Math.round(model.E))}</b> — dat is je eigen geld, geen
+          <b>{formatEuro(Math.round(model.E))}</b>. Dat is je eigen geld, geen
           winst. Wat je bovenop je inbreng hebt opgebouwd via waardestijging en
           aflossing is <b>{formatEuro(Math.round(vermogen - model.E))}</b>.
         </p>
@@ -1072,7 +1073,7 @@ function AannamesDetails({
     ],
     ["Eenmalige kosten (notaris, financiering)", "2% van de koopsom"],
     [
-      "Eigenaarslasten (VVE-bijdrage) — indicatief",
+      "Eigenaarslasten (VVE-bijdrage), indicatief",
       `${formatEuro(unit.vve)} per maand, +2% per jaar`,
     ],
     ["Huurprijs (excl. btw en servicekosten)", `${formatEuro(huurM2)} per m² per jaar`],

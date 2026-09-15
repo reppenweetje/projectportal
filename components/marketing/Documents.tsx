@@ -23,7 +23,7 @@ export function Documents({ project }: { project: Project }) {
   });
 
   function openDoc(doc: ProjectDocument) {
-    router.push(`/${project.slug}/documenten/${doc.slug}`);
+    router.push(`/documenten/${doc.slug}`);
   }
 
   // Trigger de zip-download via een tijdelijke anchor. De route zet
@@ -66,7 +66,6 @@ export function Documents({ project }: { project: Project }) {
           title="Essentieel"
           subtitle="Project, prijzen, plattegronden en beelden. Start hier."
           docs={essentieel}
-          project={project}
           accent="blue"
           onCardClick={(doc) => gateOrRun(() => openDoc(doc))}
         />
@@ -74,7 +73,6 @@ export function Documents({ project }: { project: Project }) {
           title="Voor de notaris"
           subtitle="Juridische stukken voor de overdracht."
           docs={juridisch}
-          project={project}
           accent="navy"
           onCardClick={(doc) => gateOrRun(() => openDoc(doc))}
         />
@@ -107,14 +105,12 @@ function DocSection({
   title,
   subtitle,
   docs,
-  project,
   accent,
   onCardClick,
 }: {
   title: string;
   subtitle: string;
   docs: ProjectDocument[];
-  project: Project;
   accent: "blue" | "navy";
   onCardClick: (doc: ProjectDocument) => void;
 }) {
@@ -135,7 +131,6 @@ function DocSection({
           <li key={d.slug}>
             <DocCard
               doc={d}
-              projectSlug={project.slug}
               onClick={() => onCardClick(d)}
             />
           </li>
@@ -147,11 +142,9 @@ function DocSection({
 
 function DocCard({
   doc,
-  projectSlug,
   onClick,
 }: {
   doc: ProjectDocument;
-  projectSlug: string;
   onClick: () => void;
 }) {
   // Compacte, horizontale card: icoon links, titel + tekst + Bekijk ernaast
@@ -160,7 +153,7 @@ function DocCard({
   // crawlers krijgen ook de echte URL te zien.
   return (
     <Link
-      href={`/${projectSlug}/documenten/${doc.slug}`}
+      href={`/documenten/${doc.slug}`}
       onClick={(e) => {
         if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
         e.preventDefault();

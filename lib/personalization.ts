@@ -48,7 +48,7 @@ function readCookie(): LeadProfile | null {
 
 /**
  * Synchroon lezen van het lead-profile cookie. Bedoeld voor situaties
- * waar de useState-based useLeadProfile() achterloopt — bv. direct na
+ * waar de useState-based useLeadProfile() achterloopt, bv. direct na
  * een gate-submit wanneer een component meteen het verse email-adres
  * nodig heeft om iets te verzenden. Voor reactive UI gebruik je gewoon
  * useLeadProfile().
@@ -63,7 +63,7 @@ function writeCookie(profile: LeadProfile) {
     Date.now() + TTL_DAYS * 24 * 60 * 60 * 1000,
   ).toUTCString();
   const value = encodeURIComponent(JSON.stringify(profile));
-  // Secure flag op HTTPS — extra hardening tegen MITM-cookie-leak. We
+  // Secure flag op HTTPS, extra hardening tegen MITM-cookie-leak. We
   // detecteren protocol op runtime ipv hardcode zodat localhost (http)
   // ook gewoon werkt voor dev.
   const secure =

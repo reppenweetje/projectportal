@@ -20,7 +20,11 @@ export async function generateMetadata({
   const project = getProjectBySlug(projectSlug);
   const doc = project?.documents.find((d) => d.slug === docSlug);
   if (!project || !doc) return { title: "Document niet gevonden" };
-  return { title: `${doc.label}, ${project.name}` };
+  return {
+    title: `${doc.label}, ${project.name}`,
+    description: `${doc.label} van ${project.name}: ${doc.body.toLowerCase()}. Bekijk of download het document.`,
+    alternates: { canonical: `/documenten/${doc.slug}` },
+  };
 }
 
 export default async function DocumentViewerPage({
@@ -35,7 +39,7 @@ export default async function DocumentViewerPage({
   if (!doc) notFound();
 
   // Is deze bezoeker een gepasseerde lead? Bepaalt of we het
-  // document_opened-event vuren (alleen voor echte, ingelogde views —
+  // document_opened-event vuren (alleen voor echte, ingelogde views , 
   // niet voor de geblurde gate-weergave). De LeadGate hieronder doet
   // dezelfde check nog eens voor de daadwerkelijke afscherming.
   const session = await getPortalSession();
@@ -63,7 +67,7 @@ export default async function DocumentViewerPage({
         <section className="px-4 sm:px-5 pt-6 pb-4 border-b border-repp-gray">
           <div className="mx-auto max-w-6xl">
             <Link
-              href={`/${project.slug}/documenten`}
+              href={`/documenten`}
               className="text-sm text-repp-navy/60 hover:text-repp-navy inline-flex items-center gap-1"
             >
               ← Alle documenten
@@ -75,7 +79,7 @@ export default async function DocumentViewerPage({
                 </h1>
                 <p className="mt-1 text-sm text-repp-navy/60">{doc.body}</p>
               </div>
-              {/* Desktop actions only — mobile gets prominent buttons below */}
+              {/* Desktop actions only, mobile gets prominent buttons below */}
               <div className="hidden md:flex items-center gap-2 shrink-0">
                 <a
                   href={inlineHref}

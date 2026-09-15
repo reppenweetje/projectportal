@@ -7,7 +7,7 @@
  * het verzoek doorzet.
  *
  * Body:  { "email": "flip@example.nl" }
- * 200:   { "ok": true }   — altijd, ongeacht of email bestaat (geen leak)
+ * 200:   { "ok": true }  , altijd, ongeacht of email bestaat (geen leak)
  * 400:   { "error": "invalid_email" }
  */
 
@@ -52,7 +52,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error("[portal-magic-link] upstream fetch failed", err);
-    // Geen leak van interne fouten — client krijgt nog steeds ok zodat
+    // Geen leak van interne fouten, client krijgt nog steeds ok zodat
     // 'ie geen aanvalsvlak heeft om Supabase-status te peilen.
     return NextResponse.json({ ok: true });
   }

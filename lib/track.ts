@@ -1,5 +1,5 @@
 /**
- * Plausible custom events — typed wrapper.
+ * Plausible custom events, typed wrapper.
  *
  * Plausible auto-tracks page views; deze helper is voor conversion events.
  * Definieer alle event-namen in `EventName` zodat we typo's vangen.
@@ -13,7 +13,9 @@ export type EventName =
   | "reservation_submitted"   // reserveer-formulier succesvol verzonden
   | "interest_captured"       // soft-conversion lead (e-mail/naam-capture)
   | "insider_signed_up"       // Insider-list opgegeven
-  | "xxl_interest"            // XXL-interesse formulier ingediend
+  | "xxl_interest"            // XXL-interesse formulier ingediend (legacy)
+  | "lead_unit14_submit"      // LeadFormUnit14 verzonden, prop intent = reserveren | sparren
+  | "lead_unit14_whatsapp"    // klik op een WhatsApp-link, prop page
   | "report_requested"        // calculator-rapport per mail aangevraagd
   | "document_opened"         // document geopend / gedownload
   | "unit_favorited"          // unit toegevoegd aan favorieten
@@ -31,9 +33,9 @@ type PlausibleFn = (
 ) => void;
 
 /**
- * Stuur een custom event naar Plausible, de GTM dataLayer én — als de
- * bezoeker ingelogd is — naar ons eigen per-lead eventlog via /api/track.
- * Faalt nooit — analytics-fouten mogen nooit user-flow breken.
+ * Stuur een custom event naar Plausible, de GTM dataLayer én, als de
+ * bezoeker ingelogd is, naar ons eigen per-lead eventlog via /api/track.
+ * Faalt nooit, analytics-fouten mogen nooit user-flow breken.
  *
  * De dataLayer-push maakt elk event beschikbaar als Custom Event-trigger in
  * Google Tag Manager (bv. om een Google Ads-conversie te vuren). Pushen mag
@@ -42,20 +44,31 @@ type PlausibleFn = (
  *
  * De /api/track-post is het enige kanaal dat gedrag aan een concrete lead
  * koppelt: die route leest server-side het HttpOnly dh_session-cookie en
- * schrijft — alléén voor ingelogde leads — naar de Supabase-tabel
+ * schrijft, alléén voor ingelogde leads, naar de Supabase-tabel
  * `lead_events`, zodat het CRM per lead kan tonen wat iemand deed. Plausible/
  * GTM blijven anoniem/aggregaat. Uitgelogde bezoekers: no-op server-side.
  */
 export type TrackOptions = {
   /**
    * Portal-token van de lead. Meegeven op conversie-momenten waar het
-   * dh_session-cookie nog NIET gezet is — met name de gate-submit, waar de
+   * dh_session-cookie nog NIET gezet is, met name de gate-submit, waar de
    * cookies pas na de `?t=`-redirect landen. Zonder dit zou juist het
    * belangrijkste event (de conversie zelf) nooit aan een lead gekoppeld
    * worden. Server-side resolvet dit naar hetzelfde lead_id als de sessie.
    */
   portalToken?: string;
 };
+
+/**
+ * WhatsApp-klik registreren. `page` = pathname van de pagina waar geklikt
+ * werd (of een expliciete bloknaam als de caller die meegeeft).
+ */
+export function trackWhatsAppClick(page?: string): void {
+  if (typeof window === "undefined") return;
+  track("lead_unit14_whatsapp", {
+    page: page ?? window.location.pathname,
+  });
+}
 
 export function track(
   event: EventName,
@@ -70,13 +83,13 @@ export function track(
   try {
     w.plausible?.(event, props ? { props } : undefined);
   } catch {
-    // Slik analytics-fouten — silent fail beter dan crash.
+    // Slik analytics-fouten, silent fail beter dan crash.
   }
   try {
     w.dataLayer = w.dataLayer || [];
     w.dataLayer.push({ event, ...(props ?? {}) });
   } catch {
-    // idem — dataLayer-push mag de flow nooit breken.
+    // idem, dataLayer-push mag de flow nooit breken.
   }
   try {
     trackLeadEvent(event, props, opts);
@@ -88,7 +101,7 @@ export function track(
 /**
  * Best-effort POST naar /api/track. `keepalive` zodat het event ook afgaat
  * als de gebruiker meteen wegnavigeert (bv. na een download of CTA-klik).
- * Antwoord wordt bewust genegeerd — de server bepaalt zelf of er (ingelogd)
+ * Antwoord wordt bewust genegeerd, de server bepaalt zelf of er (ingelogd)
  * iets gelogd wordt. Fouten worden geslikt.
  */
 function trackLeadEvent(
@@ -109,6 +122,6 @@ function trackLeadEvent(
     keepalive: true,
     credentials: "same-origin",
   }).catch(() => {
-    // Silent fail — analytics mag de UX nooit raken.
+    // Silent fail, analytics mag de UX nooit raken.
   });
 }

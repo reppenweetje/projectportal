@@ -9,7 +9,10 @@ import { InsiderSignup } from "@/components/conversion/InsiderSignup";
 type Params = { projectSlug: string };
 
 export const metadata: Metadata = {
-  title: "Hofman Insider — als eerste op de hoogte",
+  title: "Hofman Insider: als eerste op de hoogte",
+  description:
+    "Schrijf je in voor Hofman Insider en krijg als eerste bericht als unit 7 vrijvalt, en bij bouwmijlpalen van De Hofman.",
+  alternates: { canonical: "/insider" },
 };
 
 export default async function InsiderPage({
@@ -50,7 +53,7 @@ export default async function InsiderPage({
               />
               <Benefit
                 title="XXL-nieuws"
-                body="Nieuws over de laatste XXL-unit aan de zichtzijde — Insiders horen het eerst."
+                body="Nieuws over unit 14, de laatste XXL-unit aan de zichtzijde. Insiders horen het eerst."
               />
               <Benefit
                 title="Prijsindexaties"

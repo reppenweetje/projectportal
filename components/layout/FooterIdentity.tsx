@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { clearLeadProfile, useLeadProfile } from "@/lib/personalization";
 
-export function FooterIdentity({ projectSlug }: { projectSlug: string }) {
+export function FooterIdentity() {
   const profile = useLeadProfile();
   const router = useRouter();
   const [confirming, setConfirming] = useState(false);
@@ -23,7 +23,7 @@ export function FooterIdentity({ projectSlug }: { projectSlug: string }) {
       console.error("[logout] portal-logout call failed", err);
     }
     clearLeadProfile();
-    router.replace(`/${projectSlug}`);
+    router.replace(`/`);
     if (typeof window !== "undefined") {
       window.location.reload();
     }

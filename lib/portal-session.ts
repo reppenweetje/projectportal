@@ -1,5 +1,5 @@
 /**
- * Portal session — SERVER-ONLY helpers (gebruikt `next/headers`).
+ * Portal session, SERVER-ONLY helpers (gebruikt `next/headers`).
  *
  * Voor shared constants/types/HMAC: zie `portal-session-shared.ts`.
  * Voor client-side hook: zie `portal-session-client.ts`.

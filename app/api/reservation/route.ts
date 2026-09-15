@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Gegevens onvolledig" }, { status: 400 });
   }
 
-  // Reserveringen zijn hot-leads — koper geeft contact + concrete unit op.
+  // Reserveringen zijn hot-leads, koper geeft contact + concrete unit op.
   const result = await upsertWalkinLead({
     source: "dehofman_portal_reservation",
     email: String(body.email),

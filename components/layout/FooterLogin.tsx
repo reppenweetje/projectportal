@@ -5,7 +5,7 @@ import { useLeadProfile } from "@/lib/personalization";
 import { MagicLinkModal } from "@/components/conversion/MagicLinkModal";
 
 /**
- * FooterLogin — secundaire "Inloggen op je account" link in de footer.
+ * FooterLogin, secundaire "Inloggen op je account" link in de footer.
  * De primaire prompt zit in LoginNudge (banner onder Header). Hier voor
  * gebruikers die niet meer scrollen of die expliciet zoeken in footer-tray.
  *

@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * useLeadCapture — hook voor action-getriggerde lead-gate.
+ * useLeadCapture, hook voor action-getriggerde lead-gate.
  *
  * Voor walk-in bezoekers die iets willen doen waarvoor wij hun gegevens
  * willen vasthouden (document openen, rapport mailen, etc.). De hook
@@ -39,8 +39,8 @@ export function useLeadCapture(config: {
   hasSession: boolean | null;
 } {
   // Twee identity-cookies parallel:
-  //   dh_profile   — HMAC-signed, gezet door middleware na ?t=TOKEN redeem
-  //   repp_lead    — plain JSON, gezet door middleware + door client-side
+  //   dh_profile  , HMAC-signed, gezet door middleware na ?t=TOKEN redeem
+  //   repp_lead   , plain JSON, gezet door middleware + door client-side
   //                  useLeadProfile (URL params, CLP-handoff, walk-in submits)
   //
   // Vroeger keek de gate alleen naar dh_profile. Effect: lead die via CLP

@@ -12,6 +12,7 @@ type SearchParams = { unit?: string; intent?: string };
 
 export const metadata: Metadata = {
   title: "Reserveer jouw unit",
+  alternates: { canonical: "/reserveren" },
 };
 
 export default async function ReserverenPage({

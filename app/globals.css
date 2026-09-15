@@ -63,6 +63,43 @@ html, body {
   }
 }
 
+/* Sitebrede status-banner boven de navigatie. Hoogte 40 px mobiel, 44 px
+   desktop; de sticky header staat direct daaronder (zie .site-header). */
+.status-banner-inner {
+  height: 40px;
+}
+.site-header {
+  top: calc(41px + env(safe-area-inset-top, 0px));
+}
+@media (min-width: 768px) {
+  .status-banner-inner {
+    height: 44px;
+  }
+  .site-header {
+    top: calc(45px + env(safe-area-inset-top, 0px));
+  }
+}
+
+@keyframes status-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+.status-banner-dot {
+  animation: status-pulse 2s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .status-banner-dot {
+    animation: none;
+  }
+}
+
+/* Ankers onder de sticky banner + header (40/44 px + 64 px) netjes in
+   beeld laten scrollen. */
+[id="aanmelden"],
+[id="interesse"] {
+  scroll-margin-top: calc(120px + env(safe-area-inset-top, 0px));
+}
+
 /* iOS Safari zoomt automatisch in op inputs met font-size < 16px wanneer
    ze focus krijgen, wat een irritant UX-hick veroorzaakt (page zoomt in,
    user moet handmatig uitzoomen). Forceer minimum 16px op alle inputs
