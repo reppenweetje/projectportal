@@ -52,7 +52,6 @@ export function MinimalHero({ project }: { project: Project }) {
           </p>
 
           <ul className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm font-semibold text-white/90">
-            <Check>Vergunning onherroepelijk</Check>
             <Check>Sloop afgerond, bouwstart oktober 2026</Check>
             <Check>v.o.n. · btw terugvorderbaar</Check>
           </ul>

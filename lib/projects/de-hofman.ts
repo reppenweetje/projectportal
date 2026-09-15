@@ -353,7 +353,7 @@ export const deHofman: Project = {
     },
     {
       q: "Wanneer is de oplevering?",
-      a: "We zijn nu in de afrondende fase van de omgevingsvergunning. Verwachting: vergunning onherroepelijk binnen 6 tot 8 weken. Zodra dat rond is, start RENO Projectbouw direct met de bouw; er zit dus amper tijd tussen vergunning en eerste paal. Dat is gunstig voor jou: tussen het moment van financiering en oplevering is de doorlooptijd kort, dus minder rente over een nog niet opgeleverd pand. Indicatieve oplevering: eind 2026.",
+      a: "De sloop is afgerond en RENO Projectbouw start in oktober 2026 met de bouw. De verwachte oplevering is Q3 2027. Tussen het moment van financiering en oplevering zit daardoor een overzichtelijke periode, dus minder rente over een nog niet opgeleverd pand.",
     },
     {
       q: "Wat als ik twee units wil koppelen?",
