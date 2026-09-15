@@ -24,7 +24,7 @@ export function Spec({
     tone === "dark" ? "text-white/60" : "text-repp-navy/55";
   const valueCls = tone === "dark" ? "text-white" : "text-repp-navy";
   return (
-    <div className={tone === "dark" ? "text-center" : ""}>
+    <div className="text-center">
       <p
         className={`text-xs md:text-[13px] uppercase tracking-wider font-semibold ${labelCls}`}
       >
@@ -37,13 +37,7 @@ export function Spec({
 
 export function Unit14SpecList({ tone = "dark" }: { tone?: "dark" | "light" }) {
   return (
-    <div
-      className={
-        tone === "dark"
-          ? "flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm"
-          : "grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-4 text-sm"
-      }
-    >
+    <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm">
       {UNIT14_SPECS.map((s) => (
         <Spec key={s.label} label={s.label} value={s.value} tone={tone} />
       ))}

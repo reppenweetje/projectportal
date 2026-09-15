@@ -145,8 +145,6 @@ export function LeadFormUnit14({
       className={`grid gap-6 lg:gap-10 ${showSummary ? "lg:grid-cols-3" : ""}`}
       noValidate
     >
-      {showSummary && <Summary />}
-
       <div className={`space-y-7 ${showSummary ? "lg:col-span-2" : ""}`}>
         <div className="grid sm:grid-cols-2 gap-4">
           <Field label="Naam *">
@@ -267,6 +265,8 @@ export function LeadFormUnit14({
           <PrivacyConsent tone="light" actionLabel="Verstuur" className="mt-3" />
         </div>
       </div>
+
+      {showSummary && <Summary />}
     </form>
   );
 }
@@ -302,7 +302,7 @@ export function LeadFormUnit14Heading({
 
 function Summary() {
   return (
-    <aside className="rounded-2xl bg-repp-navy text-white p-6 self-start lg:sticky lg:top-32 order-first">
+    <aside className="rounded-2xl bg-repp-navy text-white p-6 self-start lg:sticky lg:top-32">
       <p className="text-xs uppercase tracking-wider text-repp-yellow font-semibold">
         Unit 14
       </p>

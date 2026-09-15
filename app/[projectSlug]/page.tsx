@@ -11,6 +11,7 @@ import { USPHighlights } from "@/components/marketing/USPHighlights";
 import { LossAversion } from "@/components/marketing/LossAversion";
 import { HeroCalculator } from "@/components/calculator/HeroCalculator";
 import { Gallery } from "@/components/marketing/Gallery";
+import { TrustStack } from "@/components/marketing/TrustStack";
 import { Testimonials } from "@/components/marketing/Testimonials";
 import { WhyStillAvailable } from "@/components/marketing/WhyStillAvailable";
 import { HomeFAQ } from "@/components/marketing/HomeFAQ";
@@ -130,19 +131,22 @@ export default async function ProjectHomePage({
         {/* 7. Beeldcarrousel, unit 14 vooraan */}
         <Gallery project={project} />
 
-        {/* 8. Referenties: je toekomstige buren */}
+        {/* 8. Partners */}
+        <TrustStack project={project} />
+
+        {/* 9. Referenties: je toekomstige buren */}
         <Testimonials project={project} />
 
-        {/* 9. Waarom is unit 14 er nog? */}
+        {/* 10. Waarom is unit 14 er nog? */}
         <WhyStillAvailable />
 
-        {/* 10. FAQ */}
+        {/* 11. FAQ */}
         <HomeFAQ />
 
-        {/* 11. Documenten */}
+        {/* 12. Documenten */}
         <KeyDocuments project={project} />
 
-        {/* 12. Aanmeldblok met formulier */}
+        {/* 13. Aanmeldblok met formulier */}
         <HomeLeadForm project={project} />
       </main>
       <Footer project={project} />

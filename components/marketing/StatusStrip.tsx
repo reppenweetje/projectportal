@@ -1,8 +1,8 @@
 import { STATUS_DATE, XXL_AREA_LABEL } from "@/lib/site-config";
 
 /**
- * Statusstrook onder de hero: de drie types met hun verkoopstatus. Feitelijk,
- * met datum. Kaartstijl gelijk aan de rest van de site.
+ * Statusstrook onder de hero: de drie types met hun verkoopstatus.
+ * Feitelijk, met datum. Kaartstijl gelijk aan de USP-kaarten.
  */
 const ROWS: { title: string; label: string; accent?: boolean }[] = [
   { title: "L · 105 m²", label: "Uitverkocht" },
@@ -12,21 +12,27 @@ const ROWS: { title: string; label: string; accent?: boolean }[] = [
 
 export function StatusStrip() {
   return (
-    <section className="px-5 py-8 md:py-10 bg-surface-muted">
+    <section className="px-5 py-10 md:py-14 bg-surface-muted">
       <div className="mx-auto max-w-5xl">
         <ul className="grid sm:grid-cols-3 gap-2.5 md:gap-4">
           {ROWS.map((r) => (
             <li
               key={r.title}
-              className={`rounded-xl border px-4 py-3 md:p-5 flex items-center justify-between gap-3 ${
+              className={`rounded-xl border px-4 py-4 md:p-5 text-center ${
                 r.accent
                   ? "bg-repp-navy border-repp-navy text-white"
-                  : "bg-white border-repp-gray text-repp-navy"
+                  : "bg-white border-repp-gray"
               }`}
             >
-              <p className="font-bold text-sm md:text-base">{r.title}</p>
               <p
-                className={`text-xs md:text-sm font-semibold shrink-0 ${
+                className={`font-bold text-base md:text-lg ${
+                  r.accent ? "text-white" : "text-repp-navy"
+                }`}
+              >
+                {r.title}
+              </p>
+              <p
+                className={`mt-1 text-sm font-semibold ${
                   r.accent ? "text-repp-yellow" : "text-repp-navy/55"
                 }`}
               >
@@ -35,7 +41,7 @@ export function StatusStrip() {
             </li>
           ))}
         </ul>
-        <p className="mt-3 text-xs text-repp-navy/55 text-center">
+        <p className="mt-4 text-xs text-repp-navy/55 text-center">
           Status per {STATUS_DATE}. Unit 7 is verkocht onder voorbehoud van
           financiering.
         </p>
