@@ -23,7 +23,7 @@ export const HOME_FAQ: Faq[] = [
   },
   {
     q: "Wanneer wordt opgeleverd?",
-    a: "De omgevingsvergunning is onherroepelijk, de sloop is afgerond en de bouw start in oktober 2026. De verwachte oplevering is Q3 2027.",
+    a: "De sloop is afgerond en de bouw start in oktober 2026. De verwachte oplevering is Q3 2027.",
   },
   {
     q: "Kan ik de indeling aanpassen?",

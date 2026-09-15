@@ -37,7 +37,7 @@ const USPS: USP[] = [
   },
   {
     title: "Verwachte oplevering Q3 2027",
-    body: "Vergunning onherroepelijk, sloop afgerond, bouwstart oktober 2026. Plug-and-play opgeleverd.",
+    body: "Sloop afgerond, bouwstart oktober 2026. Plug-and-play opgeleverd.",
   },
 ];
 

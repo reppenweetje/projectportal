@@ -161,8 +161,8 @@ export function ReservationForm({ project }: { project: Project }) {
               {formatEuro(aanbetaling)} (5%) op de notarisrekening.
             </li>
             <li>
-              <span className="font-bold text-repp-navy">3.</span> Onherroepelijke
-              vergunning verwacht over 6 tot 8 weken, daarna start de bouw direct.
+              <span className="font-bold text-repp-navy">3.</span> De sloop is
+              afgerond, de bouw start in oktober 2026. Verwachte oplevering Q3 2027.
             </li>
           </ol>
         </div>
@@ -484,8 +484,8 @@ function SidebarSummary({
           />
           <Step
             num={3}
-            title="Bouwen direct na vergunning"
-            body="Onherroepelijke vergunning verwacht binnen 6 tot 8 weken. Daarna start RENO Projectbouw direct, dus minder rente over een nog niet opgeleverd pand."
+            title="Bouwstart oktober 2026"
+            body="De sloop is afgerond en RENO Projectbouw start in oktober 2026 met de bouw. Verwachte oplevering Q3 2027."
           />
         </ol>
       </div>
