@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { USE_CASES } from "@/lib/use-cases";
+import { FEATURED_USE_CASES as USE_CASES } from "@/lib/use-cases";
 
 /**
  * XxlUseCases: carrousel met invulmogelijkheden voor de XXL-unit. Toont per
