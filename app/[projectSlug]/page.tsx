@@ -7,11 +7,8 @@ import { StickyCTA } from "@/components/layout/StickyCTA";
 import { MinimalHero } from "@/components/marketing/MinimalHero";
 import { StatusStrip } from "@/components/marketing/StatusStrip";
 import { Unit14Intro } from "@/components/marketing/Unit14Intro";
-import { HomeUseCases } from "@/components/marketing/HomeUseCases";
 import { USPHighlights } from "@/components/marketing/USPHighlights";
-import { LossAversion } from "@/components/marketing/LossAversion";
 import { HeroCalculator } from "@/components/calculator/HeroCalculator";
-import { Gallery } from "@/components/marketing/Gallery";
 import { TrustStack } from "@/components/marketing/TrustStack";
 import { Testimonials } from "@/components/marketing/Testimonials";
 import { WhyStillAvailable } from "@/components/marketing/WhyStillAvailable";
@@ -120,37 +117,28 @@ export default async function ProjectHomePage({
         {/* 3. Dit is unit 14 */}
         <Unit14Intro />
 
-        {/* 4. Zo kun je unit 14 inrichten */}
-        <HomeUseCases />
-
-        {/* 5. Zes redenen */}
+        {/* 4. Zes redenen */}
         <USPHighlights project={project} />
 
-        {/* 6. Wat het je kost om niet te kiezen */}
-        <LossAversion project={project} />
-
-        {/* 7. Maandlast unit 14 */}
+        {/* 5. Maandlast unit 14 */}
         <HeroCalculator project={project} />
 
-        {/* 8. Beeldcarrousel, unit 14 vooraan */}
-        <Gallery project={project} />
-
-        {/* 9. Partners */}
+        {/* 6. Partners */}
         <TrustStack project={project} />
 
-        {/* 10. Referenties: je toekomstige buren */}
+        {/* 7. Referenties: je toekomstige buren */}
         <Testimonials project={project} />
 
-        {/* 11. Waarom is unit 14 er nog? */}
+        {/* 8. Waarom is unit 14 er nog? */}
         <WhyStillAvailable />
 
-        {/* 12. FAQ */}
+        {/* 9. FAQ */}
         <HomeFAQ />
 
-        {/* 13. Documenten */}
+        {/* 10. Documenten */}
         <KeyDocuments project={project} />
 
-        {/* 14. Aanmeldblok met formulier */}
+        {/* 11. Aanmeldblok met formulier */}
         <HomeLeadForm project={project} />
       </main>
       <Footer project={project} />

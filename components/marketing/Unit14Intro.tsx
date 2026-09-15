@@ -2,13 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { PRIMARY_CTA_HREF, PRIMARY_CTA_LABEL } from "@/lib/site-config";
 import { Unit14SpecList } from "@/components/unit/Unit14Specs";
+import { Unit14Floors } from "./Unit14Floors";
 
 /**
- * "Dit is unit 14": gecentreerde kop en tekst, daaronder het beeld op volle
- * breedte en de specs. Zelfde opbouw als de secties op /xxl.
+ * "Dit is unit 14": wat het is en wat je er kunt doen, in één sectie.
+ * Eerst het pand met de specs, daarna de doorklik per verdieping. Zo leest
+ * een bezoeker eerst wat hij koopt en ziet hij zich er meteen in zitten,
+ * zonder dat het twee losse blokken worden.
  *
  * Beeld is bewust het hoekaanzicht en niet de voorgevel: die staat al in
- * de hero, twee schermen hoger.
+ * de hero, één scherm hoger.
  */
 export function Unit14Intro() {
   return (
@@ -41,7 +44,9 @@ export function Unit14Intro() {
           <Unit14SpecList tone="light" />
         </div>
 
-        <div className="mt-8 flex justify-center">
+        <Unit14Floors />
+
+        <div className="mt-10 flex justify-center">
           <Link
             href={PRIMARY_CTA_HREF}
             data-cta="unit14"

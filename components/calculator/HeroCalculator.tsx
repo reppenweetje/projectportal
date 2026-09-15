@@ -6,7 +6,13 @@ import type { Project } from "@/lib/types";
 import { formatEuro } from "@/lib/types";
 import {
   FINANCE_ASSUMPTIONS,
+  PRIMARY_CTA_HREF,
+  PRIMARY_CTA_LABEL,
+  RENT_PER_M2_YEAR,
+  SECONDARY_CTA_HREF,
+  SECONDARY_CTA_LABEL,
   VVE_MONTHLY,
+  XXL_AREA_LABEL,
   XXL_PRICE,
 } from "@/lib/site-config";
 
@@ -39,10 +45,13 @@ function aflossingJaar1PerMaand(
   return repaid / 12;
 }
 
+/** Ca. 190 m² tegen de marktconforme huurprijs per m² per jaar. */
+const HUUR_PER_JAAR = 190 * RENT_PER_M2_YEAR;
+
 /**
- * Maandlastblok op de homepage: vergelijk wat je nu per maand kwijt bent
- * met de maandlast van unit 14. Zelfde aannames als /bereken en
- * /koopvshuur (20% inbreng, 4,97%, 25 jaar annuïtair, VVE € 160).
+ * Geldblok op de homepage: wat je nu per jaar kwijt bent aan huur, naast de
+ * maandlast van unit 14. Zelfde aannames als /bereken en /koopvshuur
+ * (20% inbreng, 4,97%, 25 jaar annuïtair, VVE € 160).
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function HeroCalculator({ project }: { project: Project }) {
@@ -66,9 +75,12 @@ export function HeroCalculator({ project }: { project: Project }) {
           <h2 className="mt-3 text-3xl md:text-5xl font-extrabold text-repp-navy tracking-tight">
             Wat kost unit 14 jou per maand?
           </h2>
-          <p className="mt-3 text-repp-navy/70 max-w-xl mx-auto">
-            Vergelijk wat je nu per maand kwijt bent met de maandlast van unit
-            14 (XXL, {formatEuro(koopsom)} excl. btw).
+          <p className="mt-3 text-repp-navy/70 max-w-2xl mx-auto">
+            Huur je nu een vergelijkbare ruimte? Bij {XXL_AREA_LABEL} tegen
+            €{RENT_PER_M2_YEAR} per m² per jaar ben je{" "}
+            {formatEuro(HUUR_PER_JAAR)} per jaar aan huur kwijt. Vergelijk dat
+            met de maandlast van unit 14 (XXL, {formatEuro(koopsom)} excl.
+            btw).
           </p>
         </div>
 
@@ -184,6 +196,29 @@ export function HeroCalculator({ project }: { project: Project }) {
             </div>
           </div>
         </div>
+
+        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
+          <Link
+            href={PRIMARY_CTA_HREF}
+            data-cta="maandlast"
+            className="inline-flex items-center bg-repp-yellow text-repp-navy font-bold px-6 py-3.5 rounded-full hover:brightness-95 transition"
+          >
+            {PRIMARY_CTA_LABEL}
+          </Link>
+          <Link
+            href={SECONDARY_CTA_HREF}
+            data-cta="maandlast-sparren"
+            className="text-sm font-semibold text-repp-navy/70 hover:text-repp-navy"
+          >
+            {SECONDARY_CTA_LABEL} →
+          </Link>
+        </div>
+
+        <p className="mt-6 text-[11px] text-repp-navy/40 text-center max-w-2xl mx-auto">
+          Indicatieve cijfers op basis van unit 14 van ca. 190 m² (€475.000
+          v.o.n., excl. btw) en marktconforme huurprijzen. Aan deze indicaties
+          kunnen geen rechten worden ontleend.
+        </p>
       </div>
     </section>
   );
