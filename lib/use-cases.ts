@@ -16,8 +16,6 @@ export type UseCase = {
   body: string;
   /** Op welke laag deze invulling hoort. Het dakterras hoort bij de 2e. */
   floor: FloorKey;
-  /** Brede kaart over de volle breedte van het grid. */
-  wide?: boolean;
   /** In de carrousel op /xxl. Die toont bewust een selectie. */
   featured?: boolean;
 };
@@ -105,7 +103,6 @@ export const USE_CASES: UseCase[] = [
     title: "Eigen dakterras",
     body: "42,5 m² dakterras bovenop de unit voor pauzes, borrels of het ontvangen van klanten.",
     floor: "v2",
-    wide: true,
     featured: true,
   },
   {
