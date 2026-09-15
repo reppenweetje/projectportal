@@ -78,7 +78,7 @@ export const USE_CASES: UseCase[] = [
     alt: "Verdieping van de XXL-unit als kantoor met werkplekken en een eigen koffiehoek met pantry",
     title: "Kantoor met pantry",
     body: "Werkplekken, een vergaderhoek en een eigen koffiehoek met pantry op de verdieping.",
-    floor: "v1",
+    floor: "v2",
     featured: true,
   },
   {
@@ -117,7 +117,7 @@ export const USE_CASES: UseCase[] = [
     alt: "Verdieping van de XXL-unit als kantoor met vergadertafel, werkplekken en een pantry",
     title: "Kantoor met vergadertafel",
     body: "Werkplekken, een vergadertafel en een eigen pantry op één verdieping.",
-    floor: "v1",
+    floor: "v2",
   },
   {
     src: "/images/hofman/xxl/xxl-werkplekken.jpg",
