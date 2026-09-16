@@ -31,9 +31,10 @@ export const WHATSAPP_HREF =
  * losstaande figuur en als OG-beeld, niet paginabreed uitgesneden. */
 export const UNIT14_IMAGE = "/images/hofman/xxl/xxl-voorzijde-v3.jpg";
 
-/** Beeld voor de paginabrede hero: hoekaanzicht, breed genoeg om zonder
- * lelijke uitsnede over de volle breedte te staan. */
-export const HERO_IMAGE = "/images/hofman/renders/entree-fietsen.jpg";
+/** Beeld voor de paginabrede hero: hoekaanzicht in de avond. Breed genoeg
+ * om zonder lelijke uitsnede over de volle breedte te staan, en donker
+ * genoeg om de witte tekst te dragen zonder zware verdonkering. */
+export const HERO_IMAGE = "/images/hofman/renders/zijgevel-avond.jpg";
 
 /** Financieringsaannames, gelijk aan /bereken en /koopvshuur. */
 export const FINANCE_ASSUMPTIONS = {
