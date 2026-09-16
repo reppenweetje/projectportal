@@ -8,6 +8,7 @@ import { MinimalHero } from "@/components/marketing/MinimalHero";
 import { StatusStrip } from "@/components/marketing/StatusStrip";
 import { Unit14Intro } from "@/components/marketing/Unit14Intro";
 import { USPHighlights } from "@/components/marketing/USPHighlights";
+import { HomeUseCases } from "@/components/marketing/HomeUseCases";
 import { HeroCalculator } from "@/components/calculator/HeroCalculator";
 import { TrustStack } from "@/components/marketing/TrustStack";
 import { Testimonials } from "@/components/marketing/Testimonials";
@@ -118,25 +119,28 @@ export default async function ProjectHomePage({
         {/* 4. Zes redenen */}
         <USPHighlights project={project} />
 
-        {/* 5. Maandlast XXL-unit */}
+        {/* 5. Zo kun je de unit inrichten: doorklik per verdieping */}
+        <HomeUseCases />
+
+        {/* 6. Maandlast XXL-unit */}
         <HeroCalculator project={project} />
 
-        {/* 6. Partners */}
+        {/* 7. Partners */}
         <TrustStack project={project} />
 
-        {/* 7. Referenties: je toekomstige buren */}
+        {/* 8. Referenties: je toekomstige buren */}
         <Testimonials project={project} />
 
-        {/* 8. Waarom is deze unit er nog? */}
+        {/* 9. Waarom is deze unit er nog? */}
         <WhyStillAvailable />
 
-        {/* 9. FAQ */}
+        {/* 10. FAQ */}
         <HomeFAQ />
 
-        {/* 10. Documenten */}
+        {/* 11. Documenten */}
         <KeyDocuments project={project} />
 
-        {/* 11. Aanmeldblok met formulier */}
+        {/* 12. Aanmeldblok met formulier */}
         <HomeLeadForm project={project} />
       </main>
       <Footer project={project} />

@@ -6,17 +6,11 @@ import {
   UNIT14_IMAGE,
 } from "@/lib/site-config";
 import { Unit14SpecList } from "@/components/unit/Unit14Specs";
-import { Unit14Floors } from "./Unit14Floors";
 
 /**
- * "Dit is de laatste unit": wat het is en wat je er kunt doen, in één sectie.
- * Eerst de specs, daarna de doorklik per verdieping. Zo leest een bezoeker
- * eerst wat hij koopt en ziet hij zich er meteen in zitten, zonder dat het
- * twee losse blokken worden.
- *
- * Onderaan de sectie staat de voorgevel, na de doorklik per verdieping: een
- * recht vooraanzicht werkt niet als paginabrede hero-uitsnede, maar wel als
- * losstaande figuur op ware verhouding.
+ * "Dit is de laatste unit": wat het is, met de specs en direct het aanzicht.
+ * Eén beeld in deze sectie, want twee beeldkaders onder elkaar leest zwaar.
+ * De doorklik per verdieping staat verderop op de pagina (HomeUseCases).
  */
 export function Unit14Intro() {
   return (
@@ -38,9 +32,7 @@ export function Unit14Intro() {
           <Unit14SpecList tone="light" />
         </div>
 
-        <Unit14Floors />
-
-        <figure className="mt-12 overflow-hidden rounded-2xl border border-repp-gray bg-surface-muted">
+        <figure className="mt-10 overflow-hidden rounded-2xl border border-repp-gray bg-surface-muted">
           <Image
             src={UNIT14_IMAGE}
             alt="Voorgevel van de laatste unit van De Hofman aan de A. Hofmanweg, met eigen entree en grote glasgevel"
