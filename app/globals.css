@@ -64,19 +64,21 @@ html, body {
 }
 
 /* Sitebrede status-banner boven de navigatie. Hoogte 40 px mobiel, 44 px
-   desktop; de sticky header staat direct daaronder (zie .site-header). */
+   desktop; de sticky header plakt daar exact tegenaan (zie .site-header).
+   De offset is precies de bannerhoogte: de banner heeft geen rand meer, dus
+   een extra pixel liet een donkere streep tussen de twee balken zien. */
 .status-banner-inner {
   height: 40px;
 }
 .site-header {
-  top: calc(41px + env(safe-area-inset-top, 0px));
+  top: calc(40px + env(safe-area-inset-top, 0px));
 }
 @media (min-width: 768px) {
   .status-banner-inner {
     height: 44px;
   }
   .site-header {
-    top: calc(45px + env(safe-area-inset-top, 0px));
+    top: calc(44px + env(safe-area-inset-top, 0px));
   }
 }
 
