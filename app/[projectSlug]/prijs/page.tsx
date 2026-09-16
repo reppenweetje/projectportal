@@ -57,7 +57,7 @@ export default async function PrijsPage({
             <p className="mt-4 text-repp-navy/70 max-w-xl mx-auto">
               Hieronder de daadwerkelijke prijzen per m² van vergelijkbare
               bedrijfsunits in de buurt, naast die van De Hofman. De L- en
-              XL-units zijn inmiddels uitverkocht; alleen de laatste XXL-unit (ca.
+              XL-units zijn inmiddels uitverkocht; alleen de laatste unit, een XXL (ca.
               190 m², {formatEuro(LAST_UNIT_PRICE)} v.o.n., excl. btw) is nog
               te koop.
             </p>
@@ -93,8 +93,8 @@ export default async function PrijsPage({
                 in de aankoopprijs. De L- en XL-units zijn uitverkocht.
               </p>
               <p className="mt-3 text-repp-navy/80 max-w-xl mx-auto">
-                De laatste XXL-unit ({formatM2(LAST_UNIT_M2)} over 3
-                lagen) kost {formatEuro(LAST_UNIT_PRICE)}, circa{" "}
+                De laatste unit, een XXL van {formatM2(LAST_UNIT_M2)} over 3
+                lagen, kost {formatEuro(LAST_UNIT_PRICE)}, circa{" "}
                 <span className="font-bold text-repp-navy">
                   {formatEuro(Math.round(LAST_UNIT_PRICE / LAST_UNIT_M2))}/m²
                 </span>

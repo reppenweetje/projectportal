@@ -26,7 +26,7 @@ export function MinimalHero({ project }: { project: Project }) {
       <div className="absolute inset-0">
         <Image
           src={UNIT14_IMAGE}
-          alt="Vooraanzicht van de laatste XXL-unit van De Hofman met grote glasgevel en eigen entree"
+          alt="Vooraanzicht van de laatste unit van De Hofman, een XXL met grote glasgevel en eigen entree"
           fill
           priority
           sizes="100vw"
@@ -46,7 +46,7 @@ export function MinimalHero({ project }: { project: Project }) {
             te koop
           </h1>
           <p className="mt-5 text-lg md:text-xl text-white/85 font-light max-w-2xl mx-auto text-center">
-            De laatste XXL-unit: {XXL_AREA_LABEL} over 3 lagen, op de kop van het blok
+            De laatste unit is een XXL: {XXL_AREA_LABEL} over 3 lagen, op de kop van het blok
             aan de zichtzijde. {formatEuro(XXL_PRICE)} v.o.n., zonder
             overdrachtsbelasting.
           </p>

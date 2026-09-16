@@ -48,8 +48,8 @@ export function MobileMenu({ project }: { project: Project }) {
   const primaryItems: Item[] = [
     {
       href: "/xxl",
-      label: "De laatste XXL-unit",
-      description: `${XXL_AREA_LABEL} over 3 lagen`,
+      label: "De laatste unit",
+      description: `XXL, ${XXL_AREA_LABEL} over 3 lagen`,
     },
     {
       href: "/units",

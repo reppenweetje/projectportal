@@ -52,7 +52,7 @@ export function StatusBanner() {
           className="shrink-0 inline-flex items-center rounded-full border border-white text-white text-[13px] font-semibold leading-none hover:bg-white hover:text-[#0f0f70] transition"
           style={{ padding: "6px 14px" }}
         >
-          Bekijk de XXL-unit →
+          Bekijk de laatste unit →
         </Link>
       </div>
     </div>

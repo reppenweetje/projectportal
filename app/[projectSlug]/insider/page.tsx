@@ -53,7 +53,7 @@ export default async function InsiderPage({
               />
               <Benefit
                 title="XXL-nieuws"
-                body="Nieuws over de laatste XXL-unit aan de zichtzijde. Insiders horen het eerst."
+                body="Nieuws over de laatste unit aan de zichtzijde. Insiders horen het eerst."
               />
               <Benefit
                 title="Prijsindexaties"
