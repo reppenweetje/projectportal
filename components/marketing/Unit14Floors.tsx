@@ -15,7 +15,7 @@ export function Unit14Floors() {
   const items = USE_CASES.filter((u) => u.floor === floorKey);
 
   return (
-    <div className="mt-10">
+    <div className="mt-8">
       <div className="flex justify-center">
         <div
           role="tablist"
@@ -42,11 +42,13 @@ export function Unit14Floors() {
         </div>
       </div>
 
-      <p className="mt-4 text-center text-sm text-repp-navy/60 max-w-2xl mx-auto">
+      <p className="mt-3 text-center text-sm text-repp-navy/60 max-w-2xl mx-auto">
         {floor.specs}
       </p>
 
-      <div id={`laag-${floorKey}`} role="tabpanel" className="mt-8">
+      {/* Smaller dan de sectie: paginabreed werd het beeld een blok op
+          zichzelf, met veel lucht eromheen. */}
+      <div id={`laag-${floorKey}`} role="tabpanel" className="mt-6 mx-auto max-w-3xl">
         <UseCaseSlider items={items} resetKey={floorKey} />
       </div>
     </div>
