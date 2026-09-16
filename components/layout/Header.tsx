@@ -24,11 +24,12 @@ export const NAV_ITEMS: NavItem[] = [
 
 export function Header({
   project,
-  loginNudge = true,
+  loginNudge = false,
 }: {
   project: Project;
-  /** Strook "Maak account" onder de header. Uit op pagina's die daar zelf
-      al een grote CTA hebben. */
+  /** Strook "Maak account" onder de header. Standaard uit: boven de pagina
+      hoort maar één balk te staan (de sitebrede status-banner), en de
+      inlog/account-ingang staat al in de footer. */
   loginNudge?: boolean;
 }) {
   return (
