@@ -14,25 +14,32 @@ import { Unit14SpecList } from "@/components/unit/Unit14Specs";
  */
 export function Unit14Intro() {
   return (
-    <section className="px-5 py-16 md:py-20 bg-white">
-      <div className="mx-auto max-w-5xl">
-        <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold text-center">
-          De laatste unit
-        </p>
-        <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight text-center">
-          De XXL op de kop van het blok
-        </h2>
-        <p className="mt-3 text-repp-navy/70 max-w-2xl mx-auto text-center">
-          Werkplaats en opslag op de begane grond, kantoor of showroom op de
-          eerste en tweede verdieping, en een eigen dakterras van 42,5 m²
-          bovenop. Grote glasgevel en eigen entree aan de A. Hofmanweg.
-        </p>
+    <>
+      {/* Wat het is, met de maten. Het aanzicht staat in het blok eronder:
+          per blok maximaal een kop met een of twee alinea's, of één beeld. */}
+      <section className="px-5 pt-16 md:pt-20 pb-10 md:pb-12 bg-white">
+        <div className="mx-auto max-w-5xl">
+          <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold text-center">
+            De laatste unit
+          </p>
+          <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight text-center">
+            De XXL op de kop van het blok
+          </h2>
+          <p className="mt-3 text-repp-navy/70 max-w-2xl mx-auto text-center">
+            Werkplaats en opslag op de begane grond, kantoor of showroom op de
+            eerste en tweede verdieping, en een eigen dakterras van 42,5 m²
+            bovenop. Grote glasgevel en eigen entree aan de A. Hofmanweg.
+          </p>
 
-        <div className="mt-8">
-          <Unit14SpecList tone="light" />
+          <div className="mt-8">
+            <Unit14SpecList tone="light" />
+          </div>
         </div>
+      </section>
 
-        <figure className="mt-10 overflow-hidden rounded-2xl border border-repp-gray bg-surface-muted">
+      <section className="px-5 pb-16 md:pb-20 bg-white">
+      <div className="mx-auto max-w-5xl">
+        <figure className=" overflow-hidden rounded-2xl border border-repp-gray bg-surface-muted">
           <Image
             src={UNIT14_IMAGE}
             alt="Voorgevel van de laatste unit van De Hofman aan de A. Hofmanweg, met eigen entree en grote glasgevel"
@@ -66,5 +73,6 @@ export function Unit14Intro() {
         </div>
       </div>
     </section>
+    </>
   );
 }
