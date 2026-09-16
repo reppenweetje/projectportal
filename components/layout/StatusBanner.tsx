@@ -19,12 +19,11 @@ export function StatusBanner() {
     <div
       role="region"
       aria-label="Beschikbaarheid"
-      className="status-banner sticky top-0 z-40 w-full text-white"
-      style={{
-        background: "linear-gradient(90deg, #0f0f70 0%, #16169a 100%)",
-        borderBottom: "1px solid #E8A33D",
-        paddingTop: "env(safe-area-inset-top, 0px)",
-      }}
+      // Zelfde navy als de header: twee tinten blauw boven elkaar oogde
+      // rommelig. Het onderscheid komt van de dunne witte scheidingslijn,
+      // niet van een tweede kleur of een gouden rand.
+      className="status-banner sticky top-0 z-40 w-full text-white bg-repp-navy border-b border-white/15"
+      style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
     >
       {/* Mobiel: hele balk is één link */}
       <Link
@@ -49,8 +48,7 @@ export function StatusBanner() {
         <Link
           href={PRIMARY_CTA_HREF}
           data-cta="banner"
-          className="shrink-0 inline-flex items-center rounded-full border border-white text-white text-[13px] font-semibold leading-none hover:bg-white hover:text-[#0f0f70] transition"
-          style={{ padding: "6px 14px" }}
+          className="shrink-0 inline-flex items-center h-7 px-3.5 rounded-full border border-white/70 text-white text-[12px] font-semibold leading-none hover:bg-white hover:text-repp-navy transition"
         >
           Bekijk de laatste unit →
         </Link>
@@ -63,8 +61,7 @@ function StatusDot() {
   return (
     <span
       aria-hidden
-      className="status-banner-dot inline-block w-2 h-2 rounded-full shrink-0"
-      style={{ backgroundColor: "#E8A33D" }}
+      className="status-banner-dot inline-block w-2 h-2 rounded-full shrink-0 bg-repp-yellow"
     />
   );
 }
