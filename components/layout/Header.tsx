@@ -19,6 +19,7 @@ export const NAV_ITEMS: NavItem[] = [
   { href: "/xxl", label: "Laatste unit" },
   { href: "/units", label: "Plattegrond" },
   { href: "/bereken", label: "Bereken" },
+  { href: "/koopvshuur", label: "Kopen of huren" },
   { href: "/documenten", label: "Documenten" },
 ];
 
@@ -58,13 +59,15 @@ export function Header({
           />
         </Link>
 
-        {/* Desktop nav vanaf lg; daaronder het hamburger-menu. */}
-        <nav className="hidden lg:flex items-center gap-0.5">
+        {/* Desktop nav vanaf xl: met vijf menu-items plus de gele knop past
+            de balk onder 1280 px niet meer op één regel, dus daaronder het
+            hamburger-menu (dat dezelfde items toont). */}
+        <nav className="hidden xl:flex items-center gap-0.5">
           {NAV_ITEMS.map((i) => (
             <Link
               key={i.href}
               href={i.href}
-              className="inline-flex px-2.5 py-2 text-sm font-semibold text-white hover:text-repp-yellow transition"
+              className="inline-flex whitespace-nowrap px-2.5 py-2 text-sm font-semibold text-white hover:text-repp-yellow transition"
             >
               {i.label}
             </Link>
@@ -74,7 +77,7 @@ export function Header({
           <Link
             href={PRIMARY_CTA_HREF}
             data-cta="nav"
-            className="ml-2 inline-flex items-center bg-repp-yellow text-repp-navy text-sm font-bold px-4 py-2 rounded-full hover:brightness-95 transition"
+            className="ml-2 inline-flex items-center whitespace-nowrap bg-repp-yellow text-repp-navy text-sm font-bold px-4 py-2 rounded-full hover:brightness-95 transition"
           >
             {PRIMARY_CTA_LABEL}
           </Link>
@@ -82,7 +85,7 @@ export function Header({
 
         {/* Mobiel: primaire CTA + hamburger. Kort label, anders duwt de
             knop het hamburger-menu van het scherm op een iPhone SE. */}
-        <div className="flex lg:hidden items-center gap-1">
+        <div className="flex xl:hidden items-center gap-1">
           <Link
             href={PRIMARY_CTA_HREF}
             data-cta="nav"
