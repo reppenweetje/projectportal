@@ -66,10 +66,7 @@ export function HeroCalculator({ project }: { project: Project }) {
   const verschil = huidigeHuur - totaalMaand;
 
   return (
-    <>
-      {/* De vraag staat in een eigen blok, los van de rekenmachine: per blok
-          hoort maximaal een kop met een of twee alinea's, of één element. */}
-      <section className="px-5 pt-16 md:pt-20 pb-10 md:pb-12 bg-surface-muted">
+      <section className="px-5 py-16 md:py-20 bg-surface-muted">
         <div className="mx-auto max-w-4xl text-center">
           <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
             In 10 seconden weten
@@ -85,9 +82,6 @@ export function HeroCalculator({ project }: { project: Project }) {
             btw).
           </p>
         </div>
-      </section>
-
-      <section className="px-5 pb-16 md:pb-24 bg-surface-muted">
       <div className="mx-auto max-w-4xl">
         <div className="rounded-3xl bg-white border border-repp-gray p-6 md:p-10">
           <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -236,6 +230,5 @@ export function HeroCalculator({ project }: { project: Project }) {
         </p>
       </div>
     </section>
-    </>
   );
 }
