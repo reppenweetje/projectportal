@@ -73,13 +73,13 @@ export function HeroCalculator({ project }: { project: Project }) {
             In 10 seconden weten
           </p>
           <h2 className="mt-3 text-3xl md:text-5xl font-extrabold text-repp-navy tracking-tight">
-            Wat kost de XXL-unit jou per maand?
+            Wat kost de laatste unit jou per maand?
           </h2>
           <p className="mt-3 text-repp-navy/70 max-w-2xl mx-auto">
             Huur je nu een vergelijkbare ruimte? Bij {XXL_AREA_LABEL} tegen
             €{RENT_PER_M2_YEAR} per m² per jaar ben je{" "}
             {formatEuro(HUUR_PER_JAAR)} per jaar aan huur kwijt. Vergelijk dat
-            met de maandlast van de laatste XXL-unit ({formatEuro(koopsom)} excl.
+            met de maandlast van de laatste unit (XXL, {formatEuro(koopsom)} excl.
             btw).
           </p>
         </div>
@@ -139,7 +139,7 @@ export function HeroCalculator({ project }: { project: Project }) {
 
             <div className="rounded-2xl bg-repp-navy text-white p-6 md:p-8">
               <p className="text-xs uppercase tracking-wider text-repp-yellow font-semibold">
-                Maandlast XXL-unit
+                Maandlast laatste unit
               </p>
               <p className="mt-2 text-5xl md:text-6xl font-extrabold tracking-tight tabular-nums">
                 {formatEuro(totaalMaand)}

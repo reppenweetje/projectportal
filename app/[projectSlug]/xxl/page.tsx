@@ -21,9 +21,9 @@ import { KoopVsHuurCalculator } from "@/components/calculator/KoopVsHuurCalculat
 type Params = { projectSlug: string };
 
 export const metadata: Metadata = {
-  title: "De laatste XXL-unit te koop",
+  title: "De laatste unit te koop: XXL van ca. 190 m²",
   description:
-    "De laatste XXL-unit van De Hofman: ca. 190 m² over 3 lagen met eigen dakterras, op de kop van het blok aan de A. Hofmanweg. € 475.000 v.o.n. excl. btw. Reserveer of spar over de mogelijkheden.",
+    "De laatste unit van De Hofman is een XXL: ca. 190 m² over 3 lagen met eigen dakterras, op de kop van het blok aan de A. Hofmanweg. € 475.000 v.o.n. excl. btw. Reserveer of spar over de mogelijkheden.",
   alternates: { canonical: "/xxl" },
   openGraph: { images: [UNIT14_IMAGE] },
 };
@@ -37,8 +37,6 @@ export default async function XxlPage({
   const project = getProjectBySlug(projectSlug);
   if (!project) notFound();
 
-  const xxlUnits = project.units.filter((u) => u.type === "XXL");
-  const xxlAvailable = xxlUnits.filter((u) => u.status === "available");
   const hero = {
     src: "/images/hofman/xxl/xxl-voorzijde-v3.jpg",
     alt: "Vooraanzicht van de XXL-unit met grote glasgevel en eigen entree aan de straatzijde",
@@ -84,7 +82,7 @@ export default async function XxlPage({
             </div>
             <div className="mx-auto max-w-5xl">
               <p className="text-xs uppercase tracking-[0.2em] text-repp-yellow font-semibold text-center">
-                Nu te koop · {xxlAvailable.length} van {xxlUnits.length} units
+                Nu te koop · de laatste unit van De Hofman
               </p>
               <h1 className="mt-3 text-5xl md:text-7xl font-extrabold tracking-tight leading-[0.95] text-center">
                 XXL-unit aan
@@ -184,7 +182,7 @@ export default async function XxlPage({
               />
               <Card
                 title="Beperkt aanbod"
-                body="Slechts 2 XXL-units in heel De Hofman, op de uiteinden van het blok. Deze is de laatste die nu te koop is."
+                body="Slechts 2 XXL-units in heel De Hofman, op de uiteinden van het blok. Deze is de laatste unit die in het hele project nog te koop is."
               />
             </ul>
             <div className="mt-10 flex justify-center">

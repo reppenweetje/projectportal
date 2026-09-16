@@ -140,7 +140,7 @@ export const deHofman: Project = {
     },
     {
       label: "De Hofman XXL",
-      sublabel: "Nieuwbouw · laatste XXL-unit te koop",
+      sublabel: "Nieuwbouw · laatste unit te koop",
       pricePerM2: 2500,
       isHofman: true,
     },
@@ -369,11 +369,11 @@ export const deHofman: Project = {
     },
     {
       q: "Wat is de scherpste prijs van de Waarderpolder?",
-      a: "Vergelijkbare nieuwbouw bedrijfsunits in de Waarderpolder kosten momenteel tussen €2.500 en €3.058 per m². De L- en XL-units van De Hofman lagen op €2.281 tot €2.296 per m² en zijn inmiddels uitverkocht. De laatste XXL-unit (ca. 190 m² over 3 lagen) kost €475.000, circa €2.500 per m², en daarbij zijn de aansluitkosten voor nutsvoorzieningen (€3.000 tot €5.000 elders) en een eigen parkeerplaats al inbegrepen. Vrij op naam, dus ook zonder 10,4% overdrachtsbelasting.",
+      a: "Vergelijkbare nieuwbouw bedrijfsunits in de Waarderpolder kosten momenteel tussen €2.500 en €3.058 per m². De L- en XL-units van De Hofman lagen op €2.281 tot €2.296 per m² en zijn inmiddels uitverkocht. De laatste unit, een XXL van ca. 190 m² over 3 lagen, kost €475.000, circa €2.500 per m², en daarbij zijn de aansluitkosten voor nutsvoorzieningen (€3.000 tot €5.000 elders) en een eigen parkeerplaats al inbegrepen. Vrij op naam, dus ook zonder 10,4% overdrachtsbelasting.",
     },
     {
       q: "Wat als ik nu niet beslis?",
-      a: "Eerlijk: 13 van de 14 units zijn verkocht of verkocht onder voorbehoud. De L- en XL-units zijn uitverkocht; alleen de laatste XXL-unit is nog te koop. Wij dwingen je niet, maar de markt is wat hij is: nieuwbouw in de Waarderpolder is schaars en wordt schaarser. Wil je niet meteen reserveren? Schrijf je dan in voor 'Hofman Insider', dan krijg je als eerste bericht over prijsindexaties en statuswijzigingen.",
+      a: "Eerlijk: 13 van de 14 units zijn verkocht of verkocht onder voorbehoud. De L- en XL-units zijn uitverkocht; alleen de laatste unit, een XXL, is nog te koop. Wij dwingen je niet, maar de markt is wat hij is: nieuwbouw in de Waarderpolder is schaars en wordt schaarser. Wil je niet meteen reserveren? Schrijf je dan in voor 'Hofman Insider', dan krijg je als eerste bericht over prijsindexaties en statuswijzigingen.",
     },
   ],
   documents: [

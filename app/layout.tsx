@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     template: "%s | De Hofman",
   },
   description:
-    "Nog 1 van 14 units te koop in De Hofman, Waarderpolder Haarlem. De laatste XXL-unit, ca. 190 m² over 3 lagen, € 475.000 v.o.n. zonder overdrachtsbelasting. Verwachte oplevering Q3 2027.",
+    "Nog 1 van 14 units te koop in De Hofman, Waarderpolder Haarlem. De laatste unit is een XXL van ca. 190 m² over 3 lagen, € 475.000 v.o.n. zonder overdrachtsbelasting. Verwachte oplevering Q3 2027.",
   applicationName: "De Hofman · REPP",
   authors: [{ name: "REPP Bedrijfsmakelaar", url: "https://repp.nl" }],
   creator: "REPP Bedrijfsmakelaar",

@@ -32,12 +32,12 @@ export async function generateMetadata({
   const project = getProjectBySlug(projectSlug);
   if (!project) return { title: "Project niet gevonden" };
 
-  const title = `${project.name}, ${project.city} · Laatste XXL-unit te koop`;
+  const title = `${project.name}, ${project.city} · Laatste unit te koop`;
   const description =
-    "Nog 1 van 14 units te koop in De Hofman, Waarderpolder Haarlem. De laatste XXL-unit, ca. 190 m² over 3 lagen, € 475.000 v.o.n. zonder overdrachtsbelasting. Verwachte oplevering Q3 2027.";
+    "Nog 1 van 14 units te koop in De Hofman, Waarderpolder Haarlem. De laatste unit is een XXL van ca. 190 m² over 3 lagen, € 475.000 v.o.n. zonder overdrachtsbelasting. Verwachte oplevering Q3 2027.";
   const heroImage = UNIT14_IMAGE;
   const heroAlt =
-    "Vooraanzicht van de laatste XXL-unit van De Hofman met grote glasgevel en eigen entree";
+    "Vooraanzicht van de laatste unit van De Hofman, een XXL met grote glasgevel en eigen entree";
 
   return {
     title: { absolute: title },

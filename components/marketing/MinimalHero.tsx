@@ -26,7 +26,7 @@ export function MinimalHero({ project }: { project: Project }) {
       <div className="absolute inset-0">
         <Image
           src={UNIT14_IMAGE}
-          alt="Vooraanzicht van de laatste XXL-unit van De Hofman met grote glasgevel en eigen entree"
+          alt="Vooraanzicht van de laatste unit van De Hofman, een XXL met grote glasgevel en eigen entree"
           fill
           priority
           sizes="100vw"
@@ -46,7 +46,7 @@ export function MinimalHero({ project }: { project: Project }) {
             te koop
           </h1>
           <p className="mt-5 text-lg md:text-xl text-white/85 font-light max-w-2xl mx-auto text-center">
-            De laatste XXL-unit: {XXL_AREA_LABEL} over 3 lagen, op de kop van het blok
+            De laatste unit is een XXL: {XXL_AREA_LABEL} over 3 lagen, op de kop van het blok
             aan de zichtzijde. {formatEuro(XXL_PRICE)} v.o.n., zonder
             overdrachtsbelasting.
           </p>
@@ -72,28 +72,25 @@ export function MinimalHero({ project }: { project: Project }) {
               {SECONDARY_CTA_LABEL} →
             </Link>
           </div>
-          <div className="mt-3 text-center">
+          {/* Eén rustige hulplijn onder de CTA's: twee tekstlinks, zonder
+              pijltjes, zodat alleen de primaire knop en de sparren-link de
+              aandacht trekken. De keuze ondernemer/belegger zit als tabs op
+              /bereken zelf. */}
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-white/70">
             <Link
               href="/units"
-              className="text-sm font-semibold text-white/80 hover:text-white"
+              className="font-semibold text-white/80 hover:text-white underline-offset-4 hover:underline"
             >
-              Bekijk de plattegrond →
+              Bekijk de plattegrond
             </Link>
-          </div>
-
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-sm text-white/70">
-            <span>Eerst rekenen?</span>
+            <span aria-hidden className="text-white/40">
+              ·
+            </span>
             <Link
-              href="/bereken?modus=ondernemer"
-              className="font-semibold text-white/85 hover:text-white underline-offset-4 hover:underline"
+              href="/bereken"
+              className="font-semibold text-white/80 hover:text-white underline-offset-4 hover:underline"
             >
-              Voor mijn bedrijf →
-            </Link>
-            <Link
-              href="/bereken?modus=belegger"
-              className="font-semibold text-white/85 hover:text-white underline-offset-4 hover:underline"
-            >
-              Als belegging →
+              Reken je maandlast uit
             </Link>
           </div>
         </div>

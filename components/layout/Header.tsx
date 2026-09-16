@@ -3,7 +3,7 @@ import Image from "next/image";
 import type { Project } from "@/lib/types";
 import {
   PRIMARY_CTA_HREF,
-  PRIMARY_CTA_LABEL_NAV,
+  PRIMARY_CTA_LABEL,
   PRIMARY_CTA_LABEL_SHORT,
 } from "@/lib/site-config";
 import { HeaderFavorites } from "./HeaderFavorites";
@@ -16,7 +16,7 @@ type NavItem = { href: string; label: string };
 
 /** Hoofdnavigatie, gedeeld door desktop-nav en mobiel menu. */
 export const NAV_ITEMS: NavItem[] = [
-  { href: "/xxl", label: "XXL-unit" },
+  { href: "/xxl", label: "Laatste unit" },
   { href: "/units", label: "Plattegrond" },
   { href: "/bereken", label: "Bereken" },
   { href: "/documenten", label: "Documenten" },
@@ -75,7 +75,7 @@ export function Header({
             data-cta="nav"
             className="ml-2 inline-flex items-center bg-repp-yellow text-repp-navy text-sm font-bold px-4 py-2 rounded-full hover:brightness-95 transition"
           >
-            {PRIMARY_CTA_LABEL_NAV}
+            {PRIMARY_CTA_LABEL}
           </Link>
         </nav>
 

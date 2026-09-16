@@ -18,7 +18,7 @@ export function Unit14Intro() {
     <section className="px-5 py-16 md:py-20 bg-white">
       <div className="mx-auto max-w-5xl">
         <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold text-center">
-          De laatste XXL-unit
+          De laatste unit
         </p>
         <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight text-center">
           De XXL op de kop van het blok
@@ -60,7 +60,7 @@ export function Unit14Intro() {
             href="/xxl"
             className="text-sm font-semibold text-repp-navy/70 hover:text-repp-navy"
           >
-            Alle details van de XXL-unit →
+            Alle details van de laatste unit →
           </Link>
         </div>
       </div>

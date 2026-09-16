@@ -187,7 +187,7 @@ export function LeadFormUnit14({
               value="reserveren"
               checked={intent === "reserveren"}
               onChange={() => setIntent("reserveren")}
-              label="Ik wil de XXL-unit reserveren"
+              label="Ik wil de laatste unit reserveren"
             />
             <RadioPill
               name="intent"
@@ -286,7 +286,7 @@ export function LeadFormUnit14Heading({
         {overline}
       </p>
       <h2 className="mt-3 text-3xl md:text-5xl font-extrabold text-repp-navy tracking-tight">
-        De XXL-unit reserveren of eerst sparren?
+        De laatste unit reserveren of eerst sparren?
       </h2>
       <p
         className={`mt-3 text-repp-navy/70 max-w-xl ${
@@ -304,7 +304,7 @@ function Summary() {
   return (
     <aside className="rounded-2xl bg-repp-navy text-white p-6 self-start lg:sticky lg:top-32">
       <p className="text-xs uppercase tracking-wider text-repp-yellow font-semibold">
-        Laatste XXL-unit
+        De laatste unit
       </p>
       <p className="mt-2 text-sm leading-relaxed text-white/85">
         XXL-unit · {XXL_AREA_LABEL} · 3 lagen ·{" "}

@@ -5,8 +5,8 @@ import { sendCrmEvents } from "@/lib/crm-events";
 export const runtime = "nodejs";
 
 /**
- * Aanmelding voor de laatste XXL-unit (LeadFormUnit14). Twee intenties:
- *   - reserveren: de bezoeker wil de XXL-unit reserveren
+ * Aanmelding voor de laatste unit (LeadFormUnit14). Twee intenties:
+ *   - reserveren: de bezoeker wil de laatste unit reserveren
  *   - sparren:    de bezoeker wil eerst sparren over de mogelijkheden
  *
  * Beide zijn hot leads (contactgegevens + concrete unit). De intent, de

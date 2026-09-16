@@ -17,9 +17,7 @@ export const XXL_AREA_LABEL = "ca. 190 m²";
 export const VVE_MONTHLY = 160;
 export const RENT_PER_M2_YEAR = 145;
 
-export const PRIMARY_CTA_LABEL = "Reserveer de laatste XXL-unit";
-/** Iets korter, voor de desktop-navigatie naast de menu-items. */
-export const PRIMARY_CTA_LABEL_NAV = "Reserveer de XXL-unit";
+export const PRIMARY_CTA_LABEL = "Reserveer de laatste unit";
 /** Korte variant voor krappe plekken, zoals de mobiele header. */
 export const PRIMARY_CTA_LABEL_SHORT = "Reserveer";
 export const PRIMARY_CTA_HREF = "/xxl#aanmelden";
@@ -27,7 +25,7 @@ export const SECONDARY_CTA_LABEL = "Ik wil de mogelijkheden bespreken";
 export const SECONDARY_CTA_HREF = "/xxl?intent=sparren#aanmelden";
 
 export const WHATSAPP_HREF =
-  "https://wa.me/31617192538?text=Hallo%2C+ik+heb+interesse+in+de+laatste+XXL-unit+van+De+Hofman.";
+  "https://wa.me/31617192538?text=Hallo%2C+ik+heb+interesse+in+de+laatste+unit+van+De+Hofman.";
 
 /** Beeld van de XXL-unit dat overal als hoofdbeeld dient (hero, OG, unit-blok). */
 export const UNIT14_IMAGE = "/images/hofman/xxl/xxl-voorzijde-v3.jpg";

@@ -11,7 +11,7 @@ export function HomeLeadForm({ project }: { project: Project }) {
     <section id="aanmelden" className="px-5 py-16 md:py-24 bg-white">
       <div className="mx-auto max-w-5xl">
         <div className="mb-10">
-          <LeadFormUnit14Heading overline="Aanmelden voor de laatste XXL-unit" />
+          <LeadFormUnit14Heading overline="Aanmelden voor de laatste unit" />
         </div>
         <Suspense fallback={null}>
           <LeadFormUnit14 project={project} context="home-form" />
