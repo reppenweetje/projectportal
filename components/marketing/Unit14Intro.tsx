@@ -1,17 +1,17 @@
-import Image from "next/image";
 import Link from "next/link";
 import { PRIMARY_CTA_HREF, PRIMARY_CTA_LABEL } from "@/lib/site-config";
 import { Unit14SpecList } from "@/components/unit/Unit14Specs";
 import { Unit14Floors } from "./Unit14Floors";
 
 /**
- * "Dit is de XXL-unit": wat het is en wat je er kunt doen, in één sectie.
- * Eerst het pand met de specs, daarna de doorklik per verdieping. Zo leest
- * een bezoeker eerst wat hij koopt en ziet hij zich er meteen in zitten,
- * zonder dat het twee losse blokken worden.
+ * "Dit is de laatste unit": wat het is en wat je er kunt doen, in één sectie.
+ * Eerst de specs, daarna de doorklik per verdieping. Zo leest een bezoeker
+ * eerst wat hij koopt en ziet hij zich er meteen in zitten, zonder dat het
+ * twee losse blokken worden.
  *
- * Beeld is bewust het hoekaanzicht en niet de voorgevel: die staat al in
- * de hero, één scherm hoger.
+ * Bewust geen render van het pand hier: die staat al in de hero, één scherm
+ * hoger. Twee paginabrede beelden onder elkaar leest te zwaar, dus het
+ * enige beeld in deze sectie is de carrousel per verdieping.
  */
 export function Unit14Intro() {
   return (
@@ -28,17 +28,6 @@ export function Unit14Intro() {
           eerste en tweede verdieping, en een eigen dakterras van 42,5 m²
           bovenop. Grote glasgevel en eigen entree aan de A. Hofmanweg.
         </p>
-
-        <figure className="mt-8 overflow-hidden rounded-2xl border border-repp-gray bg-surface-muted">
-          <Image
-            src="/images/hofman/renders/entree-fietsen.jpg"
-            alt="Hoekaanzicht overdag van de kop van het blok van De Hofman, met de XXL-unit over drie lagen en de eigen entree"
-            width={2200}
-            height={1238}
-            sizes="(max-width: 1024px) 100vw, 960px"
-            className="w-full h-auto"
-          />
-        </figure>
 
         <div className="mt-8">
           <Unit14SpecList tone="light" />

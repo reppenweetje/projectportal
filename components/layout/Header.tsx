@@ -12,11 +12,16 @@ import { LoginNudge } from "./LoginNudge";
 import { MobileMenu } from "./MobileMenu";
 import { StatusBanner } from "./StatusBanner";
 
-type NavItem = { href: string; label: string };
+type NavItem = {
+  href: string;
+  label: string;
+  /** Geel in plaats van wit: één item mag eruit springen. */
+  accent?: boolean;
+};
 
 /** Hoofdnavigatie, gedeeld door desktop-nav en mobiel menu. */
 export const NAV_ITEMS: NavItem[] = [
-  { href: "/xxl", label: "Laatste unit" },
+  { href: "/xxl", label: "Laatste unit", accent: true },
   { href: "/units", label: "Plattegrond" },
   { href: "/bereken", label: "Bereken" },
   { href: "/koopvshuur", label: "Kopen of huren" },
@@ -67,7 +72,11 @@ export function Header({
             <Link
               key={i.href}
               href={i.href}
-              className="inline-flex whitespace-nowrap px-2.5 py-2 text-sm font-semibold text-white hover:text-repp-yellow transition"
+              className={`inline-flex whitespace-nowrap px-2.5 py-2 text-sm font-semibold transition ${
+                i.accent
+                  ? "text-repp-yellow font-bold hover:brightness-110"
+                  : "text-white hover:text-repp-yellow"
+              }`}
             >
               {i.label}
             </Link>

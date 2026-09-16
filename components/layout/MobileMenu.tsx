@@ -16,6 +16,8 @@ type Item = {
   href: string;
   label: string;
   description?: string;
+  /** Gele markering: het item dat eruit moet springen. */
+  accent?: boolean;
 };
 
 export function MobileMenu({ project }: { project: Project }) {
@@ -49,6 +51,7 @@ export function MobileMenu({ project }: { project: Project }) {
     {
       href: "/xxl",
       label: "De laatste unit",
+      accent: true,
       description: `XXL, ${XXL_AREA_LABEL} over 3 lagen`,
     },
     {
@@ -226,11 +229,17 @@ function MenuItem({
     <li>
       <Link
         href={item.href}
-        className="flex items-center justify-between gap-3 px-5 py-3 hover:bg-surface-muted transition"
+        className={`flex items-center justify-between gap-3 px-5 py-3 transition ${
+          item.accent
+            ? "bg-repp-yellow/15 border-l-4 border-repp-yellow hover:bg-repp-yellow/25"
+            : "hover:bg-surface-muted"
+        }`}
       >
         <div className="min-w-0">
           <p
-            className={`font-semibold text-repp-navy ${small ? "text-sm" : "text-base"}`}
+            className={`text-repp-navy ${small ? "text-sm" : "text-base"} ${
+              item.accent ? "font-extrabold" : "font-semibold"
+            }`}
           >
             {item.label}
           </p>
