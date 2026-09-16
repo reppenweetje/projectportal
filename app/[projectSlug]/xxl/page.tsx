@@ -37,8 +37,6 @@ export default async function XxlPage({
   const project = getProjectBySlug(projectSlug);
   if (!project) notFound();
 
-  const xxlUnits = project.units.filter((u) => u.type === "XXL");
-  const xxlAvailable = xxlUnits.filter((u) => u.status === "available");
   const hero = {
     src: "/images/hofman/xxl/xxl-voorzijde-v3.jpg",
     alt: "Vooraanzicht van de XXL-unit met grote glasgevel en eigen entree aan de straatzijde",
@@ -84,7 +82,7 @@ export default async function XxlPage({
             </div>
             <div className="mx-auto max-w-5xl">
               <p className="text-xs uppercase tracking-[0.2em] text-repp-yellow font-semibold text-center">
-                Nu te koop · {xxlAvailable.length} van {xxlUnits.length} units
+                Nu te koop · de laatste unit van De Hofman
               </p>
               <h1 className="mt-3 text-5xl md:text-7xl font-extrabold tracking-tight leading-[0.95] text-center">
                 XXL-unit aan

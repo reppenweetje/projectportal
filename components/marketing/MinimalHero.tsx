@@ -72,28 +72,25 @@ export function MinimalHero({ project }: { project: Project }) {
               {SECONDARY_CTA_LABEL} →
             </Link>
           </div>
-          <div className="mt-3 text-center">
+          {/* Eén rustige hulplijn onder de CTA's: twee tekstlinks, zonder
+              pijltjes, zodat alleen de primaire knop en de sparren-link de
+              aandacht trekken. De keuze ondernemer/belegger zit als tabs op
+              /bereken zelf. */}
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-white/70">
             <Link
               href="/units"
-              className="text-sm font-semibold text-white/80 hover:text-white"
+              className="font-semibold text-white/80 hover:text-white underline-offset-4 hover:underline"
             >
-              Bekijk de plattegrond →
+              Bekijk de plattegrond
             </Link>
-          </div>
-
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-sm text-white/70">
-            <span>Eerst rekenen?</span>
+            <span aria-hidden className="text-white/40">
+              ·
+            </span>
             <Link
-              href="/bereken?modus=ondernemer"
-              className="font-semibold text-white/85 hover:text-white underline-offset-4 hover:underline"
+              href="/bereken"
+              className="font-semibold text-white/80 hover:text-white underline-offset-4 hover:underline"
             >
-              Voor mijn bedrijf →
-            </Link>
-            <Link
-              href="/bereken?modus=belegger"
-              className="font-semibold text-white/85 hover:text-white underline-offset-4 hover:underline"
-            >
-              Als belegging →
+              Reken je maandlast uit
             </Link>
           </div>
         </div>
