@@ -7,7 +7,7 @@ import {
   PRIMARY_CTA_LABEL,
   SECONDARY_CTA_HREF,
   SECONDARY_CTA_LABEL,
-  UNIT14_IMAGE,
+  HERO_IMAGE,
   XXL_AREA_LABEL,
   XXL_PRICE,
 } from "@/lib/site-config";
@@ -15,9 +15,11 @@ import {
 /**
  * Homepage-hero. Zelfde opbouw als de hero op /xxl: beeld boven
  * hofman-deep met gradient, content gecentreerd. Het vooraanzicht van
- * de XXL-unit is een lichte render (witte lucht, grijze gevel), dus de
- * verdonkering is iets zwaarder dan op /xxl om de witte tekst leesbaar
- * te houden. Eén boodschap, één primaire knop en de vier feiten waar een
+ * Beeld is het hoekaanzicht in de avond: breed genoeg om paginabreed te
+ * staan zonder dat de gevel wordt afgesneden, en van zichzelf al donker met
+ * verlichte units. De verdonkering kan daardoor lichter dan bij de dagrender,
+ * die een witte lucht had. De voorgevel staat verderop op de pagina, als
+ * losstaande figuur op ware verhouding. Eén boodschap, één primaire knop en de vier feiten waar een
  * koper als eerste naar kijkt. Verdiepende links (plattegrond, calculators)
  * staan verderop op de pagina, niet in de hero. De schaarste staat al in
  * de sitebrede status-banner, dus hier geen extra chip.
@@ -27,14 +29,14 @@ export function MinimalHero({ project }: { project: Project }) {
     <section className="relative overflow-hidden bg-hofman-deep text-white flex flex-col justify-center min-h-[68vh]">
       <div className="absolute inset-0">
         <Image
-          src={UNIT14_IMAGE}
-          alt="Vooraanzicht van de laatste unit van De Hofman, een XXL met grote glasgevel en eigen entree"
+          src={HERO_IMAGE}
+          alt="De Hofman in de avond, met de laatste unit als verlichte XXL over drie lagen op de kop van het blok"
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center opacity-80"
+          className="object-cover object-center opacity-90"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-hofman-deep/45 via-hofman-deep/50 to-hofman-deep/85" />
+        <div className="absolute inset-0 bg-gradient-to-b from-hofman-deep/35 via-hofman-deep/40 to-hofman-deep/80" />
       </div>
 
       <div className="relative px-5 py-12 md:py-16">

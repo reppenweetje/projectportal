@@ -27,8 +27,14 @@ export const SECONDARY_CTA_HREF = "/xxl?intent=sparren#aanmelden";
 export const WHATSAPP_HREF =
   "https://wa.me/31617192538?text=Hallo%2C+ik+heb+interesse+in+de+laatste+unit+van+De+Hofman.";
 
-/** Beeld van de XXL-unit dat overal als hoofdbeeld dient (hero, OG, unit-blok). */
+/** Beeld van de XXL-unit: de voorgevel. Recht van voren, dus het werkt als
+ * losstaande figuur en als OG-beeld, niet paginabreed uitgesneden. */
 export const UNIT14_IMAGE = "/images/hofman/xxl/xxl-voorzijde-v3.jpg";
+
+/** Beeld voor de paginabrede hero: hoekaanzicht in de avond. Breed genoeg
+ * om zonder lelijke uitsnede over de volle breedte te staan, en donker
+ * genoeg om de witte tekst te dragen zonder zware verdonkering. */
+export const HERO_IMAGE = "/images/hofman/renders/zijgevel-avond.jpg";
 
 /** Financieringsaannames, gelijk aan /bereken en /koopvshuur. */
 export const FINANCE_ASSUMPTIONS = {
