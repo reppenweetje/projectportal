@@ -19,10 +19,10 @@ export function StatusBanner() {
     <div
       role="region"
       aria-label="Beschikbaarheid"
-      // Zelfde navy als de header: twee tinten blauw boven elkaar oogde
-      // rommelig. Het onderscheid komt van de dunne witte scheidingslijn,
-      // niet van een tweede kleur of een gouden rand.
-      className="status-banner sticky top-0 z-40 w-full text-white bg-repp-navy border-b border-white/15"
+      // repp-blue (#1b23aa) boven de navy header: één blauw uit de huisstijl
+      // dat als eigen strook leest, zonder extra scheidingslijn of gouden
+      // rand.
+      className="status-banner sticky top-0 z-40 w-full text-white bg-repp-blue"
       style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
     >
       {/* Mobiel: hele balk is één link */}
