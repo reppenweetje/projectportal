@@ -17,7 +17,9 @@ import {
  * hofman-deep met gradient, content gecentreerd. Het vooraanzicht van
  * de XXL-unit is een lichte render (witte lucht, grijze gevel), dus de
  * verdonkering is iets zwaarder dan op /xxl om de witte tekst leesbaar
- * te houden. Eén boodschap, één primaire knop. De schaarste staat al in
+ * te houden. Eén boodschap, één primaire knop en de vier feiten waar een
+ * koper als eerste naar kijkt. Verdiepende links (plattegrond, calculators)
+ * staan verderop op de pagina, niet in de hero. De schaarste staat al in
  * de sitebrede status-banner, dus hier geen extra chip.
  */
 export function MinimalHero({ project }: { project: Project }) {
@@ -46,17 +48,22 @@ export function MinimalHero({ project }: { project: Project }) {
             te koop
           </h1>
           <p className="mt-5 text-lg md:text-xl text-white/85 font-light max-w-2xl mx-auto text-center">
-            De laatste unit is een XXL: {XXL_AREA_LABEL} over 3 lagen, op de kop van het blok
-            aan de zichtzijde. {formatEuro(XXL_PRICE)} v.o.n., zonder
-            overdrachtsbelasting.
+            Een XXL van {XXL_AREA_LABEL} over 3 lagen, op de kop van het blok
+            aan de zichtzijde van de Waarderpolder.
           </p>
 
-          <ul className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm font-semibold text-white/90">
-            <Check>Sloop afgerond, bouwstart oktober 2026</Check>
-            <Check>v.o.n. · btw terugvorderbaar</Check>
-          </ul>
+          {/* De vier dingen waar een koper als eerste naar zoekt: prijs,
+              oppervlakte, wat het bijzonder maakt en wanneer hij erin kan.
+              Bewust geen extra links hier: alleen de knop en de sparren-link
+              hieronder, zodat de hero rustig blijft. */}
+          <dl className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-4 max-w-3xl mx-auto">
+            <Fact value={formatEuro(XXL_PRICE)} label="v.o.n., excl. btw" />
+            <Fact value={XXL_AREA_LABEL} label="over 3 lagen" />
+            <Fact value="42,5 m²" label="eigen dakterras" />
+            <Fact value="Q3 2027" label="oplevering" />
+          </dl>
 
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
             <Link
               href={PRIMARY_CTA_HREF}
               data-cta="hero"
@@ -72,49 +79,21 @@ export function MinimalHero({ project }: { project: Project }) {
               {SECONDARY_CTA_LABEL} →
             </Link>
           </div>
-          {/* Eén rustige hulplijn onder de CTA's: twee tekstlinks, zonder
-              pijltjes, zodat alleen de primaire knop en de sparren-link de
-              aandacht trekken. De keuze ondernemer/belegger zit als tabs op
-              /bereken zelf. */}
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-white/70">
-            <Link
-              href="/units"
-              className="font-semibold text-white/80 hover:text-white underline-offset-4 hover:underline"
-            >
-              Bekijk de plattegrond
-            </Link>
-            <span aria-hidden className="text-white/40">
-              ·
-            </span>
-            <Link
-              href="/bereken"
-              className="font-semibold text-white/80 hover:text-white underline-offset-4 hover:underline"
-            >
-              Reken je maandlast uit
-            </Link>
-          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function Check({ children }: { children: React.ReactNode }) {
+function Fact({ value, label }: { value: string; label: string }) {
   return (
-    <li className="inline-flex items-center gap-1.5">
-      <svg
-        viewBox="0 0 24 24"
-        className="w-3.5 h-3.5 shrink-0 text-repp-yellow"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden
-      >
-        <polyline points="20 6 9 17 4 12" />
-      </svg>
-      {children}
-    </li>
+    <div className="text-center">
+      <dt className="text-[11px] uppercase tracking-[0.15em] font-semibold text-white/55 whitespace-nowrap">
+        {label}
+      </dt>
+      <dd className="mt-1 text-xl md:text-2xl font-bold tracking-tight">
+        {value}
+      </dd>
+    </div>
   );
 }

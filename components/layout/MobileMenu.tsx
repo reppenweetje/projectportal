@@ -59,7 +59,7 @@ export function MobileMenu({ project }: { project: Project }) {
     {
       href: "/bereken",
       label: "Bereken",
-      description: "Maandlast, rendement en koop vs huur",
+      description: "Maandlast en rendement",
     },
     {
       href: "/koopvshuur",
@@ -98,7 +98,7 @@ export function MobileMenu({ project }: { project: Project }) {
         onClick={() => setOpen(true)}
         aria-label="Open menu"
         aria-expanded={open}
-        className="lg:hidden inline-flex items-center justify-center w-9 h-9 text-white active:text-repp-yellow transition"
+        className="xl:hidden inline-flex items-center justify-center w-9 h-9 text-white active:text-repp-yellow transition"
       >
         <svg
           viewBox="0 0 24 24"
@@ -117,7 +117,7 @@ export function MobileMenu({ project }: { project: Project }) {
       </button>
 
       {open && (
-        <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true">
+        <div className="fixed inset-0 z-50 xl:hidden" role="dialog" aria-modal="true">
           {/* Backdrop */}
           <button
             type="button"

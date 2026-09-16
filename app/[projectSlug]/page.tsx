@@ -103,9 +103,7 @@ export default async function ProjectHomePage({
   return (
     <>
       <ProjectJsonLd project={project} baseUrl={siteUrl} />
-      {/* Geen login-strook onder de header: de sitebrede status-banner en
-          de hero-CTA nemen die plek in. */}
-      <Header project={project} loginNudge={false} />
+      <Header project={project} />
       <PersonalizationBanner project={project} />
       <main className="flex-1 has-sticky-cta">
         {/* 1. Hero: één boodschap, één knop */}
