@@ -255,11 +255,21 @@ function UnitCell({
         <div className={`${typeSize} font-extrabold leading-none`}>
           {unit.type}
         </div>
-        {size !== "mini" && (
-          <div className={`${labelSize} ${labelHiddenOnMobile} mt-1 opacity-80`}>
-            {statusLabelShort[unit.status]}
-          </div>
-        )}
+        {size !== "mini" &&
+          (unit.status === "available" ? (
+            // De enige vrije unit krijgt een label in plaats van alleen kleur:
+            // op een plattegrond vol rode vlakken is één groen vlakje
+            // makkelijk te missen.
+            <div
+              className={`${labelHiddenOnMobile} mt-1.5 mx-auto w-fit rounded-full bg-repp-navy px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-repp-yellow`}
+            >
+              Nog te koop
+            </div>
+          ) : (
+            <div className={`${labelSize} ${labelHiddenOnMobile} mt-1 opacity-80`}>
+              {statusLabelShort[unit.status]}
+            </div>
+          ))}
       </div>
       <div className={`${m2Size} opacity-70 text-right tabular-nums`}>
         {Math.round(unit.m2BVO)}m²
