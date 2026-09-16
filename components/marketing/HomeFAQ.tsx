@@ -30,8 +30,8 @@ export const HOME_FAQ: Faq[] = [
     a: "Ja. Er is een optielijst met meer- en minderwerk, en je kunt met de aannemer over aanpassingen spreken. De optielijst staat bij de documenten.",
   },
   {
-    q: "Kan ik unit 14 ook koppelen met unit 7?",
-    a: "Unit 7 is verkocht onder voorbehoud van financiering. Gaat die verkoop niet door, dan zijn 7 en 14 samen te koppelen tot ca. 380 m². Meld je aan, dan hoor je het als eerste.",
+    q: "Kan ik de XXL-unit koppelen met de andere XXL?",
+    a: "De andere XXL-unit is verkocht onder voorbehoud van financiering. Gaat die verkoop niet door, dan zijn de twee XXL-units samen te koppelen tot ca. 380 m². Meld je aan, dan hoor je het als eerste.",
   },
 ];
 

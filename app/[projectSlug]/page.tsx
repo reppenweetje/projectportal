@@ -34,10 +34,10 @@ export async function generateMetadata({
 
   const title = `${project.name}, ${project.city} · Laatste XXL-unit te koop`;
   const description =
-    "Nog 1 van 14 units te koop in De Hofman, Waarderpolder Haarlem. XXL unit 14, ca. 190 m² over 3 lagen, € 475.000 v.o.n. zonder overdrachtsbelasting. Verwachte oplevering Q3 2027.";
+    "Nog 1 van 14 units te koop in De Hofman, Waarderpolder Haarlem. De laatste XXL-unit, ca. 190 m² over 3 lagen, € 475.000 v.o.n. zonder overdrachtsbelasting. Verwachte oplevering Q3 2027.";
   const heroImage = UNIT14_IMAGE;
   const heroAlt =
-    "Vooraanzicht van XXL unit 14 van De Hofman met grote glasgevel en eigen entree";
+    "Vooraanzicht van de laatste XXL-unit van De Hofman met grote glasgevel en eigen entree";
 
   return {
     title: { absolute: title },
@@ -114,13 +114,13 @@ export default async function ProjectHomePage({
         {/* 2. Statusstrook: de drie types en hun status per datum */}
         <StatusStrip />
 
-        {/* 3. Dit is unit 14 */}
+        {/* 3. Dit is de XXL-unit */}
         <Unit14Intro />
 
         {/* 4. Zes redenen */}
         <USPHighlights project={project} />
 
-        {/* 5. Maandlast unit 14 */}
+        {/* 5. Maandlast XXL-unit */}
         <HeroCalculator project={project} />
 
         {/* 6. Partners */}
@@ -129,7 +129,7 @@ export default async function ProjectHomePage({
         {/* 7. Referenties: je toekomstige buren */}
         <Testimonials project={project} />
 
-        {/* 8. Waarom is unit 14 er nog? */}
+        {/* 8. Waarom is deze unit er nog? */}
         <WhyStillAvailable />
 
         {/* 9. FAQ */}

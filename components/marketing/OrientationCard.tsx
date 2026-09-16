@@ -24,7 +24,7 @@ export function OrientationCard({ project }: { project: Project }) {
             <span>
               Drie types: L (105 m², {formatEuro(239500)}, uitverkocht), XL
               (113 m², {formatEuro(259500)}, uitverkocht), XXL (ca. 190 m²,{" "}
-              {formatEuro(475000)}, unit 14 nog te koop). Alle prijzen v.o.n.,
+              {formatEuro(475000)}, laatste XXL-unit nog te koop). Alle prijzen v.o.n.,
               excl. BTW.
             </span>
           </li>

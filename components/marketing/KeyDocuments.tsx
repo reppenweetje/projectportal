@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Project } from "@/lib/types";
 import { DocIcon } from "./DocIcon";
 
-// Drie kaarten: brochure, prijslijst en de plattegrond van unit 14. Voor de
+// Drie kaarten: brochure, prijslijst en de plattegrond van de XXL-unit. Voor de
 // plattegrond wijken label en beschrijving af van het documentenoverzicht.
 const HIGHLIGHTED: { slug: string; label?: string; body?: string }[] = [
   { slug: "brochure" },
@@ -10,7 +10,7 @@ const HIGHLIGHTED: { slug: string; label?: string; body?: string }[] = [
   {
     slug: "plattegronden",
     label: "Plattegrond XXL",
-    body: "Indeling van unit 14 per verdieping",
+    body: "Indeling van de XXL-unit per verdieping",
   },
 ];
 

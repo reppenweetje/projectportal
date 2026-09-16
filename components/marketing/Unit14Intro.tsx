@@ -5,7 +5,7 @@ import { Unit14SpecList } from "@/components/unit/Unit14Specs";
 import { Unit14Floors } from "./Unit14Floors";
 
 /**
- * "Dit is unit 14": wat het is en wat je er kunt doen, in één sectie.
+ * "Dit is de XXL-unit": wat het is en wat je er kunt doen, in één sectie.
  * Eerst het pand met de specs, daarna de doorklik per verdieping. Zo leest
  * een bezoeker eerst wat hij koopt en ziet hij zich er meteen in zitten,
  * zonder dat het twee losse blokken worden.
@@ -18,7 +18,7 @@ export function Unit14Intro() {
     <section className="px-5 py-16 md:py-20 bg-white">
       <div className="mx-auto max-w-5xl">
         <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold text-center">
-          Unit 14
+          De laatste XXL-unit
         </p>
         <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight text-center">
           De XXL op de kop van het blok
@@ -60,7 +60,7 @@ export function Unit14Intro() {
             href="/xxl"
             className="text-sm font-semibold text-repp-navy/70 hover:text-repp-navy"
           >
-            Alle details van unit 14 →
+            Alle details van de XXL-unit →
           </Link>
         </div>
       </div>

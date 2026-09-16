@@ -48,8 +48,8 @@ export function MobileMenu({ project }: { project: Project }) {
   const primaryItems: Item[] = [
     {
       href: "/xxl",
-      label: "Unit 14",
-      description: `XXL, ${XXL_AREA_LABEL} over 3 lagen`,
+      label: "De laatste XXL-unit",
+      description: `${XXL_AREA_LABEL} over 3 lagen`,
     },
     {
       href: "/units",
@@ -60,6 +60,11 @@ export function MobileMenu({ project }: { project: Project }) {
       href: "/bereken",
       label: "Bereken",
       description: "Maandlast, rendement en koop vs huur",
+    },
+    {
+      href: "/koopvshuur",
+      label: "Kopen of huren",
+      description: "Wat kopen je oplevert t.o.v. huren",
     },
     {
       href: "/documenten",
