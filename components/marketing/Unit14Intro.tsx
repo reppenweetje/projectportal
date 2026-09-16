@@ -1,5 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
-import { PRIMARY_CTA_HREF, PRIMARY_CTA_LABEL } from "@/lib/site-config";
+import {
+  PRIMARY_CTA_HREF,
+  PRIMARY_CTA_LABEL,
+  UNIT14_IMAGE,
+} from "@/lib/site-config";
 import { Unit14SpecList } from "@/components/unit/Unit14Specs";
 import { Unit14Floors } from "./Unit14Floors";
 
@@ -9,9 +14,9 @@ import { Unit14Floors } from "./Unit14Floors";
  * eerst wat hij koopt en ziet hij zich er meteen in zitten, zonder dat het
  * twee losse blokken worden.
  *
- * Bewust geen render van het pand hier: die staat al in de hero, één scherm
- * hoger. Twee paginabrede beelden onder elkaar leest te zwaar, dus het
- * enige beeld in deze sectie is de carrousel per verdieping.
+ * Onderaan de sectie staat de voorgevel, na de doorklik per verdieping: een
+ * recht vooraanzicht werkt niet als paginabrede hero-uitsnede, maar wel als
+ * losstaande figuur op ware verhouding.
  */
 export function Unit14Intro() {
   return (
@@ -34,6 +39,21 @@ export function Unit14Intro() {
         </div>
 
         <Unit14Floors />
+
+        <figure className="mt-12 overflow-hidden rounded-2xl border border-repp-gray bg-surface-muted">
+          <Image
+            src={UNIT14_IMAGE}
+            alt="Voorgevel van de laatste unit van De Hofman aan de A. Hofmanweg, met eigen entree en grote glasgevel"
+            width={1840}
+            height={1081}
+            sizes="(max-width: 1024px) 100vw, 960px"
+            className="w-full h-auto"
+          />
+          <figcaption className="px-5 py-4 text-center text-sm text-repp-navy/60">
+            De voorgevel aan de A. Hofmanweg, met eigen entree naar de
+            verdiepingen.
+          </figcaption>
+        </figure>
 
         <div className="mt-10 flex justify-center">
           <Link
