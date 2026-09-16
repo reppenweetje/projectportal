@@ -66,13 +66,15 @@ export function HeroCalculator({ project }: { project: Project }) {
   const verschil = huidigeHuur - totaalMaand;
 
   return (
-    <section className="px-5 py-16 md:py-24 bg-surface-muted">
-      <div className="mx-auto max-w-4xl">
-        <div className="text-center mb-10">
+    <>
+      {/* De vraag staat in een eigen blok, los van de rekenmachine: per blok
+          hoort maximaal een kop met een of twee alinea's, of één element. */}
+      <section className="px-5 pt-16 md:pt-20 pb-10 md:pb-12 bg-surface-muted">
+        <div className="mx-auto max-w-4xl text-center">
           <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
             In 10 seconden weten
           </p>
-          <h2 className="mt-3 text-3xl md:text-5xl font-extrabold text-repp-navy tracking-tight">
+          <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight">
             Wat kost de laatste unit jou per maand?
           </h2>
           <p className="mt-3 text-repp-navy/70 max-w-2xl mx-auto">
@@ -83,7 +85,10 @@ export function HeroCalculator({ project }: { project: Project }) {
             btw).
           </p>
         </div>
+      </section>
 
+      <section className="px-5 pb-16 md:pb-24 bg-surface-muted">
+      <div className="mx-auto max-w-4xl">
         <div className="rounded-3xl bg-white border border-repp-gray p-6 md:p-10">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
@@ -231,5 +236,6 @@ export function HeroCalculator({ project }: { project: Project }) {
         </p>
       </div>
     </section>
+    </>
   );
 }
