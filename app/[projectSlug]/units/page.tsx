@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getProjectBySlug, countByStatus } from "@/lib/projects/de-hofman";
 import { formatEuro, formatM2, type Project } from "@/lib/types";
-import { SCARCITY_LINE, SCARCITY_LINE_SHORT } from "@/lib/site-config";
+import { SCARCITY_LINE } from "@/lib/site-config";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyCTA } from "@/components/layout/StickyCTA";
@@ -104,9 +104,10 @@ function UnitTypesSummary({ project }: { project: Project }) {
         </h2>
         <div className="mt-10 grid md:grid-cols-3 gap-4">
           {types.map((t) => {
-            // Badge data-gedreven uit de unit-statussen, zelfde regels als de
-            // koop-vs-huur unitkaarten: 0 = Uitverkocht, 1 = de sitebrede
-            // schaarste-regel, meer = "X beschikbaar".
+            // Badge data-gedreven uit de unit-statussen. De badge gaat over
+            // dit type, niet over het hele project, dus geen "1 van 14" hier:
+            // die telling staat boven de plattegrond. Kleur volgt de legenda,
+            // dus beschikbaar is groen (amber betekent onder voorbehoud).
             const beschikbaar = project.units.filter(
               (u) => u.type === t.label && u.status === "available",
             ).length;
@@ -114,14 +115,12 @@ function UnitTypesSummary({ project }: { project: Project }) {
               beschikbaar === 0
                 ? "Uitverkocht"
                 : beschikbaar === 1
-                  ? SCARCITY_LINE_SHORT
+                  ? "Laatste unit te koop"
                   : `${beschikbaar} beschikbaar`;
             const badgeCls =
               beschikbaar === 0
                 ? "bg-status-sold/15 text-status-sold"
-                : beschikbaar === 1
-                  ? "bg-status-optie/25 text-[#8a681c]"
-                  : "bg-status-available/20 text-[#3f7a52]";
+                : "bg-status-available/20 text-[#3f7a52]";
 
             // Klikbaar: XXL naar de eigen XXL-pagina, andere types naar de
             // detailpagina van een beschikbare unit. Uitverkochte types
