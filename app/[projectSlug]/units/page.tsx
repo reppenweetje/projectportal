@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getProjectBySlug, countByStatus } from "@/lib/projects/de-hofman";
 import { formatEuro, formatM2, type Project } from "@/lib/types";
-import { SCARCITY_LINE_SHORT } from "@/lib/site-config";
+import { SCARCITY_LINE, SCARCITY_LINE_SHORT } from "@/lib/site-config";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyCTA } from "@/components/layout/StickyCTA";
@@ -44,7 +44,6 @@ export default async function UnitsOverviewPage({
               Welke past bij jou?
             </h1>
             <p className="mt-4 text-repp-navy/70 max-w-xl mx-auto">
-              Nog {counts.available} van {totalUnits} beschikbaar.
               Tik op een unit voor specs en reservering.
             </p>
           </div>
@@ -52,6 +51,14 @@ export default async function UnitsOverviewPage({
 
         <div className="px-5">
           <div className="mx-auto max-w-5xl">
+            {/* Schaarste als bovenregel boven de plattegrond: in een blok vol
+                verkochte units moet in één oogopslag duidelijk zijn hoeveel
+                er nog te koop is. */}
+            <p className="mb-4 text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold text-center">
+              {counts.available === 1
+                ? SCARCITY_LINE
+                : `Nog ${counts.available} van ${totalUnits} units te koop`}
+            </p>
             <UnitGrid project={project} />
           </div>
         </div>
