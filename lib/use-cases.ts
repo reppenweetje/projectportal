@@ -111,6 +111,7 @@ export const USE_CASES: UseCase[] = [
     title: "Ontspannen & ontvangen",
     body: "Pooltafel, dartbord en een eigen bar met koffiehoek, met daarnaast een grote tafel om te overleggen of met het team af te sluiten.",
     floor: "v2",
+    featured: true,
   },
   {
     src: "/images/hofman/xxl/xxl-showroom.jpg",
