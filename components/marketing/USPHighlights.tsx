@@ -8,7 +8,7 @@ import {
 } from "@/lib/site-config";
 
 /**
- * USPHighlights: zes redenen om nu voor unit 14 te kiezen. Feitelijk,
+ * USPHighlights: zes redenen om nu voor de XXL-unit te kiezen. Feitelijk,
  * zonder urgentietaal. Eindigt in de primaire CTA.
  */
 
@@ -48,7 +48,7 @@ export function USPHighlights({ project }: { project: Project }) {
       <div className="mx-auto max-w-6xl px-5">
         <div className="text-center mb-6 md:mb-8">
           <p className="text-[11px] uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
-            Waarom unit 14
+            Waarom deze XXL-unit
           </p>
           <h2 className="mt-2 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight">
             Zes redenen om nu te kiezen.

@@ -13,7 +13,7 @@ type Params = { projectSlug: string };
 export const metadata: Metadata = {
   title: "Bereken je maandlast of rendement",
   description:
-    "Reken uit wat unit 14 van De Hofman je per maand kost, of wat het als belegging oplevert. Met jouw eigen inbreng, rente en huurprijs.",
+    "Reken uit wat de laatste XXL-unit van De Hofman je per maand kost, of wat het als belegging oplevert. Met jouw eigen inbreng, rente en huurprijs.",
   alternates: { canonical: "/bereken" },
 };
 

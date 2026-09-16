@@ -43,7 +43,7 @@ export function StatusBanner() {
         <p className="flex items-center gap-2.5 text-[13px] lg:text-sm font-medium tracking-[0.01em] min-w-0 truncate">
           <StatusDot />
           <span className="truncate">
-            {SCARCITY_LINE} · XXL unit 14 · {XXL_AREA_LABEL}
+            {SCARCITY_LINE} · XXL-unit · {XXL_AREA_LABEL}
           </span>
         </p>
         <Link
@@ -52,7 +52,7 @@ export function StatusBanner() {
           className="shrink-0 inline-flex items-center rounded-full border border-white text-white text-[13px] font-semibold leading-none hover:bg-white hover:text-[#0f0f70] transition"
           style={{ padding: "6px 14px" }}
         >
-          Bekijk unit 14 →
+          Bekijk de XXL-unit →
         </Link>
       </div>
     </div>

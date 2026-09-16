@@ -50,7 +50,7 @@ const HUUR_PER_JAAR = 190 * RENT_PER_M2_YEAR;
 
 /**
  * Geldblok op de homepage: wat je nu per jaar kwijt bent aan huur, naast de
- * maandlast van unit 14. Zelfde aannames als /bereken en /koopvshuur
+ * maandlast van de XXL-unit. Zelfde aannames als /bereken en /koopvshuur
  * (20% inbreng, 4,97%, 25 jaar annuïtair, VVE € 160).
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -73,13 +73,13 @@ export function HeroCalculator({ project }: { project: Project }) {
             In 10 seconden weten
           </p>
           <h2 className="mt-3 text-3xl md:text-5xl font-extrabold text-repp-navy tracking-tight">
-            Wat kost unit 14 jou per maand?
+            Wat kost de XXL-unit jou per maand?
           </h2>
           <p className="mt-3 text-repp-navy/70 max-w-2xl mx-auto">
             Huur je nu een vergelijkbare ruimte? Bij {XXL_AREA_LABEL} tegen
             €{RENT_PER_M2_YEAR} per m² per jaar ben je{" "}
             {formatEuro(HUUR_PER_JAAR)} per jaar aan huur kwijt. Vergelijk dat
-            met de maandlast van unit 14 (XXL, {formatEuro(koopsom)} excl.
+            met de maandlast van de laatste XXL-unit ({formatEuro(koopsom)} excl.
             btw).
           </p>
         </div>
@@ -139,7 +139,7 @@ export function HeroCalculator({ project }: { project: Project }) {
 
             <div className="rounded-2xl bg-repp-navy text-white p-6 md:p-8">
               <p className="text-xs uppercase tracking-wider text-repp-yellow font-semibold">
-                Maandlast unit 14
+                Maandlast XXL-unit
               </p>
               <p className="mt-2 text-5xl md:text-6xl font-extrabold tracking-tight tabular-nums">
                 {formatEuro(totaalMaand)}
@@ -214,8 +214,18 @@ export function HeroCalculator({ project }: { project: Project }) {
           </Link>
         </div>
 
+        <div className="mt-3 text-center">
+          <Link
+            href="/koopvshuur"
+            data-cta="maandlast-koopvshuur"
+            className="text-sm font-semibold text-repp-navy/60 hover:text-repp-navy"
+          >
+            Nu nog aan het huren? Vergelijk kopen met huren →
+          </Link>
+        </div>
+
         <p className="mt-6 text-[11px] text-repp-navy/40 text-center max-w-2xl mx-auto">
-          Indicatieve cijfers op basis van unit 14 van ca. 190 m² (€475.000
+          Indicatieve cijfers op basis van de XXL-unit van ca. 190 m² (€475.000
           v.o.n., excl. btw) en marktconforme huurprijzen. Aan deze indicaties
           kunnen geen rechten worden ontleend.
         </p>

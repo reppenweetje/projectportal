@@ -16,13 +16,14 @@ import {
 import { XxlTourVideo } from "@/components/marketing/XxlTourVideo";
 import { XxlUseCases } from "@/components/marketing/XxlUseCases";
 import { UnitGrid } from "@/components/unit/UnitGrid";
+import { KoopVsHuurCalculator } from "@/components/calculator/KoopVsHuurCalculator";
 
 type Params = { projectSlug: string };
 
 export const metadata: Metadata = {
-  title: "Unit 14, de laatste XXL-unit te koop",
+  title: "De laatste XXL-unit te koop",
   description:
-    "XXL unit 14 van De Hofman: ca. 190 m² over 3 lagen met eigen dakterras, op de kop van het blok aan de A. Hofmanweg. € 475.000 v.o.n. excl. btw. Reserveer of spar over de mogelijkheden.",
+    "De laatste XXL-unit van De Hofman: ca. 190 m² over 3 lagen met eigen dakterras, op de kop van het blok aan de A. Hofmanweg. € 475.000 v.o.n. excl. btw. Reserveer of spar over de mogelijkheden.",
   alternates: { canonical: "/xxl" },
   openGraph: { images: [UNIT14_IMAGE] },
 };
@@ -178,12 +179,12 @@ export default async function XxlPage({
                 body="Een eigen dakterras van 42,5 m² bovenop de unit, met vrij uitzicht over de Waarderpolder."
               />
               <Card
-                title="Unit 7 onder voorbehoud"
-                body="Unit 7 is verkocht onder voorbehoud van financiering. Gaat die verkoop niet door, dan krijgen aanmelders als eerste bericht; units 7 en 14 zijn dan samen te koppelen tot ca. 380 m²."
+                title="Andere XXL onder voorbehoud"
+                body="De andere XXL-unit is verkocht onder voorbehoud van financiering. Gaat die verkoop niet door, dan krijgen aanmelders als eerste bericht; de twee XXL-units zijn dan samen te koppelen tot ca. 380 m²."
               />
               <Card
                 title="Beperkt aanbod"
-                body="Slechts 2 XXL-units in heel De Hofman, op de uiteinden van het blok. Unit 14 is de laatste die nu te koop is."
+                body="Slechts 2 XXL-units in heel De Hofman, op de uiteinden van het blok. Deze is de laatste die nu te koop is."
               />
             </ul>
             <div className="mt-10 flex justify-center">
@@ -214,14 +215,44 @@ export default async function XxlPage({
           </div>
         </section>
 
+        {/* Kopen of huren: de vergelijking hoort bij de XXL-unit zelf, niet
+            alleen op de losse /koopvshuur-pagina. */}
+        <section id="koopvshuur" className="px-5 py-16 md:py-20 bg-white">
+          <div className="mx-auto max-w-5xl">
+            <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold text-center">
+              Reken het uit
+            </p>
+            <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight text-center">
+              Kopen of blijven huren?
+            </h2>
+            <p className="mt-3 text-repp-navy/70 max-w-2xl mx-auto text-center">
+              Huur verdwijnt elke maand. Aflossen wordt vermogen. Zie in twintig
+              seconden wat deze XXL-unit je oplevert ten opzichte van huren.
+            </p>
+            <div className="mt-10">
+              <Suspense fallback={null}>
+                <KoopVsHuurCalculator project={project} />
+              </Suspense>
+            </div>
+            <div className="mt-6 text-center">
+              <Link
+                href="/koopvshuur"
+                className="text-sm font-semibold text-repp-navy/70 hover:text-repp-navy"
+              >
+                Bekijk de volledige koop-vs-huurvergelijking →
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* Voor wie: use-cases in een carrousel */}
         <section className="px-5 py-16 md:py-20 bg-surface-muted">
           <div className="mx-auto max-w-5xl">
             <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold text-center">
-              Voor wie is unit 14?
+              Voor wie is de XXL-unit?
             </p>
             <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight text-center">
-              Zo kun je unit 14 inrichten.
+              Zo kun je de XXL-unit inrichten.
             </h2>
             <p className="mt-3 text-repp-navy/70 max-w-2xl mx-auto text-center">
               Drie lagen plus een eigen dakterras bieden alle ruimte. Deze

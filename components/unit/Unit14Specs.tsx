@@ -1,5 +1,5 @@
 /**
- * Specificaties van unit 14 (XXL), op één plek zodat /xxl en de homepage
+ * Specificaties van de XXL-unit, op één plek zodat /xxl en de homepage
  * dezelfde cijfers tonen.
  */
 export const UNIT14_SPECS: { label: string; value: string }[] = [

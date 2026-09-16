@@ -12,8 +12,8 @@ import {
 } from "@/lib/site-config";
 
 const HUUR_PER_M2_PER_JAAR = RENT_PER_M2_YEAR;
-const REPRESENTATIVE_M2 = 190; // XXL unit 14 (ca. 190 m²)
-const REPRESENTATIVE_PRIJS = XXL_PRICE; // koopsom unit 14, v.o.n. excl. btw
+const REPRESENTATIVE_M2 = 190; // de XXL-unit (ca. 190 m²)
+const REPRESENTATIVE_PRIJS = XXL_PRICE; // koopsom XXL-unit, v.o.n. excl. btw
 const OVERDRACHTSBELASTING = 0.104; // 10,4% bij bestaande bouw, 0% bij nieuwbouw v.o.n.
 
 export function LossAversion({ project }: { project: Project }) {
@@ -76,7 +76,7 @@ export function LossAversion({ project }: { project: Project }) {
         </div>
 
         <p className="mt-6 text-[11px] text-white/40 text-center">
-          Indicatieve cijfers op basis van XXL unit 14 van ca. 190 m² (€475.000 v.o.n., excl. btw) en marktconforme huurprijzen.
+          Indicatieve cijfers op basis van de XXL-unit van ca. 190 m² (€475.000 v.o.n., excl. btw) en marktconforme huurprijzen.
           Aan deze indicaties kunnen geen rechten worden ontleend.
         </p>
       </div>

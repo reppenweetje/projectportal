@@ -5,8 +5,8 @@ import { sendCrmEvents } from "@/lib/crm-events";
 export const runtime = "nodejs";
 
 /**
- * Aanmelding voor unit 14 (LeadFormUnit14). Twee intenties:
- *   - reserveren: de bezoeker wil unit 14 reserveren
+ * Aanmelding voor de laatste XXL-unit (LeadFormUnit14). Twee intenties:
+ *   - reserveren: de bezoeker wil de XXL-unit reserveren
  *   - sparren:    de bezoeker wil eerst sparren over de mogelijkheden
  *
  * Beide zijn hot leads (contactgegevens + concrete unit). De intent, de
@@ -65,7 +65,7 @@ export async function POST(request: Request) {
 
   if (!result.ok) console.error("[lead-unit14] lead-sync failed", result.error);
 
-  // CRM-signaal: een reservering op unit 14 telt als "unit gereserveerd via
+  // CRM-signaal: een reservering op de XXL-unit telt als "unit gereserveerd via
   // het portaal"; sparren is een interesse-signaal. Best-effort.
   await sendCrmEvents({
     clpSession: typeof body.clpSession === "string" ? body.clpSession : null,

@@ -55,6 +55,14 @@ export function Footer({ project }: { project: Project }) {
             </li>
             <li>
               <Link
+                href={`/koopvshuur`}
+                className="hover:text-repp-yellow"
+              >
+                Kopen of huren
+              </Link>
+            </li>
+            <li>
+              <Link
                 href={`/documenten`}
                 className="hover:text-repp-yellow"
               >

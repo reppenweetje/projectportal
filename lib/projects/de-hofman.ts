@@ -140,7 +140,7 @@ export const deHofman: Project = {
     },
     {
       label: "De Hofman XXL",
-      sublabel: "Nieuwbouw · unit 14 te koop",
+      sublabel: "Nieuwbouw · laatste XXL-unit te koop",
       pricePerM2: 2500,
       isHofman: true,
     },
@@ -191,29 +191,29 @@ export const deHofman: Project = {
     caption: "Impressie · De Hofman bij avond",
   },
   gallery: [
-    // XXL unit 14 vooraan (hoogste gewicht), daarna de projectbeelden.
+    // De XXL-unit vooraan (hoogste gewicht), daarna de projectbeelden.
     {
       src: "/images/hofman/xxl/xxl-voorzijde-v3.jpg",
-      alt: "Vooraanzicht van XXL unit 14 met grote glasgevel en eigen entree aan de straatzijde",
-      caption: "Unit 14: de voorzijde aan de A. Hofmanweg",
+      alt: "Vooraanzicht van de XXL-unit met grote glasgevel en eigen entree aan de straatzijde",
+      caption: "XXL-unit: de voorzijde aan de A. Hofmanweg",
       weight: 140,
     },
     {
       src: "/images/hofman/xxl/xxl-dakterras.jpg",
-      alt: "Het eigen dakterras van XXL unit 14 met uitzicht over de Waarderpolder",
-      caption: "Unit 14: eigen dakterras van 42,5 m²",
+      alt: "Het eigen dakterras van de XXL-unit met uitzicht over de Waarderpolder",
+      caption: "XXL-unit: eigen dakterras van 42,5 m²",
       weight: 130,
     },
     {
       src: "/images/hofman/xxl/xxl-kantoor-koffiehoek.jpg",
-      alt: "Kantoorverdieping van XXL unit 14 met koffiehoek",
-      caption: "Unit 14: kantoorverdieping met koffiehoek",
+      alt: "Kantoorverdieping van de XXL-unit met koffiehoek",
+      caption: "XXL-unit: kantoorverdieping met koffiehoek",
       weight: 120,
     },
     {
       src: "/images/hofman/xxl/xxl-werkplaats.jpg",
-      alt: "Werkplaats op de begane grond van XXL unit 14",
-      caption: "Unit 14: werkplaats op de begane grond",
+      alt: "Werkplaats op de begane grond van de XXL-unit",
+      caption: "XXL-unit: werkplaats op de begane grond",
       weight: 110,
     },
     {
@@ -361,7 +361,7 @@ export const deHofman: Project = {
     },
     {
       q: "Wat maakt de XXL-units anders?",
-      a: "De twee XXL-units (Unit 7 en Unit 14, beide ca. 190 m² over 3 lagen) zijn de grootste in De Hofman, op de uiteinden van het blok. Werkplaats en opslag op de begane grond, kantoor of showroom op de eerste en tweede verdieping. De L- en XL-units zijn 2 lagen. Unit 7 is verkocht onder voorbehoud van financiering; unit 14 is nu te koop. Meld je aan via de XXL-pagina, dan nemen we contact op om jouw scenario door te spreken.",
+      a: "De twee XXL-units (beide ca. 190 m² over 3 lagen) zijn de grootste in De Hofman, op de uiteinden van het blok. Werkplaats en opslag op de begane grond, kantoor of showroom op de eerste en tweede verdieping. De L- en XL-units zijn 2 lagen. De ene XXL is verkocht onder voorbehoud van financiering; de andere is nu te koop. Meld je aan via de XXL-pagina, dan nemen we contact op om jouw scenario door te spreken.",
     },
     {
       q: "Is de reservering bindend?",
@@ -369,11 +369,11 @@ export const deHofman: Project = {
     },
     {
       q: "Wat is de scherpste prijs van de Waarderpolder?",
-      a: "Vergelijkbare nieuwbouw bedrijfsunits in de Waarderpolder kosten momenteel tussen €2.500 en €3.058 per m². De L- en XL-units van De Hofman lagen op €2.281 tot €2.296 per m² en zijn inmiddels uitverkocht. De laatste XXL-unit (unit 14, ca. 190 m² over 3 lagen) kost €475.000, circa €2.500 per m², en daarbij zijn de aansluitkosten voor nutsvoorzieningen (€3.000 tot €5.000 elders) en een eigen parkeerplaats al inbegrepen. Vrij op naam, dus ook zonder 10,4% overdrachtsbelasting.",
+      a: "Vergelijkbare nieuwbouw bedrijfsunits in de Waarderpolder kosten momenteel tussen €2.500 en €3.058 per m². De L- en XL-units van De Hofman lagen op €2.281 tot €2.296 per m² en zijn inmiddels uitverkocht. De laatste XXL-unit (ca. 190 m² over 3 lagen) kost €475.000, circa €2.500 per m², en daarbij zijn de aansluitkosten voor nutsvoorzieningen (€3.000 tot €5.000 elders) en een eigen parkeerplaats al inbegrepen. Vrij op naam, dus ook zonder 10,4% overdrachtsbelasting.",
     },
     {
       q: "Wat als ik nu niet beslis?",
-      a: "Eerlijk: 13 van de 14 units zijn verkocht of verkocht onder voorbehoud. De L- en XL-units zijn uitverkocht; alleen XXL-unit 14 is nog te koop. Wij dwingen je niet, maar de markt is wat hij is: nieuwbouw in de Waarderpolder is schaars en wordt schaarser. Wil je niet meteen reserveren? Schrijf je dan in voor 'Hofman Insider', dan krijg je als eerste bericht over prijsindexaties en statuswijzigingen.",
+      a: "Eerlijk: 13 van de 14 units zijn verkocht of verkocht onder voorbehoud. De L- en XL-units zijn uitverkocht; alleen de laatste XXL-unit is nog te koop. Wij dwingen je niet, maar de markt is wat hij is: nieuwbouw in de Waarderpolder is schaars en wordt schaarser. Wil je niet meteen reserveren? Schrijf je dan in voor 'Hofman Insider', dan krijg je als eerste bericht over prijsindexaties en statuswijzigingen.",
     },
   ],
   documents: [

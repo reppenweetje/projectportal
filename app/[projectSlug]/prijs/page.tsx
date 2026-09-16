@@ -10,7 +10,7 @@ import { PriceComparisonChart } from "@/components/marketing/PriceComparisonChar
 import { LeadGate } from "@/components/conversion/LeadGate";
 
 const REPRESENTATIVE_M2 = 105; // L-unit, inmiddels uitverkocht
-const LAST_UNIT_M2 = 190; // XXL unit 14, laatste beschikbare unit
+const LAST_UNIT_M2 = 190; // de XXL-unit, laatste beschikbare unit
 const LAST_UNIT_PRICE = 475000;
 
 type Params = { projectSlug: string };
@@ -57,7 +57,7 @@ export default async function PrijsPage({
             <p className="mt-4 text-repp-navy/70 max-w-xl mx-auto">
               Hieronder de daadwerkelijke prijzen per m² van vergelijkbare
               bedrijfsunits in de buurt, naast die van De Hofman. De L- en
-              XL-units zijn inmiddels uitverkocht; alleen XXL-unit 14 (ca.
+              XL-units zijn inmiddels uitverkocht; alleen de laatste XXL-unit (ca.
               190 m², {formatEuro(LAST_UNIT_PRICE)} v.o.n., excl. btw) is nog
               te koop.
             </p>
@@ -93,7 +93,7 @@ export default async function PrijsPage({
                 in de aankoopprijs. De L- en XL-units zijn uitverkocht.
               </p>
               <p className="mt-3 text-repp-navy/80 max-w-xl mx-auto">
-                De laatste XXL-unit (unit 14, {formatM2(LAST_UNIT_M2)} over 3
+                De laatste XXL-unit ({formatM2(LAST_UNIT_M2)} over 3
                 lagen) kost {formatEuro(LAST_UNIT_PRICE)}, circa{" "}
                 <span className="font-bold text-repp-navy">
                   {formatEuro(Math.round(LAST_UNIT_PRICE / LAST_UNIT_M2))}/m²

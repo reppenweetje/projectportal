@@ -113,7 +113,7 @@ export function Gallery({ project }: { project: Project }) {
             In beeld
           </p>
           <h2 className="mt-3 text-3xl md:text-5xl font-extrabold text-repp-navy tracking-tight">
-            Een blik op unit 14 en De Hofman
+            Een blik op de XXL-unit en De Hofman
           </h2>
           <p className="mt-3 text-sm text-repp-navy/60">
             Tik op een impressie voor een grotere weergave en zoom daarin met

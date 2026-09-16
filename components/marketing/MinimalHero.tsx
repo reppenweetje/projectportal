@@ -15,7 +15,7 @@ import {
 /**
  * Homepage-hero. Zelfde opbouw als de hero op /xxl: beeld boven
  * hofman-deep met gradient, content gecentreerd. Het vooraanzicht van
- * unit 14 is een lichte render (witte lucht, grijze gevel), dus de
+ * de XXL-unit is een lichte render (witte lucht, grijze gevel), dus de
  * verdonkering is iets zwaarder dan op /xxl om de witte tekst leesbaar
  * te houden. Eén boodschap, één primaire knop. De schaarste staat al in
  * de sitebrede status-banner, dus hier geen extra chip.
@@ -26,7 +26,7 @@ export function MinimalHero({ project }: { project: Project }) {
       <div className="absolute inset-0">
         <Image
           src={UNIT14_IMAGE}
-          alt="Vooraanzicht van XXL unit 14 van De Hofman met grote glasgevel en eigen entree"
+          alt="Vooraanzicht van de laatste XXL-unit van De Hofman met grote glasgevel en eigen entree"
           fill
           priority
           sizes="100vw"
@@ -46,7 +46,7 @@ export function MinimalHero({ project }: { project: Project }) {
             te koop
           </h1>
           <p className="mt-5 text-lg md:text-xl text-white/85 font-light max-w-2xl mx-auto text-center">
-            XXL unit 14: {XXL_AREA_LABEL} over 3 lagen, op de kop van het blok
+            De laatste XXL-unit: {XXL_AREA_LABEL} over 3 lagen, op de kop van het blok
             aan de zichtzijde. {formatEuro(XXL_PRICE)} v.o.n., zonder
             overdrachtsbelasting.
           </p>

@@ -15,7 +15,7 @@ type Params = { projectSlug: string };
 export const metadata: Metadata = {
   title: "Plattegrond en status van alle units",
   description:
-    "De plattegrond van De Hofman met de status van alle 14 units. Nog 1 van 14 units te koop: XXL unit 14, ca. 190 m² over 3 lagen.",
+    "De plattegrond van De Hofman met de status van alle 14 units. Nog 1 van 14 units te koop: de laatste XXL-unit, ca. 190 m² over 3 lagen.",
   alternates: { canonical: "/units" },
 };
 
