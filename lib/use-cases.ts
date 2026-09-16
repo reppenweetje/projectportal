@@ -106,6 +106,13 @@ export const USE_CASES: UseCase[] = [
     featured: true,
   },
   {
+    src: "/images/hofman/xxl/xxl-ontspanning.jpg",
+    alt: "Tweede verdieping van de XXL-unit met pooltafel, dartbord, bar met koffiehoek en een grote tafel",
+    title: "Ontspannen & ontvangen",
+    body: "Pooltafel, dartbord en een eigen bar met koffiehoek, met daarnaast een grote tafel om te overleggen of met het team af te sluiten.",
+    floor: "v2",
+  },
+  {
     src: "/images/hofman/xxl/xxl-showroom.jpg",
     alt: "Begane grond van de XXL-unit als showroom met presentatietafels en vakkenwanden",
     title: "Showroom met presentatieruimte",

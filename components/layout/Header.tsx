@@ -86,7 +86,7 @@ export function Header({
           <Link
             href={PRIMARY_CTA_HREF}
             data-cta="nav"
-            className="ml-2 inline-flex items-center whitespace-nowrap bg-repp-yellow text-repp-navy text-sm font-bold px-4 py-2 rounded-full hover:brightness-95 transition"
+            className="ml-2 inline-flex items-center h-9 whitespace-nowrap bg-repp-yellow text-repp-navy text-[13px] font-bold px-4 rounded-full hover:brightness-95 transition"
           >
             {PRIMARY_CTA_LABEL}
           </Link>
@@ -98,7 +98,7 @@ export function Header({
           <Link
             href={PRIMARY_CTA_HREF}
             data-cta="nav"
-            className="inline-flex items-center bg-repp-yellow text-repp-navy text-[11px] font-bold px-2.5 py-1.5 rounded-full hover:brightness-95 transition whitespace-nowrap"
+            className="inline-flex items-center h-8 bg-repp-yellow text-repp-navy text-[11px] font-bold px-3 rounded-full hover:brightness-95 transition whitespace-nowrap"
           >
             {PRIMARY_CTA_LABEL_SHORT}
           </Link>
