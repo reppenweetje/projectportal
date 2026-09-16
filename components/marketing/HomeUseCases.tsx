@@ -7,7 +7,7 @@ import { Unit14Floors } from "./Unit14Floors";
  */
 export function HomeUseCases() {
   return (
-    <section className="px-5 py-14 md:py-16 bg-surface-muted">
+    <section className="px-5 py-14 md:py-16 bg-white">
       <div className="mx-auto max-w-5xl">
         <div className="text-center">
           <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">

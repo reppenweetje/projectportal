@@ -14,10 +14,7 @@ import { Unit14SpecList } from "@/components/unit/Unit14Specs";
  */
 export function Unit14Intro() {
   return (
-    <>
-      {/* Wat het is, met de maten. Het aanzicht staat in het blok eronder:
-          per blok maximaal een kop met een of twee alinea's, of één beeld. */}
-      <section className="px-5 pt-16 md:pt-20 pb-10 md:pb-12 bg-white">
+      <section className="px-5 py-16 md:py-20 bg-white">
         <div className="mx-auto max-w-5xl">
           <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold text-center">
             De laatste unit
@@ -35,9 +32,6 @@ export function Unit14Intro() {
             <Unit14SpecList tone="light" />
           </div>
         </div>
-      </section>
-
-      <section className="px-5 pb-16 md:pb-20 bg-white">
       <div className="mx-auto max-w-5xl">
         <figure className=" overflow-hidden rounded-2xl border border-repp-gray bg-surface-muted">
           <Image
@@ -73,6 +67,5 @@ export function Unit14Intro() {
         </div>
       </div>
     </section>
-    </>
   );
 }

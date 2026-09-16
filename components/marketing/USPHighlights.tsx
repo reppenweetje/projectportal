@@ -44,10 +44,7 @@ const USPS: USP[] = [
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function USPHighlights({ project }: { project: Project }) {
   return (
-    <>
-      {/* Kop apart van de kaarten: per blok hoort maximaal een kop met een
-          of twee alinea's, of één element. */}
-      <section className="bg-surface-muted px-5 pt-12 md:pt-16 pb-6 md:pb-8">
+      <section className="bg-surface-muted px-5 py-14 md:py-16">
         <div className="mx-auto max-w-6xl text-center">
           <p className="text-[11px] uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
             Waarom deze unit
@@ -56,9 +53,6 @@ export function USPHighlights({ project }: { project: Project }) {
             Zes redenen om nu te kiezen.
           </h2>
         </div>
-      </section>
-
-      <section className="bg-surface-muted pb-12 md:pb-16">
       <div className="mx-auto max-w-6xl px-5">
         <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2.5 md:gap-4">
           {USPS.map((usp) => (
@@ -98,7 +92,6 @@ export function USPHighlights({ project }: { project: Project }) {
         </div>
       </div>
     </section>
-    </>
   );
 }
 
