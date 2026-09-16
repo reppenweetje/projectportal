@@ -7,13 +7,13 @@ import { Unit14Floors } from "./Unit14Floors";
  */
 export function HomeUseCases() {
   return (
-    <section className="px-5 py-16 md:py-24 bg-surface-muted">
+    <section className="px-5 py-14 md:py-16 bg-surface-muted">
       <div className="mx-auto max-w-5xl">
         <div className="text-center">
           <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
             Voor wie is de XXL-unit?
           </p>
-          <h2 className="mt-3 text-3xl md:text-5xl font-extrabold text-repp-navy tracking-tight">
+          <h2 className="mt-3 text-2xl md:text-4xl font-extrabold text-repp-navy tracking-tight">
             Zo kun je de XXL-unit inrichten.
           </h2>
           <p className="mt-3 text-repp-navy/70 max-w-2xl mx-auto">

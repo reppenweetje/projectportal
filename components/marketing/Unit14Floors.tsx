@@ -8,14 +8,16 @@ import { UseCaseSlider } from "./UseCaseSlider";
  * Doorklik per verdieping: kies een laag en blader door de invullingen,
  * één beeld tegelijk. Tab-stijl gelijk aan de tabs op /documenten en
  * /bereken. Het dakterras hoort bij de 2e verdieping.
+ *
+ * Bewust geen specsregel onder de tabs: die cijfers staan al bij de unit
+ * zelf, en dit blok houdt één onderwerp met één beeld.
  */
 export function Unit14Floors() {
   const [floorKey, setFloorKey] = useState<FloorKey>("bg");
-  const floor = FLOORS.find((f) => f.key === floorKey) ?? FLOORS[0];
   const items = USE_CASES.filter((u) => u.floor === floorKey);
 
   return (
-    <div className="mt-10">
+    <div className="mt-8">
       <div className="flex justify-center">
         <div
           role="tablist"
@@ -42,11 +44,9 @@ export function Unit14Floors() {
         </div>
       </div>
 
-      <p className="mt-4 text-center text-sm text-repp-navy/60 max-w-2xl mx-auto">
-        {floor.specs}
-      </p>
-
-      <div id={`laag-${floorKey}`} role="tabpanel" className="mt-8">
+      {/* Smaller dan de sectie: paginabreed werd het beeld een blok op
+          zichzelf, met veel lucht eromheen. */}
+      <div id={`laag-${floorKey}`} role="tabpanel" className="mt-6 mx-auto max-w-3xl">
         <UseCaseSlider items={items} resetKey={floorKey} />
       </div>
     </div>
