@@ -186,8 +186,10 @@ export function Gallery({ project }: { project: Project }) {
 }
 
 // ─── Lightbox component ───────────────────────────────────────────────────
+// Ook gebruikt door het beeldenraster op /beeld, zodat vergroten, swipen en
+// zoomen daar exact hetzelfde werken.
 
-function Lightbox({
+export function Lightbox({
   images,
   index,
   onClose,
