@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Unit14Floors } from "./Unit14Floors";
 
 /**
@@ -22,6 +23,18 @@ export function HomeUseCases() {
           </p>
         </div>
         <Unit14Floors />
+
+        {/* Eén ingang naar alle beelden: de rest van de impressies staat op
+            een eigen pagina, zodat de homepage niet volloopt met beeld. */}
+        <div className="mt-8 text-center">
+          <Link
+            href="/beeld"
+            data-cta="beeld"
+            className="inline-flex items-center rounded-full border border-repp-navy/20 px-5 py-2.5 text-sm font-semibold text-repp-navy hover:border-repp-navy hover:bg-white transition"
+          >
+            Bekijk alle impressies →
+          </Link>
+        </div>
       </div>
     </section>
   );

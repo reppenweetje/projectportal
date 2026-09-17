@@ -70,6 +70,11 @@ export function MobileMenu({ project }: { project: Project }) {
       description: "Wat kopen je oplevert t.o.v. huren",
     },
     {
+      href: "/beeld",
+      label: "Impressies",
+      description: "Alle beelden van het gebouw en de unit",
+    },
+    {
       href: "/documenten",
       label: "Documenten",
       description: "Brochure, prijslijst en meer",

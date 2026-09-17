@@ -62,6 +62,11 @@ export function Footer({ project }: { project: Project }) {
               </Link>
             </li>
             <li>
+              <Link href={`/beeld`} className="hover:text-repp-yellow">
+                Impressies
+              </Link>
+            </li>
+            <li>
               <Link
                 href={`/documenten`}
                 className="hover:text-repp-yellow"
