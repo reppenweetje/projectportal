@@ -197,7 +197,10 @@ export default async function XxlPage({
         </section>
 
         {/* Digitale rondleiding */}
-        <section className="px-5 py-16 md:py-20 bg-hofman-deep text-white">
+        <section
+          id="rondleiding"
+          className="px-5 py-16 md:py-20 bg-hofman-deep text-white scroll-mt-32"
+        >
           <div className="mx-auto max-w-5xl">
             <p className="text-xs uppercase tracking-[0.2em] text-repp-yellow font-semibold text-center">
               Digitale rondleiding
