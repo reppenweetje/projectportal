@@ -255,6 +255,18 @@ export default async function UnitDetailPage({
                     WhatsApp
                   </WhatsAppLink>
                 </div>
+
+                {/* De brochure gaat specifiek over unit 14, de enige XXL die
+                    nog te koop is. Daarom alleen daar, niet op de andere
+                    unit-pagina's. */}
+                {unit.type === "XXL" && isReservable && (
+                  <Link
+                    href={`/documenten/brochure-unit-14`}
+                    className="mt-2 block text-center text-xs text-white/80 hover:text-white py-2 border border-white/10 rounded-full"
+                  >
+                    Bekijk de brochure
+                  </Link>
+                )}
               </div>
 
               {/* Soft conversion: save for later (reservable + verkocht ovb) */}
