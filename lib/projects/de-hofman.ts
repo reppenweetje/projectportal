@@ -378,6 +378,13 @@ export const deHofman: Project = {
   ],
   documents: [
     {
+      slug: "brochure-unit-14",
+      label: "Brochure unit 14",
+      body: "De laatste XXL-unit in 9 pagina's",
+      group: "essentieel",
+      href: "/docs/de-hofman/brochure-unit-14.pdf",
+    },
+    {
       slug: "brochure",
       label: "Brochure",
       body: "Het project compleet in beeld",

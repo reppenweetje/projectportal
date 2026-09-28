@@ -2,11 +2,17 @@ import Link from "next/link";
 import type { Project } from "@/lib/types";
 import { DocIcon } from "./DocIcon";
 
-// Drie kaarten: brochure, prijslijst en de plattegrond van de XXL-unit. Voor de
-// plattegrond wijken label en beschrijving af van het documentenoverzicht.
+// Drie kaarten: eerst de brochure van unit 14, want dat is de enige unit die
+// nog te koop is. Daarna de projectbrochure voor de context en de plattegrond
+// van de XXL-unit. Voor de projectbrochure en de plattegrond wijken label en
+// beschrijving af van het documentenoverzicht.
 const HIGHLIGHTED: { slug: string; label?: string; body?: string }[] = [
-  { slug: "brochure" },
-  { slug: "prijslijst" },
+  { slug: "brochure-unit-14" },
+  {
+    slug: "brochure",
+    label: "Brochure De Hofman",
+    body: "Het hele project compleet in beeld",
+  },
   {
     slug: "plattegronden",
     label: "Plattegrond XXL",

@@ -10,6 +10,7 @@ type IconKind =
   | "people";
 
 const KIND_BY_SLUG: Record<string, IconKind> = {
+  "brochure-unit-14": "book",
   brochure: "book",
   prijslijst: "euro",
   plattegronden: "blueprint",
