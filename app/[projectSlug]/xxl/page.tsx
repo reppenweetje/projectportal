@@ -193,6 +193,17 @@ export default async function XxlPage({
                 Interesse in een XXL? →
               </a>
             </div>
+            {/* Secundaire route voor wie de unit liever eerst rustig naleest:
+                de brochure van unit 14. Geen eigen sectie, zodat de pagina
+                niet langer wordt. */}
+            <div className="mt-4 text-center">
+              <Link
+                href="/documenten/brochure-unit-14"
+                className="text-sm font-semibold text-repp-navy/70 hover:text-repp-navy"
+              >
+                Bekijk de brochure van unit 14 →
+              </Link>
+            </div>
           </div>
         </section>
 
