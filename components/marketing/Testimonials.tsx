@@ -8,7 +8,7 @@ export function Testimonials({ project }: { project: Project }) {
   return (
     <section className="py-12 md:py-20 bg-white">
       <div className="mx-auto max-w-6xl">
-        <div className="text-center mb-6 md:mb-10 px-5">
+        <div className="text-center mb-8 md:mb-10 px-5">
           <p className="text-[11px] uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
             Wat kopers zeggen
           </p>
