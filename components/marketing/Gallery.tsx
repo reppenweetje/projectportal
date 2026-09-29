@@ -108,7 +108,7 @@ export function Gallery({ project }: { project: Project }) {
   return (
     <section className="pt-2 pb-16 md:pt-4 md:pb-24 bg-surface-muted">
       <div className="mx-auto max-w-5xl px-5">
-        <div className="text-center mb-10">
+        <div className="text-center mb-8 md:mb-10">
           <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
             In beeld
           </p>

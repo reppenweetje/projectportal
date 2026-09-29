@@ -45,7 +45,7 @@ const USPS: USP[] = [
 export function USPHighlights({ project }: { project: Project }) {
   return (
       <section className="bg-surface-muted px-5 py-14 md:py-16">
-        <div className="mx-auto max-w-6xl text-center">
+        <div className="mx-auto max-w-6xl text-center mb-8 md:mb-10">
           <p className="text-[11px] uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
             Waarom deze unit
           </p>
