@@ -25,7 +25,7 @@ export const SECONDARY_CTA_LABEL = "Ik wil de mogelijkheden bespreken";
 export const SECONDARY_CTA_HREF = "/xxl?intent=sparren#aanmelden";
 
 export const WHATSAPP_HREF =
-  "https://wa.me/31617192538?text=Hallo%2C+ik+heb+interesse+in+de+laatste+unit+van+De+Hofman.";
+  "https://wa.me/31616079428?text=Hallo%2C+ik+heb+interesse+in+de+laatste+unit+van+De+Hofman.";
 
 /** Beeld van de XXL-unit: de voorgevel. Recht van voren, dus het werkt als
  * losstaande figuur en als OG-beeld, niet paginabreed uitgesneden. */
