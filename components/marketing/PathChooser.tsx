@@ -5,7 +5,7 @@ import type { Project } from "@/lib/types";
 export function PathChooser({ project }: { project: Project }) {
   return (
     <section className="px-5 pb-24 md:pb-32 pt-24 md:pt-32">
-      <div className="mx-auto max-w-3xl text-center mb-10">
+      <div className="mx-auto max-w-3xl text-center mb-8 md:mb-10">
         <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
           Twee paden
         </p>

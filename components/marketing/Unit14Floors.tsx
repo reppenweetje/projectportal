@@ -17,7 +17,7 @@ export function Unit14Floors() {
   const items = USE_CASES.filter((u) => u.floor === floorKey);
 
   return (
-    <div className="mt-8">
+    <div>
       <div className="flex justify-center">
         <div
           role="tablist"

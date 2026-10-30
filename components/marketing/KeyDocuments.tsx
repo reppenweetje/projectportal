@@ -31,7 +31,7 @@ export function KeyDocuments({ project }: { project: Project }) {
   return (
     <section className="px-5 py-20 md:py-24">
       <div className="mx-auto max-w-5xl">
-        <div className="text-center mb-10">
+        <div className="text-center mb-8 md:mb-10">
           <p className="text-xs uppercase tracking-[0.2em] text-repp-navy/50 font-semibold">
             Alvast inkijken
           </p>
